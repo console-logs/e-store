@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "e-store",
   "private": true,
   "scripts": {
     "build": "turbo build",
