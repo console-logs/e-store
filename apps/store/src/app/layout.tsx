@@ -1,6 +1,7 @@
 import { AuthProvider } from "@/context/authContext";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
+import { MainContainer } from "@shared/components/containers/mainContainer";
 import "@shared/styles/globals.css";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
@@ -23,7 +24,9 @@ export default function RootLayout({
       <html lang="en" className="h-full">
         <body className={inter.className}>
           <TRPCReactProvider cookies={cookies().toString()}>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <MainContainer>{children}</MainContainer>
+            </AuthProvider>
           </TRPCReactProvider>
         </body>
       </html>
