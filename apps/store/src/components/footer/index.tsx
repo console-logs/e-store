@@ -31,7 +31,6 @@ export default function Footer() {
             <FooterLink key={link.name} name={link.name} url={link.url} />
           ))}
         </nav>
-        ̦
         <p className="text-muted-foreground mt-5 text-center text-sm leading-5">
           &copy; {currYear} {WEBSITE_NAME}. All rights reserved.
         </p>
