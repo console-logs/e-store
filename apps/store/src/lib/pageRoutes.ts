@@ -1,11 +1,5 @@
-export const HOST_URL =
-	process.env.NODE_ENV === "development"
-		? `http://localhost:${process.env.PORT ?? 3000}`
-		: "https://www.circuitparts.in";
-
-export const RIGID_PCB_API_ROUTE = "api/rigid-pcb";
-
 export const HOME_PAGE = "/";
+export const RIGID_PCB_API_ROUTE = "api/rigid-pcb";
 export const COMPONENT_PAGES = "/products/components";
 export const COMPONENT_RESULTS_PAGE = "/products/components/results/";
 export const COMPONENT_DETAILS_PAGE = "/products/components/details/";
@@ -32,8 +26,6 @@ export const PRIVACY_POLICY_PAGE = "/privacy-policy";
 export const TERMS_AND_CONDITIONS_PAGE = "/terms-and-conditions";
 export const SHIPPING_PAGE = "/shipping-and-returns";
 export const CONTACT_US_PAGE = "/contact-us";
-export const nRF52832QFAA_R7_PAGE = "/products/components/details/NRF52832-QFAA-R7";
-export const nRF52_PAGE = "/products/components/results/NRF52";
 export const UPLOAD_BOM_PAGE = "/products/components/upload-bom";
 export const RESET_PASSWORD_STEP_2_PAGE = "/auth/reset-password/step2";
 export const ORDER_SUCCESS_PAGE = "/order-status/success";
