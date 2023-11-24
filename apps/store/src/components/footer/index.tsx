@@ -6,7 +6,7 @@ import {
   PRIVACY_POLICY_PAGE,
   SHIPPING_PAGE,
   TERMS_AND_CONDITIONS_PAGE,
-} from "@/lib/pageRoutes";
+} from "@/lib/routes";
 import { Icons } from "@shared/components/Icons";
 import { getCurrentYear } from "@shared/lib/utils";
 
@@ -36,7 +36,7 @@ export default function Footer() {
           &copy; {currYear} {WEBSITE_NAME}. All rights reserved.
         </p>
         <p className="mt-2 flex items-center justify-center text-sm leading-5">
-          Made with <Icons.heartFilled className="mx-1" /> in {COUNTRY}
+          Made with <Icons.HeartFilledIcon className="mx-1" /> in {COUNTRY}
         </p>
       </div>
     </footer>

@@ -7,3 +7,10 @@ type AuthContextType = {
 type AuthContextProviderType = {
   children: React.ReactNode;
 };
+
+type ListItemsProps = {
+  title: string;
+  href: string;
+  children: React.ReactNode;
+};
+

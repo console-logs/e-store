@@ -1,5 +1,13 @@
-type IconPropsType = React.HTMLAttributes<SVGElement>;
+import { Bars3Icon } from "@heroicons/react/20/solid";
 import { HeartFilledIcon } from "@radix-ui/react-icons";
+import { BsCpu, BsRocket } from "react-icons/bs";
+import { CgDisplayFlex } from "react-icons/cg";
+import { GiFlexibleLamp } from "react-icons/gi";
+import { MdInventory } from "react-icons/md";
+import { RiRoadMapLine } from "react-icons/ri";
+import { TfiLayers } from "react-icons/tfi";
+
+type IconPropsType = React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
 	search: (props: IconPropsType) => (
@@ -171,5 +179,39 @@ export const Icons = {
 			/>
 		</svg>
 	),
-	heartFilled: HeartFilledIcon,
+	vercel: (props: IconPropsType) => (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="100"
+			height="100"
+			viewBox="0 0 100 100"
+			{...props}>
+			<path
+				d="M 50 10 L 90 90 L 10 90 Z"
+				fill="black"
+			/>
+		</svg>
+	),
+	guest: (props: IconPropsType) => (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			className="h-fit w-fit text-gray-300"
+			fill="currentColor"
+			viewBox="0 0 24 24"
+			{...props}>
+			<path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+		</svg>
+	),
+	// react-icons
+	BsCpu: BsCpu as JSX.ElementType,
+	BsRocket: BsRocket as JSX.ElementType,
+	CgDisplayFlex: CgDisplayFlex as JSX.ElementType,
+	GiFlexibleLamp: GiFlexibleLamp as JSX.ElementType,
+	MdInventory: MdInventory as JSX.ElementType,
+	RiRoadMapLine: RiRoadMapLine as JSX.ElementType,
+	TfiLayers: TfiLayers as JSX.ElementType,
+
+	// radix-ui/react-icons
+	HeartFilledIcon,
+	Bars3Icon,
 };
