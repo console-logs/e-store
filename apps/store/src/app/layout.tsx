@@ -4,6 +4,7 @@ import { AuthProvider } from "@/context/authContext";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { MainContainer } from "@shared/components/containers/mainContainer";
+import { Toaster } from "@shared/components/ui/toaster";
 import "@shared/styles/globals.css";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
@@ -31,6 +32,7 @@ export default function RootLayout({
               <MainContainer>{children}</MainContainer>
               <Footer />
             </AuthProvider>
+            <Toaster />
           </TRPCReactProvider>
         </body>
       </html>
