@@ -1,14 +1,10 @@
-import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+// tailwind config is required for editor support
 
-export default {
-  content: ["./src/**/*.tsx"],
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-      },
-    },
-  },
-  plugins: [],
-} satisfies Config;
+import type { Config } from "tailwindcss";
+import sharedConfig from "tailwind-config/tailwind.config";
+
+const config: Pick<Config, "presets"> = {
+  presets: [sharedConfig],
+};
+
+export default config;

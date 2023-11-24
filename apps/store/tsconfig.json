@@ -31,7 +31,9 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@packages/*": ["../../packages/*"],
+      "@shared/*": ["../../packages/shared/*"]
     }
   },
   "include": [

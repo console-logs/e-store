@@ -1,0 +1,13 @@
+{
+	"name": "shared",
+	"version": "0.0.0",
+	"license": "MIT",
+	"scripts": {},
+	"dependencies": {},
+	"devDependencies": {
+		"postcss": "^8.4.31",
+		"tailwindcss": "^3.3.5",
+		"autoprefixer": "^10.4.14",
+		"tailwind-config": "workspace:*"
+	}
+}

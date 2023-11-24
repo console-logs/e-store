@@ -1,0 +1,10 @@
+{
+	"name": "tailwind-config",
+	"version": "0.0.0",
+	"license": "MIT",
+	"scripts": {},
+	"devDependencies": {
+		"tailwindcss": "^3.3.0",
+		"tailwindcss-animate": "^1.0.7"
+	}
+}
