@@ -7,7 +7,7 @@ export default function Brand() {
   return (
     <Link href={HOME_PAGE}>
       <div className="flex h-16 shrink-0 items-center space-x-2 border-b border-gray-300">
-        <Icons.vercel className="h-8 w-auto" />
+        <Icons.triangle className="h-8 w-auto" />
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           {WEBSITE_NAME}
         </h4>

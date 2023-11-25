@@ -10,7 +10,7 @@ export default function Brand() {
       href={HOME_PAGE}
       className="hidden items-center space-x-2 lg:flex"
     >
-      <Icons.vercel className="h-6 w-auto" />
+      <Icons.triangle className="h-6 w-auto" />
       <span className="hidden text-xl font-bold lg:inline-block">{WEBSITE_NAME}</span>
     </Link>
   );

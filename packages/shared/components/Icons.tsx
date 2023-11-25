@@ -179,7 +179,7 @@ export const Icons = {
 			/>
 		</svg>
 	),
-	vercel: (props: IconPropsType) => (
+	triangle: (props: IconPropsType) => (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="100"
