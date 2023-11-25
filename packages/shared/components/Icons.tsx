@@ -2,7 +2,7 @@ import { Bars3Icon, CloudArrowUpIcon, LockClosedIcon, ServerIcon } from "@heroic
 import { HeartFilledIcon } from "@radix-ui/react-icons";
 import { BsCpu, BsRocket } from "react-icons/bs";
 import { CgDisplayFlex } from "react-icons/cg";
-import { GiFlexibleLamp } from "react-icons/gi";
+import { GiFlexibleLamp, GiHelp } from "react-icons/gi";
 import { MdInventory } from "react-icons/md";
 import { RiRoadMapLine } from "react-icons/ri";
 import { TfiLayers } from "react-icons/tfi";
@@ -207,6 +207,7 @@ export const Icons = {
 	BsRocket: BsRocket as JSX.ElementType,
 	CgDisplayFlex: CgDisplayFlex as JSX.ElementType,
 	GiFlexibleLamp: GiFlexibleLamp as JSX.ElementType,
+	GiHelp: GiHelp as JSX.ElementType,
 	MdInventory: MdInventory as JSX.ElementType,
 	RiRoadMapLine: RiRoadMapLine as JSX.ElementType,
 	TfiLayers: TfiLayers as JSX.ElementType,

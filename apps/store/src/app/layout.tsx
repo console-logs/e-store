@@ -1,6 +1,7 @@
 import Footer from "@/app/_components/footer";
 import Header from "@/app/_components/header";
 import { AuthProvider } from "@/context/authContext";
+import { ReduxProvider } from "@/context/reduxContext";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { MainContainer } from "@shared/components/containers/mainContainer";
@@ -29,7 +30,9 @@ export default function RootLayout({
           <TRPCReactProvider cookies={cookies().toString()}>
             <AuthProvider>
               <Header />
-              <MainContainer>{children}</MainContainer>
+              <ReduxProvider>
+                <MainContainer>{children}</MainContainer>
+              </ReduxProvider>
               <Footer />
             </AuthProvider>
             <Toaster />

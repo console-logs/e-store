@@ -1,10 +1,12 @@
 "use client";
+import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addToCart";
+import PcbName from "@/app/products/pcb/_components/rigid/pcbName";
 import { useToast } from "@shared/components/ui/use-toast";
-import { FormEvent, useTransition } from "react";
+import { useTransition, type FormEvent } from "react";
 
 export default function RigidPcbFabrication() {
   const { toast } = useToast();
-  const [_isLoading, startTransition] = useTransition();
+  const [isLoading, startTransition] = useTransition();
 
   function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
     startTransition(async () => {
@@ -26,7 +28,10 @@ export default function RigidPcbFabrication() {
         </h1>
         <div className="grid grid-cols-1 gap-y-3 lg:grid-cols-3 lg:gap-x-4">
           <div className="mt-8 grid grid-cols-1 gap-y-6 sm:col-span-2 sm:grid-cols-2 sm:gap-x-4">
-            {/* TODO:Form Fields here */}
+            <PcbName />
+          </div>
+          <div className="mt-8 space-y-4">
+            <AddPcbToCartBtn isLoading={isLoading} />
           </div>
         </div>
       </div>
