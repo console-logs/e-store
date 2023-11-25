@@ -1,4 +1,5 @@
 import Feature from "@/app/_components/home/feature";
+import PcbInstantQuote from "@/app/_components/home/instantQuotes";
 import SearchComponentInput from "@/app/_components/home/search";
 import SubTitle from "@/app/_components/home/subtitle";
 import Title from "@/app/_components/home/title";
@@ -11,6 +12,7 @@ export default async function Home() {
       <SubTitle />
       <SearchComponentInput />
       <UploadBom />
+      <PcbInstantQuote />
       <Feature />
     </>
   );
