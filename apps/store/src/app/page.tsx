@@ -1,10 +1,11 @@
-import { Button } from "@shared/components/ui/button";
+import SubTitle from "@/app/_components/home/subtitle";
+import Title from "@/app/_components/home/title";
 
 export default async function Home() {
   return (
-    <div>
-      <h1>Hello Store</h1>
-      <Button>Click me</Button>
-    </div>
+    <>
+      <Title />
+      <SubTitle />
+    </>
   );
 }
