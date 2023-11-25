@@ -422,7 +422,7 @@ type FlexPcbStoreStateType = {
   cuttingMethodOptions: Array<"Laser Cutting">;
 };
 
-type AssemblyPcbStoreStateType = {
+type PcbAssemblyStoreStateType = {
   projectName: string;
   boardType: "Single PCB" | "Panel";
   boardTypeOptions: Array<"Single PCB" | "Panel">;

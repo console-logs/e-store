@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getFutureDate } from "@shared/lib/utils";
 
-const initialState: AssemblyPcbStoreStateType = {
+const initialState: PcbAssemblyStoreStateType = {
   projectName: "",
   boardType: "Single PCB",
   pcbsPerPanel: 1,
@@ -35,8 +35,8 @@ const initialState: AssemblyPcbStoreStateType = {
   turnaroundTimeOptions: ["Standard 5-7 days", "Expedited 3-4 days"],
 };
 
-const assemblyPcbSlice = createSlice({
-  name: "assemblyPcb",
+const pcbAssemblySlice = createSlice({
+  name: "pcbAssembly",
   initialState,
   reducers: {
     setProjectName: (state, action: PayloadAction<string>) => {
@@ -146,6 +146,6 @@ export const {
   setPickAndPlaceFile,
   setOneTimeSetupCost,
   setPcbPrice,
-} = assemblyPcbSlice.actions;
+} = pcbAssemblySlice.actions;
 
-export default assemblyPcbSlice.reducer;
+export default pcbAssemblySlice.reducer;

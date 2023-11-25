@@ -19,7 +19,7 @@ export const apiSlice = createApi({
       }),
     }),
     calculateAssemblyPcbPrice: builder.mutation({
-      query: (assemblySpecs: AssemblyPcbStoreStateType) => ({
+      query: (assemblySpecs: PcbAssemblyStoreStateType) => ({
         url: "/pcb-assembly",
         method: "POST",
         body: assemblySpecs,

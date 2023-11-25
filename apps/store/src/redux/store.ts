@@ -1,6 +1,6 @@
 import { apiSlice } from "@/redux/api/apiSlice";
-import assemblyPcbReducer from "@/redux/reducers/assemblyPcbSlice";
 import flexPcbReducer from "@/redux/reducers/flexPcbSlice";
+import pcbAssemblyReducer from "@/redux/reducers/pcbAssemblySlice";
 import rigidPcbReducer from "@/redux/reducers/rigidPcbSlice";
 import {
   configureStore,
@@ -17,7 +17,7 @@ export const reduxStore = configureStore({
   reducer: {
     rigidPcb: rigidPcbReducer,
     flexPcb: flexPcbReducer,
-    assemblyPcb: assemblyPcbReducer,
+    pcbAssembly: pcbAssemblyReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
