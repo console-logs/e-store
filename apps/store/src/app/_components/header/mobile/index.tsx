@@ -1,6 +1,6 @@
-import Brand from "@/components/header/mobile/brand";
-import Navigation from "@/components/header/mobile/navigation";
-import SidebarTrigger from "@/components/header/mobile/trigger";
+import Brand from "@/app/_components/header/mobile/brand";
+import Navigation from "@/app/_components/header/mobile/navigation";
+import SidebarTrigger from "@/app/_components/header/mobile/trigger";
 import {
   Sheet,
   SheetContent,

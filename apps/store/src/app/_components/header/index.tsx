@@ -1,9 +1,9 @@
-import Cart from "@/components/header/cart";
-import Login from "@/components/header/login";
-import Main from "@/components/header/main";
-import GuestMenu from "@/components/header/menu/guest";
-import UserMenu from "@/components/header/menu/user";
-import Mobile from "@/components/header/mobile";
+import Cart from "@/app/_components/header/cart";
+import Login from "@/app/_components/header/login";
+import Main from "@/app/_components/header/main";
+import GuestMenu from "@/app/_components/header/menu/guest";
+import UserMenu from "@/app/_components/header/menu/user";
+import Mobile from "@/app/_components/header/mobile";
 
 export default function Header() {
   return (

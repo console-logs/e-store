@@ -1,9 +1,9 @@
 "use client";
-import Brand from "@/components/header/main/brand";
-import Components from "@/components/header/main/components";
-import Inventory from "@/components/header/main/inventory";
-import Pcb from "@/components/header/main/pcb";
-import RoadMap from "@/components/header/main/roadmap";
+import Brand from "@/app/_components/header/main/brand";
+import Components from "@/app/_components/header/main/components";
+import Inventory from "@/app/_components/header/main/inventory";
+import Pcb from "@/app/_components/header/main/pcb";
+import RoadMap from "@/app/_components/header/main/roadmap";
 import {
   NavigationMenu,
   NavigationMenuList,

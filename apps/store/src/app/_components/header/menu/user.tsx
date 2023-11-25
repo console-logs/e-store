@@ -1,5 +1,5 @@
 "use client";
-import UserAvatar from "@/components/header/avatar/user";
+import UserAvatar from "@/app/_components/header/avatar/user";
 import { AuthContext } from "@/context/authContext";
 import { ACCOUNT_PAGE, ORDER_HISTORY_PAGE } from "@/lib/routes";
 import { useAuth } from "@clerk/nextjs";
