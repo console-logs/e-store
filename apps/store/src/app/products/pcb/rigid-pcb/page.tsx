@@ -25,7 +25,9 @@ export default function RigidPcbFabrication() {
           Rigid Pcb Fabrication
         </h1>
         <div className="grid grid-cols-1 gap-y-3 lg:grid-cols-3 lg:gap-x-4">
-          {/* TODO:Form Fields here */}
+          <div className="mt-8 grid grid-cols-1 gap-y-6 sm:col-span-2 sm:grid-cols-2 sm:gap-x-4">
+            {/* TODO:Form Fields here */}
+          </div>
         </div>
       </div>
     </form>
