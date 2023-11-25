@@ -1,8 +1,9 @@
-import { Bars3Icon, CloudArrowUpIcon, LockClosedIcon, ServerIcon } from "@heroicons/react/20/solid";
-import { HeartFilledIcon } from "@radix-ui/react-icons";
+import { Bars3Icon, CheckIcon, CloudArrowUpIcon, LockClosedIcon, ServerIcon } from "@heroicons/react/20/solid";
+import { CaretSortIcon, HeartFilledIcon } from "@radix-ui/react-icons";
 import { BsCpu, BsRocket } from "react-icons/bs";
 import { CgDisplayFlex } from "react-icons/cg";
 import { GiFlexibleLamp, GiHelp } from "react-icons/gi";
+import { ImWarning } from "react-icons/im";
 import { MdInventory } from "react-icons/md";
 import { RiRoadMapLine } from "react-icons/ri";
 import { TfiLayers } from "react-icons/tfi";
@@ -211,11 +212,14 @@ export const Icons = {
 	MdInventory: MdInventory as JSX.ElementType,
 	RiRoadMapLine: RiRoadMapLine as JSX.ElementType,
 	TfiLayers: TfiLayers as JSX.ElementType,
+	ImWarning: ImWarning as JSX.ElementType,
 
-	// radix-ui/react-icons
+	// radix-ui/react-icons | hero icons
 	HeartFilledIcon,
 	Bars3Icon,
 	CloudArrowUpIcon,
 	LockClosedIcon,
 	ServerIcon,
+	CaretSortIcon,
+	CheckIcon,
 };
