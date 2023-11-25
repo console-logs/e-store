@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import ImpedenceControlTip from "@/app/products/pcb/_components/rigid/tips/impedenceControlTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setImpedenceControl,
   setPcbPrice,
@@ -21,7 +21,7 @@ export default function ImpedenceControl() {
     (state: ReduxState) => state.rigidPcb.impedenceControl,
   );
   const layer = useSelector((state: ReduxState) => state.rigidPcb.layer);
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div hidden={layer < 4}>

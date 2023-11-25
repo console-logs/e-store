@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import SoldermaskTip from "@/app/products/pcb/_components/rigid/tips/soldermaskTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setPcbPrice,
   setSoldermask,
@@ -21,7 +21,7 @@ export default function Soldermask() {
   const soldermask = useSelector(
     (state: ReduxState) => state.rigidPcb.soldermask,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

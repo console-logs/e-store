@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import BoardoutlineToleranceTip from "@/app/products/pcb/_components/rigid/tips/boardOutlineToleranceTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setBoardOutlineTolerance,
   setPcbPrice,
@@ -24,7 +24,7 @@ export default function BoardOutlineTolerance() {
   const baseMaterial = useSelector(
     (state: ReduxState) => state.rigidPcb.baseMaterial,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   const hiddenStatus =
     (baseMaterial === "FR4" && layer < 2) || baseMaterial === "Rogers";

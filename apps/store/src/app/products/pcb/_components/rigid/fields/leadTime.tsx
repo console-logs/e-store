@@ -3,7 +3,7 @@ import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import { getFutureDate } from "@shared/lib/utils";
 import LeadTimeTip from "@/app/products/pcb/_components/rigid/tips/leadTimeTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setLeadTime,
   setPcbPrice,
@@ -20,7 +20,7 @@ export default function LeadTime() {
     (state: ReduxState) => state.rigidPcb.leadTimeOptions,
   );
   const leadTime = useSelector((state: ReduxState) => state.rigidPcb.leadTime);
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

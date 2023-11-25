@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import DifferentDesignsTip from "@/app/products/pcb/_components/rigid/tips/differentDesignsTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setDifferentDesignsInPanel,
   setPcbPrice,
@@ -21,7 +21,7 @@ export default function DifferentDesignsInPanel() {
   const differentDesignsInPanel = useSelector(
     (state: ReduxState) => state.rigidPcb.differentDesignsInPanel,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

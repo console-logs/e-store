@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import GoldfingerTip from "@/app/products/pcb/_components/rigid/tips/goldFingersTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setGoldFingers,
   setPcbPrice,
@@ -22,7 +22,7 @@ export default function GoldFingers() {
   const goldFingers = useSelector(
     (state: ReduxState) => state.rigidPcb.goldFingers,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import MinHoleSizeTip from "@/app/products/pcb/_components/rigid/tips/minHoleSizeTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setMinViaHoleSizeAndDiameter,
   setPcbPrice,
@@ -21,7 +21,7 @@ export default function MinimumHoleSizeAndDiameter() {
     (state: ReduxState) => state.rigidPcb.minViaHoleSizeAndDiameter,
   );
   const layer = useSelector((state: ReduxState) => state.rigidPcb.layer);
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div hidden={layer < 4}>

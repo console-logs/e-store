@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import ThermalConductivityTip from "@/app/products/pcb/_components/rigid/tips/thermalConductivityTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setPcbPrice,
   setThermalConductivity,
@@ -23,7 +23,7 @@ export default function ThermalConductivity() {
   const thermalConductivityOptions = useSelector(
     (state: ReduxState) => state.rigidPcb.thermalConductivityOptions,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   const hiddenOptions = ["Aluminum", "CopperCore"];
 

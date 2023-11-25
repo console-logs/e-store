@@ -1,4 +1,4 @@
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setCopperStructure,
   setPcbPrice,
@@ -22,7 +22,7 @@ export default function CopperStructure() {
   const baseMaterial = useSelector(
     (state: ReduxState) => state.rigidPcb.baseMaterial,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div hidden={baseMaterial === "CopperCore" ? false : true}>

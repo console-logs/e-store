@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import DispatchUnitTip from "@/app/products/pcb/_components/rigid/tips/dispatchUnitTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setDispatchUnit, setPcbPrice } from "@/redux/reducers/rigidPcbSlice";
 import { type ReduxState, reduxStore } from "@/redux/store";
 import clsx from "clsx";
@@ -17,7 +17,7 @@ export default function DispatchUnit() {
   const dispatchUnit = useSelector(
     (state: ReduxState) => state.rigidPcb.dispatchUnit,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

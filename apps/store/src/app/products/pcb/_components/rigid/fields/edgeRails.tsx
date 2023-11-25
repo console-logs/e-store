@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import EdgeRailsTip from "@/app/products/pcb/_components/rigid/tips/edgeRailsTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setEdgeRails,
   setPcbPrice,
@@ -24,7 +24,7 @@ export default function EdgeRails() {
   const designFormat = useSelector(
     (state: ReduxState) => state.rigidPcb.designFormat,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div

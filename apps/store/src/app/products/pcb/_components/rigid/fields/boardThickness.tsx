@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import BoardThicknessTip from "@/app/products/pcb/_components/rigid/tips/boardThicknessTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setBoardThickness, setPcbPrice } from "@/redux/reducers/rigidPcbSlice";
 import { type ReduxState, reduxStore } from "@/redux/store";
 import clsx from "clsx";
@@ -20,7 +20,7 @@ export default function BoardThickness() {
   const baseMaterial = useSelector(
     (state: ReduxState) => state.rigidPcb.baseMaterial,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

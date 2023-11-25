@@ -2,7 +2,7 @@
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import BoardSizeTip from "@/app/products/pcb/_components/rigid/tips/boardSizeTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setBoardSizeX,
   setBoardSizeY,
@@ -20,7 +20,7 @@ export default function BoardSize() {
   const boardSizeY = useSelector(
     (state: ReduxState) => state.rigidPcb.boardSizeY,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div className="w-full">

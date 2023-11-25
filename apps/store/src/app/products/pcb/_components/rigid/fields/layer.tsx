@@ -3,7 +3,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import LayerTip from "@/app/products/pcb/_components/rigid/tips/layerTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setLayer,
   setPcbPrice,
@@ -26,7 +26,7 @@ export default function Layer() {
     (state: ReduxState) => state.rigidPcb.layerOptions,
   );
   const layer = useSelector((state: ReduxState) => state.rigidPcb.layer);
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div className="w-full">

@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import PanelQtyTip from "@/app/products/pcb/_components/rigid/tips/panelQtyTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setPanelQty,
   setPcbPrice,
@@ -21,7 +21,7 @@ export default function PanelQuantity() {
   const designFormat = useSelector(
     (state: ReduxState) => state.rigidPcb.designFormat,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div hidden={designFormat === "Single PCB" ? true : false}>

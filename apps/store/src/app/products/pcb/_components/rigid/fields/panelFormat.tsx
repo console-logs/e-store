@@ -1,7 +1,7 @@
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import PanelFormatTip from "@/app/products/pcb/_components/rigid/tips/panelFormatTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setColumns,
   setPcbPrice,
@@ -19,7 +19,7 @@ export default function PanelFormat() {
   const designFormat = useSelector(
     (state: ReduxState) => state.rigidPcb.designFormat,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div hidden={designFormat === "Single PCB" ? true : false}>

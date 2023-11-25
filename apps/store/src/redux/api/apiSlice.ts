@@ -4,7 +4,7 @@ export const apiSlice = createApi({
   reducerPath: "pcbApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
   endpoints: (builder) => ({
-    calculatePcbPrice: builder.mutation<number, RigidPcbStoreStateType>({
+    calculateRigidPcbPrice: builder.mutation<number, RigidPcbStoreStateType>({
       query: (fabSpecs: RigidPcbStoreStateType) => ({
         url: "/rigid-pcb",
         method: "POST",
@@ -18,7 +18,10 @@ export const apiSlice = createApi({
         body: fabSpecs,
       }),
     }),
-    calculateAssemblyPcbPrice: builder.mutation<number, PcbAssemblyStoreStateType>({
+    calculatePcbAssemblyPrice: builder.mutation<
+      number,
+      PcbAssemblyStoreStateType
+    >({
       query: (assemblySpecs: PcbAssemblyStoreStateType) => ({
         url: "/pcb-assembly",
         method: "POST",
@@ -29,7 +32,7 @@ export const apiSlice = createApi({
 });
 
 export const {
-  useCalculatePcbPriceMutation,
+  useCalculateRigidPcbPriceMutation,
   useCalculateFlexPcbPriceMutation,
-  useCalculateAssemblyPcbPriceMutation,
+  useCalculatePcbAssemblyPriceMutation,
 } = apiSlice;

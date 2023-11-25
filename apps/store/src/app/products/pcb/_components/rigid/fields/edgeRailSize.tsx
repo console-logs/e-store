@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import EdgeRailSizeTip from "@/app/products/pcb/_components/rigid/tips/edgeRailsSizeTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setEdgeRailSize,
   setPcbPrice,
@@ -27,7 +27,7 @@ export default function EdgeRailsSize() {
   const edgeRailSizeOptions = useSelector(
     (state: ReduxState) => state.rigidPcb.edgeRailSizeOptions,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   const hiddenStatus =
     designFormat === "Single PCB" ||

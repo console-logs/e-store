@@ -1,5 +1,5 @@
 import BaseMaterialTip from "@/app/products/pcb/_components/rigid/tips/baseMaterialTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setBaseMaterial,
   setPcbPrice,
@@ -31,7 +31,7 @@ export default function BaseMaterial() {
   const baseMaterial = useSelector(
     (state: ReduxState) => state.rigidPcb.baseMaterial,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   async function handleChange(
     value: "FR4" | "Aluminum" | "CopperCore" | "Rogers",

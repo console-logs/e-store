@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import SilkscreenTip from "@/app/products/pcb/_components/rigid/tips/silkscreenTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setPcbPrice, setSilkscreen } from "@/redux/reducers/rigidPcbSlice";
 import { type ReduxState, reduxStore } from "@/redux/store";
 import clsx from "clsx";
@@ -17,7 +17,7 @@ export default function Silkscreen() {
   const silkscreen = useSelector(
     (state: ReduxState) => state.rigidPcb.silkscreen,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

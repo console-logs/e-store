@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import CastellatedHolesTip from "@/app/products/pcb/_components/rigid/tips/castellatedHolesTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
   setCastellatedHoles,
   setPcbPrice,
@@ -20,7 +20,7 @@ export default function CastellatedHoles() {
   const castellatedHoles = useSelector(
     (state: ReduxState) => state.rigidPcb.castellatedHoles,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

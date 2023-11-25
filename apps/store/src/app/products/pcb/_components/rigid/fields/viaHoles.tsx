@@ -1,7 +1,7 @@
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import ViaHolesTip from "@/app/products/pcb/_components/rigid/tips/viaHolesTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setPcbPrice, setViaHoles } from "@/redux/reducers/rigidPcbSlice";
 import { type ReduxState, reduxStore } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ export default function ViaHoles() {
   const baseMaterial = useSelector(
     (state: ReduxState) => state.rigidPcb.baseMaterial,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div hidden={baseMaterial === "Aluminum" || baseMaterial === "CopperCore"}>

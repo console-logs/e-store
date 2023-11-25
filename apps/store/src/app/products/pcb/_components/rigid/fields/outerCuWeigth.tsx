@@ -2,7 +2,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import OuterCuWeightTip from "@/app/products/pcb/_components/rigid/tips/outerCuWeightTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setOuterCuWeight, setPcbPrice } from "@/redux/reducers/rigidPcbSlice";
 import { type ReduxState, reduxStore } from "@/redux/store";
 import clsx from "clsx";
@@ -17,7 +17,7 @@ export default function OuterCuWeight() {
   const outerCuWeight = useSelector(
     (state: ReduxState) => state.rigidPcb.outerCuWeight,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div>

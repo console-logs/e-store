@@ -3,7 +3,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
 import PcbQtyTip from "@/app/products/pcb/_components/rigid/tips/pcbQtyTip";
-import { useCalculatePcbPriceMutation } from "@/redux/api/apiSlice";
+import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setPcbPrice, setPcbQty } from "@/redux/reducers/rigidPcbSlice";
 import { type ReduxState, reduxStore } from "@/redux/store";
 import clsx from "clsx";
@@ -19,7 +19,7 @@ export default function PcbQuantity() {
   const designFormat = useSelector(
     (state: ReduxState) => state.rigidPcb.designFormat,
   );
-  const [calculatePcbPrice] = useCalculatePcbPriceMutation();
+  const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
   return (
     <div
