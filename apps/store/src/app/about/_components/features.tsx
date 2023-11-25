@@ -8,7 +8,7 @@ export default function Features() {
           <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Everything you need at one place
           </p>
-          <p className="mt-6 text-lg leading-8">
+          <p className="mt-6 text-lg leading-8 text-gray-600">
             Quis tellus eget adipiscing convallis sit sit eget aliquet quis.
             Suspendisse eget egestas a elementum pulvinar et feugiat blandit at.
             In mi viverra elit nunc.
@@ -27,7 +27,7 @@ export default function Features() {
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-2 text-base leading-7">
+                <dd className="mt-2 text-base leading-7 text-gray-600">
                   {feature.description}
                 </dd>
               </div>

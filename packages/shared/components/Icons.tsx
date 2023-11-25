@@ -1,4 +1,4 @@
-import { Bars3Icon } from "@heroicons/react/20/solid";
+import { Bars3Icon, CloudArrowUpIcon, LockClosedIcon, ServerIcon } from "@heroicons/react/20/solid";
 import { HeartFilledIcon } from "@radix-ui/react-icons";
 import { BsCpu, BsRocket } from "react-icons/bs";
 import { CgDisplayFlex } from "react-icons/cg";
@@ -214,4 +214,7 @@ export const Icons = {
 	// radix-ui/react-icons
 	HeartFilledIcon,
 	Bars3Icon,
+	CloudArrowUpIcon,
+	LockClosedIcon,
+	ServerIcon,
 };

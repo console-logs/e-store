@@ -16,6 +16,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </h1>
     ),
+    p: ({ children }) => <p className="text-gray-800">{children}</p>,
     ...components,
   };
 }
