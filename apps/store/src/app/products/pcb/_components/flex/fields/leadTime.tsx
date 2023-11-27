@@ -1,11 +1,12 @@
 "use client";
+import LeadTimeTip from "@/app/products/pcb/_components/flex/tips/leadTimeTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setLeadTime, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setLeadTime, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,13 +19,7 @@ export default function LeadTime() {
 	return (
 		<div>
 			<Label>
-				Lead Time{" "}
-				<HelpPopover>
-					<p>
-						The tentative time from start of physical production to production finished (ready for
-						delivery), provided there are no errors in your design files.
-					</p>
-				</HelpPopover>
+				Lead Time <LeadTimeTip />
 			</Label>
 			<Listbox
 				value={leadTime}
@@ -48,9 +43,10 @@ export default function LeadTime() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (

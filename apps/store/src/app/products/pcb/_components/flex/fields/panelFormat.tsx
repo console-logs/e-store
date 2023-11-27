@@ -1,7 +1,5 @@
 "use client";
-import { Input } from "@shared/components/ui/input";
-import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
+import PanelFormatTip from "@/app/products/pcb/_components/flex/tips/panelFormatTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	setColumns,
@@ -10,7 +8,9 @@ import {
 	updatePanelSize,
 	updateSinglePiecesQty,
 } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import { reduxStore, type ReduxState } from "@/redux/store";
+import { Input } from "@shared/components/ui/input";
+import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function PanelFormat() {
@@ -23,15 +23,8 @@ export default function PanelFormat() {
 	return (
 		<div hidden={designFormat === "Single PCB" ? true : false}>
 			<Label>
-				Panel Format (Rows x Columns){" "}
-				<HelpPopover>
-					<p>
-						The number of columns/rows in the board array(PCB panel). For example: 2 Columns, 3 Rows.
-						Maximum 10 columns and 10 Rows.
-					</p>
-				</HelpPopover>
+				Panel Format (Rows x Columns) <PanelFormatTip />
 			</Label>
-			̦
 			<div className="grid grid-cols-11">
 				<Input
 					required
