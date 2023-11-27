@@ -1,11 +1,12 @@
 "use client";
-import BoardOutlineTip from "@/app/products/pcb/_components/flex/tips/tips/boardOutlineTip";
+import BoardOutlineTip from "@/app/products/pcb/_components/flex/tips/boardOutlineTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setBoardOutlineTolerance, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
 import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -43,9 +44,10 @@ export default function BoardOutlineTolerance() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (
