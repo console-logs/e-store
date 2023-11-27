@@ -5,3 +5,9 @@ export async function addRigidPcbToCartAction(
 ): Promise<void> {
   throw new Error("Action not implemented");
 }
+
+export async function addFlexPcbToCartAction(
+  _flexPcb: FlexPcbFabSpecsType,
+): Promise<void> {
+  throw new Error("Action not implemented");
+}
