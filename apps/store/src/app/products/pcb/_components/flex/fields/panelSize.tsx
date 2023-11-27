@@ -1,8 +1,8 @@
 "use client";
+import PanelSizeTip from "@/app/products/pcb/_components/flex/tips/panelSizeTip";
+import { type ReduxState } from "@/redux/store";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { ReduxState } from "@/redux/store";
 import { useSelector } from "react-redux";
 
 export default function PanelSize() {
@@ -15,10 +15,7 @@ export default function PanelSize() {
 			className="w-full"
 			hidden={designFormat === "Single PCB" ? true : designFormat === "Panel by Customer" ? true : false}>
 			<Label>
-				Panel Size (mm){" "}
-				<HelpPopover>
-					<p>The size of the panel after taking into consideration the edge rails and PCB size.</p>
-				</HelpPopover>
+				Panel Size (mm) <PanelSizeTip />
 			</Label>
 			<div className="grid grid-cols-11">
 				<Input

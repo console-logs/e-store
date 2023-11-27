@@ -1,9 +1,9 @@
 "use client";
+import UploadDesignTip from "@/app/products/pcb/_components/flex/tips/uploadDesignTip";
+import { setDesignFile } from "@/redux/reducers/flexPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { convertToBase64 } from "@shared/lib/utils";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { setDesignFile } from "@/redux/reducers/flexPcbSlice";
 import { useDispatch } from "react-redux";
 
 export default function UploadDesignFile() {
@@ -12,10 +12,7 @@ export default function UploadDesignFile() {
 	return (
 		<div>
 			<Label>
-				Upload Design Files(.zip){" "}
-				<HelpPopover>
-					<p>We only accept zip files and max size of the file should not be more than 16 MB</p>
-				</HelpPopover>
+				Upload Design Files(.zip) <UploadDesignTip />
 			</Label>
 			<Input
 				required

@@ -1,11 +1,12 @@
 "use client";
+import PolyimideThicknessTip from "@/app/products/pcb/_components/flex/tips/polyimideThicknessTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setPcbPrice, setPolyimideThickness } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setPolyimideThickness } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,13 +20,7 @@ export default function PolyimideThickness() {
 	return (
 		<div hidden={!stiffner.includes("Polyimide") ? true : false}>
 			<Label>
-				Polyimide Thickness (mm){" "}
-				<HelpPopover>
-					<p>
-						Commonly used on FPCs with gold finger connectors. A deep-brown polyimide layer is attached to
-						the back of the gold fingers.
-					</p>
-				</HelpPopover>
+				Polyimide Thickness (mm) <PolyimideThicknessTip />
 			</Label>
 			<Listbox
 				value={polyimideThickness}
@@ -49,9 +44,10 @@ export default function PolyimideThickness() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (

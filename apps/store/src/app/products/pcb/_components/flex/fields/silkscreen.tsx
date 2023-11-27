@@ -1,11 +1,12 @@
 "use client";
+import SilkscreenTip from "@/app/products/pcb/_components/flex/tips/silkscreenTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setPcbPrice, setSilkscreen } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setSilkscreen } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,13 +19,7 @@ export default function Silkscreen() {
 	return (
 		<div>
 			<Label>
-				Silkscreen{" "}
-				<HelpPopover>
-					<p>
-						The color of the silkscreen layer. This should be a different color from the cover layer to
-						ensure readability.
-					</p>
-				</HelpPopover>
+				Silkscreen <SilkscreenTip />
 			</Label>
 			<Listbox
 				value={silkscreen}
@@ -48,9 +43,10 @@ export default function Silkscreen() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (

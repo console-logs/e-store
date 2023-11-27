@@ -1,8 +1,8 @@
 "use client";
-import { ReduxState } from "@/redux/store";
+import { type ReduxState } from "@/redux/store";
 import { useSelector } from "react-redux";
 
-export default function PcbPriceSummary() {
+export default function FlexPcbPriceSummary() {
 	const pcbPrice = useSelector((state: ReduxState) => state.flexPcb.calculatedPrice);
 	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
 	const pcbQty = useSelector((state: ReduxState) => state.flexPcb.pcbQty);

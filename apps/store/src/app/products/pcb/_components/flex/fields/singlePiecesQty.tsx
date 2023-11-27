@@ -1,8 +1,8 @@
 "use client";
+import SinglePiecesQtyTip from "@/app/products/pcb/_components/flex/tips/singlePiecesQtyTip";
+import { type ReduxState } from "@/redux/store";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { ReduxState } from "@/redux/store";
 import { useSelector } from "react-redux";
 
 export default function SinglePiecesQuantity() {
@@ -10,12 +10,9 @@ export default function SinglePiecesQuantity() {
 	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
 
 	return (
-		<div hidden={designFormat === "Single PCB" ? true : false}>
+		<div hidden={designFormat === "Single PCB"}>
 			<Label>
-				Single Pieces Quantity{" "}
-				<HelpPopover>
-					<p>The total number of PCBs after de-panelization</p>
-				</HelpPopover>
+				Single Pieces Quantity <SinglePiecesQtyTip />
 			</Label>
 			<Input
 				placeholder="Single Pieces Quntity"

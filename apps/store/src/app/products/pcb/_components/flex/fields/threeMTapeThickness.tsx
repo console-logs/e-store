@@ -1,11 +1,12 @@
 "use client";
+import ThreeMTapeTip from "@/app/products/pcb/_components/flex/tips/threeMTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setPcbPrice, setThreeMTapeThickness } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setThreeMTapeThickness } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,15 +20,7 @@ export default function ThreeMTapeThickness() {
 	return (
 		<div hidden={!stiffner.includes("3M Tape") ? true : false}>
 			<Label>
-				3M Tape Thickness{" "}
-				<HelpPopover>
-					<p>
-						Flexible PCBs with 3M9077 adhesive tape can be used in the lead-free soldering process (peak
-						temperature 260°C, ≤ 20 sec.). The protective cover remains largely undamaged and can be easily
-						removed. The low outgassing of the adhesive reduces the contamination of electronic components.
-						Please note that 3M468 and 3M467 cannot be used in the lead-free soldering process.
-					</p>
-				</HelpPopover>
+				3M Tape Thickness <ThreeMTapeTip />
 			</Label>
 			<Listbox
 				value={threeMTapeThickness}
@@ -51,9 +44,10 @@ export default function ThreeMTapeThickness() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (
