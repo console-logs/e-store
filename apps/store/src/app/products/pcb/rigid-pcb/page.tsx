@@ -1,4 +1,5 @@
 "use client";
+import { addRigidPcbToCartAction } from "@/actions/pcb";
 import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addToCart";
 import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import CopperStructure from "@/app/products/pcb/_components/rigid/fields/CuStructure";
@@ -38,17 +39,20 @@ import UploadDesignFile from "@/app/products/pcb/_components/rigid/fields/upload
 import ViaCovering from "@/app/products/pcb/_components/rigid/fields/viaCovering";
 import ViaHoles from "@/app/products/pcb/_components/rigid/fields/viaHoles";
 import RigidPcbPriceSummary from "@/app/products/pcb/_components/rigid/priceSummary";
+import { selectRigidPcb } from "@/redux/reducers/rigidPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
+import { useSelector } from "react-redux";
 
 export default function RigidPcbFabrication() {
   const { toast } = useToast();
   const [isLoading, startTransition] = useTransition();
+  const rigidPcb: RigidPcbFabSpecsType = useSelector(selectRigidPcb);
 
   function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
     startTransition(async () => {
       e.preventDefault();
-      //TODO: add rigid pcb to cart func
+      await addRigidPcbToCartAction(rigidPcb);
       toast({
         variant: "default",
         title: "Rigid PCB added to cart",
