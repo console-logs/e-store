@@ -1,11 +1,12 @@
 "use client";
+import FR4ThicknessTip from "@/app/products/pcb/_components/flex/tips/fr4ThicknessTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setFr4Thickness, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setFr4Thickness, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,13 +20,7 @@ export default function FR4Thickness() {
 	return (
 		<div hidden={!stiffner.includes("FR4") ? true : false}>
 			<Label>
-				FR4 Thickness (mm){" "}
-				<HelpPopover>
-					<p>
-						FR4 is often used on low-cost products to support component placement. Some dust may remain from
-						cutting the FR4.
-					</p>
-				</HelpPopover>
+				FR4 Thickness (mm) <FR4ThicknessTip />
 			</Label>
 			<Listbox
 				value={fr4Thickness}
@@ -49,9 +44,10 @@ export default function FR4Thickness() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (

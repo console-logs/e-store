@@ -1,11 +1,12 @@
 "use client";
+import EdgeRailSizeTip from "@/app/products/pcb/_components/flex/tips/edgeRailSizeTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setEdgeRailSize, setPcbPrice, updatePanelSize } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setEdgeRailSize, setPcbPrice, updatePanelSize } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -25,13 +26,7 @@ export default function EdgeRailsSize() {
 					: false
 			}>
 			<Label>
-				Edge Rails Size (mm){" "}
-				<HelpPopover>
-					<p>
-						Edge rails that are added for increasing component-to-board-edge clearances are to be at least
-						5mm.
-					</p>
-				</HelpPopover>
+				Edge Rails Size (mm) <EdgeRailSizeTip />
 			</Label>
 			<Listbox
 				value={edgeRailSize}
@@ -56,9 +51,10 @@ export default function EdgeRailsSize() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (
