@@ -42,6 +42,12 @@ export default function Pcb() {
   );
 }
 
+type ListItemsProps = {
+  title: string;
+  href: string;
+  children: React.ReactNode;
+};
+
 function ListItem(props: ListItemsProps) {
   return (
     <li>

@@ -1,18 +1,16 @@
-type AuthContextType = {
-  isSignedIn: boolean | undefined;
-  isLoaded: boolean;
-  user: UserResource | null | undefined;
-};
-
-type AuthContextProviderType = {
-  children: React.ReactNode;
-};
-
-type ListItemsProps = {
-  title: string;
-  href: string;
-  children: React.ReactNode;
-};
+/**
+ * Declare global types that are accessible through out the app here!
+ * 
+ * Note: When you import a type into this file, TypeScript will start treating types.d.ts file as a module, 
+ * which changes the scope from global to module-level. 
+ * This means that the types declared in this file are no longer globally available.
+ * 
+ * Tip 1: If you need to use a type from an external package,
+ * consider importing it directly in the files where it's needed.
+ * 
+ * Tip 2: If you need to use a type in just one place, 
+ * consider creating it in the files where it's needed.
+ */
 
 /*  Rigid Pcb Types */
 type BaseRigidPcbFabSpecsType = {
