@@ -1,8 +1,5 @@
 "use client";
-import { Listbox, Transition } from "@headlessui/react";
-import { Icons } from "@packages/shared/components/Icons";
-import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
+import BoardThicknessTip from "@/app/products/pcb/_components/flex/tips/boardThicknessTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	setBoardThickness,
@@ -10,7 +7,11 @@ import {
 	updateCoverlayThickness,
 	updateOuterCuWeight,
 } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import { reduxStore, type ReduxState } from "@/redux/store";
+import { Listbox, Transition } from "@headlessui/react";
+import { Icons } from "@packages/shared/components/Icons";
+import { Label } from "@shared/components/ui/label";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,10 +24,7 @@ export default function BoardThickness() {
 	return (
 		<div>
 			<Label>
-				Flex PCB Thickness (mm){" "}
-				<HelpPopover>
-					<p>The thickness of finished flex PCB. Board thickness tolerance is ±10%.</p>
-				</HelpPopover>
+				Flex PCB Thickness (mm) <BoardThicknessTip />
 			</Label>
 			<Listbox
 				value={boardThickness}
@@ -52,9 +50,10 @@ export default function BoardThickness() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (

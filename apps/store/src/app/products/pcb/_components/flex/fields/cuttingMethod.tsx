@@ -1,11 +1,12 @@
 "use client";
+import CuttingMethodTip from "@/app/products/pcb/_components/flex/tips/cuttingMethodTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setCuttingMethod, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setCuttingMethod, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,14 +19,7 @@ export default function CuttingMethod() {
 	return (
 		<div>
 			<Label>
-				Cutting Method{" "}
-				<HelpPopover>
-					<p>
-						Laser cutting is the default method. Carbonization at the cut edges can cause a slight shrink in
-						the board&apos;s outline. To prevent this from removing support underneath gold fingers, all
-						gold fingers are shortened by 0.2 mm in our DFM process..
-					</p>
-				</HelpPopover>
+				Cutting Method <CuttingMethodTip />
 			</Label>
 			<Listbox
 				value={cuttingMethod}
@@ -49,9 +43,10 @@ export default function CuttingMethod() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (

@@ -1,11 +1,12 @@
 "use client";
+import CoverlayThicknessTip from "@/app/products/pcb/_components/flex/tips/coverlayThicknessTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setCoverlayThickness, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setCoverlayThickness, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,13 +19,7 @@ export default function CoverlayThickness() {
 	return (
 		<div>
 			<Label>
-				Coverlay Thickness{" "}
-				<HelpPopover>
-					<p>
-						For 1/3 oz and 0.5 oz copper, the cover layer is 12.5 μm and glue is 15 μm. For 1 oz copper, the
-						cover layer is 25 μm and glue is 25 μm.
-					</p>
-				</HelpPopover>
+				Coverlay Thickness <CoverlayThicknessTip />
 			</Label>
 			<Listbox
 				value={coverlayThickness}
@@ -48,9 +43,10 @@ export default function CoverlayThickness() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (

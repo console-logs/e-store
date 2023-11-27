@@ -1,10 +1,10 @@
 "use client";
-import { Input } from "@shared/components/ui/input";
-import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
+import BoardSizeTip from "@/app/products/pcb/_components/flex/tips/boardSizeTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setBoardSizeX, setBoardSizeY, setPcbPrice, updatePanelSize } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import { reduxStore, type ReduxState } from "@/redux/store";
+import { Input } from "@shared/components/ui/input";
+import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardSize() {
@@ -16,10 +16,7 @@ export default function BoardSize() {
 	return (
 		<div className="w-full">
 			<Label>
-				PCB / Panel Dimensions (mm){" "}
-				<HelpPopover>
-					<p>The dimension of single PCB or PCB panel you upload.</p>
-				</HelpPopover>
+				PCB / Panel Dimensions (mm) <BoardSizeTip />
 			</Label>
 			<div className="grid grid-cols-11">
 				<Input

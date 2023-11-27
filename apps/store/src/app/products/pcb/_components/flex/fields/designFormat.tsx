@@ -1,11 +1,12 @@
 "use client";
+import DesignFormatTip from "@/app/products/pcb/_components/flex/tips/designFormatTip";
+import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
+import { setDesignFormat, setPcbPrice, updateDifferentDesignsInPanel } from "@/redux/reducers/flexPcbSlice";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setDesignFormat, setPcbPrice, updateDifferentDesignsInPanel } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,33 +19,7 @@ export default function DesignFormat() {
 	return (
 		<div>
 			<Label>
-				Design Format{" "}
-				<HelpPopover>
-					This is the format of the design file supplied by you.
-					<ul className="list-disc px-3 space-y-2 my-1">
-						<li>
-							<span className="font-semibold">Single PCB - </span> The design file is a single PCB.
-						</li>
-						<li>
-							<span className="font-semibold">Panel by Customer -</span>
-							You construct the PCB panel yourself and provide us the panelized data for PCB production.
-						</li>
-						<li>
-							<span className="font-semibold">Panel by Manufacturer -</span>
-							We construct your panel with v-cut according to your need.
-						</li>
-					</ul>
-					<p className="my-2">
-						<span className="font-semibold">Note - </span>We only provide panelizing service:
-						<ul className="list-disc px-3 space-y-2 my-1">
-							<li>If PCBs are Regular shapes like rectangle and circle</li>
-							<li>
-								If number of different designs in a panel is more than one, then you need to panalize it
-								yourself.
-							</li>
-						</ul>
-					</p>
-				</HelpPopover>
+				Design Format <DesignFormatTip />
 			</Label>
 			<Listbox
 				value={designFormat}
@@ -69,9 +44,10 @@ export default function DesignFormat() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (

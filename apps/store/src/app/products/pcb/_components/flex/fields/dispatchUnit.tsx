@@ -1,11 +1,12 @@
 "use client";
-import HelpPopover from "@store/src/components/pcb/shared/helpPopover";
-import { Label } from "@shared/components/ui/label";
+import DispatchUnitTip from "@/app/products/pcb/_components/flex/tips/dispatchUnitTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import { setDispatchUnit, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { type ReduxState, reduxStore } from "@/redux/store";
+import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
+import { Label } from "@shared/components/ui/label";
+import clsx from "clsx";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,10 +19,7 @@ export default function DispatchUnit() {
 	return (
 		<div>
 			<Label>
-				Dispatch Unit{" "}
-				<HelpPopover>
-					<p>The delivery format in which you ask us to ship your PCBs after manufacturing.</p>
-				</HelpPopover>
+				Dispatch Unit <DispatchUnitTip />
 			</Label>
 			<Listbox
 				value={dispatchUnit}
@@ -45,9 +43,10 @@ export default function DispatchUnit() {
 								<Listbox.Option
 									key={optionIdx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-1.5 pl-2 pr-4 ${
+										clsx(
+											"relative cursor-default select-none py-1.5 pl-2 pr-4",
 											active && "bg-gray-100"
-										}`
+										)
 									}
 									value={option}>
 									{({ selected }) => (
