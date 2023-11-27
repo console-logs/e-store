@@ -1,12 +1,12 @@
 import ThermalConductivityTip from "@/app/products/pcb/_components/rigid/tips/thermalConductivityTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectBaseMaterial,
-  selectRigidPcb,
-  selectThermalConductivity,
-  selectThermalConductivityOptions,
-  setPcbPrice,
-  setThermalConductivity,
+	selectBaseMaterial,
+	selectRigidPcb,
+	selectThermalConductivity,
+	selectThermalConductivityOptions,
+	setPcbPrice,
+	setThermalConductivity,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -26,7 +26,7 @@ export default function ThermalConductivity() {
 	const hiddenOptions = ["Aluminum", "CopperCore"];
 
 	return (
-		<div hidden={hiddenOptions.includes(baseMaterial) ? false : true}>
+		<div hidden={!hiddenOptions.includes(baseMaterial)}>
 			<Label>
 				Thermal Conductivity (Watts) <ThermalConductivityTip />
 			</Label>

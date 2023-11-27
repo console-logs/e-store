@@ -25,7 +25,7 @@ export default function EdgeRails() {
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
-		<div hidden={designFormat === "Single PCB" ? true : designFormat === "Panel by Customer" ? true : false}>
+		<div hidden={designFormat === "Single PCB" || designFormat === "Panel by Customer"}>
 			<Label>
 				Edge Rails <EdgeRailsTip />
 			</Label>

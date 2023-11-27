@@ -23,7 +23,7 @@ export default function CopperStructure() {
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
-		<div hidden={baseMaterial === "CopperCore" ? false : true}>
+		<div hidden={!(baseMaterial === "CopperCore")}>
 			<Label>Copper Structure</Label>
 			<Listbox
 				value={copperStructure}

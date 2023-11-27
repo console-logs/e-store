@@ -2,12 +2,12 @@
 import PcbQtyTip from "@/app/products/pcb/_components/rigid/tips/pcbQtyTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectDesignFormat,
-  selectPcbQty,
-  selectPcbQtyOptions,
-  selectRigidPcb,
-  setPcbPrice,
-  setPcbQty,
+	selectDesignFormat,
+	selectPcbQty,
+	selectPcbQtyOptions,
+	selectRigidPcb,
+	setPcbPrice,
+	setPcbQty,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -27,7 +27,7 @@ export default function PcbQuantity() {
 	return (
 		<div
 			className="w-full"
-			hidden={designFormat === "Single PCB" ? false : true}>
+			hidden={designFormat !== "Single PCB"}>
 			<Label>
 				PCB Quantity <PcbQtyTip />
 			</Label>
