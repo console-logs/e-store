@@ -327,6 +327,7 @@ type BaseFlexPcbFabSpecsType = {
 		| 1000
 		| 1500
 		| 2000;
+	singlePiecesQty: number;
 	designFormat: "Single PCB" | "Panel by Customer" | "Panel by Manufacturer";
 	differentDesignsInPanel: 1 | 2 | 3 | 4;
 	panelQty:
@@ -356,7 +357,6 @@ type BaseFlexPcbFabSpecsType = {
 		| 2000;
 	columns: number;
 	rows: number;
-	singlePiecesQty: number;
 	boardThickness: 0.07 | 0.11 | 0.12 | 0.2;
 	coverlay: "Yellow";
 	coverlayThickness: "PI:12.5um/AD:15um" | "PI:25um/AD:25um";
@@ -365,8 +365,6 @@ type BaseFlexPcbFabSpecsType = {
 	goldThickness: '1 U"' | '2 U"';
 	edgeRails: "No" | "On 2 Sides" | "On 4 Sides";
 	edgeRailSize: "5mm" | "7mm" | "10mm";
-	panelSizeX: number;
-	panelSizeY: number;
 	outerCuWeight: "0.5 oz" | "1/3 oz" | "1.0 oz";
 	boardOutlineTolerance: "±0.1mm" | "±0.05mm";
 	viaHoles: number;
@@ -385,6 +383,8 @@ type BaseFlexPcbFabSpecsType = {
 };
 
 type FlexPcbStoreStateType = BaseFlexPcbFabSpecsType & {
+	panelSizeX: number;
+	panelSizeY: number;
 	tentativeDispatchDate: string;
 	designFormatOptions: Array<"Single PCB" | "Panel by Customer" | "Panel by Manufacturer">;
 	layerOptions: Array<1 | 2>;
