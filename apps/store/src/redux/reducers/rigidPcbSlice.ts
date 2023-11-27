@@ -1,8 +1,9 @@
-import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type ReduxState } from "@/redux/store";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: RigidPcbStoreStateType = {
-  // mandatory fields
+  /* mandatory fields */
   pcbname: "",
   baseMaterial: "FR4",
   layer: 1,
@@ -23,7 +24,7 @@ const initialState: RigidPcbStoreStateType = {
   tentativeDispatchDate: getFutureDate(7),
   designFile: "",
 
-  // conditional fields
+  /* conditional fields */
   pcbQty: 5,
   viaCovering: "Tented",
   material: "FR4-Standard TG 135-140",
@@ -46,7 +47,7 @@ const initialState: RigidPcbStoreStateType = {
   castellatedHolesEdges: 1,
   chamferedGoldFingers: "No",
 
-  // select options don't mess with them!!
+  /* dropdown menu options */
   layerOptions: [1, 2, 4, 6, 8, 10],
   baseMaterialOptions: ["FR4", "Aluminum", "CopperCore", "Rogers"],
   designFormatOptions: [
@@ -696,3 +697,94 @@ export const {
 } = rigidPcbSlice.actions;
 
 export default rigidPcbSlice.reducer;
+
+/* Selectors */
+export const selectRigidPcb = (state: ReduxState) => {
+  /* Destructure props used in RigidPcbFabSpecsType  */
+  const {
+    baseMaterial,
+    layer,
+    boardSizeX,
+    boardSizeY,
+    differentDesignsInPanel,
+    designFormat,
+    boardThickness,
+    soldermask,
+    silkscreen,
+    surfaceFinish,
+    outerCuWeight,
+    goldFingers,
+    castellatedHoles,
+    leadTime,
+    dispatchUnit,
+    pcbQty,
+    singlePiecesQty,
+    viaCovering,
+    viaHoles,
+    boardOutlineTolerance,
+    material,
+    goldThickness,
+    edgeRails,
+    thermalConductivity,
+    breakDownVoltage,
+    innerCuWeight,
+    impedenceControl,
+    minViaHoleSizeAndDiameter,
+    castellatedHolesEdges,
+    chamferedGoldFingers,
+    edgeRailSize,
+    copperStructure,
+    columns,
+    pcbname,
+    panelSizeX,
+    panelSizeY,
+    rows,
+    calculatedPrice,
+    panelQty,
+    designFile,
+  } = state.rigidPcb;
+
+  const rigidPcb: RigidPcbFabSpecsType = {
+    baseMaterial,
+    layer,
+    boardSizeX,
+    boardSizeY,
+    differentDesignsInPanel,
+    designFormat,
+    boardThickness,
+    soldermask,
+    silkscreen,
+    surfaceFinish,
+    outerCuWeight,
+    goldFingers,
+    castellatedHoles,
+    leadTime,
+    dispatchUnit,
+    pcbQty,
+    singlePiecesQty,
+    viaCovering,
+    viaHoles,
+    boardOutlineTolerance,
+    material,
+    goldThickness,
+    edgeRails,
+    thermalConductivity,
+    breakDownVoltage,
+    innerCuWeight,
+    impedenceControl,
+    minViaHoleSizeAndDiameter,
+    castellatedHolesEdges,
+    chamferedGoldFingers,
+    edgeRailSize,
+    copperStructure,
+    columns,
+    pcbname,
+    panelSizeX,
+    panelSizeY,
+    rows,
+    calculatedPrice,
+    panelQty,
+    designFile,
+  };
+  return rigidPcb;
+};
