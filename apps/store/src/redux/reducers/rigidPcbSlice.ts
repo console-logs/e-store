@@ -750,3 +750,21 @@ export const selectCastellatedHolesEdgesOptions = (state: ReduxState) => state.r
 export const selectCopperStructureOptions = (state: ReduxState) => state.rigidPcb.copperStructureOptions;
 export const selectBoardThicknessOptions = (state: ReduxState) => state.rigidPcb.boardThicknessOptions;
 export const selectBreakDownVoltageOptions = (state: ReduxState) => state.rigidPcb.breakDownVoltageOptions;
+export const selectDesignFormatOptions = (state: ReduxState) => state.rigidPcb.designFormatOptions;
+export const selectDifferentDesignsInPanelOptions = (state: ReduxState) =>
+	state.rigidPcb.differentDesignsInPanelOptions;
+export const selectDispatchUnitOptions = (state: ReduxState) => state.rigidPcb.dispatchUnitOptions;
+export const selectGoldThicknessOptions = (state: ReduxState) => state.rigidPcb.goldThicknessOptions;
+export const selectImpedenceControlOptions = (state: ReduxState) => state.rigidPcb.impedenceControlOptions;
+export const selectInnerCuWeightOptions = (state: ReduxState) => state.rigidPcb.innerCuWeightOptions;
+export const selectLayerOptions = (state: ReduxState) => state.rigidPcb.layerOptions;
+export const selectMinViaHoleSizeAndDiameterOptions = (state: ReduxState) =>
+	state.rigidPcb.minViaHoleSizeAndDiameterOptions;
+export const selectOuterCuWeightOptions = (state: ReduxState) => state.rigidPcb.outerCuWeightOptions;
+export const selectLeadTimeOptions = (state: ReduxState) => state.rigidPcb.leadTimeOptions;
+export const selectPcbQtyOptions = (state: ReduxState) => state.rigidPcb.pcbQtyOptions;
+export const selectSilkscreenOptions = (state: ReduxState) => state.rigidPcb.silkscreenOptions;
+export const selectSurfaceFinishOptions = (state: ReduxState) => state.rigidPcb.surfaceFinishOptions;
+export const selectSoldermaskOptions = (state: ReduxState) => state.rigidPcb.soldermaskOptions;
+export const selectGoldFingersOptions = (state: ReduxState) => state.rigidPcb.goldFingersOptions;
+export const selectPanelQtyOptions = (state: ReduxState) => state.rigidPcb.panelQtyOptions;
