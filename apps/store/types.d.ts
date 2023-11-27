@@ -532,7 +532,7 @@ type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
 };
 
 /* Pcb Assembly Types */
-type BasePcbAssemblyFabSpecsType = {
+type PcbAssemblyFabSpecsType = {
 	projectName: string;
 	boardType: "Single PCB" | "Panel";
 	pcbsPerPanel: number | null;
@@ -555,7 +555,7 @@ type BasePcbAssemblyFabSpecsType = {
 	pickAndPlaceFile: string;
 };
 
-type PcbAssemblyStoreStateType = BasePcbAssemblyFabSpecsType & {
+type PcbAssemblyStoreStateType = PcbAssemblyFabSpecsType & {
 	tentativeDispatchDate: string;
 	dePanelOptions: Array<"Yes" | "No">;
 	boardTypeOptions: Array<"Single PCB" | "Panel">;

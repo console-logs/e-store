@@ -736,3 +736,17 @@ export const selectRigidPcb = (state: ReduxState) => {
 	};
 	return rigidPcb;
 };
+
+export const selectBaseMaterialOptions = (state: ReduxState) => state.rigidPcb.baseMaterialOptions;
+export const selectBoardOutlineToleranceOptions = (state: ReduxState) => state.rigidPcb.boardOutlineToleranceOptions;
+export const selectCastellatedHolesOptions = (state: ReduxState) => state.rigidPcb.castellatedHolesOptions;
+export const selectChamferedGoldFingersOptions = (state: ReduxState) => state.rigidPcb.chamferedGoldFingersOptions;
+export const selectEdgeRailsOptions = (state: ReduxState) => state.rigidPcb.edgeRailsOptions;
+export const selectEdgeRailSizeOptions = (state: ReduxState) => state.rigidPcb.edgeRailSizeOptions;
+export const selectMaterialOptions = (state: ReduxState) => state.rigidPcb.materialOptions;
+export const selectThermalConductivityOptions = (state: ReduxState) => state.rigidPcb.thermalConductivityOptions;
+export const selectViaCoveringOptions = (state: ReduxState) => state.rigidPcb.viaCoveringOptions;
+export const selectCastellatedHolesEdgesOptions = (state: ReduxState) => state.rigidPcb.castellatedHolesEdgesOptions;
+export const selectCopperStructureOptions = (state: ReduxState) => state.rigidPcb.copperStructureOptions;
+export const selectBoardThicknessOptions = (state: ReduxState) => state.rigidPcb.boardThicknessOptions;
+export const selectBreakDownVoltageOptions = (state: ReduxState) => state.rigidPcb.breakDownVoltageOptions;
