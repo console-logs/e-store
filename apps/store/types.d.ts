@@ -14,7 +14,8 @@ type ListItemsProps = {
   children: React.ReactNode;
 };
 
-type RigidPcbStoreStateType = {
+/*  Rigid Pcb Types */
+type BaseRigidPcbFabSpecsType = {
   pcbname: string;
   layer: 1 | 2 | 4 | 6 | 8 | 10;
   baseMaterial: "FR4" | "Aluminum" | "CopperCore" | "Rogers";
@@ -127,9 +128,11 @@ type RigidPcbStoreStateType = {
     | "10 Working days";
   dispatchUnit: "PCB" | "Panel";
   calculatedPrice: number;
-  tentativeDispatchDate: string;
   designFile: string;
+};
 
+type RigidPcbStoreStateType = BaseRigidPcbFabSpecsType & {
+  tentativeDispatchDate: string;
   layerOptions: Array<1 | 10 | 6 | 8 | 2 | 4>;
   baseMaterialOptions: Array<"FR4" | "Aluminum" | "CopperCore" | "Rogers">;
   designFormatOptions: Array<
@@ -238,6 +241,101 @@ type RigidPcbStoreStateType = {
   dispatchUnitOptions: Array<"PCB" | "Panel">;
 };
 
+type RigidPcbFabSpecsType = BaseRigidPcbFabSpecsType & {
+  // override specific props in base to be nullable
+  material:
+    | null
+    | "FR4-Standard TG 135-140"
+    | "FR-4 TG155"
+    | "RO4350B (Dk=3.48, Df=0.0037)"
+    | "FR-4 TG170";
+  pcbQty:
+    | null
+    | 5
+    | 10
+    | 15
+    | 20
+    | 25
+    | 30
+    | 50
+    | 75
+    | 100
+    | 125
+    | 150
+    | 200
+    | 250
+    | 300
+    | 400
+    | 450
+    | 500
+    | 600
+    | 700
+    | 800
+    | 900
+    | 1000
+    | 1500
+    | 2000;
+  panelQty:
+    | null
+    | 5
+    | 10
+    | 15
+    | 20
+    | 25
+    | 30
+    | 50
+    | 75
+    | 100
+    | 125
+    | 150
+    | 200
+    | 250
+    | 300
+    | 400
+    | 450
+    | 500
+    | 600
+    | 700
+    | 800
+    | 900
+    | 1000
+    | 1500
+    | 2000;
+  columns: null | number;
+  rows: null | number;
+  singlePiecesQty: null | number;
+  goldThickness: null | '1 U"' | '2 U"';
+  edgeRails: null | "No" | "On 2 Sides" | "On 4 Sides";
+  edgeRailSize: null | "5mm" | "7mm" | "10mm";
+  panelSizeX: null | number;
+  panelSizeY: null | number;
+  outerCuWeight: "1 oz" | "2 oz";
+  copperStructure: null | "Direct Heatsink";
+  thermalConductivity: null | 1 | 380;
+  breakDownVoltage: null | 3000;
+  innerCuWeight: null | "0.5 oz" | "1 oz" | "2 oz";
+  impedenceControl: null | "Yes" | "No";
+  viaCovering:
+    | null
+    | "Tented"
+    | "Untented"
+    | "Plugged"
+    | "Epoxy Filled & Capped"
+    | "Epoxy Filled & Untented"
+    | "Copper paste Filled & Capped";
+  minViaHoleSizeAndDiameter:
+    | null
+    | "0.3mm/(0.4/0.45mm)"
+    | "0.25mm/(0.35/0.40mm)"
+    | "0.2mm/(0.3/0.35mm)"
+    | "0.15mm/(0.25/0.3mm)";
+  boardOutlineTolerance: null | "±0.2mm(Regular)" | "±0.1mm(Precision)";
+  viaHoles: null | number;
+  castellatedHolesEdges: null | 1 | 2 | 3 | 4;
+  chamferedGoldFingers: null | "Yes" | "No";
+};
+
+/* Flex Pcb Types */
 type FlexPcbStoreStateType = {
   pcbname: string;
   baseMaterial: "Flex (Polyimide)";
@@ -422,6 +520,7 @@ type FlexPcbStoreStateType = {
   cuttingMethodOptions: Array<"Laser Cutting">;
 };
 
+/* Pcb Assembly Types */
 type PcbAssemblyStoreStateType = {
   projectName: string;
   boardType: "Single PCB" | "Panel";
