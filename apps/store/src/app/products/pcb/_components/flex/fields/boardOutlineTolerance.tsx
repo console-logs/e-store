@@ -4,7 +4,7 @@ import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardOutlineTolerance,
 	selectBoardOutlineToleranceOptions,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectLayer,
 	setBoardOutlineTolerance,
 	setPcbPrice,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardOutlineTolerance() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const boardOutlineToleranceOptions = useSelector(selectBoardOutlineToleranceOptions);
 	const boardOutlineTolerance = useSelector(selectBoardOutlineTolerance);
 	const layer = useSelector(selectLayer);

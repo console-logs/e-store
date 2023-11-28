@@ -4,7 +4,7 @@ import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectCoverlayThickness,
 	selectCoverlayThicknessOptions,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	setCoverlayThickness,
 	setPcbPrice,
 } from "@/redux/reducers/flexPcbSlice";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CoverlayThickness() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const coverlayThicknessOptions = useSelector(selectCoverlayThicknessOptions);
 	const coverlayThickness = useSelector(selectCoverlayThickness);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

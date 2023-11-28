@@ -2,7 +2,7 @@
 import SurfaceFinishTip from "@/app/products/pcb/_components/flex/tips/surfaceFinishTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectSurfaceFinish,
 	selectSurfaceFinishOptions,
 	setPcbPrice,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function SurfaceFinish() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const surfaceFinishOptions = useSelector(selectSurfaceFinishOptions);
 	const surfaceFinish = useSelector(selectSurfaceFinish);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

@@ -4,7 +4,7 @@ import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
 	selectDesignFormatOptions,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	setDesignFormat,
 	setPcbPrice,
 	updateDifferentDesignsInPanel,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DesignFormat() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const designFormatOptions = useSelector(selectDesignFormatOptions);
 	const designFormat = useSelector(selectDesignFormat);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

@@ -4,7 +4,7 @@ import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardSizeX,
 	selectBoardSizeY,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	setBoardSizeX,
 	setBoardSizeY,
 	setPcbPrice,
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardSize() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const boardSizeX = useSelector(selectBoardSizeX);
 	const boardSizeY = useSelector(selectBoardSizeY);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

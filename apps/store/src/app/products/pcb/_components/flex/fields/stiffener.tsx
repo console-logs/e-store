@@ -2,7 +2,7 @@
 import StiffnerTip from "@/app/products/pcb/_components/flex/tips/stiffnerTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectStiffner,
 	selectStiffnerOptions,
 	setPcbPrice,
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Stiffener() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const stiffnerOptions = useSelector(selectStiffnerOptions);
 	const stiffner = useSelector(selectStiffner);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

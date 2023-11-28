@@ -2,7 +2,7 @@
 import ThreeMTapeTip from "@/app/products/pcb/_components/flex/tips/threeMTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectStiffner,
 	selectThreeMTapeThickness,
 	selectThreeMTapeThicknessOptions,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ThreeMTapeThickness() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const threeMTapeThicknessOptions = useSelector(selectThreeMTapeThicknessOptions);
 	const threeMTapeThickness = useSelector(selectThreeMTapeThickness);
 	const stiffner = useSelector(selectStiffner);

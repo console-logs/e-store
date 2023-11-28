@@ -3,7 +3,7 @@ import DifferentDesignsTip from "@/app/products/pcb/_components/flex/tips/differ
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDifferentDesignsInPanel,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	setDifferentDesignsInPanel,
 	setPcbPrice,
 	updateDesignFormatOption,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DifferentDesignsInPanel() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const differentDesignsInPanelOptions = useSelector(selectDifferentDesignsInPanelOptions);
 	const differentDesignsInPanel = useSelector(selectDifferentDesignsInPanel);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

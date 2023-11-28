@@ -4,7 +4,7 @@ import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardThickness,
 	selectBoardThicknessOptions,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	setBoardThickness,
 	setPcbPrice,
 	updateCoverlayThickness,
@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardThickness() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const boardThicknessOptions = useSelector(selectBoardThicknessOptions);
 	const boardThickness = useSelector(selectBoardThickness);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

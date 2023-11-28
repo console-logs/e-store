@@ -4,7 +4,7 @@ import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectCuttingMethod,
 	selectCuttingMethodOptions,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	setCuttingMethod,
 	setPcbPrice,
 } from "@/redux/reducers/flexPcbSlice";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CuttingMethod() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const cuttingMethodOptions = useSelector(selectCuttingMethodOptions);
 	const cuttingMethod = useSelector(selectCuttingMethod);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

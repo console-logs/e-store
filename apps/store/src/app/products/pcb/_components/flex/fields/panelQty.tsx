@@ -3,7 +3,7 @@ import PanelQtyTip from "@/app/products/pcb/_components/flex/tips/panelQtyTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectPanelQty,
 	selectPanelQtyOptions,
 	setPanelQty,
@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PanelQuantity() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const panelQtyOptions = useSelector(selectPanelQtyOptions);
 	const panelQty = useSelector(selectPanelQty);
 	const designFormat = useSelector(selectDesignFormat);

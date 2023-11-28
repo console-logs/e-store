@@ -2,7 +2,7 @@
 import GoldThicknessTip from "@/app/products/pcb/_components/flex/tips/goldThicknessTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectGoldThickness,
 	selectGoldThicknessOptions,
 	selectSurfaceFinish,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function GoldThickness() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const goldThicknessOptions = useSelector(selectGoldThicknessOptions);
 	const goldThickness = useSelector(selectGoldThickness);
 	const surfaceFinish = useSelector(selectSurfaceFinish);

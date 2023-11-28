@@ -4,7 +4,7 @@ import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectCopperType,
 	selectCopperTypeOptions,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	setCopperType,
 	setPcbPrice,
 } from "@/redux/reducers/flexPcbSlice";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CopperType() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const copperTypeOptions = useSelector(selectCopperTypeOptions);
 	const copperType = useSelector(selectCopperType);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

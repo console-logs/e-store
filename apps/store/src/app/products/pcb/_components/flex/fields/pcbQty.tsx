@@ -3,7 +3,7 @@ import PcbQtyTip from "@/app/products/pcb/_components/flex/tips/pcbQtyTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectPcbQty,
 	selectPcbQtyOptions,
 	setPcbPrice,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PcbQuantity() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const pcbQtyOptions = useSelector(selectPcbQtyOptions);
 	const pcbQty = useSelector(selectPcbQty);
 	const designFormat = useSelector(selectDesignFormat);

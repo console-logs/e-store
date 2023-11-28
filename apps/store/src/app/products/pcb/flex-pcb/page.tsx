@@ -35,7 +35,7 @@ import ThreeMTapeThickness from "@/app/products/pcb/_components/flex/fields/thre
 import UploadDesignFile from "@/app/products/pcb/_components/flex/fields/uploadDesignFile";
 import FlexPcbPriceSummary from "@/app/products/pcb/_components/flex/priceSummary";
 import PcbQuantity from "@/app/products/pcb/_components/flex/fields/pcbQty";
-import { selectFlexPcb } from "@/redux/reducers/flexPcbSlice";
+import { selectFlexPcbMemoized } from "@/redux/reducers/flexPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";
@@ -43,7 +43,7 @@ import { useSelector } from "react-redux";
 export default function FlexPcbFabrication() {
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();
-	const flexPcb: FlexPcbFabSpecsType = useSelector(selectFlexPcb);
+	const flexPcb: FlexPcbFabSpecsType = useSelector(selectFlexPcbMemoized);
 
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		startTransition(async () => {

@@ -2,7 +2,7 @@
 import StainlessSteelTip from "@/app/products/pcb/_components/flex/tips/stainlessSteelTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectStainlessSteelThickness,
 	selectStainlessSteelThicknessOptions,
 	selectStiffner,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function StainlessSteelThickness() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const stainlessSteelThicknessOptions = useSelector(selectStainlessSteelThicknessOptions);
 	const stainlessSteelThickness = useSelector(selectStainlessSteelThickness);
 	const stiffner = useSelector(selectStiffner);

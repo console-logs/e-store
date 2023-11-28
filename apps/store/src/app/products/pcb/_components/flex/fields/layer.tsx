@@ -2,7 +2,7 @@
 import LayerTip from "@/app/products/pcb/_components/flex/tips/layerTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectLayer,
 	selectLayerOptions,
 	setLayer,
@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Layer() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const layerOptions = useSelector(selectLayerOptions);
 	const layer = useSelector(selectLayer);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

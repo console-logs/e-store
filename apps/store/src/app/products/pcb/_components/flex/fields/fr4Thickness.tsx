@@ -2,7 +2,7 @@
 import FR4ThicknessTip from "@/app/products/pcb/_components/flex/tips/fr4ThicknessTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectFr4Thickness,
 	selectFr4ThicknessOptions,
 	selectStiffner,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function FR4Thickness() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const fr4ThicknessOptions = useSelector(selectFr4ThicknessOptions);
 	const fr4Thickness = useSelector(selectFr4Thickness);
 	const stiffner = useSelector(selectStiffner);

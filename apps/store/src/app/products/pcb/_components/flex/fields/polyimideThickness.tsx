@@ -2,7 +2,7 @@
 import PolyimideThicknessTip from "@/app/products/pcb/_components/flex/tips/polyimideThicknessTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectPolyimideThickness,
 	selectPolyimideThicknessOptions,
 	selectStiffner,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PolyimideThickness() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const polyimideThicknessOptions = useSelector(selectPolyimideThicknessOptions);
 	const polyimideThickness = useSelector(selectPolyimideThickness);
 	const stiffner = useSelector(selectStiffner);

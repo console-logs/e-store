@@ -2,7 +2,7 @@
 import OuterCuWeightTip from "@/app/products/pcb/_components/flex/tips/outerCuWeightTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectOuterCuWeight,
 	selectOuterCuWeightOptions,
 	setOuterCuWeight,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function OuterCuWeight() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const OuterCuWeightOptions = useSelector(selectOuterCuWeightOptions);
 	const outerCuWeight = useSelector(selectOuterCuWeight);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

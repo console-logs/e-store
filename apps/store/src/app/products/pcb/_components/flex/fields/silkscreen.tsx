@@ -2,7 +2,7 @@
 import SilkscreenTip from "@/app/products/pcb/_components/flex/tips/silkscreenTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectSilkscreen,
 	selectSilkscreenOptions,
 	setPcbPrice,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Silkscreen() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const silkscreenOptions = useSelector(selectSilkscreenOptions);
 	const silkscreen = useSelector(selectSilkscreen);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

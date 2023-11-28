@@ -2,7 +2,7 @@
 import LeadTimeTip from "@/app/products/pcb/_components/flex/tips/leadTimeTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectFlexPcb,
+	selectFlexPcbMemoized,
 	selectLeadTime,
 	selectLeadTimeOptions,
 	setLeadTime,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function LeadTime() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcb);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const leadTimeOptions = useSelector(selectLeadTimeOptions);
 	const leadTime = useSelector(selectLeadTime);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();

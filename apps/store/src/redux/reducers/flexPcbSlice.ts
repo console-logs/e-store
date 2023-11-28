@@ -1,5 +1,5 @@
 import { type ReduxState } from "@/redux/store";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: FlexPcbStoreStateType = {
@@ -383,6 +383,7 @@ export const {
 export default flexPcbSlice.reducer;
 
 /* Selectors */
+export const selectFlexPcbState = (state: ReduxState) => state.flexPcb;
 export const selectPcbName = (state: ReduxState) => state.flexPcb.pcbname;
 export const selectDesignFormat = (state: ReduxState) => state.flexPcb.designFormat;
 export const selectLayer = (state: ReduxState) => state.flexPcb.layer;
@@ -421,6 +422,8 @@ export const selectPcbPrice = (state: ReduxState) => state.flexPcb.calculatedPri
 export const selectTentativeDispatchDate = (state: ReduxState) => state.flexPcb.tentativeDispatchDate;
 export const selectPanelSizeX = (state: ReduxState) => state.flexPcb.panelSizeX;
 export const selectPanelSizeY = (state: ReduxState) => state.flexPcb.panelSizeY;
+
+/* dropdown menu selectors */
 export const selectDesignFormatOptions = (state: ReduxState) => state.flexPcb.designFormatOptions;
 export const selectLayerOptions = (state: ReduxState) => state.flexPcb.layerOptions;
 export const selectBaseMaterialOptions = (state: ReduxState) => state.flexPcb.baseMaterialOptions;
@@ -446,82 +449,45 @@ export const selectThreeMTapeThicknessOptions = (state: ReduxState) => state.fle
 export const selectPanelQtyOptions = (state: ReduxState) => state.flexPcb.panelQtyOptions;
 export const selectPcbQtyOptions = (state: ReduxState) => state.flexPcb.pcbQtyOptions;
 export const selectSilkscreenOptions = (state: ReduxState) => state.flexPcb.silkscreenOptions;
-export const selectFlexPcb = (state: ReduxState) => {
-	const {
-		baseMaterial,
-		boardOutlineTolerance,
-		boardSizeX,
-		boardSizeY,
-		boardThickness,
-		calculatedPrice,
-		columns,
-		copperType,
-		coverlay,
-		coverlayThickness,
-		cuttingMethod,
-		designFormat,
-		differentDesignsInPanel,
-		dispatchUnit,
-		edgeRails,
-		edgeRailSize,
-		emiShieldingFilm,
-		fr4Thickness,
-		goldThickness,
-		layer,
-		leadTime,
-		outerCuWeight,
-		panelQty,
-		pcbname,
-		pcbQty,
-		polyimideThickness,
-		rows,
-		silkscreen,
-		singlePiecesQty,
-		stainlessSteelThickness,
-		stiffner,
-		surfaceFinish,
-		threeMTapeThickness,
-		viaHoles,
-		designFile,
-	} = state.flexPcb;
 
-	const flexPcb: FlexPcbFabSpecsType = {
-		baseMaterial,
-		boardOutlineTolerance,
-		boardSizeX,
-		boardSizeY,
-		boardThickness,
-		calculatedPrice,
-		columns,
-		copperType,
-		coverlay,
-		coverlayThickness,
-		cuttingMethod,
-		designFormat,
-		differentDesignsInPanel,
-		dispatchUnit,
-		edgeRails,
-		edgeRailSize,
-		emiShieldingFilm,
-		fr4Thickness,
-		goldThickness,
-		layer,
-		leadTime,
-		outerCuWeight,
-		panelQty,
-		pcbname,
-		pcbQty,
-		polyimideThickness,
-		rows,
-		silkscreen,
-		singlePiecesQty,
-		stainlessSteelThickness,
-		stiffner,
-		surfaceFinish,
-		threeMTapeThickness,
-		viaHoles,
-		designFile,
+/* Memoised Selector => Output selector performs type transformation */
+export const selectFlexPcbMemoized = createSelector([selectFlexPcbState], flexPcb => {
+	const flexPcbFabSpecs: FlexPcbFabSpecsType = {
+		baseMaterial: flexPcb.baseMaterial,
+		boardOutlineTolerance: flexPcb.boardOutlineTolerance,
+		boardSizeX: flexPcb.boardSizeX,
+		boardSizeY: flexPcb.boardSizeY,
+		boardThickness: flexPcb.boardThickness,
+		calculatedPrice: flexPcb.calculatedPrice,
+		columns: flexPcb.columns,
+		copperType: flexPcb.copperType,
+		coverlay: flexPcb.coverlay,
+		coverlayThickness: flexPcb.coverlayThickness,
+		cuttingMethod: flexPcb.cuttingMethod,
+		designFormat: flexPcb.designFormat,
+		differentDesignsInPanel: flexPcb.differentDesignsInPanel,
+		dispatchUnit: flexPcb.dispatchUnit,
+		edgeRails: flexPcb.edgeRails,
+		edgeRailSize: flexPcb.edgeRailSize,
+		emiShieldingFilm: flexPcb.emiShieldingFilm,
+		fr4Thickness: flexPcb.fr4Thickness,
+		goldThickness: flexPcb.goldThickness,
+		layer: flexPcb.layer,
+		leadTime: flexPcb.leadTime,
+		outerCuWeight: flexPcb.outerCuWeight,
+		panelQty: flexPcb.panelQty,
+		pcbname: flexPcb.pcbname,
+		pcbQty: flexPcb.pcbQty,
+		polyimideThickness: flexPcb.polyimideThickness,
+		rows: flexPcb.rows,
+		silkscreen: flexPcb.silkscreen,
+		singlePiecesQty: flexPcb.singlePiecesQty,
+		stainlessSteelThickness: flexPcb.stainlessSteelThickness,
+		stiffner: flexPcb.stiffner,
+		surfaceFinish: flexPcb.surfaceFinish,
+		threeMTapeThickness: flexPcb.threeMTapeThickness,
+		viaHoles: flexPcb.viaHoles,
+		designFile: flexPcb.designFile,
 	};
-
-	return flexPcb;
-};
+	return flexPcbFabSpecs;
+});
