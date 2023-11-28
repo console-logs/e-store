@@ -34,7 +34,7 @@ import SurfaceFinish from "@/app/products/pcb/_components/flex/fields/surfaceFin
 import ThreeMTapeThickness from "@/app/products/pcb/_components/flex/fields/threeMTapeThickness";
 import UploadDesignFile from "@/app/products/pcb/_components/flex/fields/uploadDesignFile";
 import FlexPcbPriceSummary from "@/app/products/pcb/_components/flex/priceSummary";
-import PcbQuantity from "@/app/products/pcb/_components/rigid/fields/pcbQty";
+import PcbQuantity from "@/app/products/pcb/_components/flex/fields/pcbQty";
 import { selectFlexPcb } from "@/redux/reducers/flexPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
