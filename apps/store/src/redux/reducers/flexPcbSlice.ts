@@ -422,6 +422,7 @@ export const selectPcbPrice = (state: ReduxState) => state.flexPcb.calculatedPri
 export const selectTentativeDispatchDate = (state: ReduxState) => state.flexPcb.tentativeDispatchDate;
 export const selectPanelSizeX = (state: ReduxState) => state.flexPcb.panelSizeX;
 export const selectPanelSizeY = (state: ReduxState) => state.flexPcb.panelSizeY;
+export const selectCalculatedPrice = (state: ReduxState) => state.flexPcb.calculatedPrice;
 
 /* dropdown menu selectors */
 export const selectDesignFormatOptions = (state: ReduxState) => state.flexPcb.designFormatOptions;

@@ -1,13 +1,19 @@
 "use client";
-import { type ReduxState } from "@/redux/store";
+import {
+	selectCalculatedPrice,
+	selectDesignFormat,
+	selectPcbQty,
+	selectSinglePiecesQty,
+	selectTentativeDispatchDate,
+} from "@/redux/reducers/flexPcbSlice";
 import { useSelector } from "react-redux";
 
 export default function FlexPcbPriceSummary() {
-	const pcbPrice = useSelector((state: ReduxState) => state.flexPcb.calculatedPrice);
-	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
-	const pcbQty = useSelector((state: ReduxState) => state.flexPcb.pcbQty);
-	const singlePiecesQty = useSelector((state: ReduxState) => state.flexPcb.singlePiecesQty);
-	const tentativeDispatchDate = useSelector((state: ReduxState) => state.flexPcb.tentativeDispatchDate);
+	const pcbPrice = useSelector(selectCalculatedPrice);
+	const designFormat = useSelector(selectDesignFormat);
+	const pcbQty = useSelector(selectPcbQty);
+	const singlePiecesQty = useSelector(selectSinglePiecesQty);
+	const tentativeDispatchDate = useSelector(selectTentativeDispatchDate);
 
 	return (
 		<div className="rounded-lg bg-gray-50 dark:bg-gray-900 px-4 py-6 sm:p-6 lg:p-8">

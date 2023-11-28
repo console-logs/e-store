@@ -649,6 +649,7 @@ export const selectEdgeRailSize = (state: ReduxState) => state.rigidPcb.edgeRail
 export const selectCopperStructure = (state: ReduxState) => state.rigidPcb.copperStructure;
 export const selectColumns = (state: ReduxState) => state.rigidPcb.columns;
 export const selectRows = (state: ReduxState) => state.rigidPcb.rows;
+export const selectTentativeDispatchDate = (state: ReduxState) => state.rigidPcb.tentativeDispatchDate;
 
 /* dropdown menu selectors */
 export const selectBaseMaterialOptions = (state: ReduxState) => state.rigidPcb.baseMaterialOptions;
