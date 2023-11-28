@@ -28,12 +28,7 @@ export default function EdgeRailsSize() {
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
-		<div
-			hidden={
-				designFormat === "Single PCB" || designFormat === "Panel by Customer" || edgeRails === "No"
-					? true
-					: false
-			}>
+		<div hidden={designFormat === "Single PCB" || designFormat === "Panel by Customer" || edgeRails === "No"}>
 			<Label>
 				Edge Rails Size (mm) <EdgeRailSizeTip />
 			</Label>

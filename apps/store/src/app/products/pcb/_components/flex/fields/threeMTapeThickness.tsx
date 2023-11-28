@@ -25,7 +25,7 @@ export default function ThreeMTapeThickness() {
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
-		<div hidden={!stiffner.includes("3M Tape") ? true : false}>
+		<div hidden={!stiffner.includes("3M Tape")}>
 			<Label>
 				3M Tape Thickness <ThreeMTapeTip />
 			</Label>

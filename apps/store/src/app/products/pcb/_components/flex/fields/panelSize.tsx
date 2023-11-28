@@ -13,7 +13,7 @@ export default function PanelSize() {
 	return (
 		<div
 			className="w-full"
-			hidden={designFormat === "Single PCB" ? true : designFormat === "Panel by Customer" ? true : false}>
+			hidden={designFormat === "Single PCB" || designFormat === "Panel by Customer"}>
 			<Label>
 				Panel Size (mm) <PanelSizeTip />
 			</Label>

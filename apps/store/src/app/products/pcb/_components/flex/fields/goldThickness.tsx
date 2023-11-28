@@ -25,7 +25,7 @@ export default function GoldThickness() {
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
-		<div hidden={surfaceFinish !== "ENIG" ? true : false}>
+		<div hidden={surfaceFinish !== "ENIG"}>
 			<Label>
 				Gold Thickness <GoldThicknessTip />
 			</Label>
