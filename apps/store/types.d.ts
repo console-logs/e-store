@@ -535,7 +535,7 @@ type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
 type PcbAssemblyFabSpecsType = {
 	projectName: string;
 	boardType: "Single PCB" | "Panel";
-	pcbsPerPanel: number | null;
+	pcbsPerPanel: number;
 	quantity: number;
 	assemblySides: "Top Side" | "Bottom Side" | "Both Sides";
 	numOfUniqueComponents: number;
