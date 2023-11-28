@@ -1,11 +1,11 @@
 import SilkscreenTip from "@/app/products/pcb/_components/rigid/tips/silkscreenTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectRigidPcb,
-  selectSilkscreen,
-  selectSilkscreenOptions,
-  setPcbPrice,
-  setSilkscreen,
+	selectRigidPcbMemoized,
+	selectSilkscreen,
+	selectSilkscreenOptions,
+	setPcbPrice,
+	setSilkscreen,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Silkscreen() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const silkscreenOptions = useSelector(selectSilkscreenOptions);
 	const silkscreen = useSelector(selectSilkscreen);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

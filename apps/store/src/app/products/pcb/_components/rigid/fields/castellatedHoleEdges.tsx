@@ -1,12 +1,12 @@
 import CastellatedHoleEdgesTip from "@/app/products/pcb/_components/rigid/tips/castellatedHoleEdgesTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectCastellatedHoles,
-  selectCastellatedHolesEdges,
-  selectCastellatedHolesEdgesOptions,
-  selectRigidPcb,
-  setCastellatedHolesEdges,
-  setPcbPrice,
+	selectCastellatedHoles,
+	selectCastellatedHolesEdges,
+	selectCastellatedHolesEdgesOptions,
+	selectRigidPcbMemoized,
+	setCastellatedHolesEdges,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CastellatedHolesEdges() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const castellatedHolesEdgesOptions = useSelector(selectCastellatedHolesEdgesOptions);
 	const castellatedHolesEdges = useSelector(selectCastellatedHolesEdges);
 	const castellatedHoles = useSelector(selectCastellatedHoles);

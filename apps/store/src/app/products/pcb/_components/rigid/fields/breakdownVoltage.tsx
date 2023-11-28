@@ -1,12 +1,12 @@
 import BreakdownVoltageTip from "@/app/products/pcb/_components/rigid/tips/breakdownVoltageTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectBaseMaterial,
-  selectBreakDownVoltage,
-  selectBreakDownVoltageOptions,
-  selectRigidPcb,
-  setBreakdownVoltage,
-  setPcbPrice,
+	selectBaseMaterial,
+	selectBreakDownVoltage,
+	selectBreakDownVoltageOptions,
+	selectRigidPcbMemoized,
+	setBreakdownVoltage,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BreakdownVoltage() {
 	const dispatch = useDispatch();
-  const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const breakdownVoltageOptions = useSelector(selectBreakDownVoltageOptions);
 	const breakdownVoltage = useSelector(selectBreakDownVoltage);
 	const baseMaterial = useSelector(selectBaseMaterial);

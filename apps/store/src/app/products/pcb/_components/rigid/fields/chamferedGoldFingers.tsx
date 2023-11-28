@@ -1,12 +1,12 @@
 import ChamferedGoldFingersTip from "@/app/products/pcb/_components/rigid/tips/chamferedGoldFingersTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectChamferedGoldFingers,
-  selectChamferedGoldFingersOptions,
-  selectGoldFingers,
-  selectRigidPcb,
-  setChamferedGoldFingers,
-  setPcbPrice,
+	selectChamferedGoldFingers,
+	selectChamferedGoldFingersOptions,
+	selectGoldFingers,
+	selectRigidPcbMemoized,
+	setChamferedGoldFingers,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ChamferedGoldFingers() {
 	const dispatch = useDispatch();
-  const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const chamferedGoldFingersOptions = useSelector(selectChamferedGoldFingersOptions);
 	const chamferedGoldFinger = useSelector(selectChamferedGoldFingers);
 	const goldFingers = useSelector(selectGoldFingers);

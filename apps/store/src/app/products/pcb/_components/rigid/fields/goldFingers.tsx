@@ -3,11 +3,11 @@ import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectGoldFingers,
 	selectGoldFingersOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setGoldFingers,
 	setPcbPrice,
 	updateSoldermask,
-	updateSurfaceFinish
+	updateSurfaceFinish,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function GoldFingers() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const goldFingersOptions = useSelector(selectGoldFingersOptions);
 	const goldFingers = useSelector(selectGoldFingers);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

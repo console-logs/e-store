@@ -3,7 +3,7 @@ import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectGoldThickness,
 	selectGoldThicknessOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	selectSurfaceFinish,
 	setGoldThickness,
 	setPcbPrice,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function GoldThickness() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const goldThicknessOptions = useSelector(selectGoldThicknessOptions);
 	const goldThickness = useSelector(selectGoldThickness);
 	const surfaceFinish = useSelector(selectSurfaceFinish);

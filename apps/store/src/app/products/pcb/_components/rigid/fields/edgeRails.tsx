@@ -4,7 +4,7 @@ import {
 	selectDesignFormat,
 	selectEdgeRails,
 	selectEdgeRailsOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setEdgeRails,
 	setPcbPrice,
 	updatePanelSize,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function EdgeRails() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const edgeRailOptions = useSelector(selectEdgeRailsOptions);
 	const edgeRails = useSelector(selectEdgeRails);
 	const designFormat = useSelector(selectDesignFormat);

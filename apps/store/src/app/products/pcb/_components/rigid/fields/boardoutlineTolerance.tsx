@@ -5,7 +5,7 @@ import {
 	selectBoardOutlineTolerance,
 	selectBoardOutlineToleranceOptions,
 	selectLayer,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setBoardOutlineTolerance,
 	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardOutlineTolerance() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const boardOutlineToleranceOptions = useSelector(selectBoardOutlineToleranceOptions);
 	const boardOutlineTolerance = useSelector(selectBoardOutlineTolerance);
 	const layer = useSelector(selectLayer);

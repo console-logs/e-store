@@ -3,7 +3,7 @@ import {
 	selectBaseMaterial,
 	selectCopperStructure,
 	selectCopperStructureOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setCopperStructure,
 	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CopperStructure() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const copperStructureOptions = useSelector(selectCopperStructureOptions);
 	const copperStructure = useSelector(selectCopperStructure);
 	const baseMaterial = useSelector(selectBaseMaterial);

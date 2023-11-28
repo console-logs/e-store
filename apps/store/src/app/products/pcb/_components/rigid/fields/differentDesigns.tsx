@@ -1,12 +1,12 @@
 import DifferentDesignsTip from "@/app/products/pcb/_components/rigid/tips/differentDesignsTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectDifferentDesignsInPanel,
-  selectDifferentDesignsInPanelOptions,
-  selectRigidPcb,
-  setDifferentDesignsInPanel,
-  setPcbPrice,
-  updateDesignFormatOption,
+	selectDifferentDesignsInPanel,
+	selectDifferentDesignsInPanelOptions,
+	selectRigidPcbMemoized,
+	setDifferentDesignsInPanel,
+	setPcbPrice,
+	updateDesignFormatOption,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DifferentDesignsInPanel() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const differentDesignsInPanelOptions = useSelector(selectDifferentDesignsInPanelOptions);
 	const differentDesignsInPanel = useSelector(selectDifferentDesignsInPanel);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

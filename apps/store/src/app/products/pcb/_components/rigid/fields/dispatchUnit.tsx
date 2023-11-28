@@ -3,7 +3,7 @@ import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDispatchUnit,
 	selectDispatchUnitOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setDispatchUnit,
 	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DispatchUnit() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const dispatchUnitOptions = useSelector(selectDispatchUnitOptions);
 	const dispatchUnit = useSelector(selectDispatchUnit);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

@@ -4,7 +4,7 @@ import {
 	selectDesignFormat,
 	selectPanelQty,
 	selectPanelQtyOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setPanelQty,
 	setPcbPrice,
 	updateSinglePiecesQty,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PanelQuantity() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const panelQtyOptions = useSelector(selectPanelQtyOptions);
 	const panelQty = useSelector(selectPanelQty);
 	const designFormat = useSelector(selectDesignFormat);

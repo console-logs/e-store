@@ -2,7 +2,7 @@ import ThermalConductivityTip from "@/app/products/pcb/_components/rigid/tips/th
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	selectThermalConductivity,
 	selectThermalConductivityOptions,
 	setPcbPrice,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ThermalConductivity() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const baseMaterial = useSelector(selectBaseMaterial);
 	const thermalConductivity = useSelector(selectThermalConductivity);
 	const thermalConductivityOptions = useSelector(selectThermalConductivityOptions);

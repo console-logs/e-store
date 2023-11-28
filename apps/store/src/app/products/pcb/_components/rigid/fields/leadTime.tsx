@@ -3,7 +3,7 @@ import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectLeadTime,
 	selectLeadTimeOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setLeadTime,
 	setPcbPrice,
 	setTentativeDispatchDate,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function LeadTime() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const leadTimeOptions = useSelector(selectLeadTimeOptions);
 	const leadTime = useSelector(selectLeadTime);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

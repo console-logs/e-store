@@ -39,80 +39,78 @@ import UploadDesignFile from "@/app/products/pcb/_components/rigid/fields/upload
 import ViaCovering from "@/app/products/pcb/_components/rigid/fields/viaCovering";
 import ViaHoles from "@/app/products/pcb/_components/rigid/fields/viaHoles";
 import RigidPcbPriceSummary from "@/app/products/pcb/_components/rigid/priceSummary";
-import { selectRigidPcb } from "@/redux/reducers/rigidPcbSlice";
+import { selectRigidPcbMemoized } from "@/redux/reducers/rigidPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";
 
 export default function RigidPcbFabrication() {
-  const { toast } = useToast();
-  const [isLoading, startTransition] = useTransition();
-  const rigidPcb: RigidPcbFabSpecsType = useSelector(selectRigidPcb);
+	const { toast } = useToast();
+	const [isLoading, startTransition] = useTransition();
+	const rigidPcb: RigidPcbFabSpecsType = useSelector(selectRigidPcbMemoized);
 
-  function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
-    startTransition(async () => {
-      e.preventDefault();
-      await addRigidPcbToCartAction(rigidPcb);
-      toast({
-        variant: "default",
-        title: "Rigid PCB added to cart",
-        description: "We've successfully added your pcb to cart!",
-        duration: 4000,
-      });
-    });
-  }
-  return (
-    <form onSubmit={handleOnSubmit}>
-      <div className="mx-auto my-2 max-w-6xl px-4">
-        <h1 className=" text-3xl font-bold tracking-tight">
-          Rigid Pcb Fabrication
-        </h1>
-        <div className="grid grid-cols-1 gap-y-3 lg:grid-cols-3 lg:gap-x-4">
-          <div className="mt-8 grid grid-cols-1 gap-y-6 sm:col-span-2 sm:grid-cols-2 sm:gap-x-4">
-            <PcbName />
-            <BaseMaterial />
-            <Layer />
-            <MaterialType />
-            <BoardSize />
-            <PcbQuantity />
-            <DifferentDesignsInPanel />
-            <DesignFormat />
-            <PanelQuantity />
-            <PanelFormat />
-            <PanelSize />
-            <SinglePiecesQuantity />
-            <BoardThickness />
-            <Soldermask />
-            <Silkscreen />
-            <SurfaceFinish />
-            <GoldThickness />
-            <EdgeRails />
-            <EdgeRailsSize />
-            <OuterCuWeight />
-            <CopperStructure />
-            <ThermalConductivity />
-            <BreakdownVoltage />
-            <InnerCuWeight />
-            <ImpedenceControl />
-            <ViaCovering />
-            <MinimumHoleSizeAndDiameter />
-            <BoardOutlineTolerance />
-            <GoldFingers />
-            <ChamferedGoldFingers />
-            <CastellatedHoles />
-            <CastellatedHolesEdges />
-            <ViaHoles />
-            <LeadTime />
-            <DispatchUnit />
-            <UploadDesignFile />
-          </div>
-          <div className="mt-8 space-y-4">
-            <RigidPcbPriceSummary />
-            <PcbPriceEstimateAlert />
-            <AddPcbToCartBtn isLoading={isLoading} />
-          </div>
-        </div>
-      </div>
-    </form>
-  );
+	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
+		startTransition(async () => {
+			e.preventDefault();
+			await addRigidPcbToCartAction(rigidPcb);
+			toast({
+				variant: "default",
+				title: "Rigid PCB added to cart",
+				description: "We've successfully added your pcb to cart!",
+				duration: 4000,
+			});
+		});
+	}
+	return (
+		<form onSubmit={handleOnSubmit}>
+			<div className="mx-auto my-2 max-w-6xl px-4">
+				<h1 className=" text-3xl font-bold tracking-tight">Rigid Pcb Fabrication</h1>
+				<div className="grid grid-cols-1 gap-y-3 lg:grid-cols-3 lg:gap-x-4">
+					<div className="mt-8 grid grid-cols-1 gap-y-6 sm:col-span-2 sm:grid-cols-2 sm:gap-x-4">
+						<PcbName />
+						<BaseMaterial />
+						<Layer />
+						<MaterialType />
+						<BoardSize />
+						<PcbQuantity />
+						<DifferentDesignsInPanel />
+						<DesignFormat />
+						<PanelQuantity />
+						<PanelFormat />
+						<PanelSize />
+						<SinglePiecesQuantity />
+						<BoardThickness />
+						<Soldermask />
+						<Silkscreen />
+						<SurfaceFinish />
+						<GoldThickness />
+						<EdgeRails />
+						<EdgeRailsSize />
+						<OuterCuWeight />
+						<CopperStructure />
+						<ThermalConductivity />
+						<BreakdownVoltage />
+						<InnerCuWeight />
+						<ImpedenceControl />
+						<ViaCovering />
+						<MinimumHoleSizeAndDiameter />
+						<BoardOutlineTolerance />
+						<GoldFingers />
+						<ChamferedGoldFingers />
+						<CastellatedHoles />
+						<CastellatedHolesEdges />
+						<ViaHoles />
+						<LeadTime />
+						<DispatchUnit />
+						<UploadDesignFile />
+					</div>
+					<div className="mt-8 space-y-4">
+						<RigidPcbPriceSummary />
+						<PcbPriceEstimateAlert />
+						<AddPcbToCartBtn isLoading={isLoading} />
+					</div>
+				</div>
+			</div>
+		</form>
+	);
 }

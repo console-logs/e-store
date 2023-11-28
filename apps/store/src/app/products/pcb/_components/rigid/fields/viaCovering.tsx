@@ -1,12 +1,12 @@
 import ViaCoveringTip from "@/app/products/pcb/_components/rigid/tips/viaCoveringTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectBaseMaterial,
-  selectRigidPcb,
-  selectViaCovering,
-  selectViaCoveringOptions,
-  setPcbPrice,
-  setViaCovering,
+	selectBaseMaterial,
+	selectRigidPcbMemoized,
+	selectViaCovering,
+	selectViaCoveringOptions,
+	setPcbPrice,
+	setViaCovering,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ViaCovering() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const viaCoveringOptions = useSelector(selectViaCoveringOptions);
 	const viaCovering = useSelector(selectViaCovering);
 	const baseMaterial = useSelector(selectBaseMaterial);

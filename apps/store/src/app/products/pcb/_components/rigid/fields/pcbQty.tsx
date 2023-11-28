@@ -5,7 +5,7 @@ import {
 	selectDesignFormat,
 	selectPcbQty,
 	selectPcbQtyOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setPcbPrice,
 	setPcbQty,
 } from "@/redux/reducers/rigidPcbSlice";
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PcbQuantity() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const pcbQtyOptions = useSelector(selectPcbQtyOptions);
 	const pcbQty = useSelector(selectPcbQty);
 	const designFormat = useSelector(selectDesignFormat);

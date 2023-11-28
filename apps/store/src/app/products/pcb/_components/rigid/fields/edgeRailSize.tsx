@@ -1,14 +1,14 @@
 import EdgeRailSizeTip from "@/app/products/pcb/_components/rigid/tips/edgeRailsSizeTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectDesignFormat,
-  selectEdgeRailSize,
-  selectEdgeRailSizeOptions,
-  selectEdgeRails,
-  selectRigidPcb,
-  setEdgeRailSize,
-  setPcbPrice,
-  updatePanelSize,
+	selectDesignFormat,
+	selectEdgeRailSize,
+	selectEdgeRailSizeOptions,
+	selectEdgeRails,
+	selectRigidPcbMemoized,
+	setEdgeRailSize,
+	setPcbPrice,
+	updatePanelSize,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function EdgeRailsSize() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const edgeRailSize = useSelector(selectEdgeRailSize);
 	const designFormat = useSelector(selectDesignFormat);
 	const edgeRails = useSelector(selectEdgeRails);

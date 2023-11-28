@@ -1,11 +1,11 @@
 import OuterCuWeightTip from "@/app/products/pcb/_components/rigid/tips/outerCuWeightTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectOuterCuWeight,
-  selectOuterCuWeightOptions,
-  selectRigidPcb,
-  setOuterCuWeight,
-  setPcbPrice,
+	selectOuterCuWeight,
+	selectOuterCuWeightOptions,
+	selectRigidPcbMemoized,
+	setOuterCuWeight,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function OuterCuWeight() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const OuterCuWeightOptions = useSelector(selectOuterCuWeightOptions);
 	const outerCuWeight = useSelector(selectOuterCuWeight);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

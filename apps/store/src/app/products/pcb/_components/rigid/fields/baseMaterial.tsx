@@ -3,7 +3,7 @@ import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
 	selectBaseMaterialOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setBaseMaterial,
 	setPcbPrice,
 	updateBoardThickness,
@@ -27,7 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BaseMaterial() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const baseMaterialOptions = useSelector(selectBaseMaterialOptions);
 	const baseMaterial = useSelector(selectBaseMaterial);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

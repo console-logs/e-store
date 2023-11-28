@@ -1,11 +1,11 @@
 import ViaHolesTip from "@/app/products/pcb/_components/rigid/tips/viaHolesTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectBaseMaterial,
-  selectRigidPcb,
-  selectViaHoles,
-  setPcbPrice,
-  setViaHoles,
+	selectBaseMaterial,
+	selectRigidPcbMemoized,
+	selectViaHoles,
+	setPcbPrice,
+	setViaHoles,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ViaHoles() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const viaHoles = useSelector(selectViaHoles);
 	const baseMaterial = useSelector(selectBaseMaterial);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

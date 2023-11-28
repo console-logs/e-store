@@ -1,12 +1,12 @@
 import InnerCuWeightTip from "@/app/products/pcb/_components/rigid/tips/innerCuWeightTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectInnerCuWeight,
-  selectInnerCuWeightOptions,
-  selectLayer,
-  selectRigidPcb,
-  setInnerCuWeight,
-  setPcbPrice,
+	selectInnerCuWeight,
+	selectInnerCuWeightOptions,
+	selectLayer,
+	selectRigidPcbMemoized,
+	setInnerCuWeight,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function InnerCuWeight() {
 	const dispatch = useDispatch();
-  const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const innerCuWeightOptions = useSelector(selectInnerCuWeightOptions);
 	const innerCuWeight = useSelector(selectInnerCuWeight);
 	const layer = useSelector(selectLayer);

@@ -1,12 +1,12 @@
 import ImpedenceControlTip from "@/app/products/pcb/_components/rigid/tips/impedenceControlTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectImpedenceControl,
-  selectImpedenceControlOptions,
-  selectLayer,
-  selectRigidPcb,
-  setImpedenceControl,
-  setPcbPrice,
+	selectImpedenceControl,
+	selectImpedenceControlOptions,
+	selectLayer,
+	selectRigidPcbMemoized,
+	setImpedenceControl,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ImpedenceControl() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const impedenceControlOptions = useSelector(selectImpedenceControlOptions);
 	const impedenceControl = useSelector(selectImpedenceControl);
 	const layer = useSelector(selectLayer);

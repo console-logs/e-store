@@ -3,7 +3,7 @@ import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
 	selectDesignFormatOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setDesignFormat,
 	setPcbPrice,
 	updateChamferedGoldFingers,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DesignFormat() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const designFormatOptions = useSelector(selectDesignFormatOptions);
 	const designFormat = useSelector(selectDesignFormat);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

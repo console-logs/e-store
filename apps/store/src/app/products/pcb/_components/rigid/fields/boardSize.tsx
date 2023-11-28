@@ -2,13 +2,13 @@
 import BoardSizeTip from "@/app/products/pcb/_components/rigid/tips/boardSizeTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectBoardSizeX,
-  selectBoardSizeY,
-  selectRigidPcb,
-  setBoardSizeX,
-  setBoardSizeY,
-  setPcbPrice,
-  updatePanelSize,
+	selectBoardSizeX,
+	selectBoardSizeY,
+	selectRigidPcbMemoized,
+	setBoardSizeX,
+	setBoardSizeY,
+	setPcbPrice,
+	updatePanelSize,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardSize() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const boardSizeX = useSelector(selectBoardSizeX);
 	const boardSizeY = useSelector(selectBoardSizeY);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

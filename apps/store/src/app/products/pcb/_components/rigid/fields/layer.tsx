@@ -4,7 +4,7 @@ import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectLayer,
 	selectLayerOptions,
-	selectRigidPcb,
+	selectRigidPcbMemoized,
 	setLayer,
 	setPcbPrice,
 	updateBoardThickness,
@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Layer() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const layerOptions = useSelector(selectLayerOptions);
 	const layer = useSelector(selectLayer);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();

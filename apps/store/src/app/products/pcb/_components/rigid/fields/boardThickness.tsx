@@ -1,12 +1,12 @@
 import BoardThicknessTip from "@/app/products/pcb/_components/rigid/tips/boardThicknessTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectBaseMaterial,
-  selectBoardThickness,
-  selectBoardThicknessOptions,
-  selectRigidPcb,
-  setBoardThickness,
-  setPcbPrice,
+	selectBaseMaterial,
+	selectBoardThickness,
+	selectBoardThicknessOptions,
+	selectRigidPcbMemoized,
+	setBoardThickness,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardThickness() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const boardThicknessOptions = useSelector(selectBoardThicknessOptions);
 	const boardThickness = useSelector(selectBoardThickness);
 	const baseMaterial = useSelector(selectBaseMaterial);

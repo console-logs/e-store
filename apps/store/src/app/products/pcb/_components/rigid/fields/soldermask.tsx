@@ -1,12 +1,12 @@
 import SoldermaskTip from "@/app/products/pcb/_components/rigid/tips/soldermaskTip";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectRigidPcb,
-  selectSoldermask,
-  selectSoldermaskOptions,
-  setPcbPrice,
-  setSoldermask,
-  updateSilkscreen,
+	selectRigidPcbMemoized,
+	selectSoldermask,
+	selectSoldermaskOptions,
+	setPcbPrice,
+	setSoldermask,
+	updateSilkscreen,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Soldermask() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcb);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const soldermaskOptions = useSelector(selectSoldermaskOptions);
 	const soldermask = useSelector(selectSoldermask);
 	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
