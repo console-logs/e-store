@@ -381,7 +381,71 @@ export const {
 } = flexPcbSlice.actions;
 
 export default flexPcbSlice.reducer;
+
 /* Selectors */
+export const selectPcbName = (state: ReduxState) => state.flexPcb.pcbname;
+export const selectDesignFormat = (state: ReduxState) => state.flexPcb.designFormat;
+export const selectLayer = (state: ReduxState) => state.flexPcb.layer;
+export const selectBaseMaterial = (state: ReduxState) => state.flexPcb.baseMaterial;
+export const selectBoardOutlineTolerance = (state: ReduxState) => state.flexPcb.boardOutlineTolerance;
+export const selectBoardSizeX = (state: ReduxState) => state.flexPcb.boardSizeX;
+export const selectBoardSizeY = (state: ReduxState) => state.flexPcb.boardSizeY;
+export const selectBoardThickness = (state: ReduxState) => state.flexPcb.boardThickness;
+export const selectColumns = (state: ReduxState) => state.flexPcb.columns;
+export const selectCopperType = (state: ReduxState) => state.flexPcb.copperType;
+export const selectCoverlay = (state: ReduxState) => state.flexPcb.coverlay;
+export const selectCoverlayThickness = (state: ReduxState) => state.flexPcb.coverlayThickness;
+export const selectCuttingMethod = (state: ReduxState) => state.flexPcb.cuttingMethod;
+export const selectDesignFile = (state: ReduxState) => state.flexPcb.designFile;
+export const selectDifferentDesignsInPanel = (state: ReduxState) => state.flexPcb.differentDesignsInPanel;
+export const selectDispatchUnit = (state: ReduxState) => state.flexPcb.dispatchUnit;
+export const selectEdgeRailSize = (state: ReduxState) => state.flexPcb.edgeRailSize;
+export const selectEdgeRails = (state: ReduxState) => state.flexPcb.edgeRails;
+export const selectEmiShieldingFilm = (state: ReduxState) => state.flexPcb.emiShieldingFilm;
+export const selectFr4Thickness = (state: ReduxState) => state.flexPcb.fr4Thickness;
+export const selectGoldThickness = (state: ReduxState) => state.flexPcb.goldThickness;
+export const selectLeadTime = (state: ReduxState) => state.flexPcb.leadTime;
+export const selectOuterCuWeight = (state: ReduxState) => state.flexPcb.outerCuWeight;
+export const selectPanelQty = (state: ReduxState) => state.flexPcb.panelQty;
+export const selectPcbQty = (state: ReduxState) => state.flexPcb.pcbQty;
+export const selectPolyimideThickness = (state: ReduxState) => state.flexPcb.polyimideThickness;
+export const selectRows = (state: ReduxState) => state.flexPcb.rows;
+export const selectSilkscreen = (state: ReduxState) => state.flexPcb.silkscreen;
+export const selectSinglePiecesQty = (state: ReduxState) => state.flexPcb.singlePiecesQty;
+export const selectStainlessSteelThickness = (state: ReduxState) => state.flexPcb.stainlessSteelThickness;
+export const selectStiffner = (state: ReduxState) => state.flexPcb.stiffner;
+export const selectSurfaceFinish = (state: ReduxState) => state.flexPcb.surfaceFinish;
+export const selectThreeMTapeThickness = (state: ReduxState) => state.flexPcb.threeMTapeThickness;
+export const selectViaHoles = (state: ReduxState) => state.flexPcb.viaHoles;
+export const selectPcbPrice = (state: ReduxState) => state.flexPcb.calculatedPrice;
+export const selectTentativeDispatchDate = (state: ReduxState) => state.flexPcb.tentativeDispatchDate;
+export const selectPanelSizeX = (state: ReduxState) => state.flexPcb.panelSizeX;
+export const selectPanelSizeY = (state: ReduxState) => state.flexPcb.panelSizeY;
+export const selectDesignFormatOptions = (state: ReduxState) => state.flexPcb.designFormatOptions;
+export const selectLayerOptions = (state: ReduxState) => state.flexPcb.layerOptions;
+export const selectBaseMaterialOptions = (state: ReduxState) => state.flexPcb.baseMaterialOptions;
+export const selectBoardOutlineToleranceOptions = (state: ReduxState) => state.flexPcb.boardOutlineToleranceOptions;
+export const selectBoardThicknessOptions = (state: ReduxState) => state.flexPcb.boardThicknessOptions;
+export const selectCopperTypeOptions = (state: ReduxState) => state.flexPcb.copperTypeOptions;
+export const selectCoverlayOptions = (state: ReduxState) => state.flexPcb.coverlayOptions;
+export const selectCoverlayThicknessOptions = (state: ReduxState) => state.flexPcb.coverlayThicknessOptions;
+export const selectCuttingMethodOptions = (state: ReduxState) => state.flexPcb.cuttingMethodOptions;
+export const selectEdgeRailSizeOptions = (state: ReduxState) => state.flexPcb.edgeRailSizeOptions;
+export const selectEdgeRailsOptions = (state: ReduxState) => state.flexPcb.edgeRailsOptions;
+export const selectOuterCuWeightOptions = (state: ReduxState) => state.flexPcb.outerCuWeightOptions;
+export const selectLeadTimeOptions = (state: ReduxState) => state.flexPcb.leadTimeOptions;
+export const selectDispatchUnitOptions = (state: ReduxState) => state.flexPcb.dispatchUnitOptions;
+export const selectStiffnerOptions = (state: ReduxState) => state.flexPcb.stiffnerOptions;
+export const selectEmiShieldingFilmOptions = (state: ReduxState) => state.flexPcb.emiShieldingFilmOptions;
+export const selectSurfaceFinishOptions = (state: ReduxState) => state.flexPcb.surfaceFinishOptions;
+export const selectFr4ThicknessOptions = (state: ReduxState) => state.flexPcb.fr4ThicknessOptions;
+export const selectGoldThicknessOptions = (state: ReduxState) => state.flexPcb.goldThicknessOptions;
+export const selectPolyimideThicknessOptions = (state: ReduxState) => state.flexPcb.polyimideThicknessOptions;
+export const selectStainlessSteelThicknessOptions = (state: ReduxState) => state.flexPcb.stainlessSteelThicknessOptions;
+export const selectThreeMTapeThicknessOptions = (state: ReduxState) => state.flexPcb.threeMTapeThicknessOptions;
+export const selectPanelQtyOptions = (state: ReduxState) => state.flexPcb.panelQtyOptions;
+export const selectPcbQtyOptions = (state: ReduxState) => state.flexPcb.pcbQtyOptions;
+export const selectSilkscreenOptions = (state: ReduxState) => state.flexPcb.silkscreenOptions;
 export const selectFlexPcb = (state: ReduxState) => {
 	const {
 		baseMaterial,

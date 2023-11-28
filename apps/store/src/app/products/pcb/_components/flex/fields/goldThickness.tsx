@@ -1,8 +1,14 @@
 "use client";
 import GoldThicknessTip from "@/app/products/pcb/_components/flex/tips/goldThicknessTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setGoldThickness, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectGoldThickness,
+	selectGoldThicknessOptions,
+	selectSurfaceFinish,
+	setGoldThickness,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,9 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function GoldThickness() {
 	const dispatch = useDispatch();
-	const goldThicknessOptions = useSelector((state: ReduxState) => state.flexPcb.goldThicknessOptions);
-	const goldThickness = useSelector((state: ReduxState) => state.flexPcb.goldThickness);
-	const surfaceFinish = useSelector((state: ReduxState) => state.flexPcb.surfaceFinish);
+	const flexPcb = useSelector(selectFlexPcb);
+	const goldThicknessOptions = useSelector(selectGoldThicknessOptions);
+	const goldThickness = useSelector(selectGoldThickness);
+	const surfaceFinish = useSelector(selectSurfaceFinish);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -26,7 +33,7 @@ export default function GoldThickness() {
 				value={goldThickness}
 				onChange={async value => {
 					dispatch(setGoldThickness(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

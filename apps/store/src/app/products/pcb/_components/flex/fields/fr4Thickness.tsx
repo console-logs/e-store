@@ -1,8 +1,14 @@
 "use client";
 import FR4ThicknessTip from "@/app/products/pcb/_components/flex/tips/fr4ThicknessTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setFr4Thickness, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectFr4Thickness,
+	selectFr4ThicknessOptions,
+	selectStiffner,
+	setFr4Thickness,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,13 +18,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function FR4Thickness() {
 	const dispatch = useDispatch();
-	const fr4ThicknessOptions = useSelector((state: ReduxState) => state.flexPcb.fr4ThicknessOptions);
-	const fr4Thickness = useSelector((state: ReduxState) => state.flexPcb.fr4Thickness);
-	const stiffner = useSelector((state: ReduxState) => state.flexPcb.stiffner);
+	const flexPcb = useSelector(selectFlexPcb);
+	const fr4ThicknessOptions = useSelector(selectFr4ThicknessOptions);
+	const fr4Thickness = useSelector(selectFr4Thickness);
+	const stiffner = useSelector(selectStiffner);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
-		<div hidden={!stiffner.includes("FR4") ? true : false}>
+		<div hidden={!stiffner.includes("FR4")}>
 			<Label>
 				FR4 Thickness (mm) <FR4ThicknessTip />
 			</Label>
@@ -26,7 +33,7 @@ export default function FR4Thickness() {
 				value={fr4Thickness}
 				onChange={async value => {
 					dispatch(setFr4Thickness(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

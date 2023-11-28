@@ -1,8 +1,13 @@
 "use client";
 import SilkscreenTip from "@/app/products/pcb/_components/flex/tips/silkscreenTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setSilkscreen } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectSilkscreen,
+	selectSilkscreenOptions,
+	setPcbPrice,
+	setSilkscreen,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Silkscreen() {
 	const dispatch = useDispatch();
-	const silkscreenOptions = useSelector((state: ReduxState) => state.flexPcb.silkscreenOptions);
-	const silkscreen = useSelector((state: ReduxState) => state.flexPcb.silkscreen);
+	const flexPcb = useSelector(selectFlexPcb);
+	const silkscreenOptions = useSelector(selectSilkscreenOptions);
+	const silkscreen = useSelector(selectSilkscreen);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +31,7 @@ export default function Silkscreen() {
 				value={silkscreen}
 				onChange={async value => {
 					dispatch(setSilkscreen(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

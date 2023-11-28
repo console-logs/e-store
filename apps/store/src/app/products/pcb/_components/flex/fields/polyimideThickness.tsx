@@ -1,8 +1,14 @@
 "use client";
 import PolyimideThicknessTip from "@/app/products/pcb/_components/flex/tips/polyimideThicknessTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setPolyimideThickness } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectPolyimideThickness,
+	selectPolyimideThicknessOptions,
+	selectStiffner,
+	setPcbPrice,
+	setPolyimideThickness,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,13 +18,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PolyimideThickness() {
 	const dispatch = useDispatch();
-	const polyimideThicknessOptions = useSelector((state: ReduxState) => state.flexPcb.polyimideThicknessOptions);
-	const polyimideThickness = useSelector((state: ReduxState) => state.flexPcb.polyimideThickness);
-	const stiffner = useSelector((state: ReduxState) => state.flexPcb.stiffner);
+	const flexPcb = useSelector(selectFlexPcb);
+	const polyimideThicknessOptions = useSelector(selectPolyimideThicknessOptions);
+	const polyimideThickness = useSelector(selectPolyimideThickness);
+	const stiffner = useSelector(selectStiffner);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
-		<div hidden={!stiffner.includes("Polyimide") ? true : false}>
+		<div hidden={!stiffner.includes("Polyimide")}>
 			<Label>
 				Polyimide Thickness (mm) <PolyimideThicknessTip />
 			</Label>
@@ -26,7 +33,7 @@ export default function PolyimideThickness() {
 				value={polyimideThickness}
 				onChange={async value => {
 					dispatch(setPolyimideThickness(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

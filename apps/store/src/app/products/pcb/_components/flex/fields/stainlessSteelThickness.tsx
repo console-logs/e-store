@@ -1,8 +1,14 @@
 "use client";
 import StainlessSteelTip from "@/app/products/pcb/_components/flex/tips/stainlessSteelTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setStainlessSteelThickness } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectStainlessSteelThickness,
+	selectStainlessSteelThicknessOptions,
+	selectStiffner,
+	setPcbPrice,
+	setStainlessSteelThickness,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,11 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function StainlessSteelThickness() {
 	const dispatch = useDispatch();
-	const stainlessSteelThicknessOptions = useSelector(
-		(state: ReduxState) => state.flexPcb.stainlessSteelThicknessOptions
-	);
-	const stainlessSteelThickness = useSelector((state: ReduxState) => state.flexPcb.stainlessSteelThickness);
-	const stiffner = useSelector((state: ReduxState) => state.flexPcb.stiffner);
+	const flexPcb = useSelector(selectFlexPcb);
+	const stainlessSteelThicknessOptions = useSelector(selectStainlessSteelThicknessOptions);
+	const stainlessSteelThickness = useSelector(selectStainlessSteelThickness);
+	const stiffner = useSelector(selectStiffner);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -28,7 +33,7 @@ export default function StainlessSteelThickness() {
 				value={stainlessSteelThickness}
 				onChange={async value => {
 					dispatch(setStainlessSteelThickness(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

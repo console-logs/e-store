@@ -2,26 +2,30 @@
 import PanelFormatTip from "@/app/products/pcb/_components/flex/tips/panelFormatTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
+	selectColumns,
+	selectDesignFormat,
+	selectFlexPcb,
+	selectRows,
 	setColumns,
 	setPcbPrice,
 	setRows,
 	updatePanelSize,
 	updateSinglePiecesQty,
 } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function PanelFormat() {
 	const dispatch = useDispatch();
-	const columns = useSelector((state: ReduxState) => state.flexPcb.columns);
-	const rows = useSelector((state: ReduxState) => state.flexPcb.rows);
-	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
+	const flexPcb = useSelector(selectFlexPcb);
+	const columns = useSelector(selectColumns);
+	const rows = useSelector(selectRows);
+	const designFormat = useSelector(selectDesignFormat);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
-		<div hidden={designFormat === "Single PCB" ? true : false}>
+		<div hidden={designFormat === "Single PCB"}>
 			<Label>
 				Panel Format (Rows x Columns) <PanelFormatTip />
 			</Label>
@@ -40,7 +44,7 @@ export default function PanelFormat() {
 						dispatch(setRows(Number(e.target.value)));
 						dispatch(updateSinglePiecesQty());
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+						const price = await calculatePcbPrice(flexPcb).unwrap();
 						dispatch(setPcbPrice(price));
 					}}
 				/>
@@ -59,7 +63,7 @@ export default function PanelFormat() {
 						dispatch(setColumns(Number(e.target.value)));
 						dispatch(updateSinglePiecesQty());
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+						const price = await calculatePcbPrice(flexPcb).unwrap();
 						dispatch(setPcbPrice(price));
 					}}
 				/>

@@ -1,8 +1,13 @@
 "use client";
 import CopperTypeTip from "@/app/products/pcb/_components/flex/tips/copperTypeTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setCopperType, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectCopperType,
+	selectCopperTypeOptions,
+	selectFlexPcb,
+	setCopperType,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CopperType() {
 	const dispatch = useDispatch();
-	const copperTypeOptions = useSelector((state: ReduxState) => state.flexPcb.copperTypeOptions);
-	const copperType = useSelector((state: ReduxState) => state.flexPcb.copperType);
+	const flexPcb = useSelector(selectFlexPcb);
+	const copperTypeOptions = useSelector(selectCopperTypeOptions);
+	const copperType = useSelector(selectCopperType);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +31,7 @@ export default function CopperType() {
 				value={copperType}
 				onChange={async value => {
 					dispatch(setCopperType(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

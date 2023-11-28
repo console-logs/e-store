@@ -1,16 +1,24 @@
 "use client";
 import BoardSizeTip from "@/app/products/pcb/_components/flex/tips/boardSizeTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setBoardSizeX, setBoardSizeY, setPcbPrice, updatePanelSize } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectBoardSizeX,
+	selectBoardSizeY,
+	selectFlexPcb,
+	setBoardSizeX,
+	setBoardSizeY,
+	setPcbPrice,
+	updatePanelSize,
+} from "@/redux/reducers/flexPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardSize() {
 	const dispatch = useDispatch();
-	const boardSizeX = useSelector((state: ReduxState) => state.flexPcb.boardSizeX);
-	const boardSizeY = useSelector((state: ReduxState) => state.flexPcb.boardSizeY);
+	const flexPcb = useSelector(selectFlexPcb);
+	const boardSizeX = useSelector(selectBoardSizeX);
+	const boardSizeY = useSelector(selectBoardSizeY);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -31,7 +39,7 @@ export default function BoardSize() {
 					onChange={async e => {
 						dispatch(setBoardSizeX(Number(e.target.value)));
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+						const price = await calculatePcbPrice(flexPcb).unwrap();
 						dispatch(setPcbPrice(price));
 					}}
 				/>
@@ -48,7 +56,7 @@ export default function BoardSize() {
 					onChange={async e => {
 						dispatch(setBoardSizeY(Number(e.target.value)));
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+						const price = await calculatePcbPrice(flexPcb).unwrap();
 						dispatch(setPcbPrice(price));
 					}}
 				/>

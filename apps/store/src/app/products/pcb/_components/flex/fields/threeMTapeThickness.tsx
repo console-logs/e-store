@@ -1,8 +1,14 @@
 "use client";
 import ThreeMTapeTip from "@/app/products/pcb/_components/flex/tips/threeMTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setThreeMTapeThickness } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectStiffner,
+	selectThreeMTapeThickness,
+	selectThreeMTapeThicknessOptions,
+	setPcbPrice,
+	setThreeMTapeThickness,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,9 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ThreeMTapeThickness() {
 	const dispatch = useDispatch();
-	const threeMTapeThicknessOptions = useSelector((state: ReduxState) => state.flexPcb.threeMTapeThicknessOptions);
-	const threeMTapeThickness = useSelector((state: ReduxState) => state.flexPcb.threeMTapeThickness);
-	const stiffner = useSelector((state: ReduxState) => state.flexPcb.stiffner);
+	const flexPcb = useSelector(selectFlexPcb);
+	const threeMTapeThicknessOptions = useSelector(selectThreeMTapeThicknessOptions);
+	const threeMTapeThickness = useSelector(selectThreeMTapeThickness);
+	const stiffner = useSelector(selectStiffner);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -26,7 +33,7 @@ export default function ThreeMTapeThickness() {
 				value={threeMTapeThickness}
 				onChange={async value => {
 					dispatch(setThreeMTapeThickness(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

@@ -1,8 +1,7 @@
 "use client";
 import BaseMaterialTip from "@/app/products/pcb/_components/flex/tips/baseMaterialTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setBaseMaterial, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import { selectBaseMaterial, selectBaseMaterialOptions, selectFlexPcb, setBaseMaterial, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BaseMaterial() {
 	const dispatch = useDispatch();
-	const baseMaterialOptions = useSelector((state: ReduxState) => state.flexPcb.baseMaterialOptions);
-	const baseMaterial = useSelector((state: ReduxState) => state.flexPcb.baseMaterial);
+	const flexPcb = useSelector(selectFlexPcb);
+	const baseMaterialOptions = useSelector(selectBaseMaterialOptions);
+	const baseMaterial = useSelector(selectBaseMaterial);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +25,7 @@ export default function BaseMaterial() {
 				value={baseMaterial}
 				onChange={async value => {
 					dispatch(setBaseMaterial(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

@@ -1,8 +1,13 @@
 "use client";
 import OuterCuWeightTip from "@/app/products/pcb/_components/flex/tips/outerCuWeightTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setOuterCuWeight, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectOuterCuWeight,
+	selectOuterCuWeightOptions,
+	setOuterCuWeight,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function OuterCuWeight() {
 	const dispatch = useDispatch();
-	const OuterCuWeightOptions = useSelector((state: ReduxState) => state.flexPcb.outerCuWeightOptions);
-	const outerCuWeight = useSelector((state: ReduxState) => state.flexPcb.outerCuWeight);
+	const flexPcb = useSelector(selectFlexPcb);
+	const OuterCuWeightOptions = useSelector(selectOuterCuWeightOptions);
+	const outerCuWeight = useSelector(selectOuterCuWeight);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +31,7 @@ export default function OuterCuWeight() {
 				value={outerCuWeight}
 				onChange={async value => {
 					dispatch(setOuterCuWeight(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

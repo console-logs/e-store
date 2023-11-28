@@ -2,12 +2,14 @@
 import BoardThicknessTip from "@/app/products/pcb/_components/flex/tips/boardThicknessTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
+	selectBoardThickness,
+	selectBoardThicknessOptions,
+	selectFlexPcb,
 	setBoardThickness,
 	setPcbPrice,
 	updateCoverlayThickness,
 	updateOuterCuWeight,
 } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -17,8 +19,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardThickness() {
 	const dispatch = useDispatch();
-	const boardThicknessOptions = useSelector((state: ReduxState) => state.flexPcb.boardThicknessOptions);
-	const boardThickness = useSelector((state: ReduxState) => state.flexPcb.boardThickness);
+	const flexPcb = useSelector(selectFlexPcb);
+	const boardThicknessOptions = useSelector(selectBoardThicknessOptions);
+	const boardThickness = useSelector(selectBoardThickness);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -32,7 +35,7 @@ export default function BoardThickness() {
 					dispatch(setBoardThickness(value));
 					dispatch(updateOuterCuWeight());
 					dispatch(updateCoverlayThickness());
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

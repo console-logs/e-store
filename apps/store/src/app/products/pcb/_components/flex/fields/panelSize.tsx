@@ -1,14 +1,14 @@
 "use client";
 import PanelSizeTip from "@/app/products/pcb/_components/flex/tips/panelSizeTip";
-import { type ReduxState } from "@/redux/store";
+import { selectDesignFormat, selectPanelSizeX, selectPanelSizeY } from "@/redux/reducers/flexPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useSelector } from "react-redux";
 
 export default function PanelSize() {
-	const panelSizeX = useSelector((state: ReduxState) => state.flexPcb.panelSizeX);
-	const panelSizeY = useSelector((state: ReduxState) => state.flexPcb.panelSizeY);
-	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
+	const panelSizeX = useSelector(selectPanelSizeX);
+	const panelSizeY = useSelector(selectPanelSizeY);
+	const designFormat = useSelector(selectDesignFormat);
 
 	return (
 		<div

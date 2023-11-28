@@ -1,8 +1,13 @@
 "use client";
 import CoverlayTip from "@/app/products/pcb/_components/flex/tips/coverlayTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setCoverlay, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectCoverlay,
+	selectCoverlayOptions,
+	selectFlexPcb,
+	setCoverlay,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CoverlayColor() {
 	const dispatch = useDispatch();
-	const coverlayColorOptions = useSelector((state: ReduxState) => state.flexPcb.coverlayOptions);
-	const coverlayColor = useSelector((state: ReduxState) => state.flexPcb.coverlay);
+	const flexPcb = useSelector(selectFlexPcb);
+	const coverlayColorOptions = useSelector(selectCoverlayOptions);
+	const coverlayColor = useSelector(selectCoverlay);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +31,7 @@ export default function CoverlayColor() {
 				value={coverlayColor}
 				onChange={async value => {
 					dispatch(setCoverlay(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

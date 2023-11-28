@@ -1,8 +1,14 @@
 "use client";
 import DesignFormatTip from "@/app/products/pcb/_components/flex/tips/designFormatTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setDesignFormat, setPcbPrice, updateDifferentDesignsInPanel } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectDesignFormat,
+	selectDesignFormatOptions,
+	selectFlexPcb,
+	setDesignFormat,
+	setPcbPrice,
+	updateDifferentDesignsInPanel,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +18,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DesignFormat() {
 	const dispatch = useDispatch();
-	const designFormatOptions = useSelector((state: ReduxState) => state.flexPcb.designFormatOptions);
-	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
+	const flexPcb = useSelector(selectFlexPcb);
+	const designFormatOptions = useSelector(selectDesignFormatOptions);
+	const designFormat = useSelector(selectDesignFormat);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -26,7 +33,7 @@ export default function DesignFormat() {
 				onChange={async value => {
 					dispatch(setDesignFormat(value));
 					dispatch(updateDifferentDesignsInPanel());
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

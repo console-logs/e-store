@@ -1,8 +1,13 @@
 "use client";
 import StiffnerTip from "@/app/products/pcb/_components/flex/tips/stiffnerTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setStiffner } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectStiffner,
+	selectStiffnerOptions,
+	setPcbPrice,
+	setStiffner,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -11,15 +16,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Stiffener() {
 	const dispatch = useDispatch();
-	const stiffnerOptions = useSelector((state: ReduxState) => state.flexPcb.stiffnerOptions);
-	const stiffner = useSelector((state: ReduxState) => state.flexPcb.stiffner);
+	const flexPcb = useSelector(selectFlexPcb);
+	const stiffnerOptions = useSelector(selectStiffnerOptions);
+	const stiffner = useSelector(selectStiffner);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	async function handleChange(values: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">) {
 		// selected none again. remove others.
 		if (values.length > 1 && values.indexOf("Without") > 0) {
 			dispatch(setStiffner(["Without"]));
-			const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+			const price = await calculatePcbPrice(flexPcb).unwrap();
 			dispatch(setPcbPrice(price));
 			return;
 		}
@@ -27,7 +33,7 @@ export default function Stiffener() {
 		// just none (default), keep it.
 		if (values.length === 1 && values.includes("Without")) {
 			dispatch(setStiffner(["Without"]));
-			const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+			const price = await calculatePcbPrice(flexPcb).unwrap();
 			dispatch(setPcbPrice(price));
 			return;
 		}
@@ -35,7 +41,7 @@ export default function Stiffener() {
 		// remove none others are selected.
 		if (values.length > 1 && values.includes("Without")) {
 			dispatch(setStiffner(values.filter(value => value !== "Without")));
-			const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+			const price = await calculatePcbPrice(flexPcb).unwrap();
 			dispatch(setPcbPrice(price));
 			return;
 		}
@@ -43,7 +49,7 @@ export default function Stiffener() {
 		// just others, keep them
 		if (!values.includes("Without")) {
 			dispatch(setStiffner(values));
-			const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+			const price = await calculatePcbPrice(flexPcb).unwrap();
 			dispatch(setPcbPrice(price));
 			return;
 		}

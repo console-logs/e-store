@@ -1,8 +1,13 @@
 "use client";
 import CuttingMethodTip from "@/app/products/pcb/_components/flex/tips/cuttingMethodTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setCuttingMethod, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectCuttingMethod,
+	selectCuttingMethodOptions,
+	selectFlexPcb,
+	setCuttingMethod,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CuttingMethod() {
 	const dispatch = useDispatch();
-	const cuttingMethodOptions = useSelector((state: ReduxState) => state.flexPcb.cuttingMethodOptions);
-	const cuttingMethod = useSelector((state: ReduxState) => state.flexPcb.cuttingMethod);
+	const flexPcb = useSelector(selectFlexPcb);
+	const cuttingMethodOptions = useSelector(selectCuttingMethodOptions);
+	const cuttingMethod = useSelector(selectCuttingMethod);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +31,7 @@ export default function CuttingMethod() {
 				value={cuttingMethod}
 				onChange={async value => {
 					dispatch(setCuttingMethod(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

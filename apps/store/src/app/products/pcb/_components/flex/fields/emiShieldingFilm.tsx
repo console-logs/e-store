@@ -1,8 +1,13 @@
 "use client";
 import EmiShieldingTip from "@/app/products/pcb/_components/flex/tips/emiShieldingTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setEmiShieldingFilm, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectEmiShieldingFilm,
+	selectEmiShieldingFilmOptions,
+	selectFlexPcb,
+	setEmiShieldingFilm,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function EMIShieldingFilm() {
 	const dispatch = useDispatch();
-	const emiShieldingOptions = useSelector((state: ReduxState) => state.flexPcb.emiShieldingFilmOptions);
-	const emiShielding = useSelector((state: ReduxState) => state.flexPcb.emiShieldingFilm);
+	const flexPcb = useSelector(selectFlexPcb);
+	const emiShieldingOptions = useSelector(selectEmiShieldingFilmOptions);
+	const emiShielding = useSelector(selectEmiShieldingFilm);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +31,7 @@ export default function EMIShieldingFilm() {
 				value={emiShielding}
 				onChange={async value => {
 					dispatch(setEmiShieldingFilm(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

@@ -1,8 +1,14 @@
 "use client";
 import BoardOutlineTip from "@/app/products/pcb/_components/flex/tips/boardOutlineTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setBoardOutlineTolerance, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectBoardOutlineTolerance,
+	selectBoardOutlineToleranceOptions,
+	selectFlexPcb,
+	selectLayer,
+	setBoardOutlineTolerance,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,9 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardOutlineTolerance() {
 	const dispatch = useDispatch();
-	const boardOutlineToleranceOptions = useSelector((state: ReduxState) => state.flexPcb.boardOutlineToleranceOptions);
-	const boardOutlineTolerance = useSelector((state: ReduxState) => state.flexPcb.boardOutlineTolerance);
-	const layer = useSelector((state: ReduxState) => state.flexPcb.layer);
+	const flexPcb = useSelector(selectFlexPcb);
+	const boardOutlineToleranceOptions = useSelector(selectBoardOutlineToleranceOptions);
+	const boardOutlineTolerance = useSelector(selectBoardOutlineTolerance);
+	const layer = useSelector(selectLayer);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -26,7 +33,7 @@ export default function BoardOutlineTolerance() {
 				value={boardOutlineTolerance}
 				onChange={async value => {
 					dispatch(setBoardOutlineTolerance(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

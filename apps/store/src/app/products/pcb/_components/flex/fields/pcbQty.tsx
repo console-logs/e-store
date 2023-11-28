@@ -1,8 +1,14 @@
 "use client";
 import PcbQtyTip from "@/app/products/pcb/_components/flex/tips/pcbQtyTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPcbPrice, setPcbQty } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectDesignFormat,
+	selectFlexPcb,
+	selectPcbQty,
+	selectPcbQtyOptions,
+	setPcbPrice,
+	setPcbQty,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,9 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PcbQuantity() {
 	const dispatch = useDispatch();
-	const pcbQtyOptions = useSelector((state: ReduxState) => state.flexPcb.pcbQtyOptions);
-	const pcbQty = useSelector((state: ReduxState) => state.flexPcb.pcbQty);
-	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
+	const flexPcb = useSelector(selectFlexPcb);
+	const pcbQtyOptions = useSelector(selectPcbQtyOptions);
+	const pcbQty = useSelector(selectPcbQty);
+	const designFormat = useSelector(selectDesignFormat);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -26,7 +33,7 @@ export default function PcbQuantity() {
 				value={pcbQty}
 				onChange={async value => {
 					dispatch(setPcbQty(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

@@ -1,8 +1,13 @@
 "use client";
 import DispatchUnitTip from "@/app/products/pcb/_components/flex/tips/dispatchUnitTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setDispatchUnit, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectDispatchUnit,
+	selectDispatchUnitOptions,
+	selectFlexPcb,
+	setDispatchUnit,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DispatchUnit() {
 	const dispatch = useDispatch();
-	const dispatchUnitOptions = useSelector((state: ReduxState) => state.flexPcb.dispatchUnitOptions);
-	const dispatchUnit = useSelector((state: ReduxState) => state.flexPcb.dispatchUnit);
+	const flexPcb = useSelector(selectFlexPcb);
+	const dispatchUnitOptions = useSelector(selectDispatchUnitOptions);
+	const dispatchUnit = useSelector(selectDispatchUnit);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +31,7 @@ export default function DispatchUnit() {
 				value={dispatchUnit}
 				onChange={async value => {
 					dispatch(setDispatchUnit(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

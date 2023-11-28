@@ -1,8 +1,16 @@
 "use client";
 import EdgeRailSizeTip from "@/app/products/pcb/_components/flex/tips/edgeRailSizeTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setEdgeRailSize, setPcbPrice, updatePanelSize } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectDesignFormat,
+	selectEdgeRailSize,
+	selectEdgeRailSizeOptions,
+	selectEdgeRails,
+	selectFlexPcb,
+	setEdgeRailSize,
+	setPcbPrice,
+	updatePanelSize,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,10 +20,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function EdgeRailsSize() {
 	const dispatch = useDispatch();
-	const edgeRailSize = useSelector((state: ReduxState) => state.flexPcb.edgeRailSize);
-	const edgeRailSizeOptions = useSelector((state: ReduxState) => state.flexPcb.edgeRailSizeOptions);
-	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
-	const edgeRails = useSelector((state: ReduxState) => state.flexPcb.edgeRails);
+	const flexPcb = useSelector(selectFlexPcb);
+	const edgeRailSize = useSelector(selectEdgeRailSize);
+	const edgeRailSizeOptions = useSelector(selectEdgeRailSizeOptions);
+	const designFormat = useSelector(selectDesignFormat);
+	const edgeRails = useSelector(selectEdgeRails);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -33,7 +42,7 @@ export default function EdgeRailsSize() {
 				onChange={async value => {
 					dispatch(setEdgeRailSize(value));
 					dispatch(updatePanelSize());
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

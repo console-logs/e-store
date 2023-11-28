@@ -1,8 +1,15 @@
 "use client";
 import PanelQtyTip from "@/app/products/pcb/_components/flex/tips/panelQtyTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setPanelQty, setPcbPrice, updateSinglePiecesQty } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectDesignFormat,
+	selectFlexPcb,
+	selectPanelQty,
+	selectPanelQtyOptions,
+	setPanelQty,
+	setPcbPrice,
+	updateSinglePiecesQty,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,13 +19,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PanelQuantity() {
 	const dispatch = useDispatch();
-	const panelQtyOptions = useSelector((state: ReduxState) => state.flexPcb.panelQtyOptions);
-	const panelQty = useSelector((state: ReduxState) => state.flexPcb.panelQty);
-	const designFormat = useSelector((state: ReduxState) => state.flexPcb.designFormat);
+	const flexPcb = useSelector(selectFlexPcb);
+	const panelQtyOptions = useSelector(selectPanelQtyOptions);
+	const panelQty = useSelector(selectPanelQty);
+	const designFormat = useSelector(selectDesignFormat);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
-		<div hidden={designFormat === "Single PCB" ? true : false}>
+		<div hidden={designFormat === "Single PCB"}>
 			<Label>
 				Panel Quantity <PanelQtyTip />
 			</Label>
@@ -27,7 +35,7 @@ export default function PanelQuantity() {
 				onChange={async value => {
 					dispatch(setPanelQty(value));
 					dispatch(updateSinglePiecesQty());
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

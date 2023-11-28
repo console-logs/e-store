@@ -1,8 +1,13 @@
 "use client";
 import LeadTimeTip from "@/app/products/pcb/_components/flex/tips/leadTimeTip";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import { setLeadTime, setPcbPrice } from "@/redux/reducers/flexPcbSlice";
-import { reduxStore, type ReduxState } from "@/redux/store";
+import {
+	selectFlexPcb,
+	selectLeadTime,
+	selectLeadTimeOptions,
+	setLeadTime,
+	setPcbPrice,
+} from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -12,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function LeadTime() {
 	const dispatch = useDispatch();
-	const leadTimeOptions = useSelector((state: ReduxState) => state.flexPcb.leadTimeOptions);
-	const leadTime = useSelector((state: ReduxState) => state.flexPcb.leadTime);
+	const flexPcb = useSelector(selectFlexPcb);
+	const leadTimeOptions = useSelector(selectLeadTimeOptions);
+	const leadTime = useSelector(selectLeadTime);
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
@@ -25,7 +31,7 @@ export default function LeadTime() {
 				value={leadTime}
 				onChange={async value => {
 					dispatch(setLeadTime(value));
-					const price = await calculatePcbPrice(reduxStore.getState().flexPcb).unwrap();
+					const price = await calculatePcbPrice(flexPcb).unwrap();
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
