@@ -18,7 +18,10 @@ export const apiSlice = createApi({
 				body: fabSpecs,
 			}),
 		}),
-		calculatePcbAssemblyPrice: builder.mutation<number, PcbAssemblyFabSpecsType>({
+		calculatePcbAssemblyPrice: builder.mutation<
+			{ assemblyCost: number; setupCost: number },
+			PcbAssemblyFabSpecsType
+		>({
 			query: (assemblySpecs: PcbAssemblyFabSpecsType) => ({
 				url: "/pcb-assembly",
 				method: "POST",
