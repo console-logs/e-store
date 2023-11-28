@@ -172,7 +172,7 @@ export const selectComponentsProcurementOptions = (state: ReduxState) => state.p
 export const selectTurnaroundTimeOptions = (state: ReduxState) => state.pcbAssembly.turnaroundTimeOptions;
 
 /* Memoised Selector => Output selector performs type transformation */
-export const selectPcbAssembly = createSelector([selectPcbAssemblyState], pcbAssembly => {
+export const selectPcbAssemblyMemomized = createSelector([selectPcbAssemblyState], pcbAssembly => {
 	const pcbAssemblyFabSpecs: PcbAssemblyFabSpecsType = {
 		projectName: pcbAssembly.projectName,
 		boardType: pcbAssembly.boardType,
