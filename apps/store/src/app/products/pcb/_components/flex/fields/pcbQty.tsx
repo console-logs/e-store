@@ -1,5 +1,5 @@
 "use client";
-import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
+import HelpPopover from "@/app/products/pcb/_components/common/help";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,

@@ -1,4 +1,4 @@
-import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
+import HelpPopover from "@/app/products/pcb/_components/common/help";
 import { selectDesignFormat, selectPanelSizeX, selectPanelSizeY } from "@/redux/reducers/flexPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";

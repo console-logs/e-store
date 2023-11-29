@@ -1,4 +1,4 @@
-import FooterLink from "@/app/_components/footer/footerLink";
+import FooterLink from "@/app/_components/footer/footLink";
 import { COUNTRY, WEBSITE_NAME } from "@/lib/constants";
 import {
   ABOUT_PAGE,
