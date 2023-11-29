@@ -25,7 +25,9 @@ export default function PcbQuantity() {
 	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
-		<div hidden={designFormat !== "Single PCB"}>
+		<div
+			className="w-full"
+			hidden={designFormat !== "Single PCB"}>
 			<Label>
 				PCB Quantity <PcbQtyTip />
 			</Label>

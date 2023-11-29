@@ -21,7 +21,7 @@ export default function AssemblyQuantity() {
 	const [calculatePcbPrice] = useCalculatePcbAssemblyPriceMutation();
 
 	return (
-		<div>
+		<div className="w-full">
 			<Label>
 				Assembly Quantity <span>{boardType === "Single PCB" ? "(No. of Pcbs)" : "(No. of Panels)"}</span>
 				<AssemblyQtyTip />

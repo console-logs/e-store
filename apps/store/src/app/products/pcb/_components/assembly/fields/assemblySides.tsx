@@ -24,7 +24,7 @@ export default function AssemblySides() {
 	const [calculatePcbPrice] = useCalculatePcbAssemblyPriceMutation();
 
 	return (
-		<div>
+		<div className="w-full">
 			<Label>
 				Assembly Sides
 				<AssemblySidesTip />

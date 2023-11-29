@@ -24,7 +24,7 @@ export default function BoardType() {
 	const [calculatePcbPrice] = useCalculatePcbAssemblyPriceMutation();
 
 	return (
-		<div>
+		<div className="w-full">
 			<Label>
 				Board Type <BoardTypeTip />
 			</Label>
