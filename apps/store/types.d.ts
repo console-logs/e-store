@@ -599,6 +599,7 @@ type PcbPriceSummaryProps = {
 	tentativeDispatchDate: string;
 };
 
+/* Part Types */
 type PartResultsType = {
 	Parts: Record<string, PartDataType>;
 	Errors: ErrorsType | null;
@@ -630,4 +631,3 @@ type PriceBreakType = {
 	Price: string;
 	Currency: string;
 };
-
