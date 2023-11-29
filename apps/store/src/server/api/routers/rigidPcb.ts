@@ -3,8 +3,7 @@ import { RigidPcbFabSpecsTypeSchema } from "@/schema/pcb";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const rigidPcbRouter = createTRPCRouter({
-	getPrice: publicProcedure.input(RigidPcbFabSpecsTypeSchema).query(async ({ input }) => {
-		
+	getPrice: publicProcedure.input(RigidPcbFabSpecsTypeSchema).query(({ input }) => {
 		// set inactive fields to null.
 		if (input.designFormat !== "Single PCB") {
 			input.pcbQty = null;
