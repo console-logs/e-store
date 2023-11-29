@@ -1,4 +1,4 @@
-import GoldThicknessTip from "@/app/products/pcb/_components/rigid/tips/goldThicknessTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectGoldThickness,
@@ -73,5 +73,13 @@ export default function GoldThickness() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function GoldThicknessTip() {
+	return (
+		<HelpPopover>
+			<p>The thickness of the gold layer for ENIG surface finish.</p>
+		</HelpPopover>
 	);
 }

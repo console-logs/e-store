@@ -1,4 +1,4 @@
-import OuterCuWeightTip from "@/app/products/pcb/_components/rigid/tips/outerCuWeightTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectOuterCuWeight,
@@ -71,5 +71,16 @@ export default function OuterCuWeight() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function OuterCuWeightTip() {
+	return (
+		<HelpPopover>
+			<p>
+				Copper weight on the outer layers(top and bottom). The copper weight for inner layers is 0.5 oz by
+				default.
+			</p>
+		</HelpPopover>
 	);
 }

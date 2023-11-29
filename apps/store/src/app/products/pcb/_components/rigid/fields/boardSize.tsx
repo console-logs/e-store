@@ -1,5 +1,5 @@
 "use client";
-import BoardSizeTip from "@/app/products/pcb/_components/rigid/tips/boardSizeTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardSizeX,
@@ -62,5 +62,13 @@ export default function BoardSize() {
 				/>
 			</div>
 		</div>
+	);
+}
+
+function BoardSizeTip() {
+	return (
+		<HelpPopover>
+			<p>The dimension of single PCB or PCB panel you upload.</p>
+		</HelpPopover>
 	);
 }

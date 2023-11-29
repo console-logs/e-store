@@ -1,4 +1,4 @@
-import CastellatedHoleEdgesTip from "@/app/products/pcb/_components/rigid/tips/castellatedHoleEdgesTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectCastellatedHoles,
@@ -73,5 +73,13 @@ export default function CastellatedHolesEdges() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function CastellatedHoleEdgesTip() {
+	return (
+		<HelpPopover>
+			<p>The number of PCB-edges that has castellated holes.</p>
+		</HelpPopover>
 	);
 }

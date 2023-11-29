@@ -1,4 +1,4 @@
-import EdgeRailSizeTip from "@/app/products/pcb/_components/rigid/tips/edgeRailsSizeTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
@@ -79,5 +79,13 @@ export default function EdgeRailsSize() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function EdgeRailSizeTip() {
+	return (
+		<HelpPopover>
+			<p>Edge rails that are added for increasing component-to-board-edge clearances are to be at least 5mm.</p>
+		</HelpPopover>
 	);
 }

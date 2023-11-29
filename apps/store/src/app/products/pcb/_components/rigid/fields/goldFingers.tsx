@@ -1,4 +1,4 @@
-import GoldfingerTip from "@/app/products/pcb/_components/rigid/tips/goldFingersTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectGoldFingers,
@@ -75,5 +75,17 @@ export default function GoldFingers() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function GoldfingerTip() {
+	return (
+		<HelpPopover>
+			<p>
+				Gold fingers are the gold-plated columns along the connecting edges of PCBs. Only when ENIG surface
+				finish is chosen, the fingers will be gold-plated. If you choose HASL surface finish, we will use HASL
+				as edge connect plating.
+			</p>
+		</HelpPopover>
 	);
 }

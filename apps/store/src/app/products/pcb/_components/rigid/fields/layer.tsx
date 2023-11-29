@@ -1,5 +1,5 @@
 "use client";
-import LayerTip from "@/app/products/pcb/_components/rigid/tips/layerTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectLayer,
@@ -86,5 +86,13 @@ export default function Layer() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function LayerTip() {
+	return (
+		<HelpPopover>
+			<p>The number of copper layers in your board.</p>
+		</HelpPopover>
 	);
 }

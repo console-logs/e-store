@@ -1,4 +1,4 @@
-import PanelQtyTip from "@/app/products/pcb/_components/rigid/tips/panelQtyTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
@@ -73,5 +73,13 @@ export default function PanelQuantity() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function PanelQtyTip() {
+	return (
+		<HelpPopover>
+			<p>The quantity of Panels you need.</p>
+		</HelpPopover>
 	);
 }

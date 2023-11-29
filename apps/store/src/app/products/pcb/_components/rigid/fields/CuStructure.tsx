@@ -1,3 +1,4 @@
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
@@ -24,7 +25,9 @@ export default function CopperStructure() {
 
 	return (
 		<div hidden={!(baseMaterial === "CopperCore")}>
-			<Label>Copper Structure</Label>
+			<Label>
+				Copper Structure <CuStructureTip />
+			</Label>
 			<Listbox
 				value={copperStructure}
 				onChange={async value => {
@@ -70,5 +73,13 @@ export default function CopperStructure() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function CuStructureTip() {
+	return (
+		<HelpPopover>
+			<p>The type of copper structure for your PCB.</p>
+		</HelpPopover>
 	);
 }

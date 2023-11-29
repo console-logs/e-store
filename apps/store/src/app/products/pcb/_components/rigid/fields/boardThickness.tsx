@@ -1,4 +1,4 @@
-import BoardThicknessTip from "@/app/products/pcb/_components/rigid/tips/boardThicknessTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
@@ -73,5 +73,13 @@ export default function BoardThickness() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function BoardThicknessTip() {
+	return (
+		<HelpPopover>
+			<p>The thickness of finished board. Board thickness tolerance is ±10%.</p>
+		</HelpPopover>
 	);
 }

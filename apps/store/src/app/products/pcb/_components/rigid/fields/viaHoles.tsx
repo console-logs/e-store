@@ -1,4 +1,4 @@
-import ViaHolesTip from "@/app/products/pcb/_components/rigid/tips/viaHolesTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
@@ -38,5 +38,13 @@ export default function ViaHoles() {
 				value={viaHoles}
 			/>
 		</div>
+	);
+}
+
+function ViaHolesTip() {
+	return (
+		<HelpPopover>
+			<p>The number of via holes in the PCB.</p>
+		</HelpPopover>
 	);
 }

@@ -1,4 +1,4 @@
-import BreakdownVoltageTip from "@/app/products/pcb/_components/rigid/tips/breakdownVoltageTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
@@ -73,5 +73,16 @@ export default function BreakdownVoltage() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function BreakdownVoltageTip() {
+	return (
+		<HelpPopover>
+			<p>
+				The minimum voltage that causes a portion of an insulator experiences electrical breakdown and becomes
+				electrically conductive.
+			</p>
+		</HelpPopover>
 	);
 }

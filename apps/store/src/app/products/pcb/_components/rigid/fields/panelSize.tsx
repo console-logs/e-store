@@ -1,4 +1,4 @@
-import PanelSizeTip from "@/app/products/pcb/_components/rigid/tips/panelSizeTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { selectDesignFormat, selectPanelSizeX, selectPanelSizeY } from "@/redux/reducers/rigidPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -40,5 +40,13 @@ export default function PanelSize() {
 				/>
 			</div>
 		</div>
+	);
+}
+
+function PanelSizeTip() {
+	return (
+		<HelpPopover>
+			<p>The size of the panel after taking into consideration the edge rails and PCB size.</p>
+		</HelpPopover>
 	);
 }

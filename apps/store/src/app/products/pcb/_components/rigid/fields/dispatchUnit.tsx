@@ -1,4 +1,4 @@
-import DispatchUnitTip from "@/app/products/pcb/_components/rigid/tips/dispatchUnitTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDispatchUnit,
@@ -71,5 +71,13 @@ export default function DispatchUnit() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function DispatchUnitTip() {
+	return (
+		<HelpPopover>
+			<p>The delivery format in which you ask us to ship your PCBs after manufacturing.</p>
+		</HelpPopover>
 	);
 }
