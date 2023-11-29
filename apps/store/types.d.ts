@@ -269,7 +269,6 @@ type RigidPcbFabSpecsType = BaseRigidPcbFabSpecsType & {
 	edgeRailSize: null | "5mm" | "7mm" | "10mm";
 	panelSizeX: null | number;
 	panelSizeY: null | number;
-	outerCuWeight: "1 oz" | "2 oz";
 	copperStructure: null | "Direct Heatsink";
 	thermalConductivity: null | 1 | 380;
 	breakDownVoltage: null | 3000;
@@ -631,3 +630,164 @@ type PriceBreakType = {
 	Price: string;
 	Currency: string;
 };
+
+/* Rate card Types */
+type RigidPcbRateCardType = {
+	baseMaterial: {
+		FR4: number;
+		Aluminum: number;
+		CopperCore: number;
+		Rogers: number;
+	};
+	layer: {
+		1: number;
+		2: number;
+		4: number;
+		6: number;
+		8: number;
+		10: number;
+	};
+	dimensions: {
+		boardSizeX: number;
+		boardSizeY: number;
+	};
+	differentDesigns: {
+		"1 Design": number;
+		"2 Designs": number;
+		"3 Designs": number;
+		"4 Designs": number;
+	};
+	designFormat: {
+		"Single PCB": number;
+		"Panel by Customer": number;
+		"Panel by Manufacturer": number;
+	};
+	pcbThickness: {
+		0.4: number;
+		0.6: number;
+		0.8: number;
+		1.0: number;
+		1.2: number;
+		1.6: number;
+		2.0: number;
+	};
+	soldermaskColor: {
+		Green: number;
+		Purple: number;
+		Red: number;
+		Black: number;
+		Yellow: number;
+		Blue: number;
+		White: number;
+	};
+	silkscreenColor: {
+		Black: number;
+		White: number;
+	};
+	surfaceFinish: {
+		"HASL(with lead)": number;
+		"LeadFree HASL": number;
+		ENIG: number;
+		OSP: number;
+	};
+	outerCuWeight: {
+		"1 oz": number;
+		"2 oz": number;
+	};
+	goldFingers: {
+		Yes: number;
+		No: number;
+	};
+	castellatedHoles: {
+		Yes: number;
+		No: number;
+	};
+	leadTime: {
+		"3 Working days": number;
+		"5 Working days": number;
+		"7 Working days": number;
+		"10 Working days": number;
+	};
+	dispatchUnit: {
+		Pcb: {
+			1: number;
+			2_5: number;
+			6_10: number;
+			above10: number;
+		};
+		Panel: number;
+	};
+	quantity: {
+		upTo100: number;
+		101_200: number;
+		201_300: number;
+		301_400: number;
+		above400: number;
+	};
+	viaCovering: {
+		tented: number;
+		untented: number;
+		plugged: number;
+		epoxyFilledCapped: number;
+	};
+	boardOutlineTolerance: {
+		regularCncRouting: number;
+		precisionCncRouting: number;
+	};
+	goldThickness: {
+		'1 U"': number;
+		'2 U"': number;
+	};
+	edgeRailSize: {
+		"5mm": number;
+		"7mm": number;
+		"10mm": number;
+	};
+	thermalConductivity: {
+		1: number;
+		380: number;
+	};
+	breakDownVoltage: {
+		3000: number;
+	};
+	copperStructure: {
+		directHeatSink: number;
+	};
+	innerCuWeight: {
+		"0.5 oz": number;
+		"1 oz": number;
+		"2 oz": number;
+	};
+	impedenceControl: {
+		Yes: number;
+		No: number;
+	};
+	castellatedHolesEdges: {
+		1: number;
+		2: number;
+		3: number;
+		4: number;
+	};
+	chamferedGoldFingers: {
+		No: number;
+		Yes: number;
+	};
+	minViaHoleSizeAndDiameter: {
+		"0.3mm/(0.4/0.45mm)": number;
+		"0.25mm/(0.35/0.40mm)": number;
+		"0.2mm/(0.3/0.35mm)": number;
+		"0.15mm/(0.25/0.3mm)": number;
+	};
+	material: {
+		"FR4-Standard TG 135-140": number;
+		"FR-4 TG155": number;
+	};
+	viaHoles: {
+		1_50: number;
+		51_100: number;
+		101_150: number;
+		151_200: number;
+		above200: number;
+	};
+};
+

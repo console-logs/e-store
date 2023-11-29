@@ -1,5 +1,4 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
 	selectBaseMaterialOptions,
@@ -18,6 +17,7 @@ import {
 	updateThermalConductivity,
 	updateViaCovering,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCApi } from "@/trpc/server";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -30,7 +30,6 @@ export default function BaseMaterial() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const baseMaterialOptions = useSelector(selectBaseMaterialOptions);
 	const baseMaterial = useSelector(selectBaseMaterial);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	async function handleChange(value: "FR4" | "Aluminum" | "CopperCore" | "Rogers") {
 		dispatch(setBaseMaterial(value));
@@ -45,7 +44,7 @@ export default function BaseMaterial() {
 		dispatch(updateCastellatedHoles());
 		dispatch(updateMaterial());
 		dispatch(updateViaCovering());
-		const price = await calculatePcbPrice(rigidPcb).unwrap();
+		const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 		dispatch(setPcbPrice(price));
 	}
 
