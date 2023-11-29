@@ -599,9 +599,35 @@ type PcbPriceSummaryProps = {
 	tentativeDispatchDate: string;
 };
 
-type PartListType = {
-	partNumber: string;
-	description: string;
-	datasheetUrl: string;
-	stock: string;
+type PartResultsType = {
+	Parts: Record<string, PartDataType>;
+	Errors: ErrorsType | null;
 };
+
+type PartDataType = {
+	Availability: string;
+	DatasheetUrl: string;
+	Description: string;
+	ImagePath: string;
+	Category: string;
+	Manufacturer: string;
+	PartNumber: string;
+	Min: string;
+	Mult: string;
+	BCDPercent: number;
+	PriceBreaks: Array<PriceBreakType>;
+	ROHSStatus: string;
+	HSCode: string;
+};
+
+type ErrorsType = {
+	Status: number;
+	Text: string;
+};
+
+type PriceBreakType = {
+	Quantity: number;
+	Price: string;
+	Currency: string;
+};
+
