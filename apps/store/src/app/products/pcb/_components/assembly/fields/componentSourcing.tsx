@@ -1,5 +1,4 @@
-"use client";
-import ComponentSourcingTip from "@/app/products/pcb/_components/assembly/tips/componentSourcingTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectComponentsProcurement,
@@ -75,5 +74,13 @@ export default function ComponentSourcing() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function ComponentSourcingTip() {
+	return (
+		<HelpPopover>
+			<p>Should we source the components on your behalf?</p>
+		</HelpPopover>
 	);
 }

@@ -1,5 +1,4 @@
-"use client";
-import TurnAroundTimeTip from "@/app/products/pcb/_components/assembly/tips/turnAroundTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectPcbAssemblyMemomized,
@@ -74,5 +73,13 @@ export default function TurnAroundTime() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function TurnAroundTimeTip() {
+	return (
+		<HelpPopover>
+			<p>The time it takes to ship your boards.</p>
+		</HelpPopover>
 	);
 }

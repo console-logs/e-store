@@ -1,5 +1,4 @@
-"use client";
-import FunctionalTestTip from "@/app/products/pcb/_components/assembly/tips/functionalTestTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectFunctionalTest,
@@ -74,5 +73,13 @@ export default function FunctionalTest() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function FunctionalTestTip() {
+	return (
+		<HelpPopover>
+			<p>Do you want us to perform functional TemperatureAndHumiditySensitivity on your boards?</p>
+		</HelpPopover>
 	);
 }

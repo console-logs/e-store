@@ -1,5 +1,4 @@
-"use client";
-import UniqueSmdTip from "@/app/products/pcb/_components/assembly/tips/uniqueSmdTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectNumOfSmdComponents,
@@ -40,5 +39,13 @@ export default function SmdComponentsQuantity() {
 				value={numOfSmdComponents}
 			/>
 		</div>
+	);
+}
+
+function UniqueSmdTip() {
+	return (
+		<HelpPopover>
+			<p>How many number of SMD components are present on the board.</p>
+		</HelpPopover>
 	);
 }

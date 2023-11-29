@@ -1,5 +1,4 @@
-"use client";
-import PcbsPerPanelTip from "@/app/products/pcb/_components/assembly/tips/pcbsPerPanelTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardType,
@@ -41,5 +40,13 @@ export default function PcbsPerPanel() {
 				value={pcbsPerPanel === 0 ? "" : pcbsPerPanel}
 			/>
 		</div>
+	);
+}
+
+function PcbsPerPanelTip() {
+	return (
+		<HelpPopover>
+			<p>How many single pcbs you have on your panel</p>
+		</HelpPopover>
 	);
 }

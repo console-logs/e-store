@@ -1,5 +1,4 @@
-"use client";
-import UniqueBGATip from "@/app/products/pcb/_components/assembly/tips/uniqueBGATip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectNumOfBgaComponents,
@@ -40,5 +39,13 @@ export default function BgaComponentsQuantity() {
 				}}
 			/>
 		</div>
+	);
+}
+
+function UniqueBGATip() {
+	return (
+		<HelpPopover>
+			<p>How many number of BGA/QFP/QFN components are present on the board.</p>
+		</HelpPopover>
 	);
 }

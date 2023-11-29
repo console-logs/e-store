@@ -1,5 +1,4 @@
-"use client";
-import UploadBomTip from "@/app/products/pcb/_components/assembly/tips/uploadBomTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { setBomFile } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -30,5 +29,13 @@ export default function UploadBomFile() {
 				}}
 			/>
 		</div>
+	);
+}
+
+function UploadBomTip() {
+	return (
+		<HelpPopover>
+			<p>We only accept .xlsx / .csv files and max size of the file should not be more than 20 MB</p>
+		</HelpPopover>
 	);
 }

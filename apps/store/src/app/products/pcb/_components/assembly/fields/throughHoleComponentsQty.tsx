@@ -1,5 +1,4 @@
-"use client";
-import UniqueThroughHoleTip from "@/app/products/pcb/_components/assembly/tips/uniquethroughHoleTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectNumOfThroughHoleComponents,
@@ -40,5 +39,13 @@ export default function ThroughHoleComponentsQuantity() {
 				value={numOfThroughHoleComponents}
 			/>
 		</div>
+	);
+}
+
+function UniqueThroughHoleTip() {
+	return (
+		<HelpPopover>
+			<p>How many number of through-hole components are present on the board.</p>
+		</HelpPopover>
 	);
 }

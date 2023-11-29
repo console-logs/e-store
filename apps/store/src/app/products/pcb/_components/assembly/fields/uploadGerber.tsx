@@ -1,5 +1,4 @@
-"use client";
-import UploadGerberTip from "@/app/products/pcb/_components/assembly/tips/uploadGerberTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { setGerberFile } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -30,5 +29,13 @@ export default function UploadGerberFile() {
 				}}
 			/>
 		</div>
+	);
+}
+
+function UploadGerberTip() {
+	return (
+		<HelpPopover>
+			<p>We only accept zip files and max size of the file should not be more than 20 MB</p>
+		</HelpPopover>
 	);
 }

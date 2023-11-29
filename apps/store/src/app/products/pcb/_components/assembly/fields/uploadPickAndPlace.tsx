@@ -1,5 +1,4 @@
-"use client";
-import UploadPickAndPlaceTip from "@/app/products/pcb/_components/assembly/tips/uploadPickNPlaceTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { setPickAndPlaceFile } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -29,5 +28,13 @@ export default function UploadPickAndPlaceFile() {
 				}}
 			/>
 		</div>
+	);
+}
+
+function UploadPickAndPlaceTip() {
+	return (
+		<HelpPopover>
+			<p>We only accept zip files and max size of the file should not be more than 20 MB</p>
+		</HelpPopover>
 	);
 }

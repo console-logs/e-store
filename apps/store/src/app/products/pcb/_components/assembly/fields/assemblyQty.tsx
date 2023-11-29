@@ -1,13 +1,13 @@
 "use client";
-import AssemblyQtyTip from "@/app/products/pcb/_components/assembly/tips/assemblyQtyTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
-  selectBoardType,
-  selectPcbAssemblyMemomized,
-  selectQuantity,
-  setOneTimeSetupCost,
-  setPcbPrice,
-  setQuantity,
+	selectBoardType,
+	selectPcbAssemblyMemomized,
+	selectQuantity,
+	setOneTimeSetupCost,
+	setPcbPrice,
+	setQuantity,
 } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -42,5 +42,13 @@ export default function AssemblyQuantity() {
 				value={quantity === 0 ? "" : quantity}
 			/>
 		</div>
+	);
+}
+
+function AssemblyQtyTip() {
+	return (
+		<HelpPopover>
+			<p>The quantity you&apos;d want to get assembled</p>
+		</HelpPopover>
 	);
 }

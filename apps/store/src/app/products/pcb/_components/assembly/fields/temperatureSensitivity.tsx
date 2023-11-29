@@ -1,5 +1,4 @@
-"use client";
-import TempAndHumidityTip from "@/app/products/pcb/_components/assembly/tips/t&hTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectPcbAssemblyMemomized,
@@ -75,5 +74,13 @@ export default function TemperatureAndHumiditySensitivity() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function TempAndHumidityTip() {
+	return (
+		<HelpPopover>
+			<p>The temperature and humidity sensitivity tolerance of your components</p>
+		</HelpPopover>
 	);
 }

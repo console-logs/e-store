@@ -1,5 +1,4 @@
-"use client";
-import ProjectNameTip from "@/app/products/pcb/_components/assembly/tips/projectNameTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { selectProjectName, setProjectName } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -25,5 +24,13 @@ export default function ProjectName() {
 				value={projectName}
 			/>
 		</div>
+	);
+}
+
+function ProjectNameTip() {
+	return (
+		<HelpPopover>
+			<p>This is the name of your Project. It is used for the reference in the order confirmation email.</p>
+		</HelpPopover>
 	);
 }

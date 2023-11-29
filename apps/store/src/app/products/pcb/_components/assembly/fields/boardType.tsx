@@ -1,5 +1,5 @@
 "use client";
-import BoardTypeTip from "@/app/products/pcb/_components/assembly/tips/boardTypeTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardType,
@@ -74,5 +74,13 @@ export default function BoardType() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function BoardTypeTip() {
+	return (
+		<HelpPopover>
+			<p>This is the design you supply to us.</p>
+		</HelpPopover>
 	);
 }

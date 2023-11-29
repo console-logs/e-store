@@ -1,5 +1,5 @@
 "use client";
-import AssemblySidesTip from "@/app/products/pcb/_components/assembly/tips/assemblySidesTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectAssemblySideOptions,
@@ -75,5 +75,13 @@ export default function AssemblySides() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function AssemblySidesTip() {
+	return (
+		<HelpPopover>
+			<p>The side on which you&apos;d want us to place the components</p>
+		</HelpPopover>
 	);
 }

@@ -1,5 +1,4 @@
-"use client";
-import ConformalCoatTip from "@/app/products/pcb/_components/assembly/tips/conformalCoatTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectConformalCoating,
@@ -75,5 +74,13 @@ export default function ConformalCoating() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function ConformalCoatTip() {
+	return (
+		<HelpPopover>
+			<p>Should we add a conformal coating to your board?</p>
+		</HelpPopover>
 	);
 }

@@ -1,5 +1,4 @@
-"use client";
-import DepanelTip from "@/app/products/pcb/_components/assembly/tips/depanelTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDePanel,
@@ -75,5 +74,13 @@ export default function Depanel() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function DepanelTip() {
+	return (
+		<HelpPopover>
+			<p>Should we de-panel your board?</p>
+		</HelpPopover>
 	);
 }
