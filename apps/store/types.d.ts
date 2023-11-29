@@ -566,3 +566,35 @@ type PcbAssemblyStoreStateType = PcbAssemblyFabSpecsType & {
 	componentsProcurementOptions: Array<"TurnKey" | "Consigned" | "Combo">;
 	turnaroundTimeOptions: Array<"Standard 5-7 days" | "Expedited 3-4 days">;
 };
+
+type PcbPriceSummaryProps = {
+	pcbPrice: number;
+	designFormat: "Single PCB" | "Panel by Customer" | "Panel by Manufacturer";
+	pcbQty:
+		| 5
+		| 10
+		| 15
+		| 20
+		| 25
+		| 30
+		| 50
+		| 75
+		| 100
+		| 125
+		| 150
+		| 200
+		| 250
+		| 300
+		| 400
+		| 450
+		| 500
+		| 600
+		| 700
+		| 800
+		| 900
+		| 1000
+		| 1500
+		| 2000;
+	singlePiecesQty: number;
+	tentativeDispatchDate: string;
+};
