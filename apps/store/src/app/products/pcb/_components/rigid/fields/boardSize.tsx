@@ -24,7 +24,7 @@ export default function BoardSize() {
 	return (
 		<div className="w-full">
 			<Label>
-				Board Dimensions (mm) <BoardSizeTip />
+				PCB / Panel Dimensions (mm) <BoardSizeTip />
 			</Label>
 			<div className="grid grid-cols-11">
 				<Input
