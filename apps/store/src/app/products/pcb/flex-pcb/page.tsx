@@ -33,7 +33,7 @@ import Stiffener from "@/app/products/pcb/_components/flex/fields/stiffener";
 import SurfaceFinish from "@/app/products/pcb/_components/flex/fields/surfaceFinish";
 import ThreeMTapeThickness from "@/app/products/pcb/_components/flex/fields/threeMTapeThickness";
 import UploadDesignFile from "@/app/products/pcb/_components/flex/fields/uploadDesignFile";
-import FlexPcbPriceSummary from "@/app/products/pcb/_components/flex/priceSummary";
+import FlexPcbPriceSummary from "@/app/products/pcb/_components/flex/flexSummary";
 import PcbQuantity from "@/app/products/pcb/_components/flex/fields/pcbQty";
 import { selectFlexPcbMemoized } from "@/redux/reducers/flexPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";

@@ -38,7 +38,7 @@ import ThermalConductivity from "@/app/products/pcb/_components/rigid/fields/the
 import UploadDesignFile from "@/app/products/pcb/_components/rigid/fields/uploadDesignFiles";
 import ViaCovering from "@/app/products/pcb/_components/rigid/fields/viaCovering";
 import ViaHoles from "@/app/products/pcb/_components/rigid/fields/viaHoles";
-import RigidPcbPriceSummary from "@/app/products/pcb/_components/rigid/priceSummary";
+import RigidPcbPriceSummary from "@/app/products/pcb/_components/rigid/rigidSummary";
 import { selectRigidPcbMemoized } from "@/redux/reducers/rigidPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";

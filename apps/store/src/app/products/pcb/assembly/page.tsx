@@ -18,7 +18,7 @@ import UniqueComponentsQuantity from "@/app/products/pcb/_components/assembly/fi
 import UploadBomFile from "@/app/products/pcb/_components/assembly/fields/uploadBom";
 import UploadGerberFile from "@/app/products/pcb/_components/assembly/fields/uploadGerber";
 import UploadPickAndPlaceFile from "@/app/products/pcb/_components/assembly/fields/uploadPickAndPlace";
-import PcbAssemblyPriceSummary from "@/app/products/pcb/_components/assembly/priceSummary";
+import PcbAssemblyPriceSummary from "@/app/products/pcb/_components/assembly/assemblySummary";
 import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addToCart";
 import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import { selectPcbAssemblyMemomized } from "@/redux/reducers/pcbAssemblySlice";
