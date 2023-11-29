@@ -598,3 +598,10 @@ type PcbPriceSummaryProps = {
 	singlePiecesQty: number;
 	tentativeDispatchDate: string;
 };
+
+type PartListType = {
+	partNumber: string;
+	description: string;
+	datasheetUrl: string;
+	stock: string;
+};
