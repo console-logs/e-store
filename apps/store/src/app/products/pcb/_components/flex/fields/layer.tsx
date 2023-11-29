@@ -1,5 +1,5 @@
 "use client";
-import LayerTip from "@/app/products/pcb/_components/flex/tips/layerTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectFlexPcbMemoized,
@@ -80,3 +80,12 @@ export default function Layer() {
 		</div>
 	);
 }
+
+function LayerTip() {
+	return (
+		<HelpPopover>
+			<p>The number of copper layers in your board.</p>
+		</HelpPopover>
+	);
+}
+

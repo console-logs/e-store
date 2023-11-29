@@ -1,5 +1,4 @@
-"use client";
-import LeadTimeTip from "@/app/products/pcb/_components/flex/tips/leadTimeTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectFlexPcbMemoized,
@@ -72,5 +71,16 @@ export default function LeadTime() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function LeadTimeTip() {
+	return (
+		<HelpPopover>
+			<p>
+				The tentative time from start of physical production to production finished (ready for delivery),
+				provided there are no errors in your design files.
+			</p>
+		</HelpPopover>
 	);
 }

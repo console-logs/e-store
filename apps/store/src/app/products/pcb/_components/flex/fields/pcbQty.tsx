@@ -1,5 +1,5 @@
 "use client";
-import PcbQtyTip from "@/app/products/pcb/_components/flex/tips/pcbQtyTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
@@ -76,5 +76,13 @@ export default function PcbQuantity() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function PcbQtyTip() {
+	return (
+		<HelpPopover>
+			<p>The quantity of PCBs you need.</p>
+		</HelpPopover>
 	);
 }

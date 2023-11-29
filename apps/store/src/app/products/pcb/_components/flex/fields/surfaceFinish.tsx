@@ -1,5 +1,4 @@
-"use client";
-import SurfaceFinishTip from "@/app/products/pcb/_components/flex/tips/surfaceFinishTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectFlexPcbMemoized,
@@ -72,5 +71,16 @@ export default function SurfaceFinish() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function SurfaceFinishTip() {
+	return (
+		<HelpPopover>
+			<p>
+				ENIG has become the most popular surface finish in the industry as it offers flat surface, lead free and
+				RoHS compliant, longer shelf life, and tighter tolerances can be held for plated holes.
+			</p>
+		</HelpPopover>
 	);
 }

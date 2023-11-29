@@ -1,5 +1,4 @@
-"use client";
-import StainlessSteelTip from "@/app/products/pcb/_components/flex/tips/stainlessSteelTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectFlexPcbMemoized,
@@ -74,5 +73,17 @@ export default function StainlessSteelThickness() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function StainlessSteelTip() {
+	return (
+		<HelpPopover>
+			<p>
+				Electro-Deposited (ED) copper is brittle. ED copper can be deposited in thinner layers , which can be
+				beneficial in applications where thinner traces are required, and electrodeposited copper is less
+				expensive.
+			</p>
+		</HelpPopover>
 	);
 }

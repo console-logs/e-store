@@ -1,5 +1,4 @@
-"use client";
-import BoardOutlineTip from "@/app/products/pcb/_components/flex/tips/boardOutlineTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardOutlineTolerance,
@@ -74,5 +73,13 @@ export default function BoardOutlineTolerance() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function BoardOutlineTip() {
+	return (
+		<HelpPopover>
+			<p>The final boardoutline tolerance</p>
+		</HelpPopover>
 	);
 }

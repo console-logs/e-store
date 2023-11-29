@@ -1,5 +1,4 @@
-"use client";
-import UploadDesignTip from "@/app/products/pcb/_components/flex/tips/uploadDesignTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { setDesignFile } from "@/redux/reducers/flexPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -29,5 +28,13 @@ export default function UploadDesignFile() {
 				}}
 			/>
 		</div>
+	);
+}
+
+function UploadDesignTip() {
+	return (
+		<HelpPopover>
+			<p>We only accept zip files and max size of the file should not be more than 16 MB</p>
+		</HelpPopover>
 	);
 }

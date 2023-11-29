@@ -1,5 +1,4 @@
-"use client";
-import BaseMaterialTip from "@/app/products/pcb/_components/flex/tips/baseMaterialTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
@@ -74,3 +73,13 @@ export default function BaseMaterial() {
 		</div>
 	);
 }
+
+function BaseMaterialTip() {
+	return (
+		<HelpPopover>
+			Flex PCBs utilize a thin, flexible polymer film as the substrate for the circuitry. Flex PCBs reduce space
+			consumption, and have lower weight.
+		</HelpPopover>
+	);
+}
+

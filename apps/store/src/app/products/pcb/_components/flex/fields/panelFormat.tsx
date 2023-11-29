@@ -1,5 +1,4 @@
-"use client";
-import PanelFormatTip from "@/app/products/pcb/_components/flex/tips/panelFormatTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectColumns,
@@ -71,3 +70,15 @@ export default function PanelFormat() {
 		</div>
 	);
 }
+
+function PanelFormatTip() {
+	return (
+		<HelpPopover>
+			<p>
+				The number of columns/rows in the board array(PCB panel). For example: 2 Columns, 3 Rows. Maximum 10
+				columns and 10 Rows.
+			</p>
+		</HelpPopover>
+	);
+}
+

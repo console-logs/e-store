@@ -1,5 +1,4 @@
-"use client";
-import GoldThicknessTip from "@/app/products/pcb/_components/flex/tips/goldThicknessTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectFlexPcbMemoized,
@@ -74,5 +73,13 @@ export default function GoldThickness() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function GoldThicknessTip() {
+	return (
+		<HelpPopover>
+			<p>The thickness of the gold layer for ENIG surface finish.</p>
+		</HelpPopover>
 	);
 }

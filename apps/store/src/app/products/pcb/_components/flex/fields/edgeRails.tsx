@@ -1,5 +1,4 @@
-"use client";
-import EdgeRailsTip from "@/app/products/pcb/_components/flex/tips/edgeRailsTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
@@ -76,5 +75,16 @@ export default function EdgeRails() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function EdgeRailsTip() {
+	return (
+		<HelpPopover>
+			<p>
+				Edge rails are added for increasing component-to-board-edge clearances. Edge rails that are added for
+				increasing component-to-board-edge clearances are to be at least 5mm.
+			</p>
+		</HelpPopover>
 	);
 }

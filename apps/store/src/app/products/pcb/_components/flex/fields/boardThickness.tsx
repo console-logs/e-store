@@ -1,5 +1,4 @@
-"use client";
-import BoardThicknessTip from "@/app/products/pcb/_components/flex/tips/boardThicknessTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardThickness,
@@ -76,5 +75,13 @@ export default function BoardThickness() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function BoardThicknessTip() {
+	return (
+		<HelpPopover>
+			<p>The thickness of finished flex PCB. Board thickness tolerance is ±10%.</p>
+		</HelpPopover>
 	);
 }

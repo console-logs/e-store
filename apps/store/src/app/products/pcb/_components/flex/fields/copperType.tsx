@@ -1,5 +1,4 @@
-"use client";
-import CopperTypeTip from "@/app/products/pcb/_components/flex/tips/copperTypeTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectCopperType,
@@ -72,5 +71,17 @@ export default function CopperType() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function CopperTypeTip() {
+	return (
+		<HelpPopover>
+			<p>
+				Electro-Deposited (ED) copper is brittle. ED copper can be deposited in thinner layers , which can be
+				beneficial in applications where thinner traces are required, and electrodeposited copper is less
+				expensive.
+			</p>
+		</HelpPopover>
 	);
 }

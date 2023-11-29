@@ -1,4 +1,4 @@
-import NameTip from "@/app/products/pcb/_components/flex/tips/nameTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { selectPcbName, setPcbName } from "@/redux/reducers/flexPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
@@ -24,5 +24,13 @@ export default function PcbName() {
 				value={pcbname}
 			/>
 		</div>
+	);
+}
+
+function NameTip() {
+	return (
+		<HelpPopover>
+			<p>This is the name of your PCB. It is used for the reference in the order confirmation email.</p>
+		</HelpPopover>
 	);
 }

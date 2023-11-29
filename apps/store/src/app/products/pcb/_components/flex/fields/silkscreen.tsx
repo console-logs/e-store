@@ -1,5 +1,4 @@
-"use client";
-import SilkscreenTip from "@/app/products/pcb/_components/flex/tips/silkscreenTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectFlexPcbMemoized,
@@ -72,5 +71,16 @@ export default function Silkscreen() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function SilkscreenTip() {
+	return (
+		<HelpPopover>
+			<p>
+				The color of the silkscreen layer. This should be a different color from the cover layer to ensure
+				readability.
+			</p>
+		</HelpPopover>
 	);
 }

@@ -1,5 +1,4 @@
-"use client";
-import PolyimideThicknessTip from "@/app/products/pcb/_components/flex/tips/polyimideThicknessTip";
+import HelpPopover from "@/app/products/pcb/_components/common/helpPopover";
 import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectFlexPcbMemoized,
@@ -74,5 +73,16 @@ export default function PolyimideThickness() {
 				</div>
 			</Listbox>
 		</div>
+	);
+}
+
+function PolyimideThicknessTip() {
+	return (
+		<HelpPopover>
+			<p>
+				Commonly used on FPCs with gold finger connectors. A deep-brown polyimide layer is attached to the back
+				of the gold fingers.
+			</p>
+		</HelpPopover>
 	);
 }
