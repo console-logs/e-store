@@ -1,11 +1,8 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { tRPCApi } from "@/trpc/server";
 import {
 	selectBaseMaterial,
-	selectRigidPcbMemoized,
 	selectViaCovering,
 	selectViaCoveringOptions,
-	setPcbPrice,
 	setViaCovering,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
@@ -17,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ViaCovering() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const viaCoveringOptions = useSelector(selectViaCoveringOptions);
 	const viaCovering = useSelector(selectViaCovering);
 	const baseMaterial = useSelector(selectBaseMaterial);
@@ -33,8 +29,6 @@ export default function ViaCovering() {
 				value={viaCovering}
 				onChange={async value => {
 					dispatch(setViaCovering(value));
-					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
-					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

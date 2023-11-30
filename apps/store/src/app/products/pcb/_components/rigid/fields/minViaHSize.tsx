@@ -1,12 +1,9 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { tRPCApi } from "@/trpc/server";
 import {
 	selectLayer,
 	selectMinViaHoleSizeAndDiameter,
 	selectMinViaHoleSizeAndDiameterOptions,
-	selectRigidPcbMemoized,
 	setMinViaHoleSizeAndDiameter,
-	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function MinimumHoleSizeAndDiameter() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const minHoleSizeAndDiameterOptions = useSelector(selectMinViaHoleSizeAndDiameterOptions);
 	const minHoleSizeAndDiameter = useSelector(selectMinViaHoleSizeAndDiameter);
 	const layer = useSelector(selectLayer);
@@ -31,8 +27,6 @@ export default function MinimumHoleSizeAndDiameter() {
 				value={minHoleSizeAndDiameter}
 				onChange={async value => {
 					dispatch(setMinViaHoleSizeAndDiameter(value));
-					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
-					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

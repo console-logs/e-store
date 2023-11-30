@@ -1,12 +1,9 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { tRPCApi } from "@/trpc/server";
 import {
 	selectInnerCuWeight,
 	selectInnerCuWeightOptions,
 	selectLayer,
-	selectRigidPcbMemoized,
 	setInnerCuWeight,
-	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -17,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function InnerCuWeight() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const innerCuWeightOptions = useSelector(selectInnerCuWeightOptions);
 	const innerCuWeight = useSelector(selectInnerCuWeight);
 	const layer = useSelector(selectLayer);
@@ -31,8 +27,6 @@ export default function InnerCuWeight() {
 				value={innerCuWeight}
 				onChange={async value => {
 					dispatch(setInnerCuWeight(value));
-					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
-					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

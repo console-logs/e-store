@@ -685,7 +685,7 @@ export const selectGoldFingersOptions = (state: ReduxState) => state.rigidPcb.go
 export const selectPanelQtyOptions = (state: ReduxState) => state.rigidPcb.panelQtyOptions;
 
 /* Memoised Selector => Output selector performs type transformation */
-export const selectRigidPcbMemoized = createSelector([selectRigidPcbState], rigidPcb => {
+export const selectRigidPcbMemoized = createSelector([selectRigidPcbState], (rigidPcb) => {
 	const rigidPcbFabSpecs: RigidPcbFabSpecsType = {
 		pcbname: rigidPcb.pcbname,
 		layer: rigidPcb.layer,

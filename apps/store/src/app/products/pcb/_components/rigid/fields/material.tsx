@@ -2,9 +2,7 @@ import HelpPopover from "@/app/products/pcb/_components/common/help";
 import {
 	selectBaseMaterial,
 	selectBaseMaterialOptions,
-	selectRigidPcbMemoized,
 	setBaseMaterial,
-	setPcbPrice,
 	updateBoardThickness,
 	updateCastellatedHoles,
 	updateGoldFingers,
@@ -17,7 +15,6 @@ import {
 	updateThermalConductivity,
 	updateViaCovering,
 } from "@/redux/reducers/rigidPcbSlice";
-import { tRPCApi } from "@/trpc/server";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -27,7 +24,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BaseMaterial() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const baseMaterialOptions = useSelector(selectBaseMaterialOptions);
 	const baseMaterial = useSelector(selectBaseMaterial);
 
@@ -44,8 +40,6 @@ export default function BaseMaterial() {
 		dispatch(updateCastellatedHoles());
 		dispatch(updateMaterial());
 		dispatch(updateViaCovering());
-		const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
-		dispatch(setPcbPrice(price));
 	}
 
 	return (

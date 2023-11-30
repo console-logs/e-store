@@ -2,13 +2,10 @@ import HelpPopover from "@/app/products/pcb/_components/common/help";
 import {
 	selectDesignFormat,
 	selectDesignFormatOptions,
-	selectRigidPcbMemoized,
 	setDesignFormat,
-	setPcbPrice,
 	updateChamferedGoldFingers,
 	updateDifferentDesignsInPanel,
 } from "@/redux/reducers/rigidPcbSlice";
-import { tRPCApi } from "@/trpc/server";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -18,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DesignFormat() {
 	const dispatch = useDispatch();
-	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const designFormatOptions = useSelector(selectDesignFormatOptions);
 	const designFormat = useSelector(selectDesignFormat);
 
@@ -33,8 +29,6 @@ export default function DesignFormat() {
 					dispatch(setDesignFormat(value));
 					dispatch(updateDifferentDesignsInPanel());
 					dispatch(updateChamferedGoldFingers());
-					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
-					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

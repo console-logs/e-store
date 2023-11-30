@@ -567,7 +567,7 @@ type PcbAssemblyStoreStateType = PcbAssemblyFabSpecsType & {
 };
 
 type PcbPriceSummaryProps = {
-	pcbPrice: number;
+	pcbPrice: number | undefined;
 	designFormat: "Single PCB" | "Panel by Customer" | "Panel by Manufacturer";
 	pcbQty:
 		| 5
