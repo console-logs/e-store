@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectBaseMaterial,
 	selectRigidPcbMemoized,
@@ -21,7 +21,6 @@ export default function ThermalConductivity() {
 	const baseMaterial = useSelector(selectBaseMaterial);
 	const thermalConductivity = useSelector(selectThermalConductivity);
 	const thermalConductivityOptions = useSelector(selectThermalConductivityOptions);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	const hiddenOptions = ["Aluminum", "CopperCore"];
 
@@ -34,7 +33,7 @@ export default function ThermalConductivity() {
 				value={thermalConductivity}
 				onChange={async value => {
 					dispatch(setThermalConductivity(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

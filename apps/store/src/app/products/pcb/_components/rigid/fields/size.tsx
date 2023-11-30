@@ -1,6 +1,6 @@
 "use client";
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectBoardSizeX,
 	selectBoardSizeY,
@@ -19,7 +19,6 @@ export default function BoardSize() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const boardSizeX = useSelector(selectBoardSizeX);
 	const boardSizeY = useSelector(selectBoardSizeY);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div className="w-full">
@@ -39,7 +38,7 @@ export default function BoardSize() {
 					onChange={async e => {
 						dispatch(setBoardSizeX(Number(e.target.value)));
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(rigidPcb).unwrap();
+						const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 						dispatch(setPcbPrice(price));
 					}}
 				/>
@@ -56,7 +55,7 @@ export default function BoardSize() {
 					onChange={async e => {
 						dispatch(setBoardSizeY(Number(e.target.value)));
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(rigidPcb).unwrap();
+						const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 						dispatch(setPcbPrice(price));
 					}}
 				/>

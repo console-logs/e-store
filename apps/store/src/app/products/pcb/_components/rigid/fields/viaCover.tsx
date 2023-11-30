@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectBaseMaterial,
 	selectRigidPcbMemoized,
@@ -21,7 +21,7 @@ export default function ViaCovering() {
 	const viaCoveringOptions = useSelector(selectViaCoveringOptions);
 	const viaCovering = useSelector(selectViaCovering);
 	const baseMaterial = useSelector(selectBaseMaterial);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
+
 	const hiddenOptions = ["Aluminum", "CopperCore"];
 
 	return (
@@ -33,7 +33,7 @@ export default function ViaCovering() {
 				value={viaCovering}
 				onChange={async value => {
 					dispatch(setViaCovering(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

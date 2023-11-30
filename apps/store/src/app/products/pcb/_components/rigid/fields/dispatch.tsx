@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectDispatchUnit,
 	selectDispatchUnitOptions,
@@ -19,7 +19,6 @@ export default function DispatchUnit() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const dispatchUnitOptions = useSelector(selectDispatchUnitOptions);
 	const dispatchUnit = useSelector(selectDispatchUnit);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -30,7 +29,7 @@ export default function DispatchUnit() {
 				value={dispatchUnit}
 				onChange={async value => {
 					dispatch(setDispatchUnit(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

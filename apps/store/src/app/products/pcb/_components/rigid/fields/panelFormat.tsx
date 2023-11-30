@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectColumns,
 	selectDesignFormat,
@@ -21,7 +21,6 @@ export default function PanelFormat() {
 	const columns = useSelector(selectColumns);
 	const rows = useSelector(selectRows);
 	const designFormat = useSelector(selectDesignFormat);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div hidden={designFormat === "Single PCB"}>
@@ -43,7 +42,7 @@ export default function PanelFormat() {
 						dispatch(setRows(Number(e.target.value)));
 						dispatch(updateSinglePiecesQty());
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(rigidPcb).unwrap();
+						const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 						dispatch(setPcbPrice(price));
 					}}
 				/>
@@ -62,7 +61,7 @@ export default function PanelFormat() {
 						dispatch(setColumns(Number(e.target.value)));
 						dispatch(updateSinglePiecesQty());
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(rigidPcb).unwrap();
+						const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 						dispatch(setPcbPrice(price));
 					}}
 				/>

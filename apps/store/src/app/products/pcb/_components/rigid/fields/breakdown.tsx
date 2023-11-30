@@ -1,5 +1,4 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBaseMaterial,
 	selectBreakDownVoltage,
@@ -8,6 +7,7 @@ import {
 	setBreakdownVoltage,
 	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCApi } from "@/trpc/server";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -21,7 +21,6 @@ export default function BreakdownVoltage() {
 	const breakdownVoltageOptions = useSelector(selectBreakDownVoltageOptions);
 	const breakdownVoltage = useSelector(selectBreakDownVoltage);
 	const baseMaterial = useSelector(selectBaseMaterial);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div hidden={baseMaterial !== "Aluminum"}>
@@ -32,7 +31,7 @@ export default function BreakdownVoltage() {
 				value={breakdownVoltage}
 				onChange={async value => {
 					dispatch(setBreakdownVoltage(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

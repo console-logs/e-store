@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectRigidPcbMemoized,
 	selectSurfaceFinish,
@@ -19,7 +19,6 @@ export default function SurfaceFinish() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const surfaceFinishOptions = useSelector(selectSurfaceFinishOptions);
 	const surfaceFinish = useSelector(selectSurfaceFinish);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -30,7 +29,7 @@ export default function SurfaceFinish() {
 				value={surfaceFinish}
 				onChange={async value => {
 					dispatch(setSurfaceFinish(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

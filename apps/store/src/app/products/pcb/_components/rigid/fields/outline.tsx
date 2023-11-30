@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectBaseMaterial,
 	selectBoardOutlineTolerance,
@@ -23,7 +23,6 @@ export default function BoardOutlineTolerance() {
 	const boardOutlineTolerance = useSelector(selectBoardOutlineTolerance);
 	const layer = useSelector(selectLayer);
 	const baseMaterial = useSelector(selectBaseMaterial);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	const hiddenStatus = (baseMaterial === "FR4" && layer < 2) || baseMaterial === "Rogers";
 
@@ -36,7 +35,7 @@ export default function BoardOutlineTolerance() {
 				value={boardOutlineTolerance}
 				onChange={async value => {
 					dispatch(setBoardOutlineTolerance(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

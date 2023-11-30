@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectRigidPcbMemoized,
 	selectSoldermask,
@@ -20,7 +20,6 @@ export default function Soldermask() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const soldermaskOptions = useSelector(selectSoldermaskOptions);
 	const soldermask = useSelector(selectSoldermask);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -32,7 +31,7 @@ export default function Soldermask() {
 				onChange={async value => {
 					dispatch(setSoldermask(value));
 					dispatch(updateSilkscreen());
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

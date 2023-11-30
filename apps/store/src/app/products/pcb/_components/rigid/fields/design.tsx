@@ -1,5 +1,4 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
 	selectDesignFormatOptions,
@@ -9,6 +8,7 @@ import {
 	updateChamferedGoldFingers,
 	updateDifferentDesignsInPanel,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCApi } from "@/trpc/server";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -21,7 +21,6 @@ export default function DesignFormat() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const designFormatOptions = useSelector(selectDesignFormatOptions);
 	const designFormat = useSelector(selectDesignFormat);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -34,7 +33,7 @@ export default function DesignFormat() {
 					dispatch(setDesignFormat(value));
 					dispatch(updateDifferentDesignsInPanel());
 					dispatch(updateChamferedGoldFingers());
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

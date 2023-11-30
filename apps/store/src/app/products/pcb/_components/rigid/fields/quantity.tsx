@@ -1,6 +1,6 @@
 "use client";
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectDesignFormat,
 	selectPcbQty,
@@ -22,7 +22,6 @@ export default function PcbQuantity() {
 	const pcbQtyOptions = useSelector(selectPcbQtyOptions);
 	const pcbQty = useSelector(selectPcbQty);
 	const designFormat = useSelector(selectDesignFormat);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div
@@ -35,7 +34,7 @@ export default function PcbQuantity() {
 				value={pcbQty}
 				onChange={async value => {
 					dispatch(setPcbQty(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

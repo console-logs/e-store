@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectOuterCuWeight,
 	selectOuterCuWeightOptions,
@@ -19,7 +19,6 @@ export default function OuterCuWeight() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const OuterCuWeightOptions = useSelector(selectOuterCuWeightOptions);
 	const outerCuWeight = useSelector(selectOuterCuWeight);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -30,7 +29,7 @@ export default function OuterCuWeight() {
 				value={outerCuWeight}
 				onChange={async value => {
 					dispatch(setOuterCuWeight(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

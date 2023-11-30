@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectGoldFingers,
 	selectGoldFingersOptions,
@@ -21,7 +21,6 @@ export default function GoldFingers() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const goldFingersOptions = useSelector(selectGoldFingersOptions);
 	const goldFingers = useSelector(selectGoldFingers);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -34,7 +33,7 @@ export default function GoldFingers() {
 					dispatch(setGoldFingers(value));
 					dispatch(updateSurfaceFinish());
 					dispatch(updateSoldermask());
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

@@ -1,5 +1,4 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDifferentDesignsInPanel,
 	selectDifferentDesignsInPanelOptions,
@@ -8,6 +7,7 @@ import {
 	setPcbPrice,
 	updateDesignFormatOption,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCApi } from "@/trpc/server";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -20,7 +20,6 @@ export default function DifferentDesignsInPanel() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const differentDesignsInPanelOptions = useSelector(selectDifferentDesignsInPanelOptions);
 	const differentDesignsInPanel = useSelector(selectDifferentDesignsInPanel);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -32,7 +31,7 @@ export default function DifferentDesignsInPanel() {
 				onChange={async value => {
 					dispatch(setDifferentDesignsInPanel(value));
 					dispatch(updateDesignFormatOption());
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

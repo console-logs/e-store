@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectDesignFormat,
 	selectEdgeRails,
@@ -22,7 +22,6 @@ export default function EdgeRails() {
 	const edgeRailOptions = useSelector(selectEdgeRailsOptions);
 	const edgeRails = useSelector(selectEdgeRails);
 	const designFormat = useSelector(selectDesignFormat);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div hidden={designFormat === "Single PCB" || designFormat === "Panel by Customer"}>
@@ -34,7 +33,7 @@ export default function EdgeRails() {
 				onChange={async value => {
 					dispatch(setEdgeRails(value));
 					dispatch(updatePanelSize());
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

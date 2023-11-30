@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectBaseMaterial,
 	selectLayer,
@@ -23,7 +23,6 @@ export default function MaterialType() {
 	const baseMaterial = useSelector(selectBaseMaterial);
 	const material = useSelector(selectMaterial);
 	const layer = useSelector(selectLayer);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	const hiddenStatus = !(baseMaterial === "FR4" && layer >= 4) && baseMaterial !== "Rogers";
 
@@ -36,7 +35,7 @@ export default function MaterialType() {
 				value={material}
 				onChange={async value => {
 					dispatch(setMaterial(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

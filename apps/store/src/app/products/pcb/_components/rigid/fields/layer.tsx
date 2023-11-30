@@ -1,6 +1,6 @@
 "use client";
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectLayer,
 	selectLayerOptions,
@@ -27,7 +27,6 @@ export default function Layer() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const layerOptions = useSelector(selectLayerOptions);
 	const layer = useSelector(selectLayer);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div className="w-full">
@@ -45,7 +44,7 @@ export default function Layer() {
 					dispatch(updateInnerCuWeight());
 					dispatch(updateViaCovering());
 					dispatch(updateCastellatedHoles());
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

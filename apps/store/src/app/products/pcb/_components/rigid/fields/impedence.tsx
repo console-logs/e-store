@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectImpedenceControl,
 	selectImpedenceControlOptions,
@@ -21,7 +21,6 @@ export default function ImpedenceControl() {
 	const impedenceControlOptions = useSelector(selectImpedenceControlOptions);
 	const impedenceControl = useSelector(selectImpedenceControl);
 	const layer = useSelector(selectLayer);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div hidden={layer < 4}>
@@ -32,7 +31,7 @@ export default function ImpedenceControl() {
 				value={impedenceControl}
 				onChange={async value => {
 					dispatch(setImpedenceControl(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

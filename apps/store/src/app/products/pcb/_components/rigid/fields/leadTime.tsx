@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectLeadTime,
 	selectLeadTimeOptions,
@@ -21,7 +21,6 @@ export default function LeadTime() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const leadTimeOptions = useSelector(selectLeadTimeOptions);
 	const leadTime = useSelector(selectLeadTime);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -34,7 +33,7 @@ export default function LeadTime() {
 					dispatch(setLeadTime(value));
 					const dispatchDate = getFutureDate(parseInt(value, 10));
 					dispatch(setTentativeDispatchDate(dispatchDate));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

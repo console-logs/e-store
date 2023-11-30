@@ -1,5 +1,4 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectCastellatedHoles,
 	selectCastellatedHolesEdges,
@@ -8,6 +7,7 @@ import {
 	setCastellatedHolesEdges,
 	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCApi } from "@/trpc/server";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -21,7 +21,6 @@ export default function CastellatedHolesEdges() {
 	const castellatedHolesEdgesOptions = useSelector(selectCastellatedHolesEdgesOptions);
 	const castellatedHolesEdges = useSelector(selectCastellatedHolesEdges);
 	const castellatedHoles = useSelector(selectCastellatedHoles);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div hidden={castellatedHoles === "No"}>
@@ -32,7 +31,7 @@ export default function CastellatedHolesEdges() {
 				value={castellatedHolesEdges}
 				onChange={async value => {
 					dispatch(setCastellatedHolesEdges(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

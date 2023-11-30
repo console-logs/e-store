@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectBaseMaterial,
 	selectBoardThickness,
@@ -21,7 +21,6 @@ export default function BoardThickness() {
 	const boardThicknessOptions = useSelector(selectBoardThicknessOptions);
 	const boardThickness = useSelector(selectBoardThickness);
 	const baseMaterial = useSelector(selectBaseMaterial);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -32,7 +31,7 @@ export default function BoardThickness() {
 				value={boardThickness}
 				onChange={async value => {
 					dispatch(setBoardThickness(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

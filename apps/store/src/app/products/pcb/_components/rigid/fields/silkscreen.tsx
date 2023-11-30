@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectRigidPcbMemoized,
 	selectSilkscreen,
@@ -19,7 +19,6 @@ export default function Silkscreen() {
 	const rigidPcb = useSelector(selectRigidPcbMemoized);
 	const silkscreenOptions = useSelector(selectSilkscreenOptions);
 	const silkscreen = useSelector(selectSilkscreen);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div>
@@ -30,7 +29,7 @@ export default function Silkscreen() {
 				value={silkscreen}
 				onChange={async value => {
 					dispatch(setSilkscreen(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">

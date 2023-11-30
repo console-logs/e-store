@@ -1,5 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateRigidPcbPriceMutation } from "@/redux/api/apiSlice";
+import { tRPCApi } from "@/trpc/server";
 import {
 	selectLayer,
 	selectMinViaHoleSizeAndDiameter,
@@ -21,7 +21,6 @@ export default function MinimumHoleSizeAndDiameter() {
 	const minHoleSizeAndDiameterOptions = useSelector(selectMinViaHoleSizeAndDiameterOptions);
 	const minHoleSizeAndDiameter = useSelector(selectMinViaHoleSizeAndDiameter);
 	const layer = useSelector(selectLayer);
-	const [calculatePcbPrice] = useCalculateRigidPcbPriceMutation();
 
 	return (
 		<div hidden={layer < 4}>
@@ -32,7 +31,7 @@ export default function MinimumHoleSizeAndDiameter() {
 				value={minHoleSizeAndDiameter}
 				onChange={async value => {
 					dispatch(setMinViaHoleSizeAndDiameter(value));
-					const price = await calculatePcbPrice(rigidPcb).unwrap();
+					const price = await tRPCApi.rigidPcb.getPrice.query(rigidPcb);
 					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
