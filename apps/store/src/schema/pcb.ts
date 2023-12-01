@@ -271,7 +271,7 @@ export const FlexPcbFabSpecsTypeSchema = z.object({
 export const PcbAssemblyFabSpecsTypeSchema = z.object({
 	projectName: z.string(),
 	boardType: z.union([z.literal("Single PCB"), z.literal("Panel")]),
-	pcbsPerPanel: z.number(),
+	pcbsPerPanel: z.number().nullable(),
 	quantity: z.number(),
 	assemblySides: z.union([z.literal("Top Side"), z.literal("Bottom Side"), z.literal("Both Sides")]),
 	numOfUniqueComponents: z.number(),

@@ -911,3 +911,79 @@ type FlexPcbRateCardType = {
 		above200: number;
 	};
 };
+
+type PcbAssemblyRateCardType = {
+	boardType: {
+		single: number;
+		panel: {
+			2: number;
+			3_5: number;
+			6_10: number;
+			above10: number;
+		};
+	};
+	assemblySides: {
+		"Top Side": number;
+		"Bottom Side": number;
+		"Both Sides": number;
+	};
+	quantity: {
+		upTo10: number;
+		11_50: number;
+		51_100: number;
+		101_500: number;
+		above500: number;
+	};
+	uniqueComponents: {
+		upTo5: number;
+		6_10: number;
+		11_20: number;
+		above20: number;
+	};
+	smdParts: {
+		upTo10: number;
+		11_20: number;
+		21_50: number;
+		above50: number;
+	};
+	bgaQfpParts: {
+		upTo2: number;
+		3_5: number;
+		above5: number;
+	};
+	throughHoleParts: {
+		upTo5: number;
+		6_10: number;
+		11_20: number;
+		above20: number;
+	};
+	tempHumiditySensitive: {
+		low: number;
+		moderate: number;
+		high: number;
+	};
+	dePanel: {
+		1: number;
+		2_5: number;
+		6_10: number;
+		above10: number;
+	};
+	conformalCoating: {
+		"Top Side": number;
+		"Bottom Side": number;
+		"Both Sides": number;
+	};
+	functionalTesting: number;
+	turnaroundTime: {
+		standard: number;
+		expedited: number;
+		rush: number;
+	};
+	oneTimeSetupCharges: {
+		single: number;
+		panel2: number;
+		panel3_5: number;
+		panel6_10: number;
+		panel10_above: number;
+	};
+};

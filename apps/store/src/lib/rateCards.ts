@@ -278,3 +278,82 @@ export const flexPcbRateCard: FlexPcbRateCardType = {
 		above200: 1,
 	},
 };
+
+export const assemblyRateCard: PcbAssemblyRateCardType = {
+	boardType: {
+		single: 1000,
+		panel: {
+			2: 1000,
+			3_5: 2000,
+			6_10: 3000,
+			above10: 4200,
+		},
+	},
+	assemblySides: {
+		"Top Side": 500,
+		"Bottom Side": 500,
+		"Both Sides": 800,
+	},
+	quantity: {
+		upTo10: 100,
+		11_50: 90,
+		51_100: 80,
+		101_500: 70,
+		above500: 60,
+	},
+	uniqueComponents: {
+		upTo5: 0,
+		6_10: 100,
+		11_20: 200,
+		above20: 300,
+	},
+	smdParts: {
+		upTo10: 0,
+		11_20: 100,
+		21_50: 200,
+		above50: 300,
+	},
+	bgaQfpParts: {
+		upTo2: 0,
+		3_5: 200,
+		above5: 400,
+	},
+	throughHoleParts: {
+		upTo5: 0,
+		6_10: 100,
+		11_20: 200,
+		above20: 300,
+	},
+	tempHumiditySensitive: {
+		low: 0,
+		moderate: 200,
+		high: 500,
+	},
+	dePanel: {
+		1: 0,
+		2_5: 300,
+		6_10: 500,
+		above10: 650,
+	},
+	conformalCoating: {
+		// Per board cost
+		"Top Side": 200,
+		"Bottom Side": 200,
+		"Both Sides": 300,
+	},
+
+	functionalTesting: 500,
+
+	turnaroundTime: {
+		standard: 0,
+		expedited: 500,
+		rush: 1000,
+	},
+	oneTimeSetupCharges: {
+		single: 5000,
+		panel2: 5000,
+		panel3_5: 10000,
+		panel6_10: 12000,
+		panel10_above: 15000,
+	},
+};
