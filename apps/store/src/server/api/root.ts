@@ -1,5 +1,5 @@
 import { partRouter } from "@/server/api/routers/part";
-import { rigidPcbRouter } from "@/server/api/routers/rigidPcb";
+import { rigidPcbRouter } from "@/server/api/routers/rigid";
 import { flexPcbRouter } from "@/server/api/routers/flex";
 import { createTRPCRouter } from "@/server/api/trpc";
 
