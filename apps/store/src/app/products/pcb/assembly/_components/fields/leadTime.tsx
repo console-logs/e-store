@@ -1,13 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
-import {
-	selectPcbAssemblyMemomized,
-	selectTurnaroundTime,
-	selectTurnaroundTimeOptions,
-	setLeadTime,
-	setOneTimeSetupCost,
-	setPcbPrice,
-} from "@/redux/reducers/pcbAssemblySlice";
+import { selectTurnaroundTime, selectTurnaroundTimeOptions, setLeadTime } from "@/redux/reducers/pcbAssemblySlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -17,10 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function TurnAroundTime() {
 	const dispatch = useDispatch();
-	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
 	const turnaroundTimeOptions = useSelector(selectTurnaroundTimeOptions);
 	const turnaroundTime = useSelector(selectTurnaroundTime);
-	const [calculatePcbPrice] = useCalculatePcbAssemblyPriceMutation();
 
 	return (
 		<div>
@@ -31,9 +21,6 @@ export default function TurnAroundTime() {
 				value={turnaroundTime}
 				onChange={async value => {
 					dispatch(setLeadTime(value));
-					const price = await calculatePcbPrice(pcbAssembly).unwrap();
-					dispatch(setPcbPrice(price.assemblyCost));
-					dispatch(setOneTimeSetupCost(price.setupCost));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">

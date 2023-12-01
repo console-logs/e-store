@@ -1,11 +1,7 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
 import {
-	selectPcbAssemblyMemomized,
 	selectTempHumiditySensitivity,
 	selectTempHumiditySensitivityOptions,
-	setOneTimeSetupCost,
-	setPcbPrice,
 	setTempHumiditySensitivity,
 } from "@/redux/reducers/pcbAssemblySlice";
 import { Listbox, Transition } from "@headlessui/react";
@@ -17,10 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function TemperatureAndHumiditySensitivity() {
 	const dispatch = useDispatch();
-	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
 	const temperatureAndHumiditySensitivityOptions = useSelector(selectTempHumiditySensitivityOptions);
 	const temperatureAndHumiditySensitity = useSelector(selectTempHumiditySensitivity);
-	const [calculatePcbPrice] = useCalculatePcbAssemblyPriceMutation();
 
 	return (
 		<div>
@@ -32,9 +26,6 @@ export default function TemperatureAndHumiditySensitivity() {
 				value={temperatureAndHumiditySensitity}
 				onChange={async value => {
 					dispatch(setTempHumiditySensitivity(value));
-					const price = await calculatePcbPrice(pcbAssembly).unwrap();
-					dispatch(setPcbPrice(price.assemblyCost));
-					dispatch(setOneTimeSetupCost(price.setupCost));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">

@@ -1,24 +1,14 @@
 "use client";
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
-import {
-	selectBoardType,
-	selectPcbAssemblyMemomized,
-	selectQuantity,
-	setOneTimeSetupCost,
-	setPcbPrice,
-	setQuantity,
-} from "@/redux/reducers/pcbAssemblySlice";
+import { selectBoardType, selectQuantity, setQuantity } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function AssemblyQuantity() {
 	const dispatch = useDispatch();
-	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
 	const quantity = useSelector(selectQuantity);
 	const boardType = useSelector(selectBoardType);
-	const [calculatePcbPrice] = useCalculatePcbAssemblyPriceMutation();
 
 	return (
 		<div className="w-full">
@@ -35,9 +25,6 @@ export default function AssemblyQuantity() {
 				required
 				onChange={async e => {
 					dispatch(setQuantity(Number(e.target.value)));
-					const price = await calculatePcbPrice(pcbAssembly).unwrap();
-					dispatch(setPcbPrice(price.assemblyCost));
-					dispatch(setOneTimeSetupCost(price.setupCost));
 				}}
 				value={quantity === 0 ? "" : quantity}
 			/>

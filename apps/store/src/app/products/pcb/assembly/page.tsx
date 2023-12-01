@@ -18,7 +18,7 @@ import TemperatureAndHumiditySensitivity from "@/app/products/pcb/assembly/_comp
 import ThroughHoleComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/throughHole";
 import BoardType from "@/app/products/pcb/assembly/_components/fields/type";
 import UniqueComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/uniqueComp";
-import PcbAssemblyPriceSummary from "@/app/products/pcb/assembly/_components/summary";
+import PcbAssemblyPriceSummary from "@/app/products/pcb/assembly/_components/priceSum";
 import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
 import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import { selectPcbAssemblyMemomized } from "@/redux/reducers/pcbAssemblySlice";

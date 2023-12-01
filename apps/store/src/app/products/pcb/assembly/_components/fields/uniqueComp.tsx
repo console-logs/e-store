@@ -1,21 +1,12 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculatePcbAssemblyPriceMutation } from "@/redux/api/apiSlice";
-import {
-	selectNumOfUniqueComponents,
-	selectPcbAssemblyMemomized,
-	setNumOfUniqueComponents,
-	setOneTimeSetupCost,
-	setPcbPrice,
-} from "@/redux/reducers/pcbAssemblySlice";
+import { selectNumOfUniqueComponents, setNumOfUniqueComponents } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function UniqueComponentsQuantity() {
 	const dispatch = useDispatch();
-	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
 	const numOfUniqueComponents = useSelector(selectNumOfUniqueComponents);
-	const [calculatePcbPrice] = useCalculatePcbAssemblyPriceMutation();
 
 	return (
 		<div>
@@ -32,9 +23,6 @@ export default function UniqueComponentsQuantity() {
 				required
 				onChange={async e => {
 					dispatch(setNumOfUniqueComponents(Number(e.target.value)));
-					const price = await calculatePcbPrice(pcbAssembly).unwrap();
-					dispatch(setPcbPrice(price.assemblyCost));
-					dispatch(setOneTimeSetupCost(price.setupCost));
 				}}
 				value={numOfUniqueComponents === 0 ? "" : numOfUniqueComponents}
 			/>

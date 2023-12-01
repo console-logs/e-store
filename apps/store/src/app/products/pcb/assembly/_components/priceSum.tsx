@@ -1,14 +1,16 @@
 import {
-	selectCalculatedPrice,
-	selectOneTimeSetupCost,
+	selectPcbAssemblyMemomized,
 	selectQuantity,
 	selectTentativeDispatchDate,
 } from "@/redux/reducers/pcbAssemblySlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { useSelector } from "react-redux";
 
 export default function PcbAssemblyPriceSummary() {
-	const pcbAssemblyPrice = useSelector(selectCalculatedPrice);
-	const setupCost = useSelector(selectOneTimeSetupCost);
+	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
+	const response = tRPCReactApi.pcbAssembly.getPrice.useQuery(pcbAssembly).data ?? { assemblyCost: 0, setupCost: 0 };
+	const assemblyCost = response.assemblyCost;
+	const setupCost = response.setupCost;
 	const assemblyQty = useSelector(selectQuantity);
 	const tentativeDispatchDate = useSelector(selectTentativeDispatchDate);
 
@@ -24,15 +26,12 @@ export default function PcbAssemblyPriceSummary() {
 					<div className="flex items-center justify-between py-4">
 						<dt>Rate</dt>
 						<dd className="font-medium">
-							₹
-							{(pcbAssemblyPrice / assemblyQty === Infinity ? 0 : pcbAssemblyPrice / assemblyQty).toFixed(
-								2
-							)}
+							₹{(assemblyCost / assemblyQty === Infinity ? 0 : assemblyCost / assemblyQty).toFixed(2)}
 						</dd>
 					</div>
 					<div className="flex items-center justify-between py-4">
 						<dt>Assembly Price</dt>
-						<dd className="font-medium">₹{pcbAssemblyPrice}</dd>
+						<dd className="font-medium">₹{assemblyCost}</dd>
 					</div>
 					<div className="flex items-center justify-between py-4">
 						<dt>One time setup cost</dt>
@@ -44,7 +43,7 @@ export default function PcbAssemblyPriceSummary() {
 					</div>
 					<div className="flex items-center justify-between py-4">
 						<dt className="text-base font-medium">Order Total</dt>
-						<dd className="text-base font-medium">₹{setupCost + pcbAssemblyPrice}</dd>
+						<dd className="text-base font-medium">₹{setupCost + assemblyCost}</dd>
 					</div>
 				</dl>
 			</div>
