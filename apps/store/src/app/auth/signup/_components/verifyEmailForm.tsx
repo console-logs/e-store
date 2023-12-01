@@ -1,0 +1,125 @@
+"use client";
+import { captureUserSignupAction } from "@/actions/cart";
+import { HOME_PAGE } from "@/lib/routes";
+import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
+import { Icons } from "@shared/components/Icons";
+import { Button } from "@shared/components/ui/button";
+import { Input } from "@shared/components/ui/input";
+import { Label } from "@shared/components/ui/label";
+import { useToast } from "@shared/components/ui/use-toast";
+import { Field, Form, Formik } from "formik";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import * as Yup from "yup";
+
+export default function VerifyEmailForm() {
+	const { isLoaded, signUp, setActive } = useSignUp();
+	const { toast } = useToast();
+	const router = useRouter();
+	const [isLoading, startTransition] = useTransition();
+
+	const initialValues = {
+		code: "",
+	};
+
+	const validationSchema = Yup.object().shape({
+		code: Yup.string()
+			.matches(/^\d{6}$/, "Code must be exactly 6 digits")
+			.required("Code cannot be empty"),
+	});
+
+	function handleOnSubmit(values: { code: string }) {
+		startTransition(async () => {
+			if (!isLoaded) return;
+
+			try {
+				const completeSignUp = await signUp.attemptEmailAddressVerification({
+					code: values.code,
+				});
+				if (completeSignUp.status !== "complete") {
+					//  investigate the response, to see if there was an error
+					console.log(JSON.stringify(completeSignUp, null, 2));
+				}
+				if (completeSignUp.status === "complete") {
+					await setActive({
+						session: completeSignUp.createdSessionId,
+					});
+					const signupData = {
+						firstName: completeSignUp.firstName!,
+						lastName: completeSignUp.lastName!,
+						email: completeSignUp.emailAddress!,
+						userId: completeSignUp.createdUserId!,
+					};
+					await captureUserSignupAction(signupData).catch(console.error);
+					router.push(HOME_PAGE);
+				}
+			} catch (err: unknown) {
+				const unknownErr = "Something went wrong, please try again later.";
+				const errorMessage = isClerkAPIResponseError(err) ? err.errors[0]?.longMessage : unknownErr;
+				toast({
+					variant: "destructive",
+					title: "Error Signing up!",
+					description: errorMessage,
+					duration: 4000,
+				});
+			}
+		});
+	}
+	async function handleResendBtnClick() {
+		startTransition(async () => {
+			if (!isLoaded) return;
+			await signUp.prepareEmailAddressVerification({
+				strategy: "email_code",
+			});
+		});
+	}
+
+	return (
+		<Formik
+			initialValues={initialValues}
+			validationSchema={validationSchema}
+			onSubmit={handleOnSubmit}>
+			{({}) => (
+				<Form>
+					<div className="grid gap-2">
+						<Label htmlFor="code">First Name</Label>
+						<Field
+							as={Input}
+							id="code"
+							name="code"
+							type="text"
+							autoComplete="off"
+							formNoValidate
+							required
+							pattern="\d{6}"
+							placeholder="6-digit verification code"
+						/>
+					</div>
+					<Button
+						disabled={isLoading}
+						type="submit"
+						className="w-full mt-3">
+						{isLoading ? (
+							<Icons.spinner
+								className="animate-spin text-center"
+								aria-hidden="true"
+							/>
+						) : (
+							"Verify email"
+						)}
+					</Button>
+					<div className="mt-2">
+						<span className="text-sm">Did&apos;t receive code?</span>
+						<Button
+							disabled={isLoading}
+							onClick={() => handleResendBtnClick()}
+							className="-ml-3"
+							variant={"link"}>
+							Resend
+						</Button>
+					</div>
+				</Form>
+			)}
+		</Formik>
+	);
+}
