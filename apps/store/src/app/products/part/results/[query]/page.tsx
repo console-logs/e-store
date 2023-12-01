@@ -1,4 +1,4 @@
-import TableHead from "@/app/products/part/_components/thead";
+import TableHead from "@/app/products/part/results/_components/thead";
 import { PART_DETAILS_PAGE } from "@/lib/routes";
 import { tRPCServerApi } from "@/trpc/server";
 import { Badge } from "@shared/components/ui/badge";
