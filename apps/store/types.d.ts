@@ -791,3 +791,123 @@ type RigidPcbRateCardType = {
 	};
 };
 
+type FlexPcbRateCardType = {
+	baseMaterial: {
+		flex: number;
+	};
+	layer: {
+		1: number;
+		2: number;
+	};
+	dimensions: {
+		boardSizeX: number;
+		boardSizeY: number;
+	};
+	quantity: {
+		upTo100: number;
+		101_200: number;
+		201_300: number;
+		301_400: number;
+		above400: number;
+	};
+	differentDesigns: {
+		"1 Design": number;
+		"2 Designs": number;
+		"3 Designs": number;
+		"4 Designs": number;
+	};
+	designFormat: {
+		"Single PCB": number;
+		"Panel by Customer": number;
+		"Panel by Manufacturer": number;
+	};
+	edgeRailSize: {
+		"5mm": number;
+		"7mm": number;
+		"10mm": number;
+	};
+	boardThickness: {
+		0.07: number;
+		0.11: number;
+		0.12: number;
+		0.2: number;
+	};
+	coverlay: {
+		Yellow: number;
+	};
+	silkscreenColor: {
+		White: number;
+	};
+	surfaceFinish: {
+		ENIG: number;
+	};
+	copperType: {
+		Electrodeposited: number;
+	};
+	goldThickness: {
+		'1 U"': number;
+		'2 U"': number;
+	};
+	outerCuWeight: {
+		"0.5 oz": number;
+		"1/3 oz": number;
+	};
+	coverlayThickness: {
+		"PI:12.5um/AD:15um": number;
+	};
+	stiffner: {
+		polyimide: {
+			0.1: number;
+			0.15: number;
+			0.2: number;
+			0.225: number;
+			0.25: number;
+		};
+		threeMTape: {
+			"3M468 (0.13mm)": number;
+			"3M9077 (HT, 0.05mm)": number;
+		};
+		stainlessSteel: {
+			0.1: number;
+			0.2: number;
+			0.3: number;
+		};
+		fr4: {
+			0.1: number;
+			0.2: number;
+		};
+	};
+	emiShielding: {
+		"Both sides (Black, 18um)": number;
+		"Single side (Black, 18um)": number;
+	};
+	cuttingMethod: {
+		laser: number;
+	};
+	boardOutlineTolerance: {
+		regularCncRouting: number;
+		precisionCncRouting: number;
+	};
+	dispatchUnit: {
+		Pcb: {
+			1: number;
+			2_5: number;
+			6_10: number;
+			above10: number;
+		};
+		Panel: number;
+	};
+	leadTime: {
+		"3 Working days": number;
+		"5 Working days": number;
+		"7 Working days": number;
+		"10 Working days": number;
+	};
+	viaHoles: {
+		1_50: number;
+		51_100: number;
+		101_150: number;
+		151_200: number;
+		above200: number;
+	};
+};

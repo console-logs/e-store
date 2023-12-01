@@ -1,5 +1,6 @@
 import { partRouter } from "@/server/api/routers/part";
 import { rigidPcbRouter } from "@/server/api/routers/rigidPcb";
+import { flexPcbRouter } from "@/server/api/routers/flex";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 // This is the primary router for your server.
@@ -7,6 +8,7 @@ import { createTRPCRouter } from "@/server/api/trpc";
 export const appRouter = createTRPCRouter({
 	part: partRouter,
 	rigidPcb: rigidPcbRouter,
+	flexPcb: flexPcbRouter,
 });
 
 // export type definition of API
