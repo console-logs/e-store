@@ -1,8 +1,8 @@
 export const HOME_PAGE = "/";
 export const RIGID_PCB_API_ROUTE = "api/rigid-pcb";
 export const PART_PAGES = "/products/part";
-export const PART_RESULTS_PAGE = "/products/part/results/";
-export const PART_DETAILS_PAGE = "/products/part/details/";
+export const PART_RESULTS_PAGE = "/products/part/result/";
+export const PART_DETAILS_PAGE = "/products/part/detail/";
 export const RIGID_PCB_FAB_PAGE = "/products/pcb/rigid-pcb";
 export const FLEX_PCB_FAB_PAGE = "/products/pcb/flex-pcb";
 export const PCB_TECH_CAPABILITIES_PAGE = "/products/pcb/capabilities";

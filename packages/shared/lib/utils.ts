@@ -49,3 +49,8 @@ export function convertFileToBase64(file: File): Promise<string | ArrayBuffer | 
 		};
 	});
 }
+
+export function formatToInr(num: number): string {
+	const formattedAmount = new Intl.NumberFormat("en-IN").format(num);
+	return `₹${formattedAmount}`;
+}
