@@ -618,6 +618,7 @@ type PartDataType = {
 	PriceBreaks: Array<PriceBreakType>;
 	ROHSStatus: string;
 	HSCode: string;
+	OrderedQty?: number;
 };
 
 type ErrorsType = {

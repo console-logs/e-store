@@ -1,4 +1,5 @@
 import { PartInfo } from "@/app/products/part/detail/_components/info";
+import PartOrderForm from "@/app/products/part/detail/_components/orderForm";
 import { PartPrice } from "@/app/products/part/detail/_components/price";
 import { tRPCServerApi } from "@/trpc/server";
 import type { Metadata } from "next";
@@ -24,7 +25,7 @@ export default async function PartDetail({ params: { query } }: { params: { quer
 		<div className="px-4 py-0 sm:px-6 sm:py-10 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8">
 			<PartInfo partData={partData} />
 			<PartPrice partData={partData} />
-			{/* <BuyComponentsForm productDetails={parts[partNumber]!} /> */}
+			<PartOrderForm partData={partData} />
 		</div>
 	);
 }
