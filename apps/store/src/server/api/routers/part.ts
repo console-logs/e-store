@@ -1,3 +1,4 @@
+import { PARTS_API } from "@/lib/constants";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -7,7 +8,7 @@ export const partRouter = createTRPCRouter({
 		try {
 			const mpn = input.mpn;
 			//TODO: REPLACE THE API URL
-			const response = await fetch("/api/parts" + mpn);
+			const response = await fetch(PARTS_API + mpn);
 			if (!response.ok) {
 				throw new TRPCError({
 					code: "BAD_REQUEST",

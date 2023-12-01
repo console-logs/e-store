@@ -11,3 +11,6 @@ export const ERROR_MSG = {
   COMPONENT_SEARCH_QUERY_REQUIRED:
     "Please enter part number, keywords or tech specs to search",
 };
+
+//TODO: REPLACE WITH HOSTED PUBLIC URL
+export const PARTS_API = "http://localhost:3993/api/parts?mpn=";
