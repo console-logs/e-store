@@ -1,12 +1,9 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectColumns,
 	selectDesignFormat,
-	selectFlexPcbMemoized,
 	selectRows,
 	setColumns,
-	setPcbPrice,
 	setRows,
 	updatePanelSize,
 	updateSinglePiecesQty,
@@ -17,11 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PanelFormat() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const columns = useSelector(selectColumns);
 	const rows = useSelector(selectRows);
 	const designFormat = useSelector(selectDesignFormat);
-	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
 		<div hidden={designFormat === "Single PCB"}>
@@ -43,8 +38,6 @@ export default function PanelFormat() {
 						dispatch(setRows(Number(e.target.value)));
 						dispatch(updateSinglePiecesQty());
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(flexPcb).unwrap();
-						dispatch(setPcbPrice(price));
 					}}
 				/>
 				<p className="flex items-center justify-center">x</p>
@@ -62,8 +55,6 @@ export default function PanelFormat() {
 						dispatch(setColumns(Number(e.target.value)));
 						dispatch(updateSinglePiecesQty());
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(flexPcb).unwrap();
-						dispatch(setPcbPrice(price));
 					}}
 				/>
 			</div>

@@ -1,12 +1,5 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
-import {
-	selectFlexPcbMemoized,
-	selectStiffner,
-	selectStiffnerOptions,
-	setPcbPrice,
-	setStiffner,
-} from "@/redux/reducers/flexPcbSlice";
+import { selectStiffner, selectStiffnerOptions, setStiffner } from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -15,41 +8,31 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Stiffener() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const stiffnerOptions = useSelector(selectStiffnerOptions);
 	const stiffner = useSelector(selectStiffner);
-	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	async function handleChange(values: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">) {
 		// selected none again. remove others.
 		if (values.length > 1 && values.indexOf("Without") > 0) {
 			dispatch(setStiffner(["Without"]));
-			const price = await calculatePcbPrice(flexPcb).unwrap();
-			dispatch(setPcbPrice(price));
 			return;
 		}
 
 		// just none (default), keep it.
 		if (values.length === 1 && values.includes("Without")) {
 			dispatch(setStiffner(["Without"]));
-			const price = await calculatePcbPrice(flexPcb).unwrap();
-			dispatch(setPcbPrice(price));
 			return;
 		}
 
 		// remove none others are selected.
 		if (values.length > 1 && values.includes("Without")) {
 			dispatch(setStiffner(values.filter(value => value !== "Without")));
-			const price = await calculatePcbPrice(flexPcb).unwrap();
-			dispatch(setPcbPrice(price));
 			return;
 		}
 
 		// just others, keep them
 		if (!values.includes("Without")) {
 			dispatch(setStiffner(values));
-			const price = await calculatePcbPrice(flexPcb).unwrap();
-			dispatch(setPcbPrice(price));
 			return;
 		}
 	}

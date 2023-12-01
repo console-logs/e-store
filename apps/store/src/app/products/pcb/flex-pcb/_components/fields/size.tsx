@@ -1,13 +1,10 @@
 "use client";
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectBoardSizeX,
 	selectBoardSizeY,
-	selectFlexPcbMemoized,
 	setBoardSizeX,
 	setBoardSizeY,
-	setPcbPrice,
 	updatePanelSize,
 } from "@/redux/reducers/flexPcbSlice";
 import { Input } from "@shared/components/ui/input";
@@ -16,10 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BoardSize() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const boardSizeX = useSelector(selectBoardSizeX);
 	const boardSizeY = useSelector(selectBoardSizeY);
-	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
 		<div className="w-full">
@@ -39,8 +34,6 @@ export default function BoardSize() {
 					onChange={async e => {
 						dispatch(setBoardSizeX(Number(e.target.value)));
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(flexPcb).unwrap();
-						dispatch(setPcbPrice(price));
 					}}
 				/>
 				<p className="flex items-center justify-center">x</p>
@@ -56,8 +49,6 @@ export default function BoardSize() {
 					onChange={async e => {
 						dispatch(setBoardSizeY(Number(e.target.value)));
 						dispatch(updatePanelSize());
-						const price = await calculatePcbPrice(flexPcb).unwrap();
-						dispatch(setPcbPrice(price));
 					}}
 				/>
 			</div>

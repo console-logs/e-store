@@ -1,13 +1,10 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
 	selectEdgeRails,
 	selectEdgeRailsOptions,
-	selectFlexPcbMemoized,
 	setEdgeRails,
-	setPcbPrice,
-	updatePanelSize,
+	updatePanelSize
 } from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -18,11 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function EdgeRails() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const edgeRailOptions = useSelector(selectEdgeRailsOptions);
 	const edgeRails = useSelector(selectEdgeRails);
 	const designFormat = useSelector(selectDesignFormat);
-	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
 		<div hidden={designFormat === "Single PCB" || designFormat === "Panel by Customer"}>
@@ -34,8 +29,6 @@ export default function EdgeRails() {
 				onChange={async value => {
 					dispatch(setEdgeRails(value));
 					dispatch(updatePanelSize());
-					const price = await calculatePcbPrice(flexPcb).unwrap();
-					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">

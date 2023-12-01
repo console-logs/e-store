@@ -1,12 +1,9 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDesignFormat,
-	selectFlexPcbMemoized,
 	selectPanelQty,
 	selectPanelQtyOptions,
 	setPanelQty,
-	setPcbPrice,
 	updateSinglePiecesQty,
 } from "@/redux/reducers/flexPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
@@ -18,11 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function PanelQuantity() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const panelQtyOptions = useSelector(selectPanelQtyOptions);
 	const panelQty = useSelector(selectPanelQty);
 	const designFormat = useSelector(selectDesignFormat);
-	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
 		<div hidden={designFormat === "Single PCB"}>
@@ -34,8 +29,6 @@ export default function PanelQuantity() {
 				onChange={async value => {
 					dispatch(setPanelQty(value));
 					dispatch(updateSinglePiecesQty());
-					const price = await calculatePcbPrice(flexPcb).unwrap();
-					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">

@@ -1,10 +1,7 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { useCalculateFlexPcbPriceMutation } from "@/redux/api/apiSlice";
 import {
 	selectDifferentDesignsInPanel,
-	selectFlexPcbMemoized,
 	setDifferentDesignsInPanel,
-	setPcbPrice,
 	updateDesignFormatOption,
 } from "@/redux/reducers/flexPcbSlice";
 import { selectDifferentDesignsInPanelOptions } from "@/redux/reducers/rigidPcbSlice";
@@ -17,10 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DifferentDesignsInPanel() {
 	const dispatch = useDispatch();
-	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const differentDesignsInPanelOptions = useSelector(selectDifferentDesignsInPanelOptions);
 	const differentDesignsInPanel = useSelector(selectDifferentDesignsInPanel);
-	const [calculatePcbPrice] = useCalculateFlexPcbPriceMutation();
 
 	return (
 		<div>
@@ -32,8 +27,6 @@ export default function DifferentDesignsInPanel() {
 				onChange={async value => {
 					dispatch(setDifferentDesignsInPanel(value));
 					dispatch(updateDesignFormatOption());
-					const price = await calculatePcbPrice(flexPcb).unwrap();
-					dispatch(setPcbPrice(price));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
