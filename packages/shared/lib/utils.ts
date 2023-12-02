@@ -54,3 +54,9 @@ export function formatToInr(num: number): string {
 	const formattedAmount = new Intl.NumberFormat("en-IN").format(num);
 	return `₹${formattedAmount}`;
 }
+
+export function convertToTitleCase(str: string): string {
+	const words = str.match(/[A-Za-z][a-z]*/g) ?? [];
+	const titleCaseString = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+	return titleCaseString;
+}
