@@ -67,8 +67,12 @@ export default function ResetPasswordForm2() {
 					});
 				}
 			} catch (err: unknown) {
-				const unknownErr = "Something went wrong, please try again later.";
-				const errorMessage = isClerkAPIResponseError(err) ? err.errors[0]?.longMessage : unknownErr;
+				let errorMessage: string | undefined = "Something went wrong, please try again later.";
+				if (err instanceof Error) {
+					errorMessage = err.message;
+				} else if (isClerkAPIResponseError(err)) {
+					errorMessage = err.errors[0]?.longMessage;
+				}
 				toast({
 					variant: "destructive",
 					title: "Authentication error",
