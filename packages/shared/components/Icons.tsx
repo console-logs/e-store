@@ -1,4 +1,11 @@
-import { Bars3Icon, CheckIcon, CloudArrowUpIcon, LockClosedIcon, ServerIcon } from "@heroicons/react/20/solid";
+import {
+	Bars3Icon,
+	CheckIcon,
+	CloudArrowUpIcon,
+	LockClosedIcon,
+	ServerIcon,
+	XMarkIcon,
+} from "@heroicons/react/20/solid";
 import { CaretSortIcon, HeartFilledIcon } from "@radix-ui/react-icons";
 import { BsCpu, BsRocket } from "react-icons/bs";
 import { CgDisplayFlex } from "react-icons/cg";
@@ -222,4 +229,5 @@ export const Icons = {
 	ServerIcon,
 	CaretSortIcon,
 	CheckIcon,
+	XMarkIcon,
 };
