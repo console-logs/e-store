@@ -5,6 +5,10 @@ export async function fetchCartSizeAction(): Promise<number> {
 	return cartSize;
 }
 
+export async function fetchCartItemsAction(): Promise<CartType | null> {
+	throw new Error("Action not implemented");
+}
+
 export async function transferGuestCartToUserAction(): Promise<void> {
 	throw new Error("Action not implemented");
 }

@@ -618,7 +618,7 @@ type PartDataType = {
 	PriceBreaks: Array<PriceBreakType>;
 	ROHSStatus: string;
 	HSCode: string;
-	OrderedQty?: number;
+	OrderedQty: number;
 };
 
 type ErrorsType = {
@@ -987,4 +987,14 @@ type PcbAssemblyRateCardType = {
 		panel6_10: number;
 		panel10_above: number;
 	};
+};
+
+/* Shopping Cart */
+type CartType = {
+	cartId?: string; // used only with guest carts
+	cartSize: number;
+	parts: Array<PartDataType>;
+	rigidPcbs: Array<RigidPcbFabSpecsType>;
+	flexPcbs: Array<FlexPcbFabSpecsType>;
+	pcbAssemblies: Array<PcbAssemblyFabSpecsType>;
 };
