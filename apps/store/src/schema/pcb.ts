@@ -1,16 +1,16 @@
 import { z } from "zod";
 
 export const RigidPcbFabSpecsTypeSchema = z.object({
-	pcbname: z.string(),
-	layer: z.union([z.literal(1), z.literal(2), z.literal(4), z.literal(6), z.literal(8), z.literal(10)]),
-	baseMaterial: z.union([z.literal("FR4"), z.literal("Aluminum"), z.literal("CopperCore"), z.literal("Rogers")]),
-	designFormat: z.union([
+	PcbName: z.string(),
+	Layer: z.union([z.literal(1), z.literal(2), z.literal(4), z.literal(6), z.literal(8), z.literal(10)]),
+	BaseMaterial: z.union([z.literal("FR4"), z.literal("Aluminum"), z.literal("CopperCore"), z.literal("Rogers")]),
+	DesignFormat: z.union([
 		z.literal("Single PCB"),
 		z.literal("Panel by Customer"),
 		z.literal("Panel by Manufacturer"),
 	]),
-	differentDesignsInPanel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]),
-	material: z
+	DifferentDesignsInPanel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]),
+	Material: z
 		.union([
 			z.literal("FR4-Standard TG 135-140"),
 			z.literal("FR-4 TG155"),
@@ -18,9 +18,9 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 			z.literal("FR-4 TG170"),
 		])
 		.nullable(),
-	boardSizeX: z.number(),
-	boardSizeY: z.number(),
-	panelQty: z
+	BoardSizeX: z.number(),
+	BoardSizeY: z.number(),
+	PanelQty: z
 		.union([
 			z.literal(5),
 			z.literal(10),
@@ -48,10 +48,10 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 			z.literal(2000),
 		])
 		.nullable(),
-	columns: z.number().nullable(),
-	rows: z.number().nullable(),
-	singlePiecesQty: z.number().nullable(),
-	pcbQty: z
+	Columns: z.number().nullable(),
+	Rows: z.number().nullable(),
+	SinglePiecesQty: z.number().nullable(),
+	PcbQty: z
 		.union([
 			z.literal(5),
 			z.literal(10),
@@ -79,7 +79,7 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 			z.literal(2000),
 		])
 		.nullable(),
-	boardThickness: z.union([
+	BoardThickness: z.union([
 		z.literal(0.51),
 		z.literal(0.76),
 		z.literal(1.52),
@@ -91,7 +91,7 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 		z.literal(1.6),
 		z.literal(2),
 	]),
-	soldermask: z.union([
+	Soldermask: z.union([
 		z.literal("Green"),
 		z.literal("Purple"),
 		z.literal("Red"),
@@ -100,26 +100,26 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 		z.literal("Black"),
 		z.literal("White"),
 	]),
-	silkscreen: z.union([z.literal("White"), z.literal("Black")]),
-	surfaceFinish: z.union([
+	Silkscreen: z.union([z.literal("White"), z.literal("Black")]),
+	SurfaceFinish: z.union([
 		z.literal("HASL(with lead)"),
 		z.literal("LeadFree HASL"),
 		z.literal("ENIG"),
 		z.literal("OSP"),
 	]),
-	goldFingers: z.union([z.literal("Yes"), z.literal("No")]),
-	goldThickness: z.union([z.literal('1 U"'), z.literal('2 U"')]).nullable(),
-	edgeRails: z.union([z.literal("No"), z.literal("On 2 Sides"), z.literal("On 4 Sides")]).nullable(),
-	edgeRailSize: z.union([z.literal("5mm"), z.literal("7mm"), z.literal("10mm")]).nullable(),
-	panelSizeX: z.number().nullable(),
-	panelSizeY: z.number().nullable(),
-	outerCuWeight: z.union([z.literal("1 oz"), z.literal("2 oz")]),
-	copperStructure: z.literal("Direct Heatsink").nullable(),
-	thermalConductivity: z.union([z.literal(1), z.literal(380)]).nullable(),
-	breakDownVoltage: z.literal(3000).nullable(),
-	innerCuWeight: z.union([z.literal("0.5 oz"), z.literal("1 oz"), z.literal("2 oz")]).nullable(),
-	impedenceControl: z.union([z.literal("Yes"), z.literal("No")]).nullable(),
-	viaCovering: z
+	GoldFingers: z.union([z.literal("Yes"), z.literal("No")]),
+	GoldThickness: z.union([z.literal('1 U"'), z.literal('2 U"')]).nullable(),
+	EdgeRails: z.union([z.literal("No"), z.literal("On 2 Sides"), z.literal("On 4 Sides")]).nullable(),
+	EdgeRailSize: z.union([z.literal("5mm"), z.literal("7mm"), z.literal("10mm")]).nullable(),
+	PanelSizeX: z.number().nullable(),
+	PanelSizeY: z.number().nullable(),
+	OuterCuWeight: z.union([z.literal("1 oz"), z.literal("2 oz")]),
+	CopperStructure: z.literal("Direct Heatsink").nullable(),
+	ThermalConductivity: z.union([z.literal(1), z.literal(380)]).nullable(),
+	BreakDownVoltage: z.literal(3000).nullable(),
+	InnerCuWeight: z.union([z.literal("0.5 oz"), z.literal("1 oz"), z.literal("2 oz")]).nullable(),
+	ImpedanceControl: z.union([z.literal("Yes"), z.literal("No")]).nullable(),
+	ViaCovering: z
 		.union([
 			z.literal("Tented"),
 			z.literal("Untented"),
@@ -129,7 +129,7 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 			z.literal("Copper paste Filled & Capped"),
 		])
 		.nullable(),
-	minViaHoleSizeAndDiameter: z
+	MinViaHoleSizeAndDiameter: z
 		.union([
 			z.literal("0.3mm/(0.4/0.45mm)"),
 			z.literal("0.25mm/(0.35/0.40mm)"),
@@ -137,20 +137,20 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 			z.literal("0.15mm/(0.25/0.3mm)"),
 		])
 		.nullable(),
-	boardOutlineTolerance: z.union([z.literal("\u00B10.2mm(Regular)"), z.literal("\u00B10.1mm(Precision)")]).nullable(),
-	viaHoles: z.number().nullable(),
-	castellatedHoles: z.union([z.literal("Yes"), z.literal("No")]),
-	castellatedHolesEdges: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).nullable(),
-	chamferedGoldFingers: z.union([z.literal("Yes"), z.literal("No")]).nullable(),
-	leadTime: z.union([
+	BoardOutlineTolerance: z.union([z.literal("\u00B10.2mm(Regular)"), z.literal("\u00B10.1mm(Precision)")]).nullable(),
+	ViaHoles: z.number().nullable(),
+	CastellatedHoles: z.union([z.literal("Yes"), z.literal("No")]),
+	CastellatedHolesEdges: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).nullable(),
+	ChamferedGoldFingers: z.union([z.literal("Yes"), z.literal("No")]).nullable(),
+	LeadTime: z.union([
 		z.literal("3 Working days"),
 		z.literal("5 Working days"),
 		z.literal("7 Working days"),
 		z.literal("10 Working days"),
 	]),
-	dispatchUnit: z.union([z.literal("PCB"), z.literal("Panel")]),
-	calculatedPrice: z.number(),
-	designFile: z.string(),
+	DispatchUnit: z.union([z.literal("PCB"), z.literal("Panel")]),
+	NetPrice: z.number(),
+	DesignFile: z.string(),
 });
 
 export const FlexPcbFabSpecsTypeSchema = z.object({

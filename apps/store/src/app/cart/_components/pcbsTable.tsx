@@ -70,7 +70,7 @@ export default async function BasketPcbsTable() {
 							<>
 								{allPcbs.map((pcb, pcbIdx) => {
 									const serialNum = pcbIdx + 1;
-									const type = pcb.type;
+									const type = pcb.Type;
 									let name = "";
 									let quantity = 0;
 									let unitPrice = 0;
@@ -78,7 +78,7 @@ export default async function BasketPcbsTable() {
 
 									if (type === "Rigid" || type === "Flex") {
 										name = pcb.pcbname;
-										netPrice = pcb.calculatedPrice;
+										netPrice = pcb.NetPrice;
 										if (pcb.designFormat === "Single PCB") {
 											quantity = pcb.pcbQty;
 										} else {

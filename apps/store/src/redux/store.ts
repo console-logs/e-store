@@ -1,28 +1,21 @@
-import { apiSlice } from "@/redux/api/apiSlice";
 import flexPcbReducer from "@/redux/reducers/flexPcbSlice";
 import pcbAssemblyReducer from "@/redux/reducers/pcbAssemblySlice";
 import rigidPcbReducer from "@/redux/reducers/rigidPcbSlice";
+import { configureStore, type Action, type ThunkAction } from "@reduxjs/toolkit";
 import {
-  configureStore,
-  type Action,
-  type ThunkAction,
-} from "@reduxjs/toolkit";
-import {
-  useDispatch as useReduxDispatch,
-  useSelector as useReduxSelector,
-  type TypedUseSelectorHook,
+	useDispatch as useReduxDispatch,
+	useSelector as useReduxSelector,
+	type TypedUseSelectorHook,
 } from "react-redux";
 
 export const reduxStore = configureStore({
-  reducer: {
-    rigidPcb: rigidPcbReducer,
-    flexPcb: flexPcbReducer,
-    pcbAssembly: pcbAssemblyReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
-  devTools: process.env.NODE_ENV === "development",
+	reducer: {
+		rigidPcb: rigidPcbReducer,
+		flexPcb: flexPcbReducer,
+		pcbAssembly: pcbAssemblyReducer,
+	},
+
+	devTools: process.env.NODE_ENV === "development",
 });
 export const useDispatch = () => useReduxDispatch<ReduxDispatch>();
 export const useSelector: TypedUseSelectorHook<ReduxState> = useReduxSelector;
@@ -31,9 +24,4 @@ export const useSelector: TypedUseSelectorHook<ReduxState> = useReduxSelector;
 export type ReduxStore = typeof reduxStore;
 export type ReduxState = ReturnType<typeof reduxStore.getState>;
 export type ReduxDispatch = typeof reduxStore.dispatch;
-export type ReduxThunkAction<ReturnType = void> = ThunkAction<
-  ReturnType,
-  ReduxState,
-  unknown,
-  Action
->;
+export type ReduxThunkAction<ReturnType = void> = ThunkAction<ReturnType, ReduxState, unknown, Action>;
