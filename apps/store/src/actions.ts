@@ -3,6 +3,7 @@ import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo"
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import ShortUniqueId from "short-unique-id";
 
 export async function captureUserSignupAction(props: {
 	firstName: string;
@@ -96,9 +97,41 @@ export async function fetchCartSizeAction(): Promise<number> {
 }
 
 export async function addItemToCartAction(
-	_item: PartDataType | FlexPcbFabSpecsType | RigidPcbFabSpecsType | PcbAssemblyFabSpecsType
+	item: PartDataType | FlexPcbFabSpecsType | RigidPcbFabSpecsType | PcbAssemblyFabSpecsType
 ): Promise<void> {
-	throw new Error("Action not implemented");
+	try {
+		await mongoClient.connect();
+		const cart = await fetchCartItemsAction();
+		const { userId } = auth();
+		if (cart) {
+			const cartItems = cart.cartItems;
+			const existingItem = cartItems.find(cartItem => cartItem.Type === item.Type && cartItem.Name === item.Name);
+			if (existingItem) {
+				// increase the qty
+				existingItem.OrderedQty += item.OrderedQty;
+			} else {
+				// add the item & increase cartSize
+				cartItems.push(item);
+				cart.cartSize++;
+			}
+			userId
+				? await usersCollection.updateOne({ userId }, { $set: { cart } })
+				: await guestCartsCollection.updateOne({ cartId: cart.cartId }, { $set: { cart } });
+		} else {
+			// create new guest cart
+			const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
+			const newCart: CartDataType = {
+				cartId: newCartId,
+				cartSize: 1,
+				cartItems: [item],
+			};
+			await guestCartsCollection.insertOne(newCart);
+			await createCartCookie(newCartId); // future reference
+		}
+		revalidatePath("/products", "layout");
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 export async function updatePartQtyAction(_partNumber: string, _newQuantity: number): Promise<void> {
@@ -115,4 +148,15 @@ export async function deleteAllPartsAction() {
 
 export async function deleteAllPcbsAction() {
 	throw new Error("Action not implemented.");
+}
+
+export async function createCartCookie(cartId: string) {
+	cookies().set({
+		name: "cartId",
+		value: cartId,
+		path: "/",
+		maxAge: 60 * 60 * 24 * 30, // one month
+		sameSite: true,
+		// domain: env.HOST,
+	});
 }

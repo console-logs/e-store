@@ -11,7 +11,7 @@ import * as Yup from "yup";
 export default function UpdatePartQtyForm(props: { part: PartDataType }) {
 	const [isLoading, startTransition] = useTransition();
 	const { part } = props;
-	const { PartNumber, OrderedQty, Availability, Min } = part;
+	const { Name, OrderedQty, Availability, Min } = part;
 
 	const initialValues = {
 		orderQty: OrderedQty,
@@ -29,7 +29,7 @@ export default function UpdatePartQtyForm(props: { part: PartDataType }) {
 
 	function handleOnSubmit(values: { orderQty: number }) {
 		startTransition(async () => {
-			await updatePartQtyAction(PartNumber, values.orderQty);
+			await updatePartQtyAction(Name, values.orderQty);
 		});
 	}
 

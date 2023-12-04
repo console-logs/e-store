@@ -5,7 +5,8 @@ import { getFutureDate } from "@shared/lib/utils";
 const initialState: RigidPcbStoreStateType = {
 	/* mandatory fields */
 	Type: "Rigid PCB",
-	PcbName: "",
+	Name: "",
+	OrderedQty: 5,
 	BaseMaterial: "FR4",
 	Layer: 1,
 	BoardSizeX: 44,
@@ -96,8 +97,8 @@ const rigidPcbSlice = createSlice({
 	name: "rigidPcb",
 	initialState,
 	reducers: {
-		setPcbName: (state, action: PayloadAction<string>) => {
-			state.PcbName = action.payload;
+		setName: (state, action: PayloadAction<string>) => {
+			state.Name = action.payload;
 		},
 		setLayer: (state, action: PayloadAction<1 | 10 | 6 | 8 | 2 | 4>) => {
 			state.Layer = action.payload;
@@ -299,7 +300,13 @@ const rigidPcbSlice = createSlice({
 			state.DesignFile = action.payload;
 		},
 		/***************** Dependent fields update	**********************/
-
+		updateOrderedQty: state => {
+			if (state.DesignFormat === "Single PCB") {
+				state.OrderedQty = state.PcbQty;
+			} else {
+				state.OrderedQty = state.SinglePiecesQty;
+			}
+		},
 		updateMaterial: state => {
 			if (state.BaseMaterial === "FR4") {
 				if (state.Layer <= 6) {
@@ -549,7 +556,7 @@ const rigidPcbSlice = createSlice({
 });
 
 export const {
-	setPcbName,
+	setName,
 	setLayer,
 	setBaseMaterial,
 	setDesignFormat,
@@ -604,6 +611,7 @@ export const {
 	updateViaCovering,
 	updateCastellatedHoles,
 	updateChamferedGoldFingers,
+	updateOrderedQty,
 } = rigidPcbSlice.actions;
 
 export default rigidPcbSlice.reducer;
@@ -615,7 +623,7 @@ export const selectPanelSizeY = (state: ReduxState) => state.rigidPcb.PanelSizeY
 export const selectCalculatedPrice = (state: ReduxState) => state.rigidPcb.NetPrice;
 export const selectPanelQty = (state: ReduxState) => state.rigidPcb.PanelQty;
 export const selectDesignFile = (state: ReduxState) => state.rigidPcb.DesignFile;
-export const selectPcbName = (state: ReduxState) => state.rigidPcb.PcbName;
+export const selectName = (state: ReduxState) => state.rigidPcb.Name;
 export const selectBaseMaterial = (state: ReduxState) => state.rigidPcb.BaseMaterial;
 export const selectLayer = (state: ReduxState) => state.rigidPcb.Layer;
 export const selectBoardSizeX = (state: ReduxState) => state.rigidPcb.BoardSizeX;
@@ -651,6 +659,7 @@ export const selectCopperStructure = (state: ReduxState) => state.rigidPcb.Coppe
 export const selectColumns = (state: ReduxState) => state.rigidPcb.Columns;
 export const selectRows = (state: ReduxState) => state.rigidPcb.Rows;
 export const selectTentativeDispatchDate = (state: ReduxState) => state.rigidPcb.TentativeDispatchDate;
+export const selectOrderedQty = (state: ReduxState) => state.rigidPcb.OrderedQty;
 
 /* dropdown menu selectors */
 export const selectBaseMaterialOptions = (state: ReduxState) => state.rigidPcb.BaseMaterialOptions;
@@ -689,7 +698,8 @@ export const selectPanelQtyOptions = (state: ReduxState) => state.rigidPcb.Panel
 export const selectRigidPcbMemoized = createSelector([selectRigidPcbState], rigidPcb => {
 	const rigidPcbFabSpecs: RigidPcbFabSpecsType = {
 		Type: "Rigid PCB",
-		PcbName: rigidPcb.PcbName,
+		Name: rigidPcb.Name,
+		OrderedQty: rigidPcb.OrderedQty,
 		Layer: rigidPcb.Layer,
 		BaseMaterial: rigidPcb.BaseMaterial,
 		DesignFormat: rigidPcb.DesignFormat,

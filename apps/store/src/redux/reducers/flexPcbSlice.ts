@@ -4,7 +4,8 @@ import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: FlexPcbStoreStateType = {
 	Type: "Flex PCB",
-	PcbName: "",
+	Name: "",
+	OrderedQty: 5,
 	BaseMaterial: "Flex (Polyimide)",
 	BaseMaterialOptions: ["Flex (Polyimide)"],
 	Layer: 1,
@@ -80,8 +81,8 @@ const flexPcbSlice = createSlice({
 	name: "flexPcb",
 	initialState,
 	reducers: {
-		setPcbName: (state, action: PayloadAction<string>) => {
-			state.PcbName = action.payload;
+		setName: (state, action: PayloadAction<string>) => {
+			state.Name = action.payload;
 		},
 		setBaseMaterial: (state, action: PayloadAction<"Flex (Polyimide)">) => {
 			state.BaseMaterial = action.payload;
@@ -254,6 +255,13 @@ const flexPcbSlice = createSlice({
 			state.TentativeDispatchDate = action.payload;
 		},
 		/***********************************************************/
+		updateOrderedQty: state => {
+			if (state.DesignFormat === "Single PCB") {
+				state.OrderedQty = state.PcbQty;
+			} else {
+				state.OrderedQty = state.SinglePiecesQty;
+			}
+		},
 		updateDifferentDesignsInPanel: state => {
 			if (state.DesignFormat === "Panel by Manufacturer" || state.DesignFormat === "Single PCB") {
 				state.DifferentDesignsInPanelOptions = [1];
@@ -337,7 +345,7 @@ const flexPcbSlice = createSlice({
 });
 
 export const {
-	setPcbName,
+	setName,
 	setDesignFormat,
 	setLayer,
 	setBaseMaterial,
@@ -379,13 +387,14 @@ export const {
 	updatePcbThickness,
 	updateOuterCuWeight,
 	updateCoverlayThickness,
+	updateOrderedQty,
 } = flexPcbSlice.actions;
 
 export default flexPcbSlice.reducer;
 
 /* Selectors */
 export const selectFlexPcbState = (state: ReduxState) => state.flexPcb;
-export const selectPcbName = (state: ReduxState) => state.flexPcb.PcbName;
+export const selectName = (state: ReduxState) => state.flexPcb.Name;
 export const selectDesignFormat = (state: ReduxState) => state.flexPcb.DesignFormat;
 export const selectLayer = (state: ReduxState) => state.flexPcb.Layer;
 export const selectBaseMaterial = (state: ReduxState) => state.flexPcb.BaseMaterial;
@@ -424,6 +433,7 @@ export const selectTentativeDispatchDate = (state: ReduxState) => state.flexPcb.
 export const selectPanelSizeX = (state: ReduxState) => state.flexPcb.PanelSizeX;
 export const selectPanelSizeY = (state: ReduxState) => state.flexPcb.PanelSizeY;
 export const selectCalculatedPrice = (state: ReduxState) => state.flexPcb.NetPrice;
+export const selectOrderedQty = (state: ReduxState) => state.flexPcb.OrderedQty;
 
 /* dropdown menu selectors */
 export const selectDesignFormatOptions = (state: ReduxState) => state.flexPcb.DesignFormatOptions;
@@ -456,6 +466,7 @@ export const selectSilkscreenOptions = (state: ReduxState) => state.flexPcb.Silk
 export const selectFlexPcbMemoized = createSelector([selectFlexPcbState], flexPcb => {
 	const flexPcbFabSpecs: FlexPcbFabSpecsType = {
 		Type: "Flex PCB",
+		OrderedQty: flexPcb.OrderedQty,
 		BaseMaterial: flexPcb.BaseMaterial,
 		BoardOutlineTolerance: flexPcb.BoardOutlineTolerance,
 		BoardSizeX: flexPcb.BoardSizeX,
@@ -481,7 +492,7 @@ export const selectFlexPcbMemoized = createSelector([selectFlexPcbState], flexPc
 		LeadTime: flexPcb.LeadTime,
 		OuterCuWeight: flexPcb.OuterCuWeight,
 		PanelQty: flexPcb.PanelQty,
-		PcbName: flexPcb.PcbName,
+		Name: flexPcb.Name,
 		PcbQty: flexPcb.PcbQty,
 		PolyimideThickness: flexPcb.PolyimideThickness,
 		Rows: flexPcb.Rows,

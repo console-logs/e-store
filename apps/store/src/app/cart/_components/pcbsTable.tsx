@@ -75,12 +75,12 @@ export default async function BasketPcbsTable() {
 									const serialNum = pcbIdx + 1;
 									const { NetPrice, Type } = pcb;
 									const isRigidOrFlex = Type === "Rigid PCB" || Type === "Flex PCB";
-									const name = isRigidOrFlex ? pcb.PcbName : pcb.ProjectName;
+									const name = pcb.Name;
 									const quantity = isRigidOrFlex
 										? pcb.DesignFormat === "Single PCB"
 											? pcb.PcbQty
 											: pcb.SinglePiecesQty
-										: pcb.Quantity;
+										: pcb.OrderedQty;
 									const netPrice = NetPrice;
 									const unitPrice = netPrice / quantity;
 

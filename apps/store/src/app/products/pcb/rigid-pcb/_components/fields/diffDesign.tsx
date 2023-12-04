@@ -4,6 +4,7 @@ import {
 	selectDifferentDesignsInPanelOptions,
 	setDifferentDesignsInPanel,
 	updateDesignFormatOption,
+	updateOrderedQty,
 } from "@/redux/reducers/rigidPcbSlice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
@@ -27,6 +28,7 @@ export default function DifferentDesignsInPanel() {
 				onChange={async value => {
 					dispatch(setDifferentDesignsInPanel(value));
 					dispatch(updateDesignFormatOption());
+					dispatch(updateOrderedQty());
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

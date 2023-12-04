@@ -4,10 +4,10 @@ import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: PcbAssemblyStoreStateType = {
 	Type: "PCB Assembly",
-	ProjectName: "",
+	Name: "",
 	BoardType: "Single PCB",
 	PcbsPerPanel: 1,
-	Quantity: 10,
+	OrderedQty: 10,
 	AssemblySides: "Top Side",
 	NumOfUniqueComponents: 5,
 	NumOfSmdComponents: 10,
@@ -41,8 +41,8 @@ const pcbAssemblySlice = createSlice({
 	name: "pcbAssembly",
 	initialState,
 	reducers: {
-		setProjectName: (state, action: PayloadAction<string>) => {
-			state.ProjectName = action.payload;
+		setName: (state, action: PayloadAction<string>) => {
+			state.Name = action.payload;
 		},
 		setBoardType: (state, action: PayloadAction<"Single PCB" | "Panel">) => {
 			state.BoardType = action.payload;
@@ -50,8 +50,8 @@ const pcbAssemblySlice = createSlice({
 		setPcbsPerPanel: (state, action: PayloadAction<number>) => {
 			state.PcbsPerPanel = action.payload;
 		},
-		setQuantity: (state, action: PayloadAction<number>) => {
-			state.Quantity = action.payload;
+		setOrderedQty: (state, action: PayloadAction<number>) => {
+			state.OrderedQty = action.payload;
 		},
 		setAssemblySides: (state, action: PayloadAction<"Top Side" | "Bottom Side" | "Both Sides">) => {
 			state.AssemblySides = action.payload;
@@ -111,10 +111,10 @@ const pcbAssemblySlice = createSlice({
 });
 
 export const {
-	setProjectName,
+	setName,
 	setBoardType,
 	setPcbsPerPanel,
-	setQuantity,
+	setOrderedQty,
 	setAssemblySides,
 	setNumOfUniqueComponents,
 	setNumOfSmdComponents,
@@ -139,10 +139,10 @@ export default pcbAssemblySlice.reducer;
 
 /* Selectors */
 export const selectPcbAssemblyState = (state: ReduxState) => state.pcbAssembly;
-export const selectProjectName = (state: ReduxState) => state.pcbAssembly.ProjectName;
+export const selectName = (state: ReduxState) => state.pcbAssembly.Name;
 export const selectBoardType = (state: ReduxState) => state.pcbAssembly.BoardType;
 export const selectPcbsPerPanel = (state: ReduxState) => state.pcbAssembly.PcbsPerPanel;
-export const selectQuantity = (state: ReduxState) => state.pcbAssembly.Quantity;
+export const selectOrderedQty = (state: ReduxState) => state.pcbAssembly.OrderedQty;
 export const selectAssemblySides = (state: ReduxState) => state.pcbAssembly.AssemblySides;
 export const selectNumOfUniqueComponents = (state: ReduxState) => state.pcbAssembly.NumOfUniqueComponents;
 export const selectNumOfSmdComponents = (state: ReduxState) => state.pcbAssembly.NumOfSmdComponents;
@@ -176,10 +176,10 @@ export const selectTurnaroundTimeOptions = (state: ReduxState) => state.pcbAssem
 export const selectPcbAssemblyMemomized = createSelector([selectPcbAssemblyState], pcbAssembly => {
 	const pcbAssemblyFabSpecs: PcbAssemblyFabSpecsType = {
 		Type: "PCB Assembly",
-		ProjectName: pcbAssembly.ProjectName,
+		Name: pcbAssembly.Name,
 		BoardType: pcbAssembly.BoardType,
 		PcbsPerPanel: pcbAssembly.PcbsPerPanel,
-		Quantity: pcbAssembly.Quantity,
+		OrderedQty: pcbAssembly.OrderedQty,
 		AssemblySides: pcbAssembly.AssemblySides,
 		NumOfUniqueComponents: pcbAssembly.NumOfUniqueComponents,
 		NumOfSmdComponents: pcbAssembly.NumOfSmdComponents,

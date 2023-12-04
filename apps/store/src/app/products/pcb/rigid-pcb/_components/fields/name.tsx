@@ -1,12 +1,12 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectPcbName, setPcbName } from "@/redux/reducers/rigidPcbSlice";
+import { selectName, setName } from "@/redux/reducers/rigidPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function PcbName() {
 	const dispatch = useDispatch();
-	const pcbname = useSelector(selectPcbName);
+	const name = useSelector(selectName);
 
 	return (
 		<div>
@@ -20,8 +20,8 @@ export default function PcbName() {
 				autoComplete="off"
 				className="w-full"
 				required
-				onChange={e => dispatch(setPcbName(e.target.value))}
-				value={pcbname}
+				onChange={e => dispatch(setName(e.target.value))}
+				value={name}
 			/>
 		</div>
 	);

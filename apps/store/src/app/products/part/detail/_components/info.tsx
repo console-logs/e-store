@@ -2,12 +2,21 @@ import { Badge } from "@packages/shared/components/ui/badge";
 import Link from "next/link";
 
 export function PartInfo({ partData }: { partData: PartDataType }) {
-	const { Description, DatasheetUrl, Availability, PartNumber, Manufacturer, Category, ROHSStatus, Min, Mult } =
-		partData;
+	const {
+		Description,
+		DatasheetUrl,
+		Availability,
+		Name,
+		Manufacturer,
+		Category,
+		ROHSStatus,
+		Min,
+		Mult,
+	} = partData;
 	return (
 		<div className="lg:max-w-lg lg:self-end">
 			<div className="mt-4">
-				<h1 className="text-3xl font-bold tracking-tight">{PartNumber}</h1>
+				<h1 className="text-3xl font-bold tracking-tight">{Name}</h1>
 			</div>
 
 			<section

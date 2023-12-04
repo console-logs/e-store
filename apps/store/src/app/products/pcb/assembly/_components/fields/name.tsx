@@ -1,17 +1,17 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectProjectName, setProjectName } from "@/redux/reducers/pcbAssemblySlice";
+import { selectName, setName } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function ProjectName() {
+export default function PcbName() {
 	const dispatch = useDispatch();
-	const projectName = useSelector(selectProjectName);
+	const name = useSelector(selectName);
 
 	return (
 		<div>
 			<Label>
-				Project Name <ProjectNameTip />
+				PCB Name <PcbNameTip />
 			</Label>
 			<Input
 				placeholder="Enter your project name"
@@ -20,17 +20,17 @@ export default function ProjectName() {
 				autoComplete="off"
 				className="w-full"
 				required
-				onChange={e => dispatch(setProjectName(e.target.value))}
-				value={projectName}
+				onChange={e => dispatch(setName(e.target.value))}
+				value={name}
 			/>
 		</div>
 	);
 }
 
-function ProjectNameTip() {
+function PcbNameTip() {
 	return (
 		<HelpPopover>
-			<p>This is the name of your Project. It is used for the reference in the order confirmation email.</p>
+			<p>This is the name of your Pcb. It is used for the reference in the order confirmation email.</p>
 		</HelpPopover>
 	);
 }

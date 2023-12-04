@@ -247,9 +247,11 @@ export const flexPcbRouter = createTRPCRouter({
 
 		// pcb quantity
 		if (input.DesignFormat === "Single PCB" && input.PcbQty) {
-			netCost = unitCost * input.PcbQty;
+			const orderedQty = input.PcbQty;
+			netCost = unitCost * orderedQty;
 		} else if (input.DesignFormat !== "Single PCB" && input.SinglePiecesQty) {
-			netCost = unitCost * input.SinglePiecesQty;
+			const orderedQty = input.SinglePiecesQty;
+			netCost = unitCost * orderedQty;
 		}
 		return netCost;
 	}),

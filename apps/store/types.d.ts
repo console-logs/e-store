@@ -15,7 +15,8 @@
 /*  Rigid Pcb Types */
 type BaseRigidPcbFabSpecsType = {
 	Type: "Rigid PCB";
-	PcbName: string;
+	Name: string;
+	OrderedQty: number;
 	Layer: 1 | 2 | 4 | 6 | 8 | 10;
 	BaseMaterial: "FR4" | "Aluminum" | "CopperCore" | "Rogers";
 	DesignFormat: "Single PCB" | "Panel by Customer" | "Panel by Manufacturer";
@@ -298,7 +299,8 @@ type RigidPcbFabSpecsType = BaseRigidPcbFabSpecsType & {
 /* Flex Pcb Types */
 type BaseFlexPcbFabSpecsType = {
 	Type: "Flex PCB";
-	PcbName: string;
+	Name: string;
+	OrderedQty: number;
 	BaseMaterial: "Flex (Polyimide)";
 	Layer: 1 | 2;
 	BoardSizeX: number;
@@ -537,10 +539,10 @@ type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
 /* Pcb Assembly Types */
 type PcbAssemblyFabSpecsType = {
 	Type: "PCB Assembly";
-	ProjectName: string;
+	Name: string;
 	BoardType: "Single PCB" | "Panel";
 	PcbsPerPanel: number;
-	Quantity: number;
+	OrderedQty: number;
 	AssemblySides: "Top Side" | "Bottom Side" | "Both Sides";
 	NumOfUniqueComponents: number;
 	NumOfSmdComponents: number;
@@ -585,7 +587,7 @@ type PartDataType = {
 	ImagePath: string;
 	Category: string;
 	Manufacturer: string;
-	PartNumber: string;
+	Name: string;
 	Min: string;
 	Mult: string;
 	BCDPercent: number;

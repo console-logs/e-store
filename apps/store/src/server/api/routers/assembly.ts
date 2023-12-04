@@ -36,16 +36,16 @@ export const pcbAssemblyRouter = createTRPCRouter({
 		}
 
 		// Add quantity cost
-		if (input.Quantity <= 10) {
-			finalCost += assemblyRateCard.quantity.upTo10 * input.Quantity;
-		} else if (input.Quantity >= 11 && input.Quantity <= 50) {
-			finalCost += assemblyRateCard.quantity[11_50] * input.Quantity;
-		} else if (input.Quantity >= 51 && input.Quantity <= 100) {
-			finalCost += assemblyRateCard.quantity[51_100] * input.Quantity;
-		} else if (input.Quantity >= 101 && input.Quantity <= 500) {
-			finalCost += assemblyRateCard.quantity[101_500] * input.Quantity;
+		if (input.OrderedQty <= 10) {
+			finalCost += assemblyRateCard.quantity.upTo10 * input.OrderedQty;
+		} else if (input.OrderedQty >= 11 && input.OrderedQty <= 50) {
+			finalCost += assemblyRateCard.quantity[11_50] * input.OrderedQty;
+		} else if (input.OrderedQty >= 51 && input.OrderedQty <= 100) {
+			finalCost += assemblyRateCard.quantity[51_100] * input.OrderedQty;
+		} else if (input.OrderedQty >= 101 && input.OrderedQty <= 500) {
+			finalCost += assemblyRateCard.quantity[101_500] * input.OrderedQty;
 		} else {
-			finalCost += assemblyRateCard.quantity.above500 * input.Quantity;
+			finalCost += assemblyRateCard.quantity.above500 * input.OrderedQty;
 		}
 
 		// Add unique components cost
@@ -110,20 +110,20 @@ export const pcbAssemblyRouter = createTRPCRouter({
 
 		// Add conformal coating cost
 		if (input.BoardType === "Single PCB") {
-			finalCost += assemblyRateCard.conformalCoating[input.ConformalCoating] * input.Quantity;
+			finalCost += assemblyRateCard.conformalCoating[input.ConformalCoating] * input.OrderedQty;
 		} else if (input.BoardType === "Panel" && input.PcbsPerPanel) {
 			finalCost +=
-				assemblyRateCard.conformalCoating[input.ConformalCoating] * input.Quantity * input.PcbsPerPanel;
+				assemblyRateCard.conformalCoating[input.ConformalCoating] * input.OrderedQty * input.PcbsPerPanel;
 		}
 
 		// Add functional testing cost
 		if (input.BoardType === "Single PCB") {
 			if (input.FunctionalTest === "Yes") {
-				finalCost += assemblyRateCard.functionalTesting * input.Quantity;
+				finalCost += assemblyRateCard.functionalTesting * input.OrderedQty;
 			}
 		} else if (input.BoardType === "Panel" && input.PcbsPerPanel) {
 			if (input.FunctionalTest === "Yes") {
-				finalCost += assemblyRateCard.functionalTesting * input.Quantity * input.PcbsPerPanel;
+				finalCost += assemblyRateCard.functionalTesting * input.OrderedQty * input.PcbsPerPanel;
 			}
 		}
 

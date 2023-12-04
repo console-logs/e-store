@@ -1,6 +1,6 @@
 import {
 	selectPcbAssemblyMemomized,
-	selectQuantity,
+	selectOrderedQty,
 	selectTentativeDispatchDate,
 } from "@/redux/reducers/pcbAssemblySlice";
 import { tRPCReactApi } from "@/trpc/react";
@@ -11,7 +11,7 @@ export default function PcbAssemblyPriceSummary() {
 	const response = tRPCReactApi.pcbAssembly.getPrice.useQuery(pcbAssembly).data ?? { assemblyCost: 0, setupCost: 0 };
 	const assemblyCost = response.assemblyCost;
 	const setupCost = response.setupCost;
-	const assemblyQty = useSelector(selectQuantity);
+	const assemblyQty = useSelector(selectOrderedQty);
 	const tentativeDispatchDate = useSelector(selectTentativeDispatchDate);
 
 	return (

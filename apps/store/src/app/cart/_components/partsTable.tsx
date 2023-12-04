@@ -15,6 +15,7 @@ export default async function BasketPartsTable() {
 	// May include out-of-stock parts added by bom parser.
 	// Make sure to remove them at checkout.
 	const parts = cart ? cart.cartItems.filter((item): item is PartDataType => item.Type === "Part") : [];
+	
 
 	return (
 		<div>
@@ -68,9 +69,9 @@ export default async function BasketPartsTable() {
 						{parts.length > 0 ? (
 							<>
 								{parts.map((part, partIdx) => {
-									const { PartNumber, Description, Availability } = part;
+									const { Name, Description, Availability } = part;
 									const serialNum = partIdx + 1;
-									const unitPrice = calculatePartUnitPrice(parts, PartNumber);
+									const unitPrice = calculatePartUnitPrice(parts, Name);
 									const netPrice = calculatePartNetPrice(unitPrice, part.OrderedQty);
 									return (
 										<tr
@@ -80,7 +81,7 @@ export default async function BasketPartsTable() {
 												{serialNum}
 											</td>
 											<td className="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
-												<div className="font-medium">{PartNumber}</div>
+												<div className="font-medium">{Name}</div>
 												<div className="mt-1 text-muted-foreground">{Description}</div>
 												<dl className="lg:hidden">
 													<dt className="sr-only">Ordered Quantity</dt>
@@ -96,14 +97,14 @@ export default async function BasketPartsTable() {
 													<dd className="mt-1 sm:hidden">
 														<span className="text-muted-foreground">Rate: </span>
 														<span className="font-medium">
-															{calculatePartUnitPrice(parts, PartNumber)}
+															{unitPrice}
 														</span>
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
 														<DeleteButton
 															deleteAction={deleteCartItemAction}
-															itemToDelete={PartNumber}
+															itemToDelete={Name}
 														/>
 													</dd>
 												</dl>
@@ -121,7 +122,7 @@ export default async function BasketPartsTable() {
 											<td className="hidden sm:table-cell text-right">
 												<DeleteButton
 													deleteAction={deleteCartItemAction}
-													itemToDelete={PartNumber}
+													itemToDelete={Name}
 												/>
 											</td>
 										</tr>

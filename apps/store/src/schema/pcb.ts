@@ -1,7 +1,8 @@
 import { z } from "zod";
 
 export const RigidPcbFabSpecsTypeSchema = z.object({
-	PcbName: z.string(),
+	Name: z.string(),
+	OrderedQty: z.number(),
 	Layer: z.union([z.literal(1), z.literal(2), z.literal(4), z.literal(6), z.literal(8), z.literal(10)]),
 	BaseMaterial: z.union([z.literal("FR4"), z.literal("Aluminum"), z.literal("CopperCore"), z.literal("Rogers")]),
 	DesignFormat: z.union([
@@ -154,7 +155,8 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 });
 
 export const FlexPcbFabSpecsTypeSchema = z.object({
-	PcbName: z.string(),
+	Name: z.string(),
+	OrderedQty: z.number(),
 	BaseMaterial: z.literal("Flex (Polyimide)"),
 	Layer: z.union([z.literal(1), z.literal(2)]),
 	BoardSizeX: z.number(),
@@ -269,10 +271,10 @@ export const FlexPcbFabSpecsTypeSchema = z.object({
 });
 
 export const PcbAssemblyFabSpecsTypeSchema = z.object({
-	ProjectName: z.string(),
+	Name: z.string(),
 	BoardType: z.union([z.literal("Single PCB"), z.literal("Panel")]),
 	PcbsPerPanel: z.number().nullable(),
-	Quantity: z.number(),
+	OrderedQty: z.number(),
 	AssemblySides: z.union([z.literal("Top Side"), z.literal("Bottom Side"), z.literal("Both Sides")]),
 	NumOfUniqueComponents: z.number(),
 	NumOfSmdComponents: z.number(),

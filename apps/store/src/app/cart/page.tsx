@@ -1,8 +1,8 @@
 import CheckoutBtn from "@/app/cart/_components/checkout";
 import ContinueShoppingBtn from "@/app/cart/_components/continue";
 import BasketPartsTable from "@/app/cart/_components/partsTable";
-import BasketPcbsTable from "@/app/cart/_components/pcbsTable";
 import type { Metadata } from "next";
+import BasketPcbsTable from "./_components/pcbsTable";
 
 export const metadata: Metadata = {
 	title: "Shopping Cart",

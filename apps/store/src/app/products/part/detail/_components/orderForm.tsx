@@ -9,7 +9,7 @@ import { useTransition } from "react";
 import * as Yup from "yup";
 
 export default function PartOrderForm({ partData }: { partData: PartDataType }) {
-	const { Min, Availability, PartNumber } = partData;
+	const { Min, Availability, Name } = partData;
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();
 
@@ -45,7 +45,7 @@ export default function PartOrderForm({ partData }: { partData: PartDataType }) 
 			toast({
 				variant: "default",
 				title: "Added to cart",
-				description: `We've added ${PartNumber} to your cart`,
+				description: `We've added ${Name} to your cart`,
 				duration: 4000,
 			});
 		});

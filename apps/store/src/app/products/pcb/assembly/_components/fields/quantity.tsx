@@ -1,13 +1,13 @@
 "use client";
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectBoardType, selectQuantity, setQuantity } from "@/redux/reducers/pcbAssemblySlice";
+import { selectBoardType, selectOrderedQty, setOrderedQty } from "@/redux/reducers/pcbAssemblySlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function AssemblyQuantity() {
 	const dispatch = useDispatch();
-	const quantity = useSelector(selectQuantity);
+	const quantity = useSelector(selectOrderedQty);
 	const boardType = useSelector(selectBoardType);
 
 	return (
@@ -24,7 +24,7 @@ export default function AssemblyQuantity() {
 				className="w-full"
 				required
 				onChange={async e => {
-					dispatch(setQuantity(Number(e.target.value)));
+					dispatch(setOrderedQty(Number(e.target.value)));
 				}}
 				value={quantity === 0 ? "" : quantity}
 			/>
