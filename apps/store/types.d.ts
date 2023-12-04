@@ -578,6 +578,7 @@ type PartResultsType = {
 };
 
 type PartDataType = {
+	Type: "Part";
 	Availability: string;
 	DatasheetUrl: string;
 	Description: string;
