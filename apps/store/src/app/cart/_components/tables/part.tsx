@@ -133,7 +133,7 @@ export default async function BasketPartsTable() {
 								<td
 									colSpan={6}
 									className="text-center text-muted-foreground text-sm">
-									You&apos;ve not added any components to cart
+									You&apos;ve not added any parts to cart
 								</td>
 							</tr>
 						)}
