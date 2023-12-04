@@ -14,7 +14,7 @@
 
 /*  Rigid Pcb Types */
 type BaseRigidPcbFabSpecsType = {
-	Type: "Rigid";
+	Type: "Rigid PCB";
 	PcbName: string;
 	Layer: 1 | 2 | 4 | 6 | 8 | 10;
 	BaseMaterial: "FR4" | "Aluminum" | "CopperCore" | "Rogers";
