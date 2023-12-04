@@ -297,13 +297,15 @@ type RigidPcbFabSpecsType = BaseRigidPcbFabSpecsType & {
 
 /* Flex Pcb Types */
 type BaseFlexPcbFabSpecsType = {
-	type: "Flex";
-	pcbname: string;
-	baseMaterial: "Flex (Polyimide)";
-	layer: 1 | 2;
-	boardSizeX: number;
-	boardSizeY: number;
-	pcbQty:
+	Type: "Flex PCB";
+	PcbName: string;
+	BaseMaterial: "Flex (Polyimide)";
+	Layer: 1 | 2;
+	BoardSizeX: number;
+	BoardSizeY: number;
+	PanelSizeX: number;
+	PanelSizeY: number;
+	PcbQty:
 		| 5
 		| 10
 		| 15
@@ -328,10 +330,10 @@ type BaseFlexPcbFabSpecsType = {
 		| 1000
 		| 1500
 		| 2000;
-	singlePiecesQty: number;
-	designFormat: "Single PCB" | "Panel by Customer" | "Panel by Manufacturer";
-	differentDesignsInPanel: 1 | 2 | 3 | 4;
-	panelQty:
+	SinglePiecesQty: number;
+	DesignFormat: "Single PCB" | "Panel by Customer" | "Panel by Manufacturer";
+	DifferentDesignsInPanel: 1 | 2 | 3 | 4;
+	PanelQty:
 		| 5
 		| 10
 		| 15
@@ -356,42 +358,40 @@ type BaseFlexPcbFabSpecsType = {
 		| 1000
 		| 1500
 		| 2000;
-	columns: number;
-	rows: number;
-	boardThickness: 0.07 | 0.11 | 0.12 | 0.2;
-	coverlay: "Yellow";
-	coverlayThickness: "PI:12.5um/AD:15um" | "PI:25um/AD:25um";
-	silkscreen: "White";
-	surfaceFinish: "ENIG";
-	goldThickness: '1 U"' | '2 U"';
-	edgeRails: "No" | "On 2 Sides" | "On 4 Sides";
-	edgeRailSize: "5mm" | "7mm" | "10mm";
-	outerCuWeight: "0.5 oz" | "1/3 oz" | "1.0 oz";
-	boardOutlineTolerance: "±0.1mm" | "±0.05mm";
-	viaHoles: number;
-	leadTime: "3 Working days" | "5 Working days" | "7 Working days" | "10 Working days";
-	dispatchUnit: "PCB" | "Panel";
-	copperType: "Electro-deposited";
-	stiffner: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">;
-	polyimideThickness: 0.1 | 0.15 | 0.2 | 0.225 | 0.25;
-	fr4Thickness: 0.1 | 0.2;
-	stainlessSteelThickness: 0.1 | 0.2 | 0.3;
-	threeMTapeThickness: "3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)";
-	emiShieldingFilm: "Without" | "Both sides (Black, 18um)" | "Single side (Black, 18um)";
-	cuttingMethod: "Laser Cutting";
-	calculatedPrice: number;
-	designFile: string;
+	Columns: number;
+	Rows: number;
+	BoardThickness: 0.07 | 0.11 | 0.12 | 0.2;
+	Coverlay: "Yellow";
+	CoverlayThickness: "PI:12.5um/AD:15um" | "PI:25um/AD:25um";
+	Silkscreen: "White";
+	SurfaceFinish: "ENIG";
+	GoldThickness: '1 U"' | '2 U"';
+	EdgeRails: "No" | "On 2 Sides" | "On 4 Sides";
+	EdgeRailSize: "5mm" | "7mm" | "10mm";
+	OuterCuWeight: "0.5 oz" | "1/3 oz" | "1.0 oz";
+	BoardOutlineTolerance: "±0.1mm" | "±0.05mm";
+	ViaHoles: number;
+	LeadTime: "3 Working days" | "5 Working days" | "7 Working days" | "10 Working days";
+	DispatchUnit: "PCB" | "Panel";
+	CopperType: "Electro-deposited";
+	Stiffner: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">;
+	PolyimideThickness: 0.1 | 0.15 | 0.2 | 0.225 | 0.25;
+	FR4Thickness: 0.1 | 0.2;
+	StainlessSteelThickness: 0.1 | 0.2 | 0.3;
+	ThreeMTapeThickness: "3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)";
+	EMIShieldingFilm: "Without" | "Both sides (Black, 18um)" | "Single side (Black, 18um)";
+	CuttingMethod: "Laser Cutting";
+	NetPrice: number;
+	DesignFile: string;
 };
 
 type FlexPcbStoreStateType = BaseFlexPcbFabSpecsType & {
-	panelSizeX: number;
-	panelSizeY: number;
-	tentativeDispatchDate: string;
-	designFormatOptions: Array<"Single PCB" | "Panel by Customer" | "Panel by Manufacturer">;
-	layerOptions: Array<1 | 2>;
-	baseMaterialOptions: Array<"Flex (Polyimide)">;
-	differentDesignsInPanelOptions: Array<1 | 2 | 3 | 4>;
-	panelQtyOptions: Array<
+	TentativeDispatchDate: string;
+	DesignFormatOptions: Array<"Single PCB" | "Panel by Customer" | "Panel by Manufacturer">;
+	LayerOptions: Array<1 | 2>;
+	BaseMaterialOptions: Array<"Flex (Polyimide)">;
+	DifferentDesignsInPanelOptions: Array<1 | 2 | 3 | 4>;
+	PanelQtyOptions: Array<
 		| 5
 		| 10
 		| 15
@@ -417,7 +417,7 @@ type FlexPcbStoreStateType = BaseFlexPcbFabSpecsType & {
 		| 1500
 		| 2000
 	>;
-	pcbQtyOptions: Array<
+	PcbQtyOptions: Array<
 		| 5
 		| 10
 		| 15
@@ -443,30 +443,30 @@ type FlexPcbStoreStateType = BaseFlexPcbFabSpecsType & {
 		| 1500
 		| 2000
 	>;
-	boardThicknessOptions: Array<0.07 | 0.11 | 0.12 | 0.2>;
-	coverlayOptions: Array<"Yellow">;
-	coverlayThicknessOptions: Array<"PI:12.5um/AD:15um" | "PI:25um/AD:25um">;
-	silkscreenOptions: Array<"White">;
-	surfaceFinishOptions: Array<"ENIG">;
-	goldThicknessOptions: Array<'1 U"' | '2 U"'>;
-	edgeRailsOptions: Array<"No" | "On 2 Sides" | "On 4 Sides">;
-	edgeRailSizeOptions: Array<"5mm" | "7mm" | "10mm">;
-	outerCuWeightOptions: Array<"0.5 oz" | "1/3 oz" | "1.0 oz">;
-	boardOutlineToleranceOptions: Array<"±0.1mm" | "±0.05mm">;
-	leadTimeOptions: Array<"3 Working days" | "5 Working days" | "7 Working days" | "10 Working days">;
-	dispatchUnitOptions: Array<"PCB" | "Panel">;
-	copperTypeOptions: Array<"Electro-deposited">;
-	stiffnerOptions: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">;
-	polyimideThicknessOptions: Array<0.1 | 0.15 | 0.2 | 0.225 | 0.25>;
-	fr4ThicknessOptions: Array<0.1 | 0.2>;
-	stainlessSteelThicknessOptions: Array<0.1 | 0.2 | 0.3>;
-	threeMTapeThicknessOptions: Array<"3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)">;
-	emiShieldingFilmOptions: Array<"Without" | "Both sides (Black, 18um)" | "Single side (Black, 18um)">;
-	cuttingMethodOptions: Array<"Laser Cutting">;
+	BoardThicknessOptions: Array<0.07 | 0.11 | 0.12 | 0.2>;
+	CoverlayOptions: Array<"Yellow">;
+	CoverlayThicknessOptions: Array<"PI:12.5um/AD:15um" | "PI:25um/AD:25um">;
+	SilkscreenOptions: Array<"White">;
+	SurfaceFinishOptions: Array<"ENIG">;
+	GoldThicknessOptions: Array<'1 U"' | '2 U"'>;
+	EdgeRailsOptions: Array<"No" | "On 2 Sides" | "On 4 Sides">;
+	EdgeRailSizeOptions: Array<"5mm" | "7mm" | "10mm">;
+	OuterCuWeightOptions: Array<"0.5 oz" | "1/3 oz" | "1.0 oz">;
+	BoardOutlineToleranceOptions: Array<"±0.1mm" | "±0.05mm">;
+	LeadTimeOptions: Array<"3 Working days" | "5 Working days" | "7 Working days" | "10 Working days">;
+	DispatchUnitOptions: Array<"PCB" | "Panel">;
+	CopperTypeOptions: Array<"Electro-deposited">;
+	StiffnerOptions: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">;
+	PolyimideThicknessOptions: Array<0.1 | 0.15 | 0.2 | 0.225 | 0.25>;
+	FR4ThicknessOptions: Array<0.1 | 0.2>;
+	StainlessSteelThicknessOptions: Array<0.1 | 0.2 | 0.3>;
+	ThreeMTapeThicknessOptions: Array<"3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)">;
+	EMIShieldingFilmOptions: Array<"Without" | "Both sides (Black, 18um)" | "Single side (Black, 18um)">;
+	CuttingMethodOptions: Array<"Laser Cutting">;
 };
 
 type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
-	pcbQty:
+	PcbQty:
 		| null
 		| 5
 		| 10
@@ -492,19 +492,19 @@ type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
 		| 1000
 		| 1500
 		| 2000;
-	singlePiecesQty: null | number;
-	columns: null | number;
-	rows: null | number;
-	edgeRails: null | "No" | "On 2 Sides" | "On 4 Sides";
-	edgeRailSize: null | "5mm" | "7mm" | "10mm";
-	goldThickness: null | '1 U"' | '2 U"';
-	polyimideThickness: null | 0.1 | 0.15 | 0.2 | 0.225 | 0.25;
-	threeMTapeThickness: null | "3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)";
-	stainlessSteelThickness: null | 0.1 | 0.2 | 0.3;
-	fr4Thickness: null | 0.1 | 0.2;
-	boardOutlineTolerance: null | "±0.1mm" | "±0.05mm";
-	viaHoles: null | number;
-	panelQty:
+	SinglePiecesQty: null | number;
+	Columns: null | number;
+	Rows: null | number;
+	EdgeRails: null | "No" | "On 2 Sides" | "On 4 Sides";
+	EdgeRailSize: null | "5mm" | "7mm" | "10mm";
+	GoldThickness: null | '1 U"' | '2 U"';
+	PolyimideThickness: null | 0.1 | 0.15 | 0.2 | 0.225 | 0.25;
+	ThreeMTapeThickness: null | "3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)";
+	StainlessSteelThickness: null | 0.1 | 0.2 | 0.3;
+	FR4Thickness: null | 0.1 | 0.2;
+	BoardOutlineTolerance: null | "±0.1mm" | "±0.05mm";
+	ViaHoles: null | number;
+	PanelQty:
 		| null
 		| 5
 		| 10
@@ -530,6 +530,8 @@ type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
 		| 1000
 		| 1500
 		| 2000;
+	PanelSizeX: null | number;
+	PanelSizeY: null | number;
 };
 
 /* Pcb Assembly Types */

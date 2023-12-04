@@ -154,12 +154,12 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 });
 
 export const FlexPcbFabSpecsTypeSchema = z.object({
-	pcbname: z.string(),
-	baseMaterial: z.literal("Flex (Polyimide)"),
-	layer: z.union([z.literal(1), z.literal(2)]),
-	boardSizeX: z.number(),
-	boardSizeY: z.number(),
-	pcbQty: z
+	PcbName: z.string(),
+	BaseMaterial: z.literal("Flex (Polyimide)"),
+	Layer: z.union([z.literal(1), z.literal(2)]),
+	BoardSizeX: z.number(),
+	BoardSizeY: z.number(),
+	PcbQty: z
 		.union([
 			z.literal(5),
 			z.literal(10),
@@ -187,14 +187,14 @@ export const FlexPcbFabSpecsTypeSchema = z.object({
 			z.literal(2000),
 		])
 		.nullable(),
-	singlePiecesQty: z.number().nullable(),
-	designFormat: z.union([
+	SinglePiecesQty: z.number().nullable(),
+	DesignFormat: z.union([
 		z.literal("Single PCB"),
 		z.literal("Panel by Customer"),
 		z.literal("Panel by Manufacturer"),
 	]),
-	differentDesignsInPanel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]),
-	panelQty: z
+	DifferentDesignsInPanel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]),
+	PanelQty: z
 		.union([
 			z.literal(5),
 			z.literal(10),
@@ -222,28 +222,28 @@ export const FlexPcbFabSpecsTypeSchema = z.object({
 			z.literal(2000),
 		])
 		.nullable(),
-	columns: z.number().nullable(),
-	rows: z.number().nullable(),
-	boardThickness: z.union([z.literal(0.07), z.literal(0.11), z.literal(0.12), z.literal(0.2)]),
-	coverlay: z.literal("Yellow"),
-	coverlayThickness: z.union([z.literal("PI:12.5um/AD:15um"), z.literal("PI:25um/AD:25um")]),
-	silkscreen: z.literal("White"),
-	surfaceFinish: z.literal("ENIG"),
-	goldThickness: z.union([z.literal('1 U"'), z.literal('2 U"')]).nullable(),
-	edgeRails: z.union([z.literal("No"), z.literal("On 2 Sides"), z.literal("On 4 Sides")]).nullable(),
-	edgeRailSize: z.union([z.literal("5mm"), z.literal("7mm"), z.literal("10mm")]).nullable(),
-	outerCuWeight: z.union([z.literal("0.5 oz"), z.literal("1/3 oz"), z.literal("1.0 oz")]),
-	boardOutlineTolerance: z.union([z.literal("\u00B10.1mm"), z.literal("\u00B10.05mm")]).nullable(),
-	viaHoles: z.number().nullable(),
-	leadTime: z.union([
+	Columns: z.number().nullable(),
+	Rows: z.number().nullable(),
+	BoardThickness: z.union([z.literal(0.07), z.literal(0.11), z.literal(0.12), z.literal(0.2)]),
+	Coverlay: z.literal("Yellow"),
+	CoverlayThickness: z.union([z.literal("PI:12.5um/AD:15um"), z.literal("PI:25um/AD:25um")]),
+	Silkscreen: z.literal("White"),
+	SurfaceFinish: z.literal("ENIG"),
+	GoldThickness: z.union([z.literal('1 U"'), z.literal('2 U"')]).nullable(),
+	EdgeRails: z.union([z.literal("No"), z.literal("On 2 Sides"), z.literal("On 4 Sides")]).nullable(),
+	EdgeRailSize: z.union([z.literal("5mm"), z.literal("7mm"), z.literal("10mm")]).nullable(),
+	OuterCuWeight: z.union([z.literal("0.5 oz"), z.literal("1/3 oz"), z.literal("1.0 oz")]),
+	BoardOutlineTolerance: z.union([z.literal("\u00B10.1mm"), z.literal("\u00B10.05mm")]).nullable(),
+	ViaHoles: z.number().nullable(),
+	LeadTime: z.union([
 		z.literal("3 Working days"),
 		z.literal("5 Working days"),
 		z.literal("7 Working days"),
 		z.literal("10 Working days"),
 	]),
-	dispatchUnit: z.union([z.literal("PCB"), z.literal("Panel")]),
-	copperType: z.literal("Electro-deposited"),
-	stiffner: z.array(
+	DispatchUnit: z.union([z.literal("PCB"), z.literal("Panel")]),
+	CopperType: z.literal("Electro-deposited"),
+	Stiffner: z.array(
 		z.union([
 			z.literal("Without"),
 			z.literal("Polyimide"),
@@ -252,20 +252,20 @@ export const FlexPcbFabSpecsTypeSchema = z.object({
 			z.literal("3M Tape"),
 		])
 	),
-	polyimideThickness: z
+	PolyimideThickness: z
 		.union([z.literal(0.1), z.literal(0.15), z.literal(0.2), z.literal(0.225), z.literal(0.25)])
 		.nullable(),
-	fr4Thickness: z.union([z.literal(0.1), z.literal(0.2)]).nullable(),
-	stainlessSteelThickness: z.union([z.literal(0.1), z.literal(0.2), z.literal(0.3)]).nullable(),
-	threeMTapeThickness: z.union([z.literal("3M468 (0.13mm)"), z.literal("3M9077 (HT, 0.05mm)")]).nullable(),
-	emiShieldingFilm: z.union([
+	FR4Thickness: z.union([z.literal(0.1), z.literal(0.2)]).nullable(),
+	StainlessSteelThickness: z.union([z.literal(0.1), z.literal(0.2), z.literal(0.3)]).nullable(),
+	ThreeMTapeThickness: z.union([z.literal("3M468 (0.13mm)"), z.literal("3M9077 (HT, 0.05mm)")]).nullable(),
+	EMIShieldingFilm: z.union([
 		z.literal("Without"),
 		z.literal("Both sides (Black, 18um)"),
 		z.literal("Single side (Black, 18um)"),
 	]),
-	cuttingMethod: z.literal("Laser Cutting"),
-	calculatedPrice: z.number(),
-	designFile: z.string(),
+	CuttingMethod: z.literal("Laser Cutting"),
+	NetPrice: z.number(),
+	DesignFile: z.string(),
 });
 
 export const PcbAssemblyFabSpecsTypeSchema = z.object({
