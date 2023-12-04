@@ -966,8 +966,5 @@ type PcbAssemblyRateCardType = {
 type CartType = {
 	cartId?: string; // used only with guest carts
 	cartSize: number;
-	parts: Array<PartDataType>;
-	rigidPcbs: Array<RigidPcbFabSpecsType>;
-	flexPcbs: Array<FlexPcbFabSpecsType>;
-	pcbAssemblies: Array<PcbAssemblyFabSpecsType>;
+	cartItems: Array<PartDataType | RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType>;
 };
