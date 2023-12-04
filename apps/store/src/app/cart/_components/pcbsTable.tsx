@@ -76,17 +76,17 @@ export default async function BasketPcbsTable() {
 									let unitPrice = 0;
 									let netPrice = 0;
 
-									if (type === "Rigid" || type === "Flex") {
-										name = pcb.pcbname;
+									if (type === "Rigid PCB" || type === "Flex PCB") {
+										name = pcb.PcbName;
 										netPrice = pcb.NetPrice;
-										if (pcb.designFormat === "Single PCB") {
-											quantity = pcb.pcbQty;
+										if (pcb.DesignFormat === "Single PCB") {
+											quantity = pcb.PcbQty;
 										} else {
-											quantity = pcb.singlePiecesQty;
+											quantity = pcb.SinglePiecesQty;
 										}
 									} else {
-										name = pcb.projectName;
-										quantity = pcb.quantity;
+										name = pcb.ProjectName;
+										quantity = pcb.Quantity;
 									}
 									unitPrice = netPrice / quantity;
 									return (
