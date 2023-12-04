@@ -1,4 +1,6 @@
 import { fetchCartItemsAction } from "@/actions/cart";
+import { deleteAllPcbsAction, deletePcbAction } from "@/actions/pcb";
+import DeleteButton from "@/app/cart/_components/delete";
 import PcbFabSpecsModal from "@/app/cart/_components/modal";
 import { formatToInr } from "@packages/shared/lib/utils";
 import { Badge } from "@shared/components/ui/badge";
@@ -17,7 +19,7 @@ export default async function BasketPcbsTable() {
 
 	return (
 		<div>
-			<h3 className="text-lg font-semibold">Parts</h3>
+			<h3 className="text-lg font-semibold">PCB Fabrication/Assembly</h3>
 			<div className="-mx-4 mt-3 flow-root sm:mx-0">
 				<table className="min-w-full">
 					<colgroup>
@@ -59,7 +61,7 @@ export default async function BasketPcbsTable() {
 							<th
 								scope="col"
 								className="text-right hidden sm:table-cell">
-								{/* <DeleteButton deleteAllAction={} /> */}
+								<DeleteButton deleteAllAction={deleteAllPcbsAction} />
 							</th>
 						</tr>
 					</thead>
@@ -73,6 +75,7 @@ export default async function BasketPcbsTable() {
 									let quantity = 0;
 									let unitPrice = 0;
 									let netPrice = 0;
+
 									if (type === "Rigid" || type === "Flex") {
 										name = pcb.pcbname;
 										netPrice = pcb.calculatedPrice;
@@ -114,10 +117,10 @@ export default async function BasketPcbsTable() {
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
-														{/* <DeleteButton
-															deleteAction={}
+														<DeleteButton
+															deleteAction={deletePcbAction}
 															itemToDelete={name}
-														/> */}
+														/>
 													</dd>
 												</dl>
 											</td>
@@ -135,10 +138,10 @@ export default async function BasketPcbsTable() {
 											</td>
 
 											<td className="hidden sm:table-cell text-right">
-												{/* <DeleteButton
-													deleteAction={deletePartAction}
+												<DeleteButton
+													deleteAction={deletePcbAction}
 													itemToDelete={name}
-												/> */}
+												/>
 											</td>
 										</tr>
 									);
