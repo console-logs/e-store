@@ -1,5 +1,5 @@
 "use client";
-import { transferGuestCartToUserAction } from "@/actions/cart";
+import { transferGuestCartToUserAction } from "@/actions";
 import { HOME_PAGE } from "@/lib/routes";
 import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";

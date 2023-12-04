@@ -1,5 +1,5 @@
 "use client";
-import { updatePartQtyAction } from "@/actions/part";
+import { updatePartQtyAction } from "@/actions";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";

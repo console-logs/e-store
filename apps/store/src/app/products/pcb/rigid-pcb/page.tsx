@@ -1,5 +1,5 @@
 "use client";
-import { addRigidPcbToCartAction } from "@/actions/pcb";
+import { addItemToCartAction } from "@/actions";
 import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
 import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import BreakdownVoltage from "@/app/products/pcb/rigid-pcb/_components/fields/breakdown";
@@ -52,7 +52,7 @@ export default function RigidPcbFabrication() {
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		startTransition(async () => {
 			e.preventDefault();
-			await addRigidPcbToCartAction(rigidPcb);
+			await addItemToCartAction(rigidPcb);
 			toast({
 				variant: "default",
 				title: "Rigid PCB added to cart",

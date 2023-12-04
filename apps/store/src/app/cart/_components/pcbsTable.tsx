@@ -1,4 +1,4 @@
-import { fetchCartItemsAction } from "@/actions/cart";
+import { fetchCartItemsAction } from "@/actions";
 import { deleteAllPcbsAction, deletePcbAction } from "@/actions/pcb";
 import DeleteButton from "@/app/cart/_components/delete";
 import PcbFabSpecsModal from "@/app/cart/_components/modal";

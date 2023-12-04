@@ -1,5 +1,5 @@
 "use client";
-import { addFlexPcbToCartAction } from "@/actions/pcb";
+import { addItemToCartAction } from "@/actions";
 import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
 import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import CoverlayColor from "@/app/products/pcb/flex-pcb/_components/fields/coverlay";
@@ -48,7 +48,7 @@ export default function FlexPcbFabrication() {
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		startTransition(async () => {
 			e.preventDefault();
-			await addFlexPcbToCartAction(flexPcb);
+			await addItemToCartAction(flexPcb);
 			toast({
 				variant: "default",
 				title: "Flex PCB added to cart",

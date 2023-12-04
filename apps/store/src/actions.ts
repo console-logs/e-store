@@ -28,6 +28,10 @@ export async function addItemToCartAction(
 	throw new Error("Action not implemented");
 }
 
+export async function updatePartQtyAction(_partNumber: string, _newQuantity: number): Promise<void> {
+	throw new Error("Action not implemented.");
+}
+
 export async function deleteCartItemAction(_itemName: string): Promise<void> {
 	throw new Error("Action not implemented");
 }

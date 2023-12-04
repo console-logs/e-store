@@ -1,4 +1,4 @@
-import { fetchCartItemsAction } from "@/actions/cart";
+import { fetchCartItemsAction } from "@/actions";
 import { deleteAllPartsAction, deletePartAction } from "@/actions/part";
 import DeleteButton from "@/app/cart/_components/delete";
 import UpdatePartQtyForm from "@/app/cart/_components/updatePartQty";

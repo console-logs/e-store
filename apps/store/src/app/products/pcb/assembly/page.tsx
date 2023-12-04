@@ -1,5 +1,7 @@
 "use client";
-import { addPcbAssemblyToCartAction } from "@/actions/pcb";
+import { addItemToCartAction } from "@/actions";
+import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
+import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import BgaComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/bga";
 import UploadBomFile from "@/app/products/pcb/assembly/_components/fields/bom";
 import ConformalCoating from "@/app/products/pcb/assembly/_components/fields/coat";
@@ -19,8 +21,6 @@ import ThroughHoleComponentsQuantity from "@/app/products/pcb/assembly/_componen
 import BoardType from "@/app/products/pcb/assembly/_components/fields/type";
 import UniqueComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/uniqueComp";
 import PcbAssemblyPriceSummary from "@/app/products/pcb/assembly/_components/priceSum";
-import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
-import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import { selectPcbAssemblyMemomized } from "@/redux/reducers/pcbAssemblySlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
@@ -34,7 +34,7 @@ export default function PcbAssembly() {
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		startTransition(async () => {
 			e.preventDefault();
-			await addPcbAssemblyToCartAction(pcbAssembly);
+			await addItemToCartAction(pcbAssembly);
 			toast({
 				variant: "default",
 				title: "PCB Assembly Project added to cart",

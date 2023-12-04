@@ -1,5 +1,5 @@
 "use client";
-import { addPartToCartAction } from "@/actions/part";
+import { addItemToCartAction } from "@/actions";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
@@ -41,7 +41,7 @@ export default function PartOrderForm({ partData }: { partData: PartDataType }) 
 			}
 			const basketQty = parseInt(values.orderQty, 10);
 			const cartItem: PartDataType = { ...partData, OrderedQty: basketQty };
-			await addPartToCartAction(cartItem);
+			await addItemToCartAction(cartItem);
 			toast({
 				variant: "default",
 				title: "Added to cart",

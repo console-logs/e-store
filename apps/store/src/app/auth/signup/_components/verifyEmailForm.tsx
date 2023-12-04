@@ -1,5 +1,5 @@
 "use client";
-import { captureUserSignupAction } from "@/actions/cart";
+import { captureUserSignupAction } from "@/actions";
 import { HOME_PAGE } from "@/lib/routes";
 import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
