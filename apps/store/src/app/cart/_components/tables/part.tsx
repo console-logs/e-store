@@ -12,9 +12,9 @@ export default async function BasketPartsTable() {
 		throw new Error(errorMessage); // activates closest error.tsx file
 	});
 
-	// May include out-of-stock parts added by bom parser. 
+	// May include out-of-stock parts added by bom parser.
 	// Make sure to remove them at checkout.
-	const parts: PartDataType[] = cart ? cart.parts : []; 
+	const parts: PartDataType[] = cart ? cart.parts : [];
 
 	return (
 		<div>
@@ -50,12 +50,12 @@ export default async function BasketPartsTable() {
 							<th
 								scope="col"
 								className="hidden px-3 py-3.5 text-right text-sm font-semibold sm:table-cell">
-								Rate
+								Unit Price
 							</th>
 							<th
 								scope="col"
 								className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold sm:pr-0">
-								Price
+								Net Price
 							</th>
 							<th
 								scope="col"
