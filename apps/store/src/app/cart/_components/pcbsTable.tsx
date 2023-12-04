@@ -1,9 +1,11 @@
 import { fetchCartItemsAction } from "@/actions";
-import { deleteAllPcbsAction, deletePcbAction } from "@/actions/pcb";
+import { deleteAllPcbsAction, deleteCartItemAction } from "@/actions";
 import DeleteButton from "@/app/cart/_components/delete";
 import PcbFabSpecsModal from "@/app/cart/_components/modal";
 import { formatToInr } from "@packages/shared/lib/utils";
 import { Badge } from "@shared/components/ui/badge";
+
+const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
 
 export default async function BasketPcbsTable() {
 	const cart = await fetchCartItemsAction().catch((error: unknown) => {
@@ -12,10 +14,10 @@ export default async function BasketPcbsTable() {
 		throw new Error(errorMessage); // activates closest error.tsx file
 	});
 
-	const rigidPcbs: RigidPcbFabSpecsType[] = cart ? cart.rigidPcbs : [];
-	const flexPcbs: FlexPcbFabSpecsType[] = cart ? cart.flexPcbs : [];
-	const pcbAssemblies: PcbAssemblyFabSpecsType[] = cart ? cart.pcbAssemblies : [];
-	const allPcbs = [...rigidPcbs, ...flexPcbs, ...pcbAssemblies];
+	const pcbs = cart.cartItems.filter(
+		(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
+			pcbTypes.includes(item.Type)
+	);
 
 	return (
 		<div>
@@ -66,29 +68,21 @@ export default async function BasketPcbsTable() {
 						</tr>
 					</thead>
 					<tbody>
-						{allPcbs.length > 0 ? (
+						{pcbs.length > 0 ? (
 							<>
-								{allPcbs.map((pcb, pcbIdx) => {
+								{pcbs.map((pcb, pcbIdx) => {
 									const serialNum = pcbIdx + 1;
-									const type = pcb.Type;
-									let name = "";
-									let quantity = 0;
-									let unitPrice = 0;
-									let netPrice = 0;
+									const { NetPrice, Type } = pcb;
+									const isRigidOrFlex = Type === "Rigid PCB" || Type === "Flex PCB";
+									const name = isRigidOrFlex ? pcb.PcbName : pcb.ProjectName;
+									const quantity = isRigidOrFlex
+										? pcb.DesignFormat === "Single PCB"
+											? pcb.PcbQty
+											: pcb.SinglePiecesQty
+										: pcb.Quantity;
+									const netPrice = NetPrice;
+									const unitPrice = netPrice / quantity;
 
-									if (type === "Rigid PCB" || type === "Flex PCB") {
-										name = pcb.PcbName;
-										netPrice = pcb.NetPrice;
-										if (pcb.DesignFormat === "Single PCB") {
-											quantity = pcb.PcbQty;
-										} else {
-											quantity = pcb.SinglePiecesQty;
-										}
-									} else {
-										name = pcb.ProjectName;
-										quantity = pcb.Quantity;
-									}
-									unitPrice = netPrice / quantity;
 									return (
 										<tr
 											key={serialNum}
@@ -102,7 +96,7 @@ export default async function BasketPcbsTable() {
 												</div>
 
 												<div className="flex items-center gap-x-2">
-													Type: <Badge>{type}</Badge>
+													Type: <Badge>{Type}</Badge>
 												</div>
 
 												<PcbFabSpecsModal fabSpecs={pcb} />
@@ -118,7 +112,7 @@ export default async function BasketPcbsTable() {
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
 														<DeleteButton
-															deleteAction={deletePcbAction}
+															deleteAction={deleteCartItemAction}
 															itemToDelete={name}
 														/>
 													</dd>
@@ -139,7 +133,7 @@ export default async function BasketPcbsTable() {
 
 											<td className="hidden sm:table-cell text-right">
 												<DeleteButton
-													deleteAction={deletePcbAction}
+													deleteAction={deleteCartItemAction}
 													itemToDelete={name}
 												/>
 											</td>

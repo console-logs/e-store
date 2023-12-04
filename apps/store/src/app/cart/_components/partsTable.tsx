@@ -1,5 +1,5 @@
 import { fetchCartItemsAction } from "@/actions";
-import { deleteAllPartsAction, deletePartAction } from "@/actions/part";
+import { deleteAllPartsAction, deleteCartItemAction } from "@/actions";
 import DeleteButton from "@/app/cart/_components/delete";
 import UpdatePartQtyForm from "@/app/cart/_components/updatePartQty";
 import { calculatePartNetPrice, calculatePartUnitPrice } from "@/lib/utils";
@@ -14,7 +14,7 @@ export default async function BasketPartsTable() {
 
 	// May include out-of-stock parts added by bom parser.
 	// Make sure to remove them at checkout.
-	const parts: PartDataType[] = cart ? cart.parts : [];
+	const parts = cart.cartItems.filter((item): item is PartDataType => item.Type === "Part");
 
 	return (
 		<div>
@@ -102,7 +102,7 @@ export default async function BasketPartsTable() {
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
 														<DeleteButton
-															deleteAction={deletePartAction}
+															deleteAction={deleteCartItemAction}
 															itemToDelete={PartNumber}
 														/>
 													</dd>
@@ -120,7 +120,7 @@ export default async function BasketPartsTable() {
 											</td>
 											<td className="hidden sm:table-cell text-right">
 												<DeleteButton
-													deleteAction={deletePartAction}
+													deleteAction={deleteCartItemAction}
 													itemToDelete={PartNumber}
 												/>
 											</td>

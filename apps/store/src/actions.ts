@@ -18,7 +18,7 @@ export async function fetchCartSizeAction(): Promise<number> {
 	return cartSize;
 }
 
-export async function fetchCartItemsAction(): Promise<CartType | null> {
+export async function fetchCartItemsAction(): Promise<CartDataType> {
 	throw new Error("Action not implemented");
 }
 

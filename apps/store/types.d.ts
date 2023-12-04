@@ -964,7 +964,7 @@ type PcbAssemblyRateCardType = {
 };
 
 /* Shopping Cart */
-type CartType = {
+type CartDataType = {
 	cartId?: string; // used only with guest carts
 	cartSize: number;
 	cartItems: Array<PartDataType | RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType>;
