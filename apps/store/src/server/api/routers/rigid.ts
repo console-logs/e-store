@@ -51,7 +51,7 @@ export const rigidPcbRouter = createTRPCRouter({
 
 		// use the remaining fields to calculate the price.
 		let unitCost = 0;
-		let finalCost = 0;
+		let netCost = 0;
 
 		const areaInSquareMilliMeters = input.BoardSizeX * input.BoardSizeY;
 		const areaInSquareInches = areaInSquareMilliMeters / 645.2; // divide the area value by 645.2
@@ -313,10 +313,10 @@ export const rigidPcbRouter = createTRPCRouter({
 
 		// pcb quantity
 		if (input.DesignFormat === "Single PCB" && input.PcbQty) {
-			finalCost = unitCost * input.PcbQty;
+			netCost = unitCost * input.PcbQty;
 		} else if (input.DesignFormat !== "Single PCB" && input.SinglePiecesQty) {
-			finalCost = unitCost * input.SinglePiecesQty;
+			netCost = unitCost * input.SinglePiecesQty;
 		}
-		return finalCost;
+		return netCost;
 	}),
 });
