@@ -2,7 +2,7 @@ import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { useTransition } from "react";
 
-export default function DeleteItemButton({
+export default function DeleteButton({
 	deleteAction,
 	deleteAllAction,
 	itemToDelete,

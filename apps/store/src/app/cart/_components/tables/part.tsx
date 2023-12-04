@@ -1,6 +1,6 @@
 import { fetchCartItemsAction } from "@/actions/cart";
 import { deleteAllPartsAction, deletePartAction } from "@/actions/part";
-import DeleteItemButton from "@/app/cart/_components/delete";
+import DeleteButton from "@/app/cart/_components/delete";
 import UpdatePartQtyForm from "@/app/cart/_components/updatePartQty";
 import { calculatePartNetPrice, calculatePartUnitPrice } from "@/lib/utils";
 import { Badge } from "@shared/components/ui/badge";
@@ -58,7 +58,7 @@ export default async function BasketPartsTable() {
 							<th
 								scope="col"
 								className="text-right hidden sm:table-cell">
-								<DeleteItemButton deleteAllAction={deleteAllPartsAction} />
+								<DeleteButton deleteAllAction={deleteAllPartsAction} />
 							</th>
 						</tr>
 					</thead>
@@ -99,7 +99,7 @@ export default async function BasketPartsTable() {
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
-														<DeleteItemButton
+														<DeleteButton
 															deleteAction={deletePartAction}
 															itemToDelete={PartNumber}
 														/>
@@ -117,7 +117,7 @@ export default async function BasketPartsTable() {
 												{netPrice}
 											</td>
 											<td className="hidden sm:table-cell text-right">
-												<DeleteItemButton
+												<DeleteButton
 													deleteAction={deletePartAction}
 													itemToDelete={PartNumber}
 												/>
