@@ -14,7 +14,7 @@ export default async function BasketPartsTable() {
 
 	// May include out-of-stock parts added by bom parser.
 	// Make sure to remove them at checkout.
-	const parts = cart.cartItems.filter((item): item is PartDataType => item.Type === "Part");
+	const parts = cart ? cart.cartItems.filter((item): item is PartDataType => item.Type === "Part") : [];
 
 	return (
 		<div>

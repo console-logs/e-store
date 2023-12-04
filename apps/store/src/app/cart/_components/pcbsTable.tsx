@@ -14,10 +14,11 @@ export default async function BasketPcbsTable() {
 		throw new Error(errorMessage); // activates closest error.tsx file
 	});
 
-	const pcbs = cart.cartItems.filter(
-		(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
-			pcbTypes.includes(item.Type)
-	);
+	const pcbs = cart
+		? cart.cartItems.filter((item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
+				pcbTypes.includes(item.Type)
+		  )
+		: [];
 
 	return (
 		<div>
