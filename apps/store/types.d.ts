@@ -14,6 +14,7 @@
 
 /*  Rigid Pcb Types */
 type BaseRigidPcbFabSpecsType = {
+	type: "Rigid";
 	pcbname: string;
 	layer: 1 | 2 | 4 | 6 | 8 | 10;
 	baseMaterial: "FR4" | "Aluminum" | "CopperCore" | "Rogers";
@@ -296,6 +297,7 @@ type RigidPcbFabSpecsType = BaseRigidPcbFabSpecsType & {
 
 /* Flex Pcb Types */
 type BaseFlexPcbFabSpecsType = {
+	type: "Flex";
 	pcbname: string;
 	baseMaterial: "Flex (Polyimide)";
 	layer: 1 | 2;
@@ -532,6 +534,7 @@ type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
 
 /* Pcb Assembly Types */
 type PcbAssemblyFabSpecsType = {
+	type: "Assembly";
 	projectName: string;
 	boardType: "Single PCB" | "Panel";
 	pcbsPerPanel: number;

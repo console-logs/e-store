@@ -4,6 +4,7 @@ import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: RigidPcbStoreStateType = {
 	/* mandatory fields */
+	type: "Rigid",
 	pcbname: "",
 	baseMaterial: "FR4",
 	layer: 1,
@@ -685,8 +686,9 @@ export const selectGoldFingersOptions = (state: ReduxState) => state.rigidPcb.go
 export const selectPanelQtyOptions = (state: ReduxState) => state.rigidPcb.panelQtyOptions;
 
 /* Memoised Selector => Output selector performs type transformation */
-export const selectRigidPcbMemoized = createSelector([selectRigidPcbState], (rigidPcb) => {
+export const selectRigidPcbMemoized = createSelector([selectRigidPcbState], rigidPcb => {
 	const rigidPcbFabSpecs: RigidPcbFabSpecsType = {
+		type: "Rigid",
 		pcbname: rigidPcb.pcbname,
 		layer: rigidPcb.layer,
 		baseMaterial: rigidPcb.baseMaterial,

@@ -3,6 +3,7 @@ import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolki
 import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: FlexPcbStoreStateType = {
+	type: "Flex",
 	pcbname: "",
 	baseMaterial: "Flex (Polyimide)",
 	baseMaterialOptions: ["Flex (Polyimide)"],
@@ -454,6 +455,7 @@ export const selectSilkscreenOptions = (state: ReduxState) => state.flexPcb.silk
 /* Memoised Selector => Output selector performs type transformation */
 export const selectFlexPcbMemoized = createSelector([selectFlexPcbState], flexPcb => {
 	const flexPcbFabSpecs: FlexPcbFabSpecsType = {
+		type: "Flex",
 		baseMaterial: flexPcb.baseMaterial,
 		boardOutlineTolerance: flexPcb.boardOutlineTolerance,
 		boardSizeX: flexPcb.boardSizeX,
