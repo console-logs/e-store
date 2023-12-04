@@ -3,38 +3,38 @@ import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolki
 import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: PcbAssemblyStoreStateType = {
-	type: "Assembly",
-	projectName: "",
-	boardType: "Single PCB",
-	pcbsPerPanel: 1,
-	quantity: 10,
-	assemblySides: "Top Side",
-	numOfUniqueComponents: 5,
-	numOfSmdComponents: 10,
-	numOfBgaComponents: 2,
-	numOfThroughHoleComponents: 5,
-	tempHumiditySensitivity: "Low",
-	dePanel: "Yes",
-	conformalCoating: "Top Side",
-	functionalTest: "No",
-	componentsProcurement: "TurnKey",
-	turnaroundTime: "Standard 5-7 days",
-	calculatedPrice: 4500,
-	tentativeDispatchDate: getFutureDate(7),
-	oneTimeSetupCosts: 5000,
-	bomFile: "",
-	gerberFile: "",
-	pickAndPlaceFile: "",
+	Type: "PCB Assembly",
+	ProjectName: "",
+	BoardType: "Single PCB",
+	PcbsPerPanel: 1,
+	Quantity: 10,
+	AssemblySides: "Top Side",
+	NumOfUniqueComponents: 5,
+	NumOfSmdComponents: 10,
+	NumOfBgaComponents: 2,
+	NumOfThroughHoleComponents: 5,
+	TempHumiditySensitivity: "Low",
+	DePanel: "Yes",
+	ConformalCoating: "Top Side",
+	FunctionalTest: "No",
+	ComponentsProcurement: "TurnKey",
+	TurnaroundTime: "Standard 5-7 days",
+	NetPrice: 4500,
+	TentativeDispatchDate: getFutureDate(7),
+	OneTimeSetupCosts: 5000,
+	BOMFile: "",
+	GerberFile: "",
+	PickAndPlaceFile: "",
 
 	// options
-	boardTypeOptions: ["Single PCB", "Panel"],
-	assemblySideOptions: ["Top Side", "Bottom Side", "Both Sides"],
-	tempHumiditySensitivityOptions: ["Low", "Medium", "High"],
-	dePanelOptions: ["Yes", "No"],
-	conformalCoatingOptions: ["Top Side", "Bottom Side", "Both Sides"],
-	functionalTestOptions: ["Yes", "No"],
-	componentsProcurementOptions: ["TurnKey", "Consigned", "Combo"],
-	turnaroundTimeOptions: ["Standard 5-7 days", "Expedited 3-4 days"],
+	BoardTypeOptions: ["Single PCB", "Panel"],
+	AssemblySideOptions: ["Top Side", "Bottom Side", "Both Sides"],
+	TempHumiditySensitivityOptions: ["Low", "Medium", "High"],
+	DePanelOptions: ["Yes", "No"],
+	ConformalCoatingOptions: ["Top Side", "Bottom Side", "Both Sides"],
+	FunctionalTestOptions: ["Yes", "No"],
+	ComponentsProcurementOptions: ["TurnKey", "Consigned", "Combo"],
+	TurnaroundTimeOptions: ["Standard 5-7 days", "Expedited 3-4 days"],
 };
 
 const pcbAssemblySlice = createSlice({
@@ -42,70 +42,70 @@ const pcbAssemblySlice = createSlice({
 	initialState,
 	reducers: {
 		setProjectName: (state, action: PayloadAction<string>) => {
-			state.projectName = action.payload;
+			state.ProjectName = action.payload;
 		},
 		setBoardType: (state, action: PayloadAction<"Single PCB" | "Panel">) => {
-			state.boardType = action.payload;
+			state.BoardType = action.payload;
 		},
 		setPcbsPerPanel: (state, action: PayloadAction<number>) => {
-			state.pcbsPerPanel = action.payload;
+			state.PcbsPerPanel = action.payload;
 		},
 		setQuantity: (state, action: PayloadAction<number>) => {
-			state.quantity = action.payload;
+			state.Quantity = action.payload;
 		},
 		setAssemblySides: (state, action: PayloadAction<"Top Side" | "Bottom Side" | "Both Sides">) => {
-			state.assemblySides = action.payload;
+			state.AssemblySides = action.payload;
 		},
 		setNumOfUniqueComponents: (state, action: PayloadAction<number>) => {
-			state.numOfUniqueComponents = action.payload;
+			state.NumOfUniqueComponents = action.payload;
 		},
 		setNumOfSmdComponents: (state, action: PayloadAction<number>) => {
-			state.numOfSmdComponents = action.payload;
+			state.NumOfSmdComponents = action.payload;
 		},
 		setNumOfBgaComponents: (state, action: PayloadAction<number>) => {
-			state.numOfBgaComponents = action.payload;
+			state.NumOfBgaComponents = action.payload;
 		},
 		setNumOfThroughHoleComponents: (state, action: PayloadAction<number>) => {
-			state.numOfThroughHoleComponents = action.payload;
+			state.NumOfThroughHoleComponents = action.payload;
 		},
 		setTempHumiditySensitivity: (state, action: PayloadAction<"Low" | "Medium" | "High">) => {
-			state.tempHumiditySensitivity = action.payload;
+			state.TempHumiditySensitivity = action.payload;
 		},
 		setDePanel: (state, action: PayloadAction<"Yes" | "No">) => {
-			state.dePanel = action.payload;
+			state.DePanel = action.payload;
 		},
 		setConformalCoating: (state, action: PayloadAction<"Top Side" | "Bottom Side" | "Both Sides">) => {
-			state.conformalCoating = action.payload;
+			state.ConformalCoating = action.payload;
 		},
 		setFunctionalTest: (state, action: PayloadAction<"Yes" | "No">) => {
-			state.functionalTest = action.payload;
+			state.FunctionalTest = action.payload;
 		},
 		setComponentsProcurement: (state, action: PayloadAction<"TurnKey" | "Consigned" | "Combo">) => {
-			state.componentsProcurement = action.payload;
+			state.ComponentsProcurement = action.payload;
 		},
 		setLeadTime: (state, action: PayloadAction<"Standard 5-7 days" | "Expedited 3-4 days">) => {
-			state.turnaroundTime = action.payload;
+			state.TurnaroundTime = action.payload;
 		},
 		setPcbAssemblyPrice: (state, action: PayloadAction<number>) => {
-			state.calculatedPrice = action.payload;
+			state.NetPrice = action.payload;
 		},
 		setOneTimeSetupCost: (state, action: PayloadAction<number>) => {
-			state.oneTimeSetupCosts = action.payload;
+			state.OneTimeSetupCosts = action.payload;
 		},
 		setTentativeDispatchDate: (state, action: PayloadAction<string>) => {
-			state.tentativeDispatchDate = action.payload;
+			state.TentativeDispatchDate = action.payload;
 		},
 		setBomFile: (state, action: PayloadAction<string>) => {
-			state.bomFile = action.payload;
+			state.BOMFile = action.payload;
 		},
 		setGerberFile: (state, action: PayloadAction<string>) => {
-			state.gerberFile = action.payload;
+			state.GerberFile = action.payload;
 		},
 		setPickAndPlaceFile: (state, action: PayloadAction<string>) => {
-			state.pickAndPlaceFile = action.payload;
+			state.PickAndPlaceFile = action.payload;
 		},
 		setPcbPrice: (state, action: PayloadAction<number>) => {
-			state.calculatedPrice = action.payload;
+			state.NetPrice = action.payload;
 		},
 	},
 });
@@ -139,63 +139,63 @@ export default pcbAssemblySlice.reducer;
 
 /* Selectors */
 export const selectPcbAssemblyState = (state: ReduxState) => state.pcbAssembly;
-export const selectProjectName = (state: ReduxState) => state.pcbAssembly.projectName;
-export const selectBoardType = (state: ReduxState) => state.pcbAssembly.boardType;
-export const selectPcbsPerPanel = (state: ReduxState) => state.pcbAssembly.pcbsPerPanel;
-export const selectQuantity = (state: ReduxState) => state.pcbAssembly.quantity;
-export const selectAssemblySides = (state: ReduxState) => state.pcbAssembly.assemblySides;
-export const selectNumOfUniqueComponents = (state: ReduxState) => state.pcbAssembly.numOfUniqueComponents;
-export const selectNumOfSmdComponents = (state: ReduxState) => state.pcbAssembly.numOfSmdComponents;
-export const selectNumOfBgaComponents = (state: ReduxState) => state.pcbAssembly.numOfBgaComponents;
-export const selectNumOfThroughHoleComponents = (state: ReduxState) => state.pcbAssembly.numOfThroughHoleComponents;
-export const selectTempHumiditySensitivity = (state: ReduxState) => state.pcbAssembly.tempHumiditySensitivity;
-export const selectDePanel = (state: ReduxState) => state.pcbAssembly.dePanel;
-export const selectConformalCoating = (state: ReduxState) => state.pcbAssembly.conformalCoating;
-export const selectFunctionalTest = (state: ReduxState) => state.pcbAssembly.functionalTest;
-export const selectComponentsProcurement = (state: ReduxState) => state.pcbAssembly.componentsProcurement;
-export const selectTurnaroundTime = (state: ReduxState) => state.pcbAssembly.turnaroundTime;
-export const selectCalculatedPrice = (state: ReduxState) => state.pcbAssembly.calculatedPrice;
-export const selectTentativeDispatchDate = (state: ReduxState) => state.pcbAssembly.tentativeDispatchDate;
-export const selectOneTimeSetupCost = (state: ReduxState) => state.pcbAssembly.oneTimeSetupCosts;
-export const selectBomFile = (state: ReduxState) => state.pcbAssembly.bomFile;
-export const selectGerberFile = (state: ReduxState) => state.pcbAssembly.gerberFile;
-export const selectPickAndPlaceFile = (state: ReduxState) => state.pcbAssembly.pickAndPlaceFile;
+export const selectProjectName = (state: ReduxState) => state.pcbAssembly.ProjectName;
+export const selectBoardType = (state: ReduxState) => state.pcbAssembly.BoardType;
+export const selectPcbsPerPanel = (state: ReduxState) => state.pcbAssembly.PcbsPerPanel;
+export const selectQuantity = (state: ReduxState) => state.pcbAssembly.Quantity;
+export const selectAssemblySides = (state: ReduxState) => state.pcbAssembly.AssemblySides;
+export const selectNumOfUniqueComponents = (state: ReduxState) => state.pcbAssembly.NumOfUniqueComponents;
+export const selectNumOfSmdComponents = (state: ReduxState) => state.pcbAssembly.NumOfSmdComponents;
+export const selectNumOfBgaComponents = (state: ReduxState) => state.pcbAssembly.NumOfBgaComponents;
+export const selectNumOfThroughHoleComponents = (state: ReduxState) => state.pcbAssembly.NumOfThroughHoleComponents;
+export const selectTempHumiditySensitivity = (state: ReduxState) => state.pcbAssembly.TempHumiditySensitivity;
+export const selectDePanel = (state: ReduxState) => state.pcbAssembly.DePanel;
+export const selectConformalCoating = (state: ReduxState) => state.pcbAssembly.ConformalCoating;
+export const selectFunctionalTest = (state: ReduxState) => state.pcbAssembly.FunctionalTest;
+export const selectComponentsProcurement = (state: ReduxState) => state.pcbAssembly.ComponentsProcurement;
+export const selectTurnaroundTime = (state: ReduxState) => state.pcbAssembly.TurnaroundTime;
+export const selectCalculatedPrice = (state: ReduxState) => state.pcbAssembly.NetPrice;
+export const selectTentativeDispatchDate = (state: ReduxState) => state.pcbAssembly.TentativeDispatchDate;
+export const selectOneTimeSetupCost = (state: ReduxState) => state.pcbAssembly.OneTimeSetupCosts;
+export const selectBomFile = (state: ReduxState) => state.pcbAssembly.BOMFile;
+export const selectGerberFile = (state: ReduxState) => state.pcbAssembly.GerberFile;
+export const selectPickAndPlaceFile = (state: ReduxState) => state.pcbAssembly.PickAndPlaceFile;
 
 /* dropdown menu selectors */
-export const selectBoardTypeOptions = (state: ReduxState) => state.pcbAssembly.boardTypeOptions;
-export const selectAssemblySideOptions = (state: ReduxState) => state.pcbAssembly.assemblySideOptions;
+export const selectBoardTypeOptions = (state: ReduxState) => state.pcbAssembly.BoardTypeOptions;
+export const selectAssemblySideOptions = (state: ReduxState) => state.pcbAssembly.AssemblySideOptions;
 export const selectTempHumiditySensitivityOptions = (state: ReduxState) =>
-	state.pcbAssembly.tempHumiditySensitivityOptions;
-export const selectDePanelOptions = (state: ReduxState) => state.pcbAssembly.dePanelOptions;
-export const selectConformalCoatingOptions = (state: ReduxState) => state.pcbAssembly.conformalCoatingOptions;
-export const selectFunctionalTestOptions = (state: ReduxState) => state.pcbAssembly.functionalTestOptions;
-export const selectComponentsProcurementOptions = (state: ReduxState) => state.pcbAssembly.componentsProcurementOptions;
-export const selectTurnaroundTimeOptions = (state: ReduxState) => state.pcbAssembly.turnaroundTimeOptions;
+	state.pcbAssembly.TempHumiditySensitivityOptions;
+export const selectDePanelOptions = (state: ReduxState) => state.pcbAssembly.DePanelOptions;
+export const selectConformalCoatingOptions = (state: ReduxState) => state.pcbAssembly.ConformalCoatingOptions;
+export const selectFunctionalTestOptions = (state: ReduxState) => state.pcbAssembly.FunctionalTestOptions;
+export const selectComponentsProcurementOptions = (state: ReduxState) => state.pcbAssembly.ComponentsProcurementOptions;
+export const selectTurnaroundTimeOptions = (state: ReduxState) => state.pcbAssembly.TurnaroundTimeOptions;
 
 /* Memoised Selector => Output selector performs type transformation */
 export const selectPcbAssemblyMemomized = createSelector([selectPcbAssemblyState], pcbAssembly => {
 	const pcbAssemblyFabSpecs: PcbAssemblyFabSpecsType = {
-		type: "Assembly",
-		projectName: pcbAssembly.projectName,
-		boardType: pcbAssembly.boardType,
-		pcbsPerPanel: pcbAssembly.pcbsPerPanel,
-		quantity: pcbAssembly.quantity,
-		assemblySides: pcbAssembly.assemblySides,
-		numOfUniqueComponents: pcbAssembly.numOfUniqueComponents,
-		numOfSmdComponents: pcbAssembly.numOfSmdComponents,
-		numOfBgaComponents: pcbAssembly.numOfBgaComponents,
-		numOfThroughHoleComponents: pcbAssembly.numOfThroughHoleComponents,
-		tempHumiditySensitivity: pcbAssembly.tempHumiditySensitivity,
-		dePanel: pcbAssembly.dePanel,
-		conformalCoating: pcbAssembly.conformalCoating,
-		functionalTest: pcbAssembly.functionalTest,
-		componentsProcurement: pcbAssembly.componentsProcurement,
-		turnaroundTime: pcbAssembly.turnaroundTime,
-		oneTimeSetupCosts: pcbAssembly.oneTimeSetupCosts,
-		calculatedPrice: pcbAssembly.calculatedPrice,
-		bomFile: pcbAssembly.bomFile,
-		gerberFile: pcbAssembly.gerberFile,
-		pickAndPlaceFile: pcbAssembly.pickAndPlaceFile,
+		Type: "PCB Assembly",
+		ProjectName: pcbAssembly.ProjectName,
+		BoardType: pcbAssembly.BoardType,
+		PcbsPerPanel: pcbAssembly.PcbsPerPanel,
+		Quantity: pcbAssembly.Quantity,
+		AssemblySides: pcbAssembly.AssemblySides,
+		NumOfUniqueComponents: pcbAssembly.NumOfUniqueComponents,
+		NumOfSmdComponents: pcbAssembly.NumOfSmdComponents,
+		NumOfBgaComponents: pcbAssembly.NumOfBgaComponents,
+		NumOfThroughHoleComponents: pcbAssembly.NumOfThroughHoleComponents,
+		TempHumiditySensitivity: pcbAssembly.TempHumiditySensitivity,
+		DePanel: pcbAssembly.DePanel,
+		ConformalCoating: pcbAssembly.ConformalCoating,
+		FunctionalTest: pcbAssembly.FunctionalTest,
+		ComponentsProcurement: pcbAssembly.ComponentsProcurement,
+		TurnaroundTime: pcbAssembly.TurnaroundTime,
+		OneTimeSetupCosts: pcbAssembly.OneTimeSetupCosts,
+		NetPrice: pcbAssembly.NetPrice,
+		BOMFile: pcbAssembly.BOMFile,
+		GerberFile: pcbAssembly.GerberFile,
+		PickAndPlaceFile: pcbAssembly.PickAndPlaceFile,
 	};
 	return pcbAssemblyFabSpecs;
 });

@@ -536,71 +536,39 @@ type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
 
 /* Pcb Assembly Types */
 type PcbAssemblyFabSpecsType = {
-	type: "Assembly";
-	projectName: string;
-	boardType: "Single PCB" | "Panel";
-	pcbsPerPanel: number;
-	quantity: number;
-	assemblySides: "Top Side" | "Bottom Side" | "Both Sides";
-	numOfUniqueComponents: number;
-	numOfSmdComponents: number;
-	numOfBgaComponents: number;
-	numOfThroughHoleComponents: number;
-	tempHumiditySensitivity: "Low" | "Medium" | "High";
-	dePanel: "Yes" | "No";
-	conformalCoating: "Top Side" | "Bottom Side" | "Both Sides";
-	functionalTest: "Yes" | "No";
-	componentsProcurement: "TurnKey" | "Consigned" | "Combo";
-	turnaroundTime: "Standard 5-7 days" | "Expedited 3-4 days";
-	oneTimeSetupCosts: number;
-	calculatedPrice: number;
-	bomFile: string;
-	gerberFile: string;
-	pickAndPlaceFile: string;
+	Type: "PCB Assembly";
+	ProjectName: string;
+	BoardType: "Single PCB" | "Panel";
+	PcbsPerPanel: number;
+	Quantity: number;
+	AssemblySides: "Top Side" | "Bottom Side" | "Both Sides";
+	NumOfUniqueComponents: number;
+	NumOfSmdComponents: number;
+	NumOfBgaComponents: number;
+	NumOfThroughHoleComponents: number;
+	TempHumiditySensitivity: "Low" | "Medium" | "High";
+	DePanel: "Yes" | "No";
+	ConformalCoating: "Top Side" | "Bottom Side" | "Both Sides";
+	FunctionalTest: "Yes" | "No";
+	ComponentsProcurement: "TurnKey" | "Consigned" | "Combo";
+	TurnaroundTime: "Standard 5-7 days" | "Expedited 3-4 days";
+	OneTimeSetupCosts: number;
+	NetPrice: number;
+	BOMFile: string;
+	GerberFile: string;
+	PickAndPlaceFile: string;
 };
 
 type PcbAssemblyStoreStateType = PcbAssemblyFabSpecsType & {
-	tentativeDispatchDate: string;
-	dePanelOptions: Array<"Yes" | "No">;
-	boardTypeOptions: Array<"Single PCB" | "Panel">;
-	assemblySideOptions: Array<"Top Side" | "Bottom Side" | "Both Sides">;
-	tempHumiditySensitivityOptions: Array<"Low" | "Medium" | "High">;
-	conformalCoatingOptions: Array<"Top Side" | "Bottom Side" | "Both Sides">;
-	functionalTestOptions: Array<"Yes" | "No">;
-	componentsProcurementOptions: Array<"TurnKey" | "Consigned" | "Combo">;
-	turnaroundTimeOptions: Array<"Standard 5-7 days" | "Expedited 3-4 days">;
-};
-
-type PcbPriceSummaryProps = {
-	pcbPrice: number | undefined;
-	designFormat: "Single PCB" | "Panel by Customer" | "Panel by Manufacturer";
-	pcbQty:
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000;
-	singlePiecesQty: number;
-	tentativeDispatchDate: string;
+	TentativeDispatchDate: string;
+	DePanelOptions: Array<"Yes" | "No">;
+	BoardTypeOptions: Array<"Single PCB" | "Panel">;
+	AssemblySideOptions: Array<"Top Side" | "Bottom Side" | "Both Sides">;
+	TempHumiditySensitivityOptions: Array<"Low" | "Medium" | "High">;
+	ConformalCoatingOptions: Array<"Top Side" | "Bottom Side" | "Both Sides">;
+	FunctionalTestOptions: Array<"Yes" | "No">;
+	ComponentsProcurementOptions: Array<"TurnKey" | "Consigned" | "Combo">;
+	TurnaroundTimeOptions: Array<"Standard 5-7 days" | "Expedited 3-4 days">;
 };
 
 /* Part Types */

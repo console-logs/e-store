@@ -9,19 +9,19 @@ export const pcbAssemblyRouter = createTRPCRouter({
 		let setupCharges = 0;
 
 		// set unused fields to null
-		if (input.boardType === "Single PCB") {
-			input.pcbsPerPanel = null;
+		if (input.BoardType === "Single PCB") {
+			input.PcbsPerPanel = null;
 		}
 
 		// Add board type cost (base charge)
-		if (input.boardType === "Single PCB") {
+		if (input.BoardType === "Single PCB") {
 			finalCost += assemblyRateCard.boardType.single;
-		} else if (input.boardType === "Panel" && input.pcbsPerPanel) {
-			if (input.pcbsPerPanel <= 2) {
+		} else if (input.BoardType === "Panel" && input.PcbsPerPanel) {
+			if (input.PcbsPerPanel <= 2) {
 				finalCost += assemblyRateCard.boardType.panel[2];
-			} else if (input.pcbsPerPanel >= 3 && input.pcbsPerPanel <= 5) {
+			} else if (input.PcbsPerPanel >= 3 && input.PcbsPerPanel <= 5) {
 				finalCost += assemblyRateCard.boardType.panel[3_5];
-			} else if (input.pcbsPerPanel >= 6 && input.pcbsPerPanel <= 10) {
+			} else if (input.PcbsPerPanel >= 6 && input.PcbsPerPanel <= 10) {
 				finalCost += assemblyRateCard.boardType.panel[6_10];
 			} else {
 				finalCost += assemblyRateCard.boardType.panel.above10;
@@ -29,79 +29,79 @@ export const pcbAssemblyRouter = createTRPCRouter({
 		}
 
 		// Add assembly sides cost
-		if (input.boardType === "Single PCB") {
-			finalCost += assemblyRateCard.assemblySides[input.assemblySides];
-		} else if (input.boardType === "Panel" && input.pcbsPerPanel) {
-			finalCost += assemblyRateCard.assemblySides[input.assemblySides] * input.pcbsPerPanel;
+		if (input.BoardType === "Single PCB") {
+			finalCost += assemblyRateCard.assemblySides[input.AssemblySides];
+		} else if (input.BoardType === "Panel" && input.PcbsPerPanel) {
+			finalCost += assemblyRateCard.assemblySides[input.AssemblySides] * input.PcbsPerPanel;
 		}
 
 		// Add quantity cost
-		if (input.quantity <= 10) {
-			finalCost += assemblyRateCard.quantity.upTo10 * input.quantity;
-		} else if (input.quantity >= 11 && input.quantity <= 50) {
-			finalCost += assemblyRateCard.quantity[11_50] * input.quantity;
-		} else if (input.quantity >= 51 && input.quantity <= 100) {
-			finalCost += assemblyRateCard.quantity[51_100] * input.quantity;
-		} else if (input.quantity >= 101 && input.quantity <= 500) {
-			finalCost += assemblyRateCard.quantity[101_500] * input.quantity;
+		if (input.Quantity <= 10) {
+			finalCost += assemblyRateCard.quantity.upTo10 * input.Quantity;
+		} else if (input.Quantity >= 11 && input.Quantity <= 50) {
+			finalCost += assemblyRateCard.quantity[11_50] * input.Quantity;
+		} else if (input.Quantity >= 51 && input.Quantity <= 100) {
+			finalCost += assemblyRateCard.quantity[51_100] * input.Quantity;
+		} else if (input.Quantity >= 101 && input.Quantity <= 500) {
+			finalCost += assemblyRateCard.quantity[101_500] * input.Quantity;
 		} else {
-			finalCost += assemblyRateCard.quantity.above500 * input.quantity;
+			finalCost += assemblyRateCard.quantity.above500 * input.Quantity;
 		}
 
 		// Add unique components cost
-		if (input.numOfUniqueComponents <= 5) {
+		if (input.NumOfUniqueComponents <= 5) {
 			finalCost += assemblyRateCard.uniqueComponents.upTo5;
-		} else if (input.numOfUniqueComponents >= 6 && input.numOfUniqueComponents <= 10) {
+		} else if (input.NumOfUniqueComponents >= 6 && input.NumOfUniqueComponents <= 10) {
 			finalCost += assemblyRateCard.uniqueComponents[6_10];
-		} else if (input.numOfUniqueComponents >= 11 && input.numOfUniqueComponents <= 20) {
+		} else if (input.NumOfUniqueComponents >= 11 && input.NumOfUniqueComponents <= 20) {
 			finalCost += assemblyRateCard.uniqueComponents[11_20];
 		} else {
 			finalCost += assemblyRateCard.uniqueComponents.above20;
 		}
 
 		// Add SMD parts cost
-		if (input.numOfSmdComponents >= 11 && input.numOfSmdComponents <= 20) {
+		if (input.NumOfSmdComponents >= 11 && input.NumOfSmdComponents <= 20) {
 			finalCost += assemblyRateCard.smdParts[11_20];
-		} else if (input.numOfSmdComponents >= 21 && input.numOfSmdComponents <= 50) {
+		} else if (input.NumOfSmdComponents >= 21 && input.NumOfSmdComponents <= 50) {
 			finalCost += assemblyRateCard.smdParts[21_50];
-		} else if (input.numOfSmdComponents > 50) {
+		} else if (input.NumOfSmdComponents > 50) {
 			finalCost += assemblyRateCard.smdParts.above50;
 		}
 
 		// Add BGA/QFP parts cost
-		if (input.numOfBgaComponents >= 3 && input.numOfBgaComponents <= 5) {
+		if (input.NumOfBgaComponents >= 3 && input.NumOfBgaComponents <= 5) {
 			finalCost += assemblyRateCard.bgaQfpParts[3_5];
-		} else if (input.numOfBgaComponents > 5) {
+		} else if (input.NumOfBgaComponents > 5) {
 			finalCost += assemblyRateCard.bgaQfpParts.above5;
 		}
 
 		// Add through-hole parts cost
-		if (input.numOfThroughHoleComponents >= 6 && input.numOfThroughHoleComponents <= 10) {
+		if (input.NumOfThroughHoleComponents >= 6 && input.NumOfThroughHoleComponents <= 10) {
 			finalCost += assemblyRateCard.throughHoleParts[6_10];
-		} else if (input.numOfThroughHoleComponents >= 11 && input.numOfThroughHoleComponents <= 20) {
+		} else if (input.NumOfThroughHoleComponents >= 11 && input.NumOfThroughHoleComponents <= 20) {
 			finalCost += assemblyRateCard.throughHoleParts[11_20];
-		} else if (input.numOfThroughHoleComponents > 20) {
+		} else if (input.NumOfThroughHoleComponents > 20) {
 			finalCost += assemblyRateCard.throughHoleParts.above20;
 		}
 
 		// Add temperature and humidity-sensitive components cost
-		if (input.tempHumiditySensitivity) {
-			if (input.tempHumiditySensitivity === "Low") {
+		if (input.TempHumiditySensitivity) {
+			if (input.TempHumiditySensitivity === "Low") {
 				finalCost += assemblyRateCard.tempHumiditySensitive.low;
-			} else if (input.tempHumiditySensitivity === "Medium") {
+			} else if (input.TempHumiditySensitivity === "Medium") {
 				finalCost += assemblyRateCard.tempHumiditySensitive.moderate;
-			} else if (input.tempHumiditySensitivity === "High") {
+			} else if (input.TempHumiditySensitivity === "High") {
 				finalCost += assemblyRateCard.tempHumiditySensitive.high;
 			}
 		}
 
 		// Add de-panel cost
-		if (input.dePanel === "Yes" && input.pcbsPerPanel) {
-			if (input.pcbsPerPanel <= 1) {
+		if (input.DePanel === "Yes" && input.PcbsPerPanel) {
+			if (input.PcbsPerPanel <= 1) {
 				finalCost += assemblyRateCard.dePanel[1];
-			} else if (input.pcbsPerPanel >= 2 && input.pcbsPerPanel <= 5) {
+			} else if (input.PcbsPerPanel >= 2 && input.PcbsPerPanel <= 5) {
 				finalCost += assemblyRateCard.dePanel[2_5];
-			} else if (input.pcbsPerPanel >= 6 && input.pcbsPerPanel <= 10) {
+			} else if (input.PcbsPerPanel >= 6 && input.PcbsPerPanel <= 10) {
 				finalCost += assemblyRateCard.dePanel[6_10];
 			} else {
 				finalCost += assemblyRateCard.dePanel.above10;
@@ -109,40 +109,40 @@ export const pcbAssemblyRouter = createTRPCRouter({
 		}
 
 		// Add conformal coating cost
-		if (input.boardType === "Single PCB") {
-			finalCost += assemblyRateCard.conformalCoating[input.conformalCoating] * input.quantity;
-		} else if (input.boardType === "Panel" && input.pcbsPerPanel) {
+		if (input.BoardType === "Single PCB") {
+			finalCost += assemblyRateCard.conformalCoating[input.ConformalCoating] * input.Quantity;
+		} else if (input.BoardType === "Panel" && input.PcbsPerPanel) {
 			finalCost +=
-				assemblyRateCard.conformalCoating[input.conformalCoating] * input.quantity * input.pcbsPerPanel;
+				assemblyRateCard.conformalCoating[input.ConformalCoating] * input.Quantity * input.PcbsPerPanel;
 		}
 
 		// Add functional testing cost
-		if (input.boardType === "Single PCB") {
-			if (input.functionalTest === "Yes") {
-				finalCost += assemblyRateCard.functionalTesting * input.quantity;
+		if (input.BoardType === "Single PCB") {
+			if (input.FunctionalTest === "Yes") {
+				finalCost += assemblyRateCard.functionalTesting * input.Quantity;
 			}
-		} else if (input.boardType === "Panel" && input.pcbsPerPanel) {
-			if (input.functionalTest === "Yes") {
-				finalCost += assemblyRateCard.functionalTesting * input.quantity * input.pcbsPerPanel;
+		} else if (input.BoardType === "Panel" && input.PcbsPerPanel) {
+			if (input.FunctionalTest === "Yes") {
+				finalCost += assemblyRateCard.functionalTesting * input.Quantity * input.PcbsPerPanel;
 			}
 		}
 
 		// Add turnaround time cost
-		if (input.turnaroundTime === "Standard 5-7 days") {
+		if (input.TurnaroundTime === "Standard 5-7 days") {
 			finalCost += assemblyRateCard.turnaroundTime.standard;
-		} else if (input.turnaroundTime === "Expedited 3-4 days") {
+		} else if (input.TurnaroundTime === "Expedited 3-4 days") {
 			finalCost += assemblyRateCard.turnaroundTime.expedited;
 		}
 
 		// Add one-time setup charges
-		if (input.boardType === "Single PCB") {
+		if (input.BoardType === "Single PCB") {
 			setupCharges += assemblyRateCard.oneTimeSetupCharges.single;
-		} else if (input.boardType === "Panel" && input.pcbsPerPanel) {
-			if (input.pcbsPerPanel <= 2) {
+		} else if (input.BoardType === "Panel" && input.PcbsPerPanel) {
+			if (input.PcbsPerPanel <= 2) {
 				setupCharges += assemblyRateCard.oneTimeSetupCharges.panel2;
-			} else if (input.pcbsPerPanel >= 3 && input.pcbsPerPanel <= 5) {
+			} else if (input.PcbsPerPanel >= 3 && input.PcbsPerPanel <= 5) {
 				setupCharges += assemblyRateCard.oneTimeSetupCharges.panel3_5;
-			} else if (input.pcbsPerPanel >= 6 && input.pcbsPerPanel <= 10) {
+			} else if (input.PcbsPerPanel >= 6 && input.PcbsPerPanel <= 10) {
 				setupCharges += assemblyRateCard.oneTimeSetupCharges.panel6_10;
 			} else {
 				setupCharges += assemblyRateCard.oneTimeSetupCharges.panel10_above;
