@@ -969,3 +969,16 @@ type CartDataType = {
 	cartSize: number;
 	cartItems: Array<PartDataType | RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType>;
 };
+
+/* User */
+type UserType = {
+	createdAt: Date;
+	userId: string;
+	email: string;
+	firstName: string;
+	lastName: string;
+	billingAddresses: Array<BillingAddressType>;
+	shippingAddresses: Array<ShippingAddressType>;
+	cart: CartDataType;
+	// orders: Array<OrderType>;
+};
