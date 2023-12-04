@@ -12,7 +12,9 @@ export default async function BasketPartsTable() {
 		throw new Error(errorMessage); // activates closest error.tsx file
 	});
 
-	const parts: PartDataType[] = cart ? cart.parts : [];
+	// May include out-of-stock parts added by bom parser. 
+	// Make sure to remove them at checkout.
+	const parts: PartDataType[] = cart ? cart.parts : []; 
 
 	return (
 		<div>
@@ -125,7 +127,6 @@ export default async function BasketPartsTable() {
 										</tr>
 									);
 								})}
-								{/* <NaCartComponentsTable availablePartsLength={cartComponents.length} /> */}
 							</>
 						) : (
 							<tr className="divide-y divide-gray-300 dark:divide-gray-700">
