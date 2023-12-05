@@ -92,12 +92,13 @@ export async function addItemToCartAction(
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
-			const cartItems = cart.cartItems;
-			const existingItem = cartItems.find(cartItem => cartItem.Type === item.Type && cartItem.Name === item.Name);
+			const existingItem = cart.cartItems.find(
+				cartItem => cartItem.Type === item.Type && cartItem.Name === item.Name
+			);
 			if (existingItem) {
 				existingItem.OrderedQty += item.OrderedQty;
 			} else {
-				cartItems.push(item);
+				cart.cartItems.push(item);
 				cart.cartSize++;
 			}
 			// update in db
@@ -109,12 +110,11 @@ export async function addItemToCartAction(
 		} else {
 			// create new guest cart
 			const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
-			const newCart: CartDataType = {
+			await guestCartsCollection.insertOne({
 				cartId: newCartId,
 				cartSize: 1,
 				cartItems: [item],
-			};
-			await guestCartsCollection.insertOne(newCart);
+			});
 			await createCartCookie(newCartId); // future reference
 		}
 		revalidatePath("/products", "layout");
