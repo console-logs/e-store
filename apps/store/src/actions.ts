@@ -17,8 +17,6 @@ export async function captureUserSignupAction({
 	userId: string;
 }): Promise<void> {
 	try {
-		await mongoClient.connect();
-
 		// Create a new user with the provided details
 		const user: UserType = {
 			createdAt: new Date(),
@@ -34,18 +32,18 @@ export async function captureUserSignupAction({
 			},
 		};
 
+		await mongoClient.connect();
+
 		// Check if there's a guest cart and assign it to the user
 		const cartId = cookies().get("cartId")?.value;
 		if (cartId) {
 			const guestCart = await guestCartsCollection.findOne<CartDataType>(
 				{ cartId },
-				{ projection: { _id: 0, cartId: 0 } }
+				{ projection: { _id: 0, cart: 1 } }
 			);
 
-			if (!guestCart) {
-				throw new Error("createUserAction: Guest cart is missing!");
-			}
-
+			if (!guestCart) throw new Error("createUserAction: Guest cart is missing!");
+			
 			user.cart = guestCart;
 
 			// Clean up the guest cart
@@ -64,33 +62,39 @@ export async function captureUserSignupAction({
 
 export async function transferGuestCartToUserAction(): Promise<void> {
 	try {
-		const { userId } = auth();
-		const cartId = cookies().get("cartId")?.value;
-
-		if (!cartId) return;
-
 		await mongoClient.connect();
+		const options = { projection: { _id: 0, cart: 1 } };
+		const cartIdCookie = cookies().get("cartId");
+		const guestCartFilter = { cartId: cartIdCookie?.value };
+		const guestResults = await guestCartsCollection.findOne<{ cart: CartDataType }>(guestCartFilter, options);
+		if (!guestResults) return; // no guest cart to transfer
 
-		// Fetch the guest cart without the _id and cartId fields
-		const guestCart = await guestCartsCollection.findOne<CartDataType>(
-			{ cartId },
-			{ projection: { _id: 0, cartId: 0 } }
-		);
+		// transfer guest cart to user
+		const { userId } = auth();
+		const userCartFilter = { userId };
 
-		if (!guestCart) {
-			throw new Error("transferGuestCartToUserAction: Guest cart is missing!");
-		}
+		const userResults = await usersCollection.findOne<{ cart: CartDataType }>(userCartFilter, options);
+		if (!userResults) throw new Error("transferGuestCartToUserAction: User cart is missing!");
 
-		// Transfer the guest cart to the user and delete the guest cart
-		await Promise.all([
-			usersCollection.updateOne({ userId }, { $set: { cart: guestCart } }),
-			guestCartsCollection.deleteOne({ cartId }),
-		]);
+		const userCart = userResults.cart;
+		const guestCart = guestResults.cart;
 
-		// Delete the cartId cookie
-		cookies().delete("cartId");
+		// merge carts
+		guestCart.cartItems.forEach(guestCartItem => {
+			const existingItem = userCart.cartItems.find(
+				userCartItem => userCartItem.Type === guestCartItem.Type && userCartItem.Name === guestCartItem.Name
+			);
+			if (existingItem) {
+				existingItem.OrderedQty = guestCartItem.OrderedQty; // update qty
+			} else {
+				userCart.cartItems.push(guestCartItem);
+				userCart.cartSize++;
+			}
+		});
 
-		revalidatePath("/cart");
+		// update in db
+		await usersCollection.updateOne(userCartFilter, { $set: { cart: userCart } });
+		await guestCartsCollection.deleteOne(guestCartFilter); // cleanup!
 	} catch (error) {
 		throw error; // handle on the client side.
 	}
@@ -104,10 +108,9 @@ export async function fetchCartItemsAction(): Promise<CartDataType | null> {
 
 		const collection = userId ? usersCollection : guestCartsCollection;
 		const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
-		const options = { projection: { _id: 0, cartId: 0, userId: 0 } };
-
-		const result = await collection.findOne<CartDataType>(filter, options);
-		return result;
+		const options = { projection: { _id: 0, cart: 1 } };
+		const result = await collection.findOne<{ cart: CartDataType }>(filter, options);
+		return result ? result.cart : null;
 	} catch (error) {
 		throw error; // handle on the client side.
 	}
@@ -144,16 +147,18 @@ export async function addItemToCartAction(
 			// update in db
 			const { userId } = auth();
 			const cartIdCookie = cookies().get("cartId");
-			userId
-				? await usersCollection.updateOne({ userId }, { $set: { cart } })
-				: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
+			const collection = userId ? usersCollection : guestCartsCollection;
+			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
+			await collection.updateOne(filter, { $set: { cart } });
 		} else {
 			// create new guest cart
 			const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
 			await guestCartsCollection.insertOne({
 				cartId: newCartId,
-				cartSize: 1,
-				cartItems: [item],
+				cart: {
+					cartSize: 1,
+					cartItems: [item],
+				},
 			});
 			await createCartCookie(newCartId); // future reference
 		}
@@ -175,9 +180,9 @@ export async function updatePartQtyAction(name: string, newQuantity: number): Pr
 			// update in db
 			const { userId } = auth();
 			const cartIdCookie = cookies().get("cartId");
-			userId
-				? await usersCollection.updateOne({ userId }, { $set: { cart } })
-				: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
+			const collection = userId ? usersCollection : guestCartsCollection;
+			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
+			await collection.updateOne(filter, { $set: { cart } });
 		}
 		revalidatePath("/cart");
 	} catch (error) {
@@ -200,9 +205,9 @@ export async function deleteCartItemAction(itemToDelete: string): Promise<void> 
 			// update db
 			const { userId } = auth();
 			const cartIdCookie = cookies().get("cartId");
-			userId
-				? await usersCollection.updateOne({ userId }, { $set: { cart } })
-				: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
+			const collection = userId ? usersCollection : guestCartsCollection;
+			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
+			await collection.updateOne(filter, { $set: { cart } });
 		}
 		revalidatePath("/cart");
 	} catch (error) {
@@ -229,9 +234,9 @@ export async function deleteAllItemsAction(property: string, value: string) {
 			// update db
 			const { userId } = auth();
 			const cartIdCookie = cookies().get("cartId");
-			userId
-				? await usersCollection.updateOne({ userId }, { $set: { cart } })
-				: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
+			const collection = userId ? usersCollection : guestCartsCollection;
+			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
+			await collection.updateOne(filter, { $set: { cart } });
 		}
 		revalidatePath("/cart");
 	} catch (error) {
