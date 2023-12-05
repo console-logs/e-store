@@ -5,47 +5,57 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import ShortUniqueId from "short-unique-id";
 
-export async function captureUserSignupAction(props: {
+export async function captureUserSignupAction({
+	firstName,
+	lastName,
+	email,
+	userId,
+}: {
 	firstName: string;
 	lastName: string;
 	email: string;
 	userId: string;
 }): Promise<void> {
-	const { firstName, lastName, email, userId } = props;
-	const user: UserType = {
-		createdAt: new Date(),
-		userId,
-		email,
-		firstName,
-		lastName,
-		billingAddresses: [],
-		shippingAddresses: [],
-		cart: {
-			cartSize: 0,
-			cartItems: [],
-		},
-		// orders: [],
-	};
-
 	try {
-		const cartIdCookie = cookies().get("cartId");
 		await mongoClient.connect();
-		if (cartIdCookie) {
-			const cartId = cartIdCookie.value;
-			const cartFilter = { cartId };
-			const guestCart = await guestCartsCollection.findOne<CartDataType>(cartFilter, {
-				projection: { _id: 0, cartId: 0 },
-			});
+
+		// Create a new user with the provided details
+		const user: UserType = {
+			createdAt: new Date(),
+			userId,
+			email,
+			firstName,
+			lastName,
+			billingAddresses: [],
+			shippingAddresses: [],
+			cart: {
+				cartSize: 0,
+				cartItems: [],
+			},
+		};
+
+		// Check if there's a guest cart and assign it to the user
+		const cartId = cookies().get("cartId")?.value;
+		if (cartId) {
+			const guestCart = await guestCartsCollection.findOne<CartDataType>(
+				{ cartId },
+				{ projection: { _id: 0, cartId: 0 } }
+			);
+
 			if (!guestCart) {
 				throw new Error("createUserAction: Guest cart is missing!");
 			}
-			user.cart = guestCart; // assign guest cart to user's cart
 
-			//clean up!
-			await guestCartsCollection.deleteOne(cartFilter);
+			user.cart = guestCart;
+
+			// Clean up the guest cart
+			await guestCartsCollection.deleteOne({ cartId });
 			cookies().delete("cartId");
 		}
+
+		// Insert the new user into the database
 		await usersCollection.insertOne(user);
+
 		revalidatePath("/", "layout"); // full revalidate
 	} catch (error) {
 		throw error; // handle on the client side.
@@ -53,7 +63,37 @@ export async function captureUserSignupAction(props: {
 }
 
 export async function transferGuestCartToUserAction(): Promise<void> {
-	throw new Error("Action not implemented");
+	try {
+		const { userId } = auth();
+		const cartId = cookies().get("cartId")?.value;
+
+		if (!cartId) return;
+
+		await mongoClient.connect();
+
+		// Fetch the guest cart without the _id and cartId fields
+		const guestCart = await guestCartsCollection.findOne<CartDataType>(
+			{ cartId },
+			{ projection: { _id: 0, cartId: 0 } }
+		);
+
+		if (!guestCart) {
+			throw new Error("transferGuestCartToUserAction: Guest cart is missing!");
+		}
+
+		// Transfer the guest cart to the user and delete the guest cart
+		await Promise.all([
+			usersCollection.updateOne({ userId }, { $set: { cart: guestCart } }),
+			guestCartsCollection.deleteOne({ cartId }),
+		]);
+
+		// Delete the cartId cookie
+		cookies().delete("cartId");
+
+		revalidatePath("/cart");
+	} catch (error) {
+		throw error; // handle on the client side.
+	}
 }
 
 export async function fetchCartItemsAction(): Promise<CartDataType | null> {
@@ -123,8 +163,26 @@ export async function addItemToCartAction(
 	}
 }
 
-export async function updatePartQtyAction(_partNumber: string, _newQuantity: number): Promise<void> {
-	throw new Error("Action not implemented.");
+export async function updatePartQtyAction(name: string, newQuantity: number): Promise<void> {
+	try {
+		await mongoClient.connect();
+		const cart = await fetchCartItemsAction();
+		if (cart) {
+			const existingItem = cart.cartItems.find(cartItem => cartItem.Name === name);
+			if (existingItem) {
+				existingItem.OrderedQty = newQuantity;
+			}
+			// update in db
+			const { userId } = auth();
+			const cartIdCookie = cookies().get("cartId");
+			userId
+				? await usersCollection.updateOne({ userId }, { $set: { cart } })
+				: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
+		}
+		revalidatePath("/cart");
+	} catch (error) {
+		console.error(error); // handle on the client side.
+	}
 }
 
 export async function deleteCartItemAction(itemToDelete: string): Promise<void> {
