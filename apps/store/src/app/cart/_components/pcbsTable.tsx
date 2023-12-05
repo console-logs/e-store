@@ -1,9 +1,7 @@
-import { fetchCartItemsAction } from "@/actions";
-import { deleteAllPcbsAction, deleteCartItemAction } from "@/actions";
+import { deleteAllItemsAction, deleteCartItemAction, fetchCartItemsAction } from "@/actions";
 import DeleteButton from "@/app/cart/_components/delete";
 import PcbFabSpecsModal from "@/app/cart/_components/modal";
 import { formatToInr } from "@packages/shared/lib/utils";
-import { Badge } from "@shared/components/ui/badge";
 
 const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
 
@@ -64,7 +62,10 @@ export default async function BasketPcbsTable() {
 							<th
 								scope="col"
 								className="text-right hidden sm:table-cell">
-								<DeleteButton deleteAllAction={deleteAllPcbsAction} />
+								<DeleteButton
+									deleteAllAction={deleteAllItemsAction}
+									itemTypeToDelete="PCB"
+								/>
 							</th>
 						</tr>
 					</thead>
@@ -92,12 +93,12 @@ export default async function BasketPcbsTable() {
 												{serialNum}
 											</td>
 											<td className="max-w-0 space-y-1 py-5 pl-4 pr-3 text-sm sm:pl-0">
-												<div className="font-medium">
+												<div className="font-bold">
 													Name: <span className="font-normal">{name}</span>
 												</div>
 
-												<div className="flex items-center gap-x-2">
-													Type: <Badge>{Type}</Badge>
+												<div className="font-bold">
+													Type: <span className="font-normal">{Type}</span>
 												</div>
 
 												<PcbFabSpecsModal fabSpecs={pcb} />

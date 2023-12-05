@@ -1,5 +1,4 @@
-import { fetchCartItemsAction } from "@/actions";
-import { deleteAllPartsAction, deleteCartItemAction } from "@/actions";
+import { deleteAllItemsAction, deleteCartItemAction, fetchCartItemsAction } from "@/actions";
 import DeleteButton from "@/app/cart/_components/delete";
 import UpdatePartQtyForm from "@/app/cart/_components/updatePartQty";
 import { calculatePartNetPrice, calculatePartUnitPrice } from "@/lib/utils";
@@ -15,7 +14,6 @@ export default async function BasketPartsTable() {
 	// May include out-of-stock parts added by bom parser.
 	// Make sure to remove them at checkout.
 	const parts = cart ? cart.cartItems.filter((item): item is PartDataType => item.Type === "Part") : [];
-	
 
 	return (
 		<div>
@@ -61,7 +59,10 @@ export default async function BasketPartsTable() {
 							<th
 								scope="col"
 								className="text-right hidden sm:table-cell">
-								<DeleteButton deleteAllAction={deleteAllPartsAction} />
+								<DeleteButton
+									deleteAllAction={deleteAllItemsAction}
+									itemTypeToDelete="Part"
+								/>
 							</th>
 						</tr>
 					</thead>
@@ -96,9 +97,7 @@ export default async function BasketPartsTable() {
 													<dt className="sr-only sm:hidden">Rate</dt>
 													<dd className="mt-1 sm:hidden">
 														<span className="text-muted-foreground">Rate: </span>
-														<span className="font-medium">
-															{unitPrice}
-														</span>
+														<span className="font-medium">{unitPrice}</span>
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">

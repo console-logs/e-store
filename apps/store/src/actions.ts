@@ -103,14 +103,11 @@ export async function addItemToCartAction(
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
-			// cart exists
 			const cartItems = cart.cartItems;
 			const existingItem = cartItems.find(cartItem => cartItem.Type === item.Type && cartItem.Name === item.Name);
 			if (existingItem) {
-				// increase the qty
 				existingItem.OrderedQty += item.OrderedQty;
 			} else {
-				// add the item & increase cartSize
 				cartItems.push(item);
 				cart.cartSize++;
 			}
@@ -133,7 +130,7 @@ export async function addItemToCartAction(
 		}
 		revalidatePath("/products", "layout");
 	} catch (error) {
-		console.error(error);
+		console.error(error); // handle on the client side.
 	}
 }
 
@@ -141,16 +138,57 @@ export async function updatePartQtyAction(_partNumber: string, _newQuantity: num
 	throw new Error("Action not implemented.");
 }
 
-export async function deleteCartItemAction(_itemName: string): Promise<void> {
-	throw new Error("Action not implemented");
+export async function deleteCartItemAction(itemToDelete: string): Promise<void> {
+	try {
+		await mongoClient.connect();
+		const cart = await fetchCartItemsAction();
+		if (cart) {
+			const cartItems = cart.cartItems;
+			const existingItem = cartItems.find(cartItem => cartItem.Name === itemToDelete);
+			if (existingItem) {
+				const index = cartItems.indexOf(existingItem);
+				cartItems.splice(index, 1);
+				cart.cartSize--;
+
+				// update db
+				const { userId } = auth();
+				const cartIdCookie = cookies().get("cartId");
+				userId
+					? await usersCollection.updateOne({ userId }, { $set: { cart } })
+					: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
+			}
+		}
+		revalidatePath("/cart");
+	} catch (error) {
+		console.error(error); // handle on the client side.
+	}
 }
 
-export async function deleteAllPartsAction() {
-	throw new Error("Action not implemented.");
-}
+export async function deleteAllItemsAction(type: string) {
+	try {
+		await mongoClient.connect();
+		const cart = await fetchCartItemsAction();
+		if (cart) {
+			const cartItems = cart.cartItems;
 
-export async function deleteAllPcbsAction() {
-	throw new Error("Action not implemented.");
+			// Filter out items with Type === itemType
+			const updatedCartItems = cartItems.filter(cartItem => cartItem.Type !== type);
+
+			// Update cart with filtered items and adjust cartSize
+			cart.cartItems = updatedCartItems;
+			cart.cartSize = updatedCartItems.length;
+
+			// update db
+			const { userId } = auth();
+			const cartIdCookie = cookies().get("cartId");
+			userId
+				? await usersCollection.updateOne({ userId }, { $set: { cart } })
+				: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
+		}
+		revalidatePath("/cart");
+	} catch (error) {
+		console.error(error); // handle on the client side.
+	}
 }
 
 export async function createCartCookie(cartId: string) {

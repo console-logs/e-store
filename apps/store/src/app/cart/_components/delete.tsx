@@ -7,10 +7,12 @@ export default function DeleteButton({
 	deleteAction,
 	deleteAllAction,
 	itemToDelete,
+	itemTypeToDelete,
 }: {
 	deleteAction?: (params: string) => Promise<void>;
-	deleteAllAction?: () => Promise<void>;
+	deleteAllAction?: (params: string) => Promise<void>;
 	itemToDelete?: string;
+	itemTypeToDelete?: string;
 }) {
 	const [isLoading, startTransition] = useTransition();
 
@@ -23,8 +25,8 @@ export default function DeleteButton({
 				startTransition(async () => {
 					if (deleteAction && itemToDelete) {
 						await deleteAction(itemToDelete);
-					} else if (deleteAllAction) {
-						await deleteAllAction();
+					} else if (deleteAllAction && itemTypeToDelete) {
+						await deleteAllAction(itemTypeToDelete);
 					}
 				})
 			}>
