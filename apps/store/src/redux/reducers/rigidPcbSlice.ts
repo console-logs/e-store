@@ -5,6 +5,7 @@ import { getFutureDate } from "@shared/lib/utils";
 const initialState: RigidPcbStoreStateType = {
 	/* mandatory fields */
 	Type: "Rigid PCB",
+	Category: "PCB",
 	Name: "",
 	OrderedQty: 5,
 	BaseMaterial: "FR4",
@@ -698,6 +699,7 @@ export const selectPanelQtyOptions = (state: ReduxState) => state.rigidPcb.Panel
 export const selectRigidPcbMemoized = createSelector([selectRigidPcbState], rigidPcb => {
 	const rigidPcbFabSpecs: RigidPcbFabSpecsType = {
 		Type: "Rigid PCB",
+		Category: "PCB",
 		Name: rigidPcb.Name,
 		OrderedQty: rigidPcb.OrderedQty,
 		Layer: rigidPcb.Layer,

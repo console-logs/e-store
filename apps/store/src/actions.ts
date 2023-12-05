@@ -164,15 +164,42 @@ export async function deleteCartItemAction(itemToDelete: string): Promise<void> 
 	}
 }
 
-export async function deleteAllItemsAction(type: string) {
+export async function deleteAllPartsAction(type: string) {
 	try {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
 			const cartItems = cart.cartItems;
 
-			// Filter out items with Type === itemType
+			// keep the items that dont match type
 			const updatedCartItems = cartItems.filter(cartItem => cartItem.Type !== type);
+
+			// Update cart with filtered items and adjust cartSize
+			cart.cartItems = updatedCartItems;
+			cart.cartSize = updatedCartItems.length;
+
+			// update db
+			const { userId } = auth();
+			const cartIdCookie = cookies().get("cartId");
+			userId
+				? await usersCollection.updateOne({ userId }, { $set: { cart } })
+				: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
+		}
+		revalidatePath("/cart");
+	} catch (error) {
+		console.error(error); // handle on the client side.
+	}
+}
+
+export async function deleteAllPcbsAction(category: string) {
+	try {
+		await mongoClient.connect();
+		const cart = await fetchCartItemsAction();
+		if (cart) {
+			const cartItems = cart.cartItems;
+
+			// keep the items that dont match category
+			const updatedCartItems = cartItems.filter(cartItem => cartItem.Category !== category);
 
 			// Update cart with filtered items and adjust cartSize
 			cart.cartItems = updatedCartItems;

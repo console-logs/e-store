@@ -6,13 +6,15 @@ import { useTransition } from "react";
 export default function DeleteButton({
 	deleteAction,
 	deleteAllAction,
-	itemToDelete,
-	itemTypeToDelete,
+	item,
+	type,
+	category,
 }: {
 	deleteAction?: (params: string) => Promise<void>;
 	deleteAllAction?: (params: string) => Promise<void>;
-	itemToDelete?: string;
-	itemTypeToDelete?: string;
+	item?: string;
+	type?: string;
+	category?: string;
 }) {
 	const [isLoading, startTransition] = useTransition();
 
@@ -23,10 +25,15 @@ export default function DeleteButton({
 			variant={"ghost"}
 			onClick={() =>
 				startTransition(async () => {
-					if (deleteAction && itemToDelete) {
-						await deleteAction(itemToDelete);
-					} else if (deleteAllAction && itemTypeToDelete) {
-						await deleteAllAction(itemTypeToDelete);
+					if (deleteAction && item) {
+						await deleteAction(item);
+					} else if (deleteAllAction) {
+						if (type) {
+							await deleteAllAction(type);
+						}
+						if (category) {
+							await deleteAllAction(category);
+						}
 					}
 				})
 			}>

@@ -15,6 +15,7 @@
 /*  Rigid Pcb Types */
 type BaseRigidPcbFabSpecsType = {
 	Type: "Rigid PCB";
+	Category: "PCB";
 	Name: string;
 	OrderedQty: number;
 	Layer: 1 | 2 | 4 | 6 | 8 | 10;
@@ -299,6 +300,7 @@ type RigidPcbFabSpecsType = BaseRigidPcbFabSpecsType & {
 /* Flex Pcb Types */
 type BaseFlexPcbFabSpecsType = {
 	Type: "Flex PCB";
+	Category: "PCB";
 	Name: string;
 	OrderedQty: number;
 	BaseMaterial: "Flex (Polyimide)";
@@ -539,6 +541,7 @@ type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
 /* Pcb Assembly Types */
 type PcbAssemblyFabSpecsType = {
 	Type: "PCB Assembly";
+	Category: "PCB";
 	Name: string;
 	BoardType: "Single PCB" | "Panel";
 	PcbsPerPanel: number;

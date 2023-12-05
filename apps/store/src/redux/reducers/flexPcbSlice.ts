@@ -4,6 +4,7 @@ import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: FlexPcbStoreStateType = {
 	Type: "Flex PCB",
+	Category: "PCB",
 	Name: "",
 	OrderedQty: 5,
 	BaseMaterial: "Flex (Polyimide)",
@@ -466,6 +467,7 @@ export const selectSilkscreenOptions = (state: ReduxState) => state.flexPcb.Silk
 export const selectFlexPcbMemoized = createSelector([selectFlexPcbState], flexPcb => {
 	const flexPcbFabSpecs: FlexPcbFabSpecsType = {
 		Type: "Flex PCB",
+		Category: "PCB",
 		OrderedQty: flexPcb.OrderedQty,
 		BaseMaterial: flexPcb.BaseMaterial,
 		BoardOutlineTolerance: flexPcb.BoardOutlineTolerance,
