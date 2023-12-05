@@ -102,9 +102,8 @@ export async function addItemToCartAction(
 	try {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
-		const { userId } = auth();
-		const cartIdCookie = cookies().get("cartId");
 		if (cart) {
+			// cart exists
 			const cartItems = cart.cartItems;
 			const existingItem = cartItems.find(cartItem => cartItem.Type === item.Type && cartItem.Name === item.Name);
 			if (existingItem) {
@@ -115,6 +114,9 @@ export async function addItemToCartAction(
 				cartItems.push(item);
 				cart.cartSize++;
 			}
+			// update in db
+			const { userId } = auth();
+			const cartIdCookie = cookies().get("cartId");
 			userId
 				? await usersCollection.updateOne({ userId }, { $set: { cart } })
 				: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
