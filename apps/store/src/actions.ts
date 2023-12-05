@@ -143,36 +143,8 @@ export async function deleteCartItemAction(itemToDelete: string): Promise<void> 
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
-			const cartItems = cart.cartItems;
-			const existingItem = cartItems.find(cartItem => cartItem.Name === itemToDelete);
-			if (existingItem) {
-				const index = cartItems.indexOf(existingItem);
-				cartItems.splice(index, 1);
-				cart.cartSize--;
-
-				// update db
-				const { userId } = auth();
-				const cartIdCookie = cookies().get("cartId");
-				userId
-					? await usersCollection.updateOne({ userId }, { $set: { cart } })
-					: await guestCartsCollection.updateOne({ cartId: cartIdCookie?.value }, { $set: cart });
-			}
-		}
-		revalidatePath("/cart");
-	} catch (error) {
-		console.error(error); // handle on the client side.
-	}
-}
-
-export async function deleteAllPartsAction(type: string) {
-	try {
-		await mongoClient.connect();
-		const cart = await fetchCartItemsAction();
-		if (cart) {
-			const cartItems = cart.cartItems;
-
-			// keep the items that dont match type
-			const updatedCartItems = cartItems.filter(cartItem => cartItem.Type !== type);
+			// keep the item that is not a match
+			const updatedCartItems = cart.cartItems.filter(cartItem => cartItem.Name !== itemToDelete);
 
 			// Update cart with filtered items and adjust cartSize
 			cart.cartItems = updatedCartItems;
@@ -191,15 +163,17 @@ export async function deleteAllPartsAction(type: string) {
 	}
 }
 
-export async function deleteAllPcbsAction(category: string) {
+export async function deleteAllItemsAction(property: string, value: string) {
 	try {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
 			const cartItems = cart.cartItems;
 
-			// keep the items that dont match category
-			const updatedCartItems = cartItems.filter(cartItem => cartItem.Category !== category);
+			// keep the items that dont match the property value
+			const updatedCartItems = cartItems.filter(
+				cartItem => cartItem[property as keyof typeof cartItem] !== value
+			);
 
 			// Update cart with filtered items and adjust cartSize
 			cart.cartItems = updatedCartItems;

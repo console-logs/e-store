@@ -1,5 +1,5 @@
-import { deleteAllPcbsAction, deleteCartItemAction, fetchCartItemsAction } from "@/actions";
-import DeleteButton from "@/app/cart/_components/delete";
+import { deleteAllItemsAction, deleteCartItemAction, fetchCartItemsAction } from "@/actions";
+import { DeleteAllButton, DeleteCartItemButton } from "@/app/cart/_components/delete";
 import PcbFabSpecsModal from "@/app/cart/_components/modal";
 import { formatToInr } from "@packages/shared/lib/utils";
 
@@ -62,9 +62,10 @@ export default async function BasketPcbsTable() {
 							<th
 								scope="col"
 								className="text-right hidden sm:table-cell">
-								<DeleteButton
-									deleteAllAction={deleteAllPcbsAction}
-									category="PCB"
+								<DeleteAllButton
+									deleteAllAction={deleteAllItemsAction}
+									property="Category"
+									value="PCB"
 								/>
 							</th>
 						</tr>
@@ -113,8 +114,8 @@ export default async function BasketPcbsTable() {
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
-														<DeleteButton
-															deleteAction={deleteCartItemAction}
+														<DeleteCartItemButton
+															deleteCartItemAction={deleteCartItemAction}
 															item={name}
 														/>
 													</dd>
@@ -134,8 +135,8 @@ export default async function BasketPcbsTable() {
 											</td>
 
 											<td className="hidden sm:table-cell text-right">
-												<DeleteButton
-													deleteAction={deleteCartItemAction}
+												<DeleteCartItemButton
+													deleteCartItemAction={deleteCartItemAction}
 													item={name}
 												/>
 											</td>
