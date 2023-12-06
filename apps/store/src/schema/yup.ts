@@ -1,5 +1,5 @@
 import { ERROR_MSG } from "@/lib/constants";
-import { EMPTY_FIRSTNAME, EMPTY_LASTNAME, INVALID_EMAIL, PASSWORD_ERROR } from "@packages/shared/lib/errorMessages";
+import { EMPTY_CODE, EMPTY_FIRSTNAME, EMPTY_LASTNAME, INVALID_CODE, INVALID_EMAIL, PASSWORD_ERROR } from "@packages/shared/lib/errorMessages";
 import * as Yup from "yup";
 
 export const searchPartSchema = Yup.object().shape({
@@ -25,9 +25,9 @@ export const resetSchema = Yup.object().shape({
 
 export const reset2Schema = Yup.object().shape({
 	code: Yup.string()
-		.required("Code cannot be empty")
-		.min(6, "Code should be 6 digits")
-		.max(6, "Code should be 6 digits"),
+		.required(EMPTY_CODE)
+		.min(6, INVALID_CODE)
+		.max(6, INVALID_CODE),
 	newPassword: Yup.string()
 		.required(PASSWORD_ERROR)
 		.matches(/(?=.*[a-z])/, PASSWORD_ERROR)
@@ -52,4 +52,10 @@ export const signupSchema = Yup.object().shape({
 		.matches(/(?=.*[0-9])/, PASSWORD_ERROR)
 		.matches(/(?=.*[!@#\$%\^&\*\?])/, PASSWORD_ERROR)
 		.min(8, PASSWORD_ERROR),
+});
+
+export const verifyEmailSchema = Yup.object().shape({
+	code: Yup.string()
+		.matches(/^\d{6}$/, INVALID_CODE)
+		.required(EMPTY_CODE),
 });

@@ -32,3 +32,5 @@ export const CREDENTIAL_ALREADY_IN_USE = "User ID is taken. Please try a differe
 export const EMAIL_EXISTS = "Email ID already exists. Please login.";
 export const EMPTY_PCB_NAME = "PCB name cannot be empty";
 export const EMPTY_QUANTITY = "Quantity cannot be empty";
+export const INVALID_CODE = "Code must be exactly 6 digits";
+export const EMPTY_CODE = "Code cannot be empty";
