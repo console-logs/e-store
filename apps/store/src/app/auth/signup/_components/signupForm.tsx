@@ -1,22 +1,21 @@
 "use client";
 import { VERIFY_EMAIL_PAGE } from "@/lib/routes";
+import { signupSchema } from "@/schema/yup";
 import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useToast } from "@shared/components/ui/use-toast";
-import { EMPTY_FIRSTNAME, EMPTY_LASTNAME, INVALID_EMAIL, PASSWORD_ERROR } from "@shared/lib/errorMessages";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
-import React, { useTransition } from "react";
-import * as Yup from "yup";
+import { useCallback, useState, useTransition } from "react";
 
 export default function SignupForm() {
 	const router = useRouter();
 	const { toast } = useToast();
 	const { isLoaded, signUp } = useSignUp();
-	const [showPassword, setShowPassword] = React.useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 	const [isLoading, startTransition] = useTransition();
 
 	const initialValues = {
@@ -26,61 +25,48 @@ export default function SignupForm() {
 		password: "",
 	};
 
-	const validationSchema = Yup.object().shape({
-		fname: Yup.string().required(EMPTY_FIRSTNAME),
-		lname: Yup.string().required(EMPTY_LASTNAME),
-		email: Yup.string()
-			.email(INVALID_EMAIL)
-			.required(INVALID_EMAIL)
-			.matches(/@[^.]*\./, INVALID_EMAIL)
-			.matches(/^\S+$/, INVALID_EMAIL),
-		password: Yup.string()
-			.required(PASSWORD_ERROR)
-			.matches(/(?=.*[a-z])/, PASSWORD_ERROR)
-			.matches(/(?=.*[A-Z])/, PASSWORD_ERROR)
-			.matches(/(?=.*[0-9])/, PASSWORD_ERROR)
-			.matches(/(?=.*[!@#\$%\^&\*\?])/, PASSWORD_ERROR)
-			.min(8, PASSWORD_ERROR),
-	});
-
-	function handleOnSubmit(signup_credentials: { email: string; password: string; fname: string; lname: string }) {
-		startTransition(async () => {
-			if (!isLoaded) {
-				return;
-			}
-			try {
-				await signUp.create({
-					emailAddress: signup_credentials.email,
-					password: signup_credentials.password,
-					firstName: signup_credentials.fname,
-					lastName: signup_credentials.lname,
-				});
-
-				// Send email verification code
-				await signUp.prepareEmailAddressVerification({
-					strategy: "email_code",
-				});
-				router.push(VERIFY_EMAIL_PAGE);
-			} catch (err: unknown) {
-				let errorMessage: string | undefined = "Something went wrong, please try again later.";
-				if (err instanceof Error) {
-					errorMessage = err.message;
-				} else if (isClerkAPIResponseError(err)) {
-					errorMessage = err.errors[0]?.longMessage;
+	const handleOnSubmit = useCallback(
+		(signup_credentials: { email: string; password: string; fname: string; lname: string }) => {
+			startTransition(async () => {
+				if (!isLoaded) {
+					return;
 				}
-				toast({
-					variant: "destructive",
-					title: "Authentication error",
-					description: errorMessage,
-					duration: 4000,
-				});
-			}
-		});
-	}
+				try {
+					await signUp.create({
+						emailAddress: signup_credentials.email,
+						password: signup_credentials.password,
+						firstName: signup_credentials.fname,
+						lastName: signup_credentials.lname,
+					});
+
+					// Send email verification code
+					await signUp.prepareEmailAddressVerification({
+						strategy: "email_code",
+					});
+					router.push(VERIFY_EMAIL_PAGE);
+				} catch (err: unknown) {
+					let errorMessage: string | undefined = "Something went wrong, please try again later.";
+					if (err instanceof Error) {
+						errorMessage = err.message;
+					} else if (isClerkAPIResponseError(err)) {
+						errorMessage = err.errors[0]?.longMessage;
+					}
+					toast({
+						variant: "destructive",
+						title: "Authentication error",
+						description: errorMessage,
+						duration: 4000,
+					});
+				}
+			});
+		},
+		[startTransition, router]
+	);
+
 	return (
 		<Formik
 			initialValues={initialValues}
-			validationSchema={validationSchema}
+			validationSchema={signupSchema}
 			onSubmit={handleOnSubmit}>
 			{({}) => (
 				<Form className="space-y-3">

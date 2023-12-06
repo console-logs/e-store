@@ -1,5 +1,5 @@
 import { ERROR_MSG } from "@/lib/constants";
-import { INVALID_EMAIL, PASSWORD_ERROR } from "@packages/shared/lib/errorMessages";
+import { EMPTY_FIRSTNAME, EMPTY_LASTNAME, INVALID_EMAIL, PASSWORD_ERROR } from "@packages/shared/lib/errorMessages";
 import * as Yup from "yup";
 
 export const searchPartSchema = Yup.object().shape({
@@ -29,6 +29,23 @@ export const reset2Schema = Yup.object().shape({
 		.min(6, "Code should be 6 digits")
 		.max(6, "Code should be 6 digits"),
 	newPassword: Yup.string()
+		.required(PASSWORD_ERROR)
+		.matches(/(?=.*[a-z])/, PASSWORD_ERROR)
+		.matches(/(?=.*[A-Z])/, PASSWORD_ERROR)
+		.matches(/(?=.*[0-9])/, PASSWORD_ERROR)
+		.matches(/(?=.*[!@#\$%\^&\*\?])/, PASSWORD_ERROR)
+		.min(8, PASSWORD_ERROR),
+});
+
+export const signupSchema = Yup.object().shape({
+	fname: Yup.string().required(EMPTY_FIRSTNAME),
+	lname: Yup.string().required(EMPTY_LASTNAME),
+	email: Yup.string()
+		.email(INVALID_EMAIL)
+		.required(INVALID_EMAIL)
+		.matches(/@[^.]*\./, INVALID_EMAIL)
+		.matches(/^\S+$/, INVALID_EMAIL),
+	password: Yup.string()
 		.required(PASSWORD_ERROR)
 		.matches(/(?=.*[a-z])/, PASSWORD_ERROR)
 		.matches(/(?=.*[A-Z])/, PASSWORD_ERROR)
