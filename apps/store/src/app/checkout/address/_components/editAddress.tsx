@@ -1,7 +1,7 @@
 "use client";
 import { addAddressesAction } from "@/actions";
-import BillingAddressFields from "@/app/checkout/address/_components/billingFields";
-import ShippingAddressFields from "@/app/checkout/address/_components/shippingFields";
+import BillingAddressFields from "@/app/checkout/address/_components/fields/bill";
+import ShippingAddressFields from "@/app/checkout/address/_components/fields/ship";
 import { REVIEW_ORDER_PAGE } from "@/lib/routes";
 import { addressSchema } from "@/schema/yup";
 import { Icons } from "@shared/components/Icons";
@@ -16,7 +16,7 @@ export default function EditAddressForm() {
 	const router = useRouter();
 	const [isSameAddress, setIsSameAddress] = useState<boolean>(true);
 	const [isLoading, startTransition] = useTransition();
-  const [billShipMatch, setBillShipMatch] = useState<boolean>(true);
+	const [billShipMatch, setBillShipMatch] = useState<boolean>(true);
 
 	const initialValues = {
 		bill_fname: "",
@@ -50,32 +50,32 @@ export default function EditAddressForm() {
 
 	const handleOnSubmit = useCallback(
 		(values: typeof initialValues) => {
-      const {
-			bill_fname,
-			bill_lname,
-			bill_email,
-			bill_phone,
-			bill_address1,
-			bill_address2,
-			bill_city,
-			bill_state,
-			bill_postalCode,
-			bill_company,
-			bill_country,
-      bill_gst,
-      bill_poNumber,
-			ship_fname,
-			ship_lname,
-			ship_email,
-			ship_phone,
-			ship_address1,
-			ship_address2,
-			ship_city,
-			ship_state,
-			ship_postalCode,
-			ship_company,
-			ship_country,
-		} = values;
+			const {
+				bill_fname,
+				bill_lname,
+				bill_email,
+				bill_phone,
+				bill_address1,
+				bill_address2,
+				bill_city,
+				bill_state,
+				bill_postalCode,
+				bill_company,
+				bill_country,
+				bill_gst,
+				bill_poNumber,
+				ship_fname,
+				ship_lname,
+				ship_email,
+				ship_phone,
+				ship_address1,
+				ship_address2,
+				ship_city,
+				ship_state,
+				ship_postalCode,
+				ship_company,
+				ship_country,
+			} = values;
 			startTransition(async () => {
 				const billingInfo: AddressType = {
 					type: "Billing Address",
@@ -109,22 +109,22 @@ export default function EditAddressForm() {
 					landmark: "",
 					shippingInstructions: "",
 				};
-				 try {
-						await addAddressesAction(billingInfo, shippingInfo);
-						router.push(REVIEW_ORDER_PAGE);
-					} catch (error) {
-						const unknownError = "Something went wrong, please try again later.";
-						const errorMessage = error instanceof Error ? error.message : unknownError;
-						throw new Error(errorMessage);
-					}
+				try {
+					await addAddressesAction(billingInfo, shippingInfo);
+					router.push(REVIEW_ORDER_PAGE);
+				} catch (error) {
+					const unknownError = "Something went wrong, please try again later.";
+					const errorMessage = error instanceof Error ? error.message : unknownError;
+					throw new Error(errorMessage);
+				}
 			});
 		},
 		[startTransition, router, isSameAddress]
 	);
 
-  useEffect(() => {
+	useEffect(() => {
 		setIsSameAddress(billShipMatch);
-  }, [billShipMatch]);
+	}, [billShipMatch]);
 
 	return (
 		<div>
