@@ -1,7 +1,7 @@
 "use client";
 import { addAddressesAction } from "@/actions";
-import BillingAddressFields from "@/app/checkout/address/_components/fields/bill";
-import ShippingAddressFields from "@/app/checkout/address/_components/fields/ship";
+import BillingAddressFields from "@/app/checkout/_components/address/fields/bill";
+import ShippingAddressFields from "@/app/checkout/_components/address/fields/ship";
 import { REVIEW_ORDER_PAGE } from "@/lib/routes";
 import { addressSchema } from "@/schema/yup";
 import { Icons } from "@shared/components/Icons";

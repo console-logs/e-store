@@ -1,13 +1,13 @@
 import { fetchAddressesAction } from "@/actions";
-import EditAddressForm from "@/app/checkout/address/_components/edit";
-import ViewSavedAddresses from "@/app/checkout/address/_components/view";
+import EditAddressForm from "@/app/checkout/_components/address/editAddress";
+import ViewSavedAddresses from "@/app/checkout/_components/address/viewAddress";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Saved Addresses",
 };
 
-export default async function Address() {
+export default async function SavedAddress() {
 	const { billingAddresses, shippingAddresses } = await fetchAddressesAction().catch((error: unknown) => {
 		const unknownError = "Something went wrong, please try again later.";
 		const errorMessage = error instanceof Error ? error.message : unknownError;

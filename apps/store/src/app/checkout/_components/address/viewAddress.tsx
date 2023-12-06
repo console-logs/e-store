@@ -1,5 +1,5 @@
 "use client";
-import { AddressDisplayCard } from "@/app/checkout/address/_components/display";
+import { AddressDisplayCard } from "@/app/checkout/_components/address/displayAddress";
 import { EDIT_ADDRESSES_PAGE, REVIEW_ORDER_PAGE } from "@/lib/routes";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";

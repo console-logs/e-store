@@ -6,8 +6,8 @@ const fieldProps = [
 	{
 		label: "First Name",
 		type: "text",
-		id: "ship_fname",
-		name: "ship_fname",
+		id: "bill_fname",
+		name: "bill_fname",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
@@ -15,8 +15,8 @@ const fieldProps = [
 	{
 		label: "Last Name",
 		type: "text",
-		id: "ship_lname",
-		name: "ship_lname",
+		id: "bill_lname",
+		name: "bill_lname",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
@@ -24,8 +24,8 @@ const fieldProps = [
 	{
 		label: "Company",
 		type: "text",
-		id: "ship_company",
-		name: "ship_company",
+		id: "bill_company",
+		name: "bill_company",
 		autoComplete: "off",
 		className: "w-full",
 		required: false,
@@ -33,8 +33,8 @@ const fieldProps = [
 	{
 		label: "Address Line 1",
 		type: "text",
-		id: "ship_address1",
-		name: "ship_address1",
+		id: "bill_address1",
+		name: "bill_address1",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
@@ -42,8 +42,8 @@ const fieldProps = [
 	{
 		label: "Address Line 2",
 		type: "text",
-		id: "ship_address2",
-		name: "ship_address2",
+		id: "bill_address2",
+		name: "bill_address2",
 		autoComplete: "off",
 		className: "w-full",
 		required: false,
@@ -51,8 +51,8 @@ const fieldProps = [
 	{
 		label: "City",
 		type: "text",
-		id: "ship_city",
-		name: "ship_city",
+		id: "bill_city",
+		name: "bill_city",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
@@ -60,8 +60,8 @@ const fieldProps = [
 	{
 		label: "Country",
 		type: "text",
-		id: "ship_country",
-		name: "ship_country",
+		id: "bill_country",
+		name: "bill_country",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
@@ -69,8 +69,8 @@ const fieldProps = [
 	{
 		label: "State / Province",
 		type: "text",
-		id: "ship_state",
-		name: "ship_state",
+		id: "bill_state",
+		name: "bill_state",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
@@ -78,8 +78,8 @@ const fieldProps = [
 	{
 		label: "Postal code",
 		type: "number",
-		id: "ship_postalCode",
-		name: "ship_postalCode",
+		id: "bill_postalCode",
+		name: "bill_postalCode",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
@@ -87,8 +87,8 @@ const fieldProps = [
 	{
 		label: "Phone",
 		type: "number",
-		id: "ship_phone",
-		name: "ship_phone",
+		id: "bill_phone",
+		name: "bill_phone",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
@@ -96,33 +96,49 @@ const fieldProps = [
 	{
 		label: "Email",
 		type: "email",
-		id: "ship_email",
-		name: "ship_email",
+		id: "bill_email",
+		name: "bill_email",
 		autoComplete: "off",
 		className: "w-full",
 		required: true,
 	},
+	{
+		label: "GST",
+		type: "text",
+		id: "bill_gst",
+		name: "bill_gst",
+		autoComplete: "off",
+		className: "w-full",
+		required: false,
+	},
+	{
+		label: "PO Number",
+		type: "text",
+		id: "bill_poNumber",
+		name: "bill_poNumber",
+		autoComplete: "off",
+		className: "w-full",
+		required: false,
+	},
 ];
 
-export default function ShippingAddressFields() {
+export default function BillingAddressFields() {
 	return (
 		<div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-			<div>
-				{fieldProps.map((field, index) => (
-					<div key={index}>
-						<Label htmlFor={field.id}>{field.label}</Label>
-						<Field
-							as={Input}
-							type={field.type}
-							id={field.id}
-							name={field.name}
-							autoComplete={field.autoComplete}
-							className={field.className}
-							required={field.required}
-						/>
-					</div>
-				))}
-			</div>
+			{fieldProps.map((field, index) => (
+				<div key={index}>
+					<Label htmlFor={field.id}>{field.label}</Label>
+					<Field
+						as={Input}
+						type={field.type}
+						id={field.id}
+						name={field.name}
+						autoComplete={field.autoComplete}
+						className={field.className}
+						required={field.required}
+					/>
+				</div>
+			))}
 		</div>
 	);
 }
