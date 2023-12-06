@@ -24,7 +24,7 @@ export default function ViewSavedAddresses({
 					<Link href={EDIT_ADDRESSES_PAGE}>Add new address</Link>
 				</Button>
 			</div>
-			<div className="space-y-10 mt-8">
+			<div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4 my-10">
 				<AddressDisplayCard address={billingAddresses} />
 				<AddressDisplayCard address={shippingAddresses} />
 			</div>
