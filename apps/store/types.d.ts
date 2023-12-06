@@ -1004,6 +1004,7 @@ type UserType = {
 	// orders: Array<OrderType>;
 };
 
+/* Address */
 type AddressType = {
 	firstName: string;
 	lastName: string;
@@ -1028,4 +1029,11 @@ type ShippingAddressProps = {
 	type: "Shipping Address";
 	landmark: string;
 	shippingInstructions: string;
+};
+
+/* Razorpay */
+type RazorpayResponseType = {
+	razorpay_payment_id: string;
+	razorpay_order_id: string;
+	razorpay_signature: string;
 };
