@@ -1,12 +1,11 @@
 "use client";
 import { updatePartQtyAction } from "@/actions";
+import { updatePartQtySchema } from "@/schema/yup";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
-import { EMPTY_QUANTITY } from "@shared/lib/errorMessages";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useTransition } from "react";
-import * as Yup from "yup";
 
 export default function UpdatePartQtyForm(props: { part: PartDataType }) {
 	const [isLoading, startTransition] = useTransition();
@@ -19,13 +18,6 @@ export default function UpdatePartQtyForm(props: { part: PartDataType }) {
 
 	const minOrderQty = parseInt(Min, 10);
 	const maxOrderQty = parseInt(Availability, 10);
-	const validationSchema = Yup.object().shape({
-		orderQty: Yup.number()
-			.positive()
-			.required(EMPTY_QUANTITY)
-			.min(minOrderQty, `Quantity cannot be less than ${minOrderQty}`)
-			.max(maxOrderQty, `Quantity cannot be more than the available stock`),
-	});
 
 	function handleOnSubmit(values: { orderQty: number }) {
 		startTransition(async () => {
@@ -36,7 +28,7 @@ export default function UpdatePartQtyForm(props: { part: PartDataType }) {
 	return (
 		<Formik
 			initialValues={initialValues}
-			validationSchema={validationSchema}
+			validationSchema={updatePartQtySchema(minOrderQty, maxOrderQty)}
 			onSubmit={handleOnSubmit}>
 			{({}) => (
 				<Form>

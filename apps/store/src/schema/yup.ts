@@ -1,5 +1,13 @@
 import { ERROR_MSG } from "@/lib/constants";
-import { EMPTY_CODE, EMPTY_FIRSTNAME, EMPTY_LASTNAME, INVALID_CODE, INVALID_EMAIL, PASSWORD_ERROR } from "@packages/shared/lib/errorMessages";
+import {
+	EMPTY_CODE,
+	EMPTY_FIRSTNAME,
+	EMPTY_LASTNAME,
+	EMPTY_QUANTITY,
+	INVALID_CODE,
+	INVALID_EMAIL,
+	PASSWORD_ERROR
+} from "@packages/shared/lib/errorMessages";
 import * as Yup from "yup";
 
 export const searchPartSchema = Yup.object().shape({
@@ -24,10 +32,7 @@ export const resetSchema = Yup.object().shape({
 });
 
 export const reset2Schema = Yup.object().shape({
-	code: Yup.string()
-		.required(EMPTY_CODE)
-		.min(6, INVALID_CODE)
-		.max(6, INVALID_CODE),
+	code: Yup.string().required(EMPTY_CODE).min(6, INVALID_CODE).max(6, INVALID_CODE),
 	newPassword: Yup.string()
 		.required(PASSWORD_ERROR)
 		.matches(/(?=.*[a-z])/, PASSWORD_ERROR)
@@ -59,3 +64,12 @@ export const verifyEmailSchema = Yup.object().shape({
 		.matches(/^\d{6}$/, INVALID_CODE)
 		.required(EMPTY_CODE),
 });
+
+export const updatePartQtySchema = (minOrderQty: number, maxOrderQty: number) =>
+	Yup.object().shape({
+		orderQty: Yup.number()
+			.positive()
+			.required(EMPTY_QUANTITY)
+			.min(minOrderQty, `Quantity cannot be less than ${minOrderQty}`)
+			.max(maxOrderQty, `Quantity cannot be more than the available stock`),
+	});
