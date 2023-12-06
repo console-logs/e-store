@@ -1,14 +1,13 @@
 "use client";
-import { ERROR_MSG } from "@/lib/constants";
 import { PART_RESULTS_PAGE } from "@/lib/routes";
+import { searchPartSchema } from "@/schema/yup";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import * as Yup from "yup";
+import { useCallback, useTransition } from "react";
 
 export default function SearchPartInput() {
 	const router = useRouter();
@@ -18,20 +17,19 @@ export default function SearchPartInput() {
 		query: "",
 	};
 
-	const validationSchema = Yup.object().shape({
-		query: Yup.string().required(ERROR_MSG.COMPONENT_SEARCH_QUERY_REQUIRED),
-	});
-
-	async function handleOnSubmit(values: { query: string }) {
-		startTransition(() => {
-			router.push(PART_RESULTS_PAGE + encodeURI(values.query.toUpperCase()));
-		});
-	}
+	const handleOnSubmit = useCallback(
+		(values: { query: string }) => {
+			startTransition(() => {
+				router.push(PART_RESULTS_PAGE + encodeURI(values.query.toUpperCase()));
+			});
+		},
+		[startTransition, router]
+	);
 
 	return (
 		<Formik
 			initialValues={initialValues}
-			validationSchema={validationSchema}
+			validationSchema={searchPartSchema}
 			onSubmit={handleOnSubmit}>
 			{({}) => (
 				<Form className="flex flex-1">
