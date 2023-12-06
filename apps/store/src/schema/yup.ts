@@ -6,7 +6,7 @@ import {
 	EMPTY_QUANTITY,
 	INVALID_CODE,
 	INVALID_EMAIL,
-	PASSWORD_ERROR
+	PASSWORD_ERROR,
 } from "@packages/shared/lib/errorMessages";
 import * as Yup from "yup";
 
@@ -72,4 +72,13 @@ export const updatePartQtySchema = (minOrderQty: number, maxOrderQty: number) =>
 			.required(EMPTY_QUANTITY)
 			.min(minOrderQty, `Quantity cannot be less than ${minOrderQty}`)
 			.max(maxOrderQty, `Quantity cannot be more than the available stock`),
+	});
+
+export const partOrderSchema = (minOrderQty: number, maxOrderQty: number) =>
+	Yup.object().shape({
+		orderQty: Yup.number()
+			.positive()
+			.required("Quantity cannot be empty")
+			.min(minOrderQty, `Quantity cannot be less than min order quantity [Minimum: ${minOrderQty}]`)
+			.max(maxOrderQty, `Quantity cannot be more than the available stock [${maxOrderQty}]`),
 	});

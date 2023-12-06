@@ -1,12 +1,12 @@
 "use client";
 import { addItemToCartAction } from "@/actions";
+import { partOrderSchema } from "@/schema/yup";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
 import { useToast } from "@shared/components/ui/use-toast";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useTransition } from "react";
-import * as Yup from "yup";
+import { useCallback, useTransition } from "react";
 
 export default function PartOrderForm({ partData }: { partData: PartDataType }) {
 	const { Min, Availability, Name } = partData;
@@ -20,36 +20,31 @@ export default function PartOrderForm({ partData }: { partData: PartDataType }) 
 	const minOrderQty = parseInt(Min, 10);
 	const maxOrderQty = parseInt(Availability, 10);
 
-	const validationSchema = Yup.object().shape({
-		orderQty: Yup.number()
-			.positive()
-			.required("Quantity cannot be empty")
-			.min(minOrderQty, `Quantity cannot be less than min order quantity [Minimum: ${Min}]`)
-			.max(maxOrderQty, `Quantity cannot be more than the available stock [${Availability}]`),
-	});
-
-	function handleOnSubmit(values: { orderQty: string }) {
-		startTransition(async () => {
-			if (!partData) {
+	const handleOnSubmit = useCallback(
+		(values: { orderQty: string }) => {
+			startTransition(async () => {
+				if (!partData) {
+					toast({
+						variant: "destructive",
+						title: "Failed to add to cart",
+						description: "We were not able to add the component to your cart",
+						duration: 4000,
+					});
+					return;
+				}
+				const basketQty = parseInt(values.orderQty, 10);
+				const cartItem: PartDataType = { ...partData, OrderedQty: basketQty };
+				await addItemToCartAction(cartItem);
 				toast({
-					variant: "destructive",
-					title: "Failed to add to cart",
-					description: "We were not able to add the component to your cart",
+					variant: "default",
+					title: "Added to cart",
+					description: `We've added ${Name} to your cart`,
 					duration: 4000,
 				});
-				return;
-			}
-			const basketQty = parseInt(values.orderQty, 10);
-			const cartItem: PartDataType = { ...partData, OrderedQty: basketQty };
-			await addItemToCartAction(cartItem);
-			toast({
-				variant: "default",
-				title: "Added to cart",
-				description: `We've added ${Name} to your cart`,
-				duration: 4000,
 			});
-		});
-	}
+		},
+		[startTransition]
+	);
 
 	return (
 		<div className="mt-4 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
@@ -61,7 +56,7 @@ export default function PartOrderForm({ partData }: { partData: PartDataType }) 
 				</h2>
 				<Formik
 					initialValues={initialValues}
-					validationSchema={validationSchema}
+					validationSchema={partOrderSchema(minOrderQty, maxOrderQty)}
 					onSubmit={handleOnSubmit}>
 					{({}) => (
 						<Form>
