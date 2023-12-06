@@ -24,7 +24,8 @@ export async function captureUserSignupAction({
 			email,
 			firstName,
 			lastName,
-			addresses: [],
+			billingAddresses: [],
+			shippingAddresses: [],
 			cart: {
 				cartSize: 0,
 				cartItems: [],
@@ -252,4 +253,49 @@ export async function createCartCookie(cartId: string) {
 		sameSite: true,
 		// domain: env.HOST,
 	});
+}
+
+export async function addAddressesAction(billingAddress: AddressType, shippingAddress: AddressType): Promise<void> {
+	try {
+		const { userId } = auth();
+		await mongoClient.connect();
+		const userFilter = { userId };
+		const updateDoc = {
+			$push: {
+				billingAddresses: {
+					$each: [billingAddress],
+					$position: 0, // add to the top of the array
+					$slice: -2, // keep only the two most recent addresses
+				},
+				shippingAddresses: {
+					$each: [shippingAddress],
+					$position: 0, // add to the top of the array
+					$slice: -2, // keep only the two most recent addresses
+				},
+			},
+		};
+		await usersCollection.updateOne(userFilter, updateDoc);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function fetchAddressesAction(): Promise<{
+	billingAddresses: Array<AddressType>;
+	shippingAddresses: Array<AddressType>;
+}> {
+	try {
+		const { userId } = auth();
+		await mongoClient.connect();
+		const userFilter = { userId };
+		const options = { projection: { _id: 0, billingAddresses: 1, shippingAddresses: 1 } };
+		const result = await usersCollection.findOne<{
+			billingAddresses: Array<AddressType>;
+			shippingAddresses: Array<AddressType>;
+		}>(userFilter, options);
+		return result ? result : { billingAddresses: [], shippingAddresses: [] };
+	} catch (error) {
+		console.error(error);
+		return { billingAddresses: [], shippingAddresses: [] };
+	}
 }

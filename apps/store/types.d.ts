@@ -999,7 +999,8 @@ type UserType = {
 	firstName: string;
 	lastName: string;
 	cart: CartDataType;
-	addresses: Array<AddressType>;
+	billingAddresses: Array<AddressType>;
+	shippingAddresses: Array<AddressType>;
 	// orders: Array<OrderType>;
 };
 
@@ -1014,6 +1015,7 @@ type AddressType = {
 	state: string;
 	pincode: string;
 	company: string;
+	country: string;
 } & (BillingAddressProps | ShippingAddressProps);
 
 type BillingAddressProps = {
