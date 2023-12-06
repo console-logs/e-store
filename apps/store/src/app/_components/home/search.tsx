@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import * as Yup from "yup";
 
-export default function SearchComponentInput() {
+export default function SearchPartInput() {
 	const router = useRouter();
 	const [isLoading, startTransition] = useTransition();
 
