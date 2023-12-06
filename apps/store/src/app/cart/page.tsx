@@ -1,6 +1,7 @@
 import { fetchCartItemsAction } from "@/actions";
 import CheckoutBtn from "@/app/cart/_components/checkout";
 import ContinueShoppingBtn from "@/app/cart/_components/continue";
+import NaComponentsAlert from "@/app/cart/_components/naAlert";
 import BasketPartsTable from "@/app/cart/_components/partsTable";
 import BasketPcbsTable from "@/app/cart/_components/pcbsTable";
 import CartSummary from "@/app/cart/_components/summary";
@@ -31,8 +32,7 @@ export default async function ShoppingCart() {
 
 				<div className="space-y-4">
 					<CartSummary cartValue={cartValue} />
-					{/*<NaComponentsAlert />
-					 */}
+					<NaComponentsAlert cart={cart} />
 					<CheckoutBtn cartValue={cartValue} />
 					<ContinueShoppingBtn />
 				</div>
