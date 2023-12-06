@@ -1,4 +1,5 @@
 import { fetchAddressesAction } from "@/actions";
+import EditAddressForm from "@/app/checkout/address/_components/editAddress";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default async function Address() {
 	if (billingAddresses.length === 0 || shippingAddresses.length === 0) {
 		return (
 			<div className="mx-auto max-w-4xl px-4 py-2 sm:px-6 lg:px-8">
-				{/* <EditAddressForm /> */}
+				<EditAddressForm />
 			</div>
 		);
 	}
