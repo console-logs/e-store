@@ -22,3 +22,17 @@ export const resetSchema = Yup.object().shape({
 		.matches(/@[^.]*\./, INVALID_EMAIL)
 		.matches(/^\S+$/, INVALID_EMAIL),
 });
+
+export const reset2Schema = Yup.object().shape({
+	code: Yup.string()
+		.required("Code cannot be empty")
+		.min(6, "Code should be 6 digits")
+		.max(6, "Code should be 6 digits"),
+	newPassword: Yup.string()
+		.required(PASSWORD_ERROR)
+		.matches(/(?=.*[a-z])/, PASSWORD_ERROR)
+		.matches(/(?=.*[A-Z])/, PASSWORD_ERROR)
+		.matches(/(?=.*[0-9])/, PASSWORD_ERROR)
+		.matches(/(?=.*[!@#\$%\^&\*\?])/, PASSWORD_ERROR)
+		.min(8, PASSWORD_ERROR),
+});
