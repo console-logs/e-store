@@ -14,3 +14,4 @@ export const ERROR_MSG = {
 
 //TODO: REPLACE WITH HOSTED PUBLIC URL
 export const PARTS_API = "http://localhost:3993/api/parts?mpn=";
+export const OVERHEAD_SHIPPING_CHARGES = 0.0;

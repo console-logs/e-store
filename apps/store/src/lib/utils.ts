@@ -23,3 +23,31 @@ export function calculatePartNetPrice(unitPrice: string, cartQty: number) {
 	const extPrice = Number(unitPrice.slice(1).replace(/,/g, "")) * cartQty;
 	return formatToInr(extPrice);
 }
+
+export function calculateCartTotal(cart: CartDataType | null): number {
+	const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
+	const parts = cart ? cart.cartItems.filter((item): item is PartDataType => item.Type === "Part") : [];
+	const pcbs = cart
+		? cart.cartItems.filter((item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
+				pcbTypes.includes(item.Type)
+		  )
+		: [];
+	const partTotal = parts.reduce((acc, curr) => {
+		const unitPrice = calculatePartUnitPrice(parts, curr.Name);
+		const netPrice = calculatePartNetPrice(unitPrice, curr.OrderedQty);
+		const total = Number(netPrice.slice(1).replace(/,/g, ""));
+		return acc + total;
+	}, 0);
+
+	const pcbTotal = pcbs.reduce((acc, curr) => {
+		const total = Number(curr.NetPrice);
+		return acc + total;
+	}, 0);
+
+	const cartTotal = partTotal + pcbTotal;
+	return cartTotal;
+}
+
+export function calculateGst(num: number): number {
+	return Number((num * 0.18).toFixed(2));
+}
