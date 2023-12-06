@@ -24,8 +24,7 @@ export async function captureUserSignupAction({
 			email,
 			firstName,
 			lastName,
-			billingAddresses: [],
-			shippingAddresses: [],
+			addresses: [],
 			cart: {
 				cartSize: 0,
 				cartItems: [],
@@ -43,7 +42,7 @@ export async function captureUserSignupAction({
 			);
 
 			if (!guestCart) throw new Error("createUserAction: Guest cart is missing!");
-			
+
 			user.cart = guestCart;
 
 			// Clean up the guest cart

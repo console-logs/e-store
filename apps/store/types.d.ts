@@ -12,6 +12,10 @@
  * consider creating it in the files where it's needed.
  */
 
+type Unwrap<T> = {
+	[K in keyof T]: T[K];
+} & object;
+
 /*  Rigid Pcb Types */
 type BaseRigidPcbFabSpecsType = {
 	Type: "Rigid PCB";
@@ -117,185 +121,191 @@ type BaseRigidPcbFabSpecsType = {
 	DesignFile: string;
 };
 
-type RigidPcbStoreStateType = BaseRigidPcbFabSpecsType & {
-	TentativeDispatchDate: string;
-	LayerOptions: Array<1 | 10 | 6 | 8 | 2 | 4>;
-	BaseMaterialOptions: Array<"FR4" | "Aluminum" | "CopperCore" | "Rogers">;
-	DesignFormatOptions: Array<"Single PCB" | "Panel by Customer" | "Panel by Manufacturer">;
-	DifferentDesignsInPanelOptions: Array<1 | 2 | 3 | 4>;
-	MaterialOptions: Array<"FR4-Standard TG 135-140" | "FR-4 TG155" | "RO4350B (Dk=3.48, Df=0.0037)" | "FR-4 TG170">;
-	PanelQtyOptions: Array<
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000
-	>;
-	PcbQtyOptions: Array<
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000
-	>;
-	BoardThicknessOptions: Array<0.51 | 0.76 | 1.52 | 0.4 | 0.6 | 0.8 | 1.0 | 1.2 | 1.6 | 2.0>;
-	SoldermaskOptions: Array<"Green" | "Purple" | "Red" | "Yellow" | "Blue" | "Black" | "White">;
-	SilkscreenOptions: Array<"White" | "Black">;
-	SurfaceFinishOptions: Array<"HASL(with lead)" | "LeadFree HASL" | "ENIG" | "OSP">;
-	GoldFingersOptions: Array<"Yes" | "No">;
-	GoldThicknessOptions: Array<'1 U"' | '2 U"'>;
-	EdgeRailsOptions: Array<"No" | "On 2 Sides" | "On 4 Sides">;
-	EdgeRailSizeOptions: Array<"5mm" | "7mm" | "10mm">;
-	OuterCuWeightOptions: Array<"1 oz" | "2 oz">;
-	CopperStructureOptions: Array<"Direct Heatsink">;
-	ThermalConductivityOptions: Array<1 | 380>;
-	BreakDownVoltageOptions: Array<3000>;
-	InnerCuWeightOptions: Array<"0.5 oz" | "1 oz" | "2 oz">;
-	ImpedanceControlOptions: Array<"Yes" | "No">;
-	ViaCoveringOptions: Array<
-		| "Tented"
-		| "Untented"
-		| "Plugged"
-		| "Epoxy Filled & Capped"
-		| "Epoxy Filled & Untented"
-		| "Copper paste Filled & Capped"
-	>;
-	MinViaHoleSizeAndDiameterOptions: Array<
-		"0.3mm/(0.4/0.45mm)" | "0.25mm/(0.35/0.40mm)" | "0.2mm/(0.3/0.35mm)" | "0.15mm/(0.25/0.3mm)"
-	>;
-	BoardOutlineToleranceOptions: Array<"±0.2mm(Regular)" | "±0.1mm(Precision)">;
-	CastellatedHolesOptions: Array<"Yes" | "No">;
-	CastellatedHolesEdgesOptions: Array<1 | 2 | 3 | 4>;
-	LeadTimeOptions: Array<"3 Working days" | "5 Working days" | "7 Working days" | "10 Working days">;
-	ChamferedGoldFingersOptions: Array<"Yes" | "No">;
-	DispatchUnitOptions: Array<"PCB" | "Panel">;
-};
+type RigidPcbStoreStateType = Unwrap<
+	BaseRigidPcbFabSpecsType & {
+		TentativeDispatchDate: string;
+		LayerOptions: Array<1 | 10 | 6 | 8 | 2 | 4>;
+		BaseMaterialOptions: Array<"FR4" | "Aluminum" | "CopperCore" | "Rogers">;
+		DesignFormatOptions: Array<"Single PCB" | "Panel by Customer" | "Panel by Manufacturer">;
+		DifferentDesignsInPanelOptions: Array<1 | 2 | 3 | 4>;
+		MaterialOptions: Array<
+			"FR4-Standard TG 135-140" | "FR-4 TG155" | "RO4350B (Dk=3.48, Df=0.0037)" | "FR-4 TG170"
+		>;
+		PanelQtyOptions: Array<
+			| 5
+			| 10
+			| 15
+			| 20
+			| 25
+			| 30
+			| 50
+			| 75
+			| 100
+			| 125
+			| 150
+			| 200
+			| 250
+			| 300
+			| 400
+			| 450
+			| 500
+			| 600
+			| 700
+			| 800
+			| 900
+			| 1000
+			| 1500
+			| 2000
+		>;
+		PcbQtyOptions: Array<
+			| 5
+			| 10
+			| 15
+			| 20
+			| 25
+			| 30
+			| 50
+			| 75
+			| 100
+			| 125
+			| 150
+			| 200
+			| 250
+			| 300
+			| 400
+			| 450
+			| 500
+			| 600
+			| 700
+			| 800
+			| 900
+			| 1000
+			| 1500
+			| 2000
+		>;
+		BoardThicknessOptions: Array<0.51 | 0.76 | 1.52 | 0.4 | 0.6 | 0.8 | 1.0 | 1.2 | 1.6 | 2.0>;
+		SoldermaskOptions: Array<"Green" | "Purple" | "Red" | "Yellow" | "Blue" | "Black" | "White">;
+		SilkscreenOptions: Array<"White" | "Black">;
+		SurfaceFinishOptions: Array<"HASL(with lead)" | "LeadFree HASL" | "ENIG" | "OSP">;
+		GoldFingersOptions: Array<"Yes" | "No">;
+		GoldThicknessOptions: Array<'1 U"' | '2 U"'>;
+		EdgeRailsOptions: Array<"No" | "On 2 Sides" | "On 4 Sides">;
+		EdgeRailSizeOptions: Array<"5mm" | "7mm" | "10mm">;
+		OuterCuWeightOptions: Array<"1 oz" | "2 oz">;
+		CopperStructureOptions: Array<"Direct Heatsink">;
+		ThermalConductivityOptions: Array<1 | 380>;
+		BreakDownVoltageOptions: Array<3000>;
+		InnerCuWeightOptions: Array<"0.5 oz" | "1 oz" | "2 oz">;
+		ImpedanceControlOptions: Array<"Yes" | "No">;
+		ViaCoveringOptions: Array<
+			| "Tented"
+			| "Untented"
+			| "Plugged"
+			| "Epoxy Filled & Capped"
+			| "Epoxy Filled & Untented"
+			| "Copper paste Filled & Capped"
+		>;
+		MinViaHoleSizeAndDiameterOptions: Array<
+			"0.3mm/(0.4/0.45mm)" | "0.25mm/(0.35/0.40mm)" | "0.2mm/(0.3/0.35mm)" | "0.15mm/(0.25/0.3mm)"
+		>;
+		BoardOutlineToleranceOptions: Array<"±0.2mm(Regular)" | "±0.1mm(Precision)">;
+		CastellatedHolesOptions: Array<"Yes" | "No">;
+		CastellatedHolesEdgesOptions: Array<1 | 2 | 3 | 4>;
+		LeadTimeOptions: Array<"3 Working days" | "5 Working days" | "7 Working days" | "10 Working days">;
+		ChamferedGoldFingersOptions: Array<"Yes" | "No">;
+		DispatchUnitOptions: Array<"PCB" | "Panel">;
+	}
+>;
 
-type RigidPcbFabSpecsType = BaseRigidPcbFabSpecsType & {
-	// override specific props in base to be nullable
-	Material: null | "FR4-Standard TG 135-140" | "FR-4 TG155" | "RO4350B (Dk=3.48, Df=0.0037)" | "FR-4 TG170";
-	PcbQty:
-		| null
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000;
-	PanelQty:
-		| null
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000;
-	Columns: null | number;
-	Rows: null | number;
-	SinglePiecesQty: null | number;
-	GoldThickness: null | '1 U"' | '2 U"';
-	EdgeRails: null | "No" | "On 2 Sides" | "On 4 Sides";
-	EdgeRailSize: null | "5mm" | "7mm" | "10mm";
-	PanelSizeX: null | number;
-	PanelSizeY: null | number;
-	CopperStructure: null | "Direct Heatsink";
-	ThermalConductivity: null | 1 | 380;
-	BreakDownVoltage: null | 3000;
-	InnerCuWeight: null | "0.5 oz" | "1 oz" | "2 oz";
-	ImpedanceControl: null | "Yes" | "No";
-	ViaCovering:
-		| null
-		| "Tented"
-		| "Untented"
-		| "Plugged"
-		| "Epoxy Filled & Capped"
-		| "Epoxy Filled & Untented"
-		| "Copper paste Filled & Capped";
-	MinViaHoleSizeAndDiameter:
-		| null
-		| "0.3mm/(0.4/0.45mm)"
-		| "0.25mm/(0.35/0.40mm)"
-		| "0.2mm/(0.3/0.35mm)"
-		| "0.15mm/(0.25/0.3mm)";
-	BoardOutlineTolerance: null | "±0.2mm(Regular)" | "±0.1mm(Precision)";
-	ViaHoles: null | number;
-	CastellatedHolesEdges: null | 1 | 2 | 3 | 4;
-	ChamferedGoldFingers: null | "Yes" | "No";
-};
+type RigidPcbFabSpecsType = Unwrap<
+	BaseRigidPcbFabSpecsType & {
+		// override specific props in base to be nullable
+		Material: null | "FR4-Standard TG 135-140" | "FR-4 TG155" | "RO4350B (Dk=3.48, Df=0.0037)" | "FR-4 TG170";
+		PcbQty:
+			| null
+			| 5
+			| 10
+			| 15
+			| 20
+			| 25
+			| 30
+			| 50
+			| 75
+			| 100
+			| 125
+			| 150
+			| 200
+			| 250
+			| 300
+			| 400
+			| 450
+			| 500
+			| 600
+			| 700
+			| 800
+			| 900
+			| 1000
+			| 1500
+			| 2000;
+		PanelQty:
+			| null
+			| 5
+			| 10
+			| 15
+			| 20
+			| 25
+			| 30
+			| 50
+			| 75
+			| 100
+			| 125
+			| 150
+			| 200
+			| 250
+			| 300
+			| 400
+			| 450
+			| 500
+			| 600
+			| 700
+			| 800
+			| 900
+			| 1000
+			| 1500
+			| 2000;
+		Columns: null | number;
+		Rows: null | number;
+		SinglePiecesQty: null | number;
+		GoldThickness: null | '1 U"' | '2 U"';
+		EdgeRails: null | "No" | "On 2 Sides" | "On 4 Sides";
+		EdgeRailSize: null | "5mm" | "7mm" | "10mm";
+		PanelSizeX: null | number;
+		PanelSizeY: null | number;
+		CopperStructure: null | "Direct Heatsink";
+		ThermalConductivity: null | 1 | 380;
+		BreakDownVoltage: null | 3000;
+		InnerCuWeight: null | "0.5 oz" | "1 oz" | "2 oz";
+		ImpedanceControl: null | "Yes" | "No";
+		ViaCovering:
+			| null
+			| "Tented"
+			| "Untented"
+			| "Plugged"
+			| "Epoxy Filled & Capped"
+			| "Epoxy Filled & Untented"
+			| "Copper paste Filled & Capped";
+		MinViaHoleSizeAndDiameter:
+			| null
+			| "0.3mm/(0.4/0.45mm)"
+			| "0.25mm/(0.35/0.40mm)"
+			| "0.2mm/(0.3/0.35mm)"
+			| "0.15mm/(0.25/0.3mm)";
+		BoardOutlineTolerance: null | "±0.2mm(Regular)" | "±0.1mm(Precision)";
+		ViaHoles: null | number;
+		CastellatedHolesEdges: null | 1 | 2 | 3 | 4;
+		ChamferedGoldFingers: null | "Yes" | "No";
+	}
+>;
 
 /* Flex Pcb Types */
 type BaseFlexPcbFabSpecsType = {
@@ -389,154 +399,158 @@ type BaseFlexPcbFabSpecsType = {
 	DesignFile: string;
 };
 
-type FlexPcbStoreStateType = BaseFlexPcbFabSpecsType & {
-	TentativeDispatchDate: string;
-	DesignFormatOptions: Array<"Single PCB" | "Panel by Customer" | "Panel by Manufacturer">;
-	LayerOptions: Array<1 | 2>;
-	BaseMaterialOptions: Array<"Flex (Polyimide)">;
-	DifferentDesignsInPanelOptions: Array<1 | 2 | 3 | 4>;
-	PanelQtyOptions: Array<
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000
-	>;
-	PcbQtyOptions: Array<
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000
-	>;
-	BoardThicknessOptions: Array<0.07 | 0.11 | 0.12 | 0.2>;
-	CoverlayOptions: Array<"Yellow">;
-	CoverlayThicknessOptions: Array<"PI:12.5um/AD:15um" | "PI:25um/AD:25um">;
-	SilkscreenOptions: Array<"White">;
-	SurfaceFinishOptions: Array<"ENIG">;
-	GoldThicknessOptions: Array<'1 U"' | '2 U"'>;
-	EdgeRailsOptions: Array<"No" | "On 2 Sides" | "On 4 Sides">;
-	EdgeRailSizeOptions: Array<"5mm" | "7mm" | "10mm">;
-	OuterCuWeightOptions: Array<"0.5 oz" | "1/3 oz" | "1.0 oz">;
-	BoardOutlineToleranceOptions: Array<"±0.1mm" | "±0.05mm">;
-	LeadTimeOptions: Array<"3 Working days" | "5 Working days" | "7 Working days" | "10 Working days">;
-	DispatchUnitOptions: Array<"PCB" | "Panel">;
-	CopperTypeOptions: Array<"Electro-deposited">;
-	StiffnerOptions: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">;
-	PolyimideThicknessOptions: Array<0.1 | 0.15 | 0.2 | 0.225 | 0.25>;
-	FR4ThicknessOptions: Array<0.1 | 0.2>;
-	StainlessSteelThicknessOptions: Array<0.1 | 0.2 | 0.3>;
-	ThreeMTapeThicknessOptions: Array<"3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)">;
-	EMIShieldingFilmOptions: Array<"Without" | "Both sides (Black, 18um)" | "Single side (Black, 18um)">;
-	CuttingMethodOptions: Array<"Laser Cutting">;
-};
+type FlexPcbStoreStateType = Unwrap<
+	BaseFlexPcbFabSpecsType & {
+		TentativeDispatchDate: string;
+		DesignFormatOptions: Array<"Single PCB" | "Panel by Customer" | "Panel by Manufacturer">;
+		LayerOptions: Array<1 | 2>;
+		BaseMaterialOptions: Array<"Flex (Polyimide)">;
+		DifferentDesignsInPanelOptions: Array<1 | 2 | 3 | 4>;
+		PanelQtyOptions: Array<
+			| 5
+			| 10
+			| 15
+			| 20
+			| 25
+			| 30
+			| 50
+			| 75
+			| 100
+			| 125
+			| 150
+			| 200
+			| 250
+			| 300
+			| 400
+			| 450
+			| 500
+			| 600
+			| 700
+			| 800
+			| 900
+			| 1000
+			| 1500
+			| 2000
+		>;
+		PcbQtyOptions: Array<
+			| 5
+			| 10
+			| 15
+			| 20
+			| 25
+			| 30
+			| 50
+			| 75
+			| 100
+			| 125
+			| 150
+			| 200
+			| 250
+			| 300
+			| 400
+			| 450
+			| 500
+			| 600
+			| 700
+			| 800
+			| 900
+			| 1000
+			| 1500
+			| 2000
+		>;
+		BoardThicknessOptions: Array<0.07 | 0.11 | 0.12 | 0.2>;
+		CoverlayOptions: Array<"Yellow">;
+		CoverlayThicknessOptions: Array<"PI:12.5um/AD:15um" | "PI:25um/AD:25um">;
+		SilkscreenOptions: Array<"White">;
+		SurfaceFinishOptions: Array<"ENIG">;
+		GoldThicknessOptions: Array<'1 U"' | '2 U"'>;
+		EdgeRailsOptions: Array<"No" | "On 2 Sides" | "On 4 Sides">;
+		EdgeRailSizeOptions: Array<"5mm" | "7mm" | "10mm">;
+		OuterCuWeightOptions: Array<"0.5 oz" | "1/3 oz" | "1.0 oz">;
+		BoardOutlineToleranceOptions: Array<"±0.1mm" | "±0.05mm">;
+		LeadTimeOptions: Array<"3 Working days" | "5 Working days" | "7 Working days" | "10 Working days">;
+		DispatchUnitOptions: Array<"PCB" | "Panel">;
+		CopperTypeOptions: Array<"Electro-deposited">;
+		StiffnerOptions: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">;
+		PolyimideThicknessOptions: Array<0.1 | 0.15 | 0.2 | 0.225 | 0.25>;
+		FR4ThicknessOptions: Array<0.1 | 0.2>;
+		StainlessSteelThicknessOptions: Array<0.1 | 0.2 | 0.3>;
+		ThreeMTapeThicknessOptions: Array<"3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)">;
+		EMIShieldingFilmOptions: Array<"Without" | "Both sides (Black, 18um)" | "Single side (Black, 18um)">;
+		CuttingMethodOptions: Array<"Laser Cutting">;
+	}
+>;
 
-type FlexPcbFabSpecsType = BaseFlexPcbFabSpecsType & {
-	PcbQty:
-		| null
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000;
-	SinglePiecesQty: null | number;
-	Columns: null | number;
-	Rows: null | number;
-	EdgeRails: null | "No" | "On 2 Sides" | "On 4 Sides";
-	EdgeRailSize: null | "5mm" | "7mm" | "10mm";
-	GoldThickness: null | '1 U"' | '2 U"';
-	PolyimideThickness: null | 0.1 | 0.15 | 0.2 | 0.225 | 0.25;
-	ThreeMTapeThickness: null | "3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)";
-	StainlessSteelThickness: null | 0.1 | 0.2 | 0.3;
-	FR4Thickness: null | 0.1 | 0.2;
-	BoardOutlineTolerance: null | "±0.1mm" | "±0.05mm";
-	ViaHoles: null | number;
-	PanelQty:
-		| null
-		| 5
-		| 10
-		| 15
-		| 20
-		| 25
-		| 30
-		| 50
-		| 75
-		| 100
-		| 125
-		| 150
-		| 200
-		| 250
-		| 300
-		| 400
-		| 450
-		| 500
-		| 600
-		| 700
-		| 800
-		| 900
-		| 1000
-		| 1500
-		| 2000;
-	PanelSizeX: null | number;
-	PanelSizeY: null | number;
-};
+type FlexPcbFabSpecsType = Unwrap<
+	BaseFlexPcbFabSpecsType & {
+		PcbQty:
+			| null
+			| 5
+			| 10
+			| 15
+			| 20
+			| 25
+			| 30
+			| 50
+			| 75
+			| 100
+			| 125
+			| 150
+			| 200
+			| 250
+			| 300
+			| 400
+			| 450
+			| 500
+			| 600
+			| 700
+			| 800
+			| 900
+			| 1000
+			| 1500
+			| 2000;
+		SinglePiecesQty: null | number;
+		Columns: null | number;
+		Rows: null | number;
+		EdgeRails: null | "No" | "On 2 Sides" | "On 4 Sides";
+		EdgeRailSize: null | "5mm" | "7mm" | "10mm";
+		GoldThickness: null | '1 U"' | '2 U"';
+		PolyimideThickness: null | 0.1 | 0.15 | 0.2 | 0.225 | 0.25;
+		ThreeMTapeThickness: null | "3M468 (0.13mm)" | "3M9077 (HT, 0.05mm)";
+		StainlessSteelThickness: null | 0.1 | 0.2 | 0.3;
+		FR4Thickness: null | 0.1 | 0.2;
+		BoardOutlineTolerance: null | "±0.1mm" | "±0.05mm";
+		ViaHoles: null | number;
+		PanelQty:
+			| null
+			| 5
+			| 10
+			| 15
+			| 20
+			| 25
+			| 30
+			| 50
+			| 75
+			| 100
+			| 125
+			| 150
+			| 200
+			| 250
+			| 300
+			| 400
+			| 450
+			| 500
+			| 600
+			| 700
+			| 800
+			| 900
+			| 1000
+			| 1500
+			| 2000;
+		PanelSizeX: null | number;
+		PanelSizeY: null | number;
+	}
+>;
 
 /* Pcb Assembly Types */
 type PcbAssemblyFabSpecsType = {
@@ -564,17 +578,19 @@ type PcbAssemblyFabSpecsType = {
 	PickAndPlaceFile: string;
 };
 
-type PcbAssemblyStoreStateType = PcbAssemblyFabSpecsType & {
-	TentativeDispatchDate: string;
-	DePanelOptions: Array<"Yes" | "No">;
-	BoardTypeOptions: Array<"Single PCB" | "Panel">;
-	AssemblySideOptions: Array<"Top Side" | "Bottom Side" | "Both Sides">;
-	TempHumiditySensitivityOptions: Array<"Low" | "Medium" | "High">;
-	ConformalCoatingOptions: Array<"Top Side" | "Bottom Side" | "Both Sides">;
-	FunctionalTestOptions: Array<"Yes" | "No">;
-	ComponentsProcurementOptions: Array<"TurnKey" | "Consigned" | "Combo">;
-	TurnaroundTimeOptions: Array<"Standard 5-7 days" | "Expedited 3-4 days">;
-};
+type PcbAssemblyStoreStateType = Unwrap<
+	PcbAssemblyFabSpecsType & {
+		TentativeDispatchDate: string;
+		DePanelOptions: Array<"Yes" | "No">;
+		BoardTypeOptions: Array<"Single PCB" | "Panel">;
+		AssemblySideOptions: Array<"Top Side" | "Bottom Side" | "Both Sides">;
+		TempHumiditySensitivityOptions: Array<"Low" | "Medium" | "High">;
+		ConformalCoatingOptions: Array<"Top Side" | "Bottom Side" | "Both Sides">;
+		FunctionalTestOptions: Array<"Yes" | "No">;
+		ComponentsProcurementOptions: Array<"TurnKey" | "Consigned" | "Combo">;
+		TurnaroundTimeOptions: Array<"Standard 5-7 days" | "Expedited 3-4 days">;
+	}
+>;
 
 /* Part Types */
 type PartResultsType = {
@@ -982,8 +998,32 @@ type UserType = {
 	email: string;
 	firstName: string;
 	lastName: string;
-	billingAddresses: Array<BillingAddressType>;
-	shippingAddresses: Array<ShippingAddressType>;
 	cart: CartDataType;
+	addresses: Array<AddressType>;
 	// orders: Array<OrderType>;
+};
+
+type AddressType = {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+	address1: string;
+	address2: string;
+	city: string;
+	state: string;
+	pincode: string;
+	company: string;
+} & (BillingAddressProps | ShippingAddressProps);
+
+type BillingAddressProps = {
+	type: "Billing Address";
+	gst: string;
+	po: string;
+};
+
+type ShippingAddressProps = {
+	type: "Shipping Address";
+	landmark: string;
+	shippingInstructions: string;
 };
