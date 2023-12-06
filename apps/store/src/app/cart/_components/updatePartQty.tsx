@@ -5,7 +5,7 @@ import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useTransition } from "react";
+import { useCallback, useTransition } from "react";
 
 export default function UpdatePartQtyForm(props: { part: PartDataType }) {
 	const [isLoading, startTransition] = useTransition();
@@ -19,11 +19,14 @@ export default function UpdatePartQtyForm(props: { part: PartDataType }) {
 	const minOrderQty = parseInt(Min, 10);
 	const maxOrderQty = parseInt(Availability, 10);
 
-	function handleOnSubmit(values: { orderQty: number }) {
-		startTransition(async () => {
-			await updatePartQtyAction(Name, values.orderQty);
-		});
-	}
+	const handleOnSubmit = useCallback(
+		(values: { orderQty: number }) => {
+			startTransition(async () => {
+				await updatePartQtyAction(Name, values.orderQty);
+			});
+		},
+		[startTransition]
+	);
 
 	return (
 		<Formik
