@@ -1,5 +1,6 @@
 import { fetchAddressesAction } from "@/actions";
-import EditAddressForm from "@/app/checkout/address/_components/editAddress";
+import EditAddressForm from "@/app/checkout/address/_components/edit";
+import ViewSavedAddresses from "@/app/checkout/address/_components/view";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,10 +24,10 @@ export default async function Address() {
 
 	return (
 		<div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-2 lg:px-8">
-			{/* <SavedAddresses
+			<ViewSavedAddresses
 				billingAddresses={billingAddresses}
 				shippingAddresses={shippingAddresses}
-			/> */}
+			/>
 		</div>
 	);
 }
