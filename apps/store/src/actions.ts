@@ -152,7 +152,7 @@ export async function addItemToCartAction(props: CartUpdatePropsType): Promise<v
 					cartItems: [props],
 				},
 			});
-			await createCartCookie(newCartId); // future reference
+			await createCartCookieAction(newCartId); // future reference
 		}
 		revalidatePath("/products", "layout");
 	} catch (error) {
@@ -237,7 +237,7 @@ export async function deleteAllItemsAction(property: string, value: string) {
 	}
 }
 
-export async function createCartCookie(cartId: string) {
+export async function createCartCookieAction(cartId: string) {
 	cookies().set({
 		name: "cartId",
 		value: cartId,
