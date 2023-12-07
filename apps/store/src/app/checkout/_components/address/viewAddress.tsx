@@ -16,6 +16,9 @@ export default function ViewSavedAddresses({
 }) {
 	const [isLoading, startTransition] = useTransition();
 	const router = useRouter();
+
+	const billingAddress = billingAddresses[0]!;
+	const shippingAddress = shippingAddresses[0]!;
 	return (
 		<div>
 			<div className="flex justify-between items-center">
@@ -25,8 +28,8 @@ export default function ViewSavedAddresses({
 				</Button>
 			</div>
 			<div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4 my-10">
-				<AddressDisplayCard address={billingAddresses} />
-				<AddressDisplayCard address={shippingAddresses} />
+				<AddressDisplayCard address={billingAddress} />
+				<AddressDisplayCard address={shippingAddress} />
 			</div>
 			<Button
 				className="mt-8 w-full"

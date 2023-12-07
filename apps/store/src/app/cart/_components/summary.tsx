@@ -5,7 +5,8 @@ import { Badge } from "@shared/components/ui/badge";
 
 export default async function CartSummary(props: { cartValue: number }) {
 	const { cartValue } = props;
-	const tax = calculateGst(cartValue);
+	const cartValueInRupees = cartValue / 100;
+	const tax = calculateGst(cartValueInRupees);
 
 	return (
 		<div className="rounded-lg bg-gray-50 dark:bg-gray-900 px-4 py-6 sm:p-6 lg:p-8">
@@ -14,7 +15,7 @@ export default async function CartSummary(props: { cartValue: number }) {
 				<dl className="-my-4 divide-y divide-gray-300 dark:divide-gray-700 text-sm">
 					<div className="flex items-center justify-between py-4">
 						<dt>Subtotal</dt>
-						<dd className="font-medium">{formatToInr(cartValue)}</dd>
+						<dd className="font-medium">{formatToInr(cartValueInRupees)}</dd>
 					</div>
 					<div className="flex items-center justify-between py-4">
 						<dt>Shipping</dt>
@@ -30,7 +31,7 @@ export default async function CartSummary(props: { cartValue: number }) {
 					<div className="flex items-center justify-between py-4">
 						<dt className="text-base font-medium">Order total</dt>
 						<dd className="text-base font-medium">
-							{formatToInr(cartValue + tax + OVERHEAD_SHIPPING_CHARGES)}
+							{formatToInr(cartValueInRupees + tax + OVERHEAD_SHIPPING_CHARGES)}
 						</dd>
 					</div>
 				</dl>

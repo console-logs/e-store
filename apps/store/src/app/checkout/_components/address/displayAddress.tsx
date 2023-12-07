@@ -1,32 +1,30 @@
-export function AddressDisplayCard({ address }: { address: Array<AddressType> }) {
-	const savedAddress = address[0]!;
-
+export function AddressDisplayCard({ address }: { address: AddressType }) {
 	return (
 		<div>
 			<div className="flex justify-between">
-				<h2 className="text-xl font-semibold">{savedAddress.type}</h2>
+				<h2 className="text-xl font-semibold">{address.type}</h2>
 			</div>
 
 			<div className="space-y-1 my-2">
 				<p>
-					{savedAddress.firstName} {savedAddress.lastName}
+					{address.firstName} {address.lastName}
 				</p>
-				<p>{savedAddress.company}</p>
-				<p>{savedAddress.address1}</p>
-				<p>{savedAddress.address2}</p>
-				<p>{savedAddress.city}</p>
-				<p>{savedAddress.state}</p>
-				<p>{savedAddress.pincode}</p>
-				<p>{savedAddress.phone}</p>
-				{savedAddress.type === "Billing Address" ? (
+				<p>{address.company}</p>
+				<p>{address.address1}</p>
+				<p>{address.address2}</p>
+				<p>{address.city}</p>
+				<p>{address.state}</p>
+				<p>{address.pincode}</p>
+				<p>{address.phone}</p>
+				{address.type === "Billing Address" ? (
 					<>
-						<p>{savedAddress.gst}</p>
-						<p>{savedAddress.po}</p>
+						<p>{address.gst}</p>
+						<p>{address.po}</p>
 					</>
 				) : (
 					<>
-						<p>{savedAddress.landmark}</p>
-						<p>{savedAddress.shippingInstructions}</p>
+						<p>{address.landmark}</p>
+						<p>{address.shippingInstructions}</p>
 					</>
 				)}
 			</div>
