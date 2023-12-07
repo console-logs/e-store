@@ -348,3 +348,17 @@ export async function captureOrderDetails(props: RazorpayPropsType): Promise<voi
 		throw error; // handle on the client side.
 	}
 }
+
+export async function fetchOrders(): Promise<Array<OrderType>> {
+	try {
+		const { userId } = auth();
+		await mongoClient.connect();
+		const filter = { userId };
+		const options = { projection: { _id: 0, orders: 1 } };
+		const result = await usersCollection.findOne<{ orders: Array<OrderType> }>(filter, options);
+		if (!result) throw new Error("fetchOrders: User not found!");
+		return result.orders;
+	} catch (error) {
+		throw error; // handle on the client side.
+	}
+}
