@@ -294,14 +294,15 @@ export async function captureOrderDetails(props: RazorpayPropsType): Promise<voi
 		await mongoClient.connect();
 		const filter = { userId };
 		const options = { projection: { _id: 0, cart: 1, billingAddresses: 1, shippingAddresses: 1 } };
-		const result = await usersCollection.findOne<{ data: CheckoutDataType }>(filter, options);
+		const result = await usersCollection.findOne<CheckoutDataType>(filter, options);
+
 		if (!result) throw new Error("captureOrderDetails: User not found!");
 
-		const cart = result.data.cart;
+		const cart = result.cart;
 		const cartValue = calculateCartTotal(cart);
 		const tax = calculateGst(cartValue);
-		const billingAddress = result.data.billingAddresses[0]!;
-		const shippingAddress = result.data.shippingAddresses[0]!;
+		const billingAddress = result.billingAddresses[0]!;
+		const shippingAddress = result.shippingAddresses[0]!;
 		const newOrderId = orderId(razorpayResponses.razorpay_order_id).generate();
 
 		const newOrder: OrderType = {
@@ -355,9 +356,9 @@ export async function fetchOrders(): Promise<Array<OrderType>> {
 		await mongoClient.connect();
 		const filter = { userId };
 		const options = { projection: { _id: 0, orders: 1 } };
-		const result = await usersCollection.findOne<{ orders: Array<OrderType> }>(filter, options);
+		const result = await usersCollection.findOne<Array<OrderType>>(filter, options);
 		if (!result) throw new Error("fetchOrders: User not found!");
-		return result.orders;
+		return result;
 	} catch (error) {
 		throw error; // handle on the client side.
 	}

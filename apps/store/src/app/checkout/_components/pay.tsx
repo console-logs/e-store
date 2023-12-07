@@ -18,6 +18,7 @@ export default function PayButton(props: { cartValue: number }) {
 	const [isLoading, startTransition] = useTransition();
 	const router = useRouter();
 	const [Razorpay] = useRazorpay();
+	const { data } = tRPCReactApi.razorpay.getOrder.useQuery();
 
 	async function handlePaymentBtnClick() {
 		startTransition(async () => {
@@ -26,26 +27,26 @@ export default function PayButton(props: { cartValue: number }) {
 				if (!res) {
 					throw new Error("Razorpay SDK failed to load");
 				}
-				const response = tRPCReactApi.razorpay.getOrder.useQuery().data;
-				if (!response) {
+
+				if (!data) {
 					throw new Error("Something went wrong with payment gateway. Please try again later");
 				}
 				const options: RazorpayOptions = {
-					order_id: response.id,
+					order_id: data.id,
 					key: env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-					amount: response.amount,
-					currency: response.currency,
-					name: response.name,
-					description: `ID-${response.id}-${response.currency}-${response.amount}`,
+					amount: data.amount,
+					currency: data.currency,
+					name: data.name,
+					description: `ID-${data.id}-${data.currency}-${data.amount}`,
 					prefill: {
-						name: response.name,
-						email: response.email,
-						contact: response.phoneNumber,
+						name: data.name,
+						email: data.email,
+						contact: data.phoneNumber,
 					},
 					handler: (razorpayResponse: RazorpayResponseType) => {
 						captureOrderDetails({
 							razorpayResponses: razorpayResponse,
-							razorpayOrderValue: response.amount,
+							razorpayOrderValue: data.amount,
 						}).catch((error: unknown) => {
 							const unknownError = "Something went wrong, please try again later.";
 							const errorMessage = error instanceof Error ? error.message : unknownError;
