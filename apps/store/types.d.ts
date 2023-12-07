@@ -1001,7 +1001,7 @@ type UserType = {
 	cart: CartDataType;
 	billingAddresses: Array<AddressType>;
 	shippingAddresses: Array<AddressType>;
-	// orders: Array<OrderType>;
+	orders: Array<OrderType>;
 };
 
 /* Address */
@@ -1036,4 +1036,39 @@ type RazorpayResponseType = {
 	razorpay_payment_id: string;
 	razorpay_order_id: string;
 	razorpay_signature: string;
+};
+
+/* Order */
+type OrderType = {
+	id: string;
+	createdAt: Date;
+	status: "PLACED" | "PROCESSING" | "SHIPPED" | "COMPLETE" | "CANCELLED" | "REJECTED";
+	cartValue: number;
+	discountCode: string;
+	discountValue: number;
+	tax: number;
+	shippingCost: number;
+	cartTotal: number;
+	paymentId: string;
+	paymentOrderId: string;
+	paymentSignature: string;
+	shipper: string | null;
+	awb: string | null;
+	billingAddress: AddressType;
+	shippingAddress: AddressType;
+	cart: CartDataType;
+	remarks: string | null;
+};
+
+type OpenOrderType = Unwrap<
+	OrderType & {
+		userId: string | null;
+		notes: string | null;
+	}
+>;
+
+type OrderDataType = {
+	cart: CartDataType;
+	billingAddresses: Array<AddressType>;
+	shippingAddresses: Array<AddressType>;
 };

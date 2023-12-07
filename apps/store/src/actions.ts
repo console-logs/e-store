@@ -1,9 +1,12 @@
 "use server";
-import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo";
+import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import orderId from "order-id";
 import ShortUniqueId from "short-unique-id";
+import { OVERHEAD_SHIPPING_CHARGES } from "./lib/constants";
+import { calculateCartTotal, calculateGst } from "./lib/utils";
 
 export async function captureUserSignupAction({
 	firstName,
@@ -30,6 +33,7 @@ export async function captureUserSignupAction({
 				cartSize: 0,
 				cartItems: [],
 			},
+			orders: [],
 		};
 
 		await mongoClient.connect();
@@ -280,10 +284,12 @@ export async function addAddressesAction(billingAddress: AddressType, shippingAd
 	}
 }
 
-export async function fetchAddressesAction(): Promise<{
+type FetchAddressesType = {
 	billingAddresses: Array<AddressType>;
 	shippingAddresses: Array<AddressType>;
-}> {
+};
+
+export async function fetchAddressesAction(): Promise<FetchAddressesType> {
 	try {
 		const { userId } = auth();
 		await mongoClient.connect();
@@ -300,9 +306,65 @@ export async function fetchAddressesAction(): Promise<{
 	}
 }
 
-export async function captureOrderDetails(razorpayResponses: RazorpayResponseType, orderValue: string): Promise<void> {
+export async function captureOrderDetails(
+	razorpayResponses: RazorpayResponseType,
+	razorpayOrderValue: string
+): Promise<void> {
 	try {
-		
+		const { userId } = auth();
+		await mongoClient.connect();
+		const filter = { userId };
+		const options = { projection: { _id: 0, cart: 1, billingAddresses: 1, shippingAddresses: 1 } };
+		const result = await usersCollection.findOne<{ data: OrderDataType }>(filter, options);
+		if (!result) throw new Error("captureOrderDetails: User not found!");
+
+		const cart = result.data.cart;
+		const cartValue = calculateCartTotal(cart);
+		const tax = calculateGst(cartValue);
+		const billingAddress = result.data.billingAddresses[0]!;
+		const shippingAddress = result.data.shippingAddresses[0]!;
+		const newOrderId = orderId(razorpayResponses.razorpay_order_id).generate();
+
+		const newOrder: OrderType = {
+			id: newOrderId,
+			createdAt: new Date(),
+			status: "PLACED",
+			cartValue,
+			discountCode: "NA",
+			discountValue: 0,
+			tax,
+			shippingCost: OVERHEAD_SHIPPING_CHARGES,
+			cartTotal: Number(razorpayOrderValue), // in paise
+			paymentId: razorpayResponses.razorpay_payment_id,
+			paymentOrderId: razorpayResponses.razorpay_order_id,
+			paymentSignature: razorpayResponses.razorpay_signature,
+			shipper: null,
+			awb: null,
+			billingAddress,
+			shippingAddress,
+			cart,
+			remarks: null,
+		};
+
+		// create new open order for admin
+		const newOpenOrder: OpenOrderType = {
+			...newOrder,
+			userId,
+			notes: null,
+		};
+
+		await usersCollection.updateOne(filter, {
+			$push: { orders: newOrder },
+		});
+		await openOrdersCollection.insertOne(newOpenOrder); // for admin
+
+		// reset cart
+		const newCart: CartDataType = {
+			cartSize: 0,
+			cartItems: [],
+		};
+		await usersCollection.updateOne(filter, { $set: { newCart } });
+		revalidatePath("/");
 	} catch (error) {
 		throw error; // handle on the client side.
 	}
