@@ -44,7 +44,7 @@ export const razorpayRouter = createTRPCRouter({
 
 			const razorpayOrder = {
 				id: response.id,
-				amount: response.amount,
+				amount: response.amount as string,
 				currency: response.currency,
 				name: "Circuit Parts",
 				email: userData.email,

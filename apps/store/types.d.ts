@@ -1036,6 +1036,17 @@ type RazorpayResponseType = {
 	razorpay_signature: string;
 };
 
+type RazorpayErrorType = {
+	error: {
+		code: string;
+		description: string;
+		source: string;
+		step: string;
+		reason: string;
+		metadata: { order_id: string; payment_id: string };
+	};
+};
+
 /****************************** ORDER *********************************************/
 type OrderType = {
 	id: string;
