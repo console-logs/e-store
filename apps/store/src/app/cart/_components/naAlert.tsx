@@ -5,8 +5,9 @@ import { Alert, AlertDescription, AlertTitle } from "@shared/components/ui/alert
 export default function NaComponentsAlert(props: { cart: CartDataType | null }) {
 	const { cart } = props;
 	const parts = cart ? cart.cartItems.filter((item): item is PartDataType => item.Type === "Part") : [];
+	const naParts = parts.filter(part => part.Availability === "None" || part.Availability === "On Order");
 	return (
-		<Alert hidden={!parts.length}>
+		<Alert hidden={!naParts.length}>
 			<Icons.ImWarning className="h-4 w-4" />
 			<AlertTitle className="font-semibold">Heads up!</AlertTitle>
 			<AlertDescription>

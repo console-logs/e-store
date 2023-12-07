@@ -84,7 +84,7 @@ export default function PartOrderForm({ partData }: { partData: PartDataType }) 
 							</div>
 							<div className="mt-10">
 								<Button
-									disabled={isLoading}
+									disabled={isLoading || Availability === "None" || Availability === "On Order"}
 									type="submit"
 									className="w-full">
 									{isLoading ? (
@@ -96,6 +96,11 @@ export default function PartOrderForm({ partData }: { partData: PartDataType }) 
 										"Add to Shopping Cart"
 									)}
 								</Button>
+								<p
+									className="text-red-600"
+									hidden={Availability.includes("In Stock")}>
+									This part is currently out of stock.
+								</p>
 							</div>
 						</Form>
 					)}
