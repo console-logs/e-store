@@ -1,6 +1,6 @@
 import { deleteAllItemsAction, deleteCartItemAction, fetchCartItemsAction } from "@/actions";
 import { DeleteAllButton, DeleteCartItemButton } from "@/app/cart/_components/delete";
-import PcbFabSpecsModal from "@/app/cart/_components/modal";
+import PcbFabSpecsModal from "@/app/_components/fabSpecsModal";
 import { formatToInr } from "@packages/shared/lib/utils";
 
 const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
