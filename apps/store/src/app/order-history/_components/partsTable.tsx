@@ -1,6 +1,4 @@
-import UpdatePartQtyForm from "@/app/cart/_components/updatePartQty";
 import { calculatePartNetPrice, calculatePartUnitPrice } from "@/lib/utils";
-import { Badge } from "@shared/components/ui/badge";
 
 export default async function OrderedPartsTable({ order }: { order: OrderType }) {
 	const parts = order.cart.cartItems.filter((item): item is PartDataType => item.Type === "Part");
@@ -49,7 +47,7 @@ export default async function OrderedPartsTable({ order }: { order: OrderType })
 					</thead>
 					<tbody>
 						{parts.map((part, partIdx) => {
-							const { Name, Description, Availability } = part;
+							const { Name, Description, OrderedQty } = part;
 							const serialNum = partIdx + 1;
 							const unitPrice = calculatePartUnitPrice(parts, Name);
 							const netPrice = calculatePartNetPrice(unitPrice, part.OrderedQty);
@@ -65,14 +63,7 @@ export default async function OrderedPartsTable({ order }: { order: OrderType })
 										<div className="mt-1 text-muted-foreground">{Description}</div>
 										<dl className="lg:hidden">
 											<dt className="sr-only">Ordered Quantity</dt>
-											<dd className="mt-1 md:w-80 sm:hidden">
-												<UpdatePartQtyForm part={part} />
-											</dd>
-
-											<dt className="sr-only sm:hidden">Stock</dt>
-											<dd className="mt-1 sm:hidden">
-												<Badge>{Availability}</Badge>
-											</dd>
+											<dd className="mt-1 md:w-80 sm:hidden">{OrderedQty}</dd>
 											<dt className="sr-only sm:hidden">Rate</dt>
 											<dd className="mt-1 sm:hidden">
 												<span className="text-muted-foreground">Rate: </span>
@@ -80,10 +71,7 @@ export default async function OrderedPartsTable({ order }: { order: OrderType })
 											</dd>
 										</dl>
 									</td>
-									<td className="hidden px-3 py-5 text-sm sm:table-cell">
-										<UpdatePartQtyForm part={part} />
-										<Badge className="mt-2">{Availability}</Badge>
-									</td>
+									<td className="hidden px-3 py-5 text-sm sm:table-cell">{OrderedQty}</td>
 									<td className="hidden px-3 py-5 text-right font-medium text-sm sm:table-cell">
 										{unitPrice}
 									</td>

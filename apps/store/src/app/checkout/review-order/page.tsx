@@ -34,12 +34,15 @@ export default async function ReviewOrder() {
 		);
 	}
 
+	const billingAddress = addresses.billingAddresses[0]!;
+	const shippingAddress = addresses.shippingAddresses[0]!;
+
 	return (
 		<div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-2 lg:px-8">
 			<h1 className="text-3xl font-bold tracking-tight">Review Order</h1>
 			<div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4 my-10">
-				<AddressDisplayCard address={addresses.billingAddresses} />
-				<AddressDisplayCard address={addresses.shippingAddresses} />
+				<AddressDisplayCard address={billingAddress} />
+				<AddressDisplayCard address={shippingAddress} />
 			</div>
 
 			<div className="space-y-10">

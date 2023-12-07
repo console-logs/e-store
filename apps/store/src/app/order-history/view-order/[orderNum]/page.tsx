@@ -1,8 +1,8 @@
 import { fetchOrders } from "@/actions";
-import CartSummary from "@/app/cart/_components/summary";
 import { AddressDisplayCard } from "@/app/checkout/_components/address/displayAddress";
 import OrderedPartsTable from "@/app/order-history/_components/partsTable";
 import OrderedPcbsTable from "@/app/order-history/_components/pcbsTable";
+import PriceSummary from "@/app/order-history/_components/priceSum";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export default async function ViewOrder({ params: { orderNum } }: ViewOrderPageP
 					<OrderedPcbsTable order={order} />
 				</div>
 				<div>
-					<CartSummary cartValue={orderValue} />
+					<PriceSummary orderValue={orderValue} />
 					<div className="rounded-lg bg-gray-50 dark:bg-gray-900 px-4 py-6 sm:p-6 lg:p-8 space-y-8">
 						<AddressDisplayCard address={billingAddress} />
 						<AddressDisplayCard address={shippingAddress} />
