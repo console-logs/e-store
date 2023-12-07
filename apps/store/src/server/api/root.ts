@@ -1,6 +1,7 @@
 import { pcbAssemblyRouter } from "@/server/api/routers/assembly";
 import { flexPcbRouter } from "@/server/api/routers/flex";
 import { partRouter } from "@/server/api/routers/part";
+import { razorpayRouter } from "@/server/api/routers/razorpay";
 import { rigidPcbRouter } from "@/server/api/routers/rigid";
 import { createTRPCRouter } from "@/server/api/trpc";
 
@@ -11,6 +12,7 @@ export const appRouter = createTRPCRouter({
 	rigidPcb: rigidPcbRouter,
 	flexPcb: flexPcbRouter,
 	pcbAssembly: pcbAssemblyRouter,
+	razorpay: razorpayRouter,
 });
 
 // export type definition of API
