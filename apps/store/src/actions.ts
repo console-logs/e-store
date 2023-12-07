@@ -1,24 +1,15 @@
 "use server";
+import { OVERHEAD_SHIPPING_CHARGES } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
+import { calculateCartTotal, calculateGst } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import orderId from "order-id";
 import ShortUniqueId from "short-unique-id";
-import { OVERHEAD_SHIPPING_CHARGES } from "./lib/constants";
-import { calculateCartTotal, calculateGst } from "./lib/utils";
 
-export async function captureUserSignupAction({
-	firstName,
-	lastName,
-	email,
-	userId,
-}: {
-	firstName: string;
-	lastName: string;
-	email: string;
-	userId: string;
-}): Promise<void> {
+export async function captureUserSignupAction(props: SignupPropsType): Promise<void> {
+	const { email, firstName, lastName, userId } = props;
 	try {
 		// Create a new user with the provided details
 		const user: UserType = {
@@ -132,20 +123,17 @@ export async function fetchCartSizeAction(): Promise<number> {
 	return cartSize;
 }
 
-export async function addItemToCartAction(
-	item: PartDataType | FlexPcbFabSpecsType | RigidPcbFabSpecsType | PcbAssemblyFabSpecsType
-): Promise<void> {
+export async function addItemToCartAction(props: CartUpdatePropsType): Promise<void> {
+	const { Name, OrderedQty, Type } = props;
 	try {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
-			const existingItem = cart.cartItems.find(
-				cartItem => cartItem.Type === item.Type && cartItem.Name === item.Name
-			);
+			const existingItem = cart.cartItems.find(cartItem => cartItem.Type === Type && cartItem.Name === Name);
 			if (existingItem) {
-				existingItem.OrderedQty += item.OrderedQty;
+				existingItem.OrderedQty += OrderedQty;
 			} else {
-				cart.cartItems.push(item);
+				cart.cartItems.push(props);
 				cart.cartSize++;
 			}
 			// update in db
@@ -161,7 +149,7 @@ export async function addItemToCartAction(
 				cartId: newCartId,
 				cart: {
 					cartSize: 1,
-					cartItems: [item],
+					cartItems: [props],
 				},
 			});
 			await createCartCookie(newCartId); // future reference
@@ -172,7 +160,8 @@ export async function addItemToCartAction(
 	}
 }
 
-export async function updatePartQtyAction(name: string, newQuantity: number): Promise<void> {
+export async function updatePartQtyAction(props: UpdatePartQtyPropsType): Promise<void> {
+	const { name, newQty: newQuantity } = props;
 	try {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
@@ -194,13 +183,13 @@ export async function updatePartQtyAction(name: string, newQuantity: number): Pr
 	}
 }
 
-export async function deleteCartItemAction(itemToDelete: string): Promise<void> {
+export async function deleteCartItemAction(name: string): Promise<void> {
 	try {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
 			// keep the item that is not a match
-			const updatedCartItems = cart.cartItems.filter(cartItem => cartItem.Name !== itemToDelete);
+			const updatedCartItems = cart.cartItems.filter(cartItem => cartItem.Name !== name);
 
 			// Update cart with filtered items and adjust cartSize
 			cart.cartItems = updatedCartItems;
@@ -259,7 +248,8 @@ export async function createCartCookie(cartId: string) {
 	});
 }
 
-export async function addAddressesAction(billingAddress: AddressType, shippingAddress: AddressType): Promise<void> {
+export async function addAddressesAction(props: NewAddressPropsType): Promise<void> {
+	const { billingAddress, shippingAddress } = props;
 	try {
 		const { userId } = auth();
 		await mongoClient.connect();
@@ -284,38 +274,27 @@ export async function addAddressesAction(billingAddress: AddressType, shippingAd
 	}
 }
 
-type FetchAddressesType = {
-	billingAddresses: Array<AddressType>;
-	shippingAddresses: Array<AddressType>;
-};
-
-export async function fetchAddressesAction(): Promise<FetchAddressesType> {
+export async function fetchAddressesAction(): Promise<FetchAddressesPropsType | null> {
 	try {
 		const { userId } = auth();
 		await mongoClient.connect();
 		const userFilter = { userId };
 		const options = { projection: { _id: 0, billingAddresses: 1, shippingAddresses: 1 } };
-		const result = await usersCollection.findOne<{
-			billingAddresses: Array<AddressType>;
-			shippingAddresses: Array<AddressType>;
-		}>(userFilter, options);
-		return result ? result : { billingAddresses: [], shippingAddresses: [] };
+		const result = await usersCollection.findOne<FetchAddressesPropsType>(userFilter, options);
+		return result ? result : null;
 	} catch (error) {
-		console.error(error);
-		return { billingAddresses: [], shippingAddresses: [] };
+		throw error; // handle on the client side.
 	}
 }
 
-export async function captureOrderDetails(
-	razorpayResponses: RazorpayResponseType,
-	razorpayOrderValue: string
-): Promise<void> {
+export async function captureOrderDetails(props: RazorpayPropsType): Promise<void> {
+	const { razorpayResponses, razorpayOrderValue } = props;
 	try {
 		const { userId } = auth();
 		await mongoClient.connect();
 		const filter = { userId };
 		const options = { projection: { _id: 0, cart: 1, billingAddresses: 1, shippingAddresses: 1 } };
-		const result = await usersCollection.findOne<{ data: OrderDataType }>(filter, options);
+		const result = await usersCollection.findOne<{ data: CheckoutDataType }>(filter, options);
 		if (!result) throw new Error("captureOrderDetails: User not found!");
 
 		const cart = result.data.cart;
@@ -363,7 +342,7 @@ export async function captureOrderDetails(
 			cartSize: 0,
 			cartItems: [],
 		};
-		await usersCollection.updateOne(filter, { $set: { newCart } });
+		await usersCollection.updateOne(filter, { $set: { cart: newCart } });
 		revalidatePath("/");
 	} catch (error) {
 		throw error; // handle on the client side.

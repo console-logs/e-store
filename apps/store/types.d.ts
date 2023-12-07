@@ -5,18 +5,16 @@
  * which changes the scope from global to module-level.
  * This means that the types declared in this file are no longer globally available.
  *
- * Tip 1: If you need to use a type from an external package,
+ * NOTE: If you need to use a type from an external package,
  * consider importing it directly in the files where it's needed.
- *
- * Tip 2: If you need to use a type in just one place,
- * consider creating it in the files where it's needed.
+
  */
 
 type Unwrap<T> = {
 	[K in keyof T]: T[K];
 } & object;
 
-/*  Rigid Pcb Types */
+/****************************** RIGID PCB FAB *********************************************/
 type BaseRigidPcbFabSpecsType = {
 	Type: "Rigid PCB";
 	Category: "PCB";
@@ -307,7 +305,7 @@ type RigidPcbFabSpecsType = Unwrap<
 	}
 >;
 
-/* Flex Pcb Types */
+/****************************** FLEX PCB FAB *********************************************/
 type BaseFlexPcbFabSpecsType = {
 	Type: "Flex PCB";
 	Category: "PCB";
@@ -552,7 +550,7 @@ type FlexPcbFabSpecsType = Unwrap<
 	}
 >;
 
-/* Pcb Assembly Types */
+/****************************** PCB ASSEMBLY FAB *********************************************/
 type PcbAssemblyFabSpecsType = {
 	Type: "PCB Assembly";
 	Category: "PCB";
@@ -592,7 +590,7 @@ type PcbAssemblyStoreStateType = Unwrap<
 	}
 >;
 
-/* Part Types */
+/****************************** PART *********************************************/
 type PartResultsType = {
 	Parts: Record<string, PartDataType>;
 	Errors: ErrorsType | null;
@@ -627,7 +625,7 @@ type PriceBreakType = {
 	Currency: string;
 };
 
-/* Rate card Types */
+/****************************** PCB RATE CARD *********************************************/
 type RigidPcbRateCardType = {
 	baseMaterial: {
 		FR4: number;
@@ -984,14 +982,14 @@ type PcbAssemblyRateCardType = {
 	};
 };
 
-/* Shopping Cart */
+/****************************** CART *********************************************/
 type CartDataType = {
 	cartId?: string; // used only with guest carts
 	cartSize: number;
 	cartItems: Array<PartDataType | RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType>;
 };
 
-/* User */
+/****************************** USER *********************************************/
 type UserType = {
 	createdAt: Date;
 	userId: string;
@@ -1004,7 +1002,7 @@ type UserType = {
 	orders: Array<OrderType>;
 };
 
-/* Address */
+/****************************** ADDRESS *********************************************/
 type AddressType = {
 	firstName: string;
 	lastName: string;
@@ -1031,14 +1029,14 @@ type ShippingAddressProps = {
 	shippingInstructions: string;
 };
 
-/* Razorpay */
+/****************************** RAZORPAY *********************************************/
 type RazorpayResponseType = {
 	razorpay_payment_id: string;
 	razorpay_order_id: string;
 	razorpay_signature: string;
 };
 
-/* Order */
+/****************************** ORDER *********************************************/
 type OrderType = {
 	id: string;
 	createdAt: Date;
@@ -1067,8 +1065,26 @@ type OpenOrderType = Unwrap<
 	}
 >;
 
-type OrderDataType = {
-	cart: CartDataType;
-	billingAddresses: Array<AddressType>;
-	shippingAddresses: Array<AddressType>;
+/****************************** ACTION PROPS *********************************************/
+type SignupPropsType = Pick<UserType, "userId" | "firstName" | "lastName" | "email">;
+
+type CartUpdatePropsType = PartDataType | FlexPcbFabSpecsType | RigidPcbFabSpecsType | PcbAssemblyFabSpecsType;
+
+type UpdatePartQtyPropsType = {
+	name: string;
+	newQty: number;
 };
+
+type NewAddressPropsType = {
+	billingAddress: AddressType;
+	shippingAddress: AddressType;
+};
+
+type FetchAddressesPropsType = Pick<UserType, "billingAddresses" | "shippingAddresses">;
+
+type RazorpayPropsType = {
+	razorpayResponses: RazorpayResponseType;
+	razorpayOrderValue: string;
+};
+
+type CheckoutDataType = Pick<UserType, "cart" | "billingAddresses" | "shippingAddresses">;

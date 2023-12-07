@@ -22,7 +22,7 @@ export default function UpdatePartQtyForm(props: { part: PartDataType }) {
 	const handleOnSubmit = useCallback(
 		(values: { orderQty: number }) => {
 			startTransition(async () => {
-				await updatePartQtyAction(Name, values.orderQty);
+				await updatePartQtyAction({ name: Name, newQty: values.orderQty });
 			});
 		},
 		[startTransition]

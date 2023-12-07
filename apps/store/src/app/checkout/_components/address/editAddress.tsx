@@ -77,7 +77,7 @@ export default function EditAddressForm() {
 				ship_country,
 			} = values;
 			startTransition(async () => {
-				const billingInfo: AddressType = {
+				const billingAddress: AddressType = {
 					type: "Billing Address",
 					firstName: bill_fname,
 					lastName: bill_lname,
@@ -93,7 +93,7 @@ export default function EditAddressForm() {
 					po: bill_poNumber,
 					country: bill_country,
 				};
-				const shippingInfo: AddressType = {
+				const shippingAddress: AddressType = {
 					type: "Shipping Address",
 					firstName: isSameAddress ? bill_fname : ship_fname,
 					lastName: isSameAddress ? bill_lname : ship_lname,
@@ -110,7 +110,7 @@ export default function EditAddressForm() {
 					shippingInstructions: "",
 				};
 				try {
-					await addAddressesAction(billingInfo, shippingInfo);
+					await addAddressesAction({ billingAddress, shippingAddress });
 					router.push(REVIEW_ORDER_PAGE);
 				} catch (error) {
 					const unknownError = "Something went wrong, please try again later.";
