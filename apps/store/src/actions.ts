@@ -164,7 +164,7 @@ export async function addItemToCartAction(
 		}
 		revalidatePath("/products", "layout");
 	} catch (error) {
-		console.error(error); // handle on the client side.
+		throw error; // handle on the client side.
 	}
 }
 
@@ -186,7 +186,7 @@ export async function updatePartQtyAction(name: string, newQuantity: number): Pr
 		}
 		revalidatePath("/cart");
 	} catch (error) {
-		console.error(error); // handle on the client side.
+		throw error; // handle on the client side.
 	}
 }
 
@@ -211,7 +211,7 @@ export async function deleteCartItemAction(itemToDelete: string): Promise<void> 
 		}
 		revalidatePath("/cart");
 	} catch (error) {
-		console.error(error); // handle on the client side.
+		throw error; // handle on the client side.
 	}
 }
 
@@ -240,7 +240,7 @@ export async function deleteAllItemsAction(property: string, value: string) {
 		}
 		revalidatePath("/cart");
 	} catch (error) {
-		console.error(error); // handle on the client side.
+		throw error; // handle on the client side.
 	}
 }
 
@@ -276,7 +276,7 @@ export async function addAddressesAction(billingAddress: AddressType, shippingAd
 		};
 		await usersCollection.updateOne(userFilter, updateDoc);
 	} catch (error) {
-		console.error(error);
+		throw error; // handle on the client side.
 	}
 }
 
@@ -297,5 +297,13 @@ export async function fetchAddressesAction(): Promise<{
 	} catch (error) {
 		console.error(error);
 		return { billingAddresses: [], shippingAddresses: [] };
+	}
+}
+
+export async function captureOrderDetails(razorpayResponses: RazorpayResponseType, orderValue: string): Promise<void> {
+	try {
+		
+	} catch (error) {
+		throw error; // handle on the client side.
 	}
 }
