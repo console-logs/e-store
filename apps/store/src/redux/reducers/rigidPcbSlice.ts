@@ -594,7 +594,7 @@ export const {
 	setDispatchUnit,
 	setPcbPrice,
 	setTentativeDispatchDate,
-	setFileUrl: setDesignFile,
+	setFileUrl,
 	updateBoardThickness,
 	updateMaterial,
 	updateSurfaceFinish,

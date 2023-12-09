@@ -71,3 +71,8 @@ export const initializeRazorpay = () => {
 export function convertMBToBytes(mb: number): number {
 	return mb * 1024 * 1024;
 }
+
+export function getUrlFromBucket(props: { s3Bucket: string; region: string; fileName: string }): string {
+	const { s3Bucket, region, fileName } = props;
+	return `https://${s3Bucket}.s3${region}.amazonaws.com/${fileName}`;
+}

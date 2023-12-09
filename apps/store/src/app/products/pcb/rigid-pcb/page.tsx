@@ -55,8 +55,8 @@ export default function RigidPcbFabrication() {
 		startTransition(async () => {
 			e.preventDefault();
 			// handle file upload
-			const isUploaded = await uploadFile({ file, Name: rigidPcb.Name });
-			if (!isUploaded) {
+			const response = await uploadFile({ file, Name: rigidPcb.Name });
+			if (!response.success) {
 				toast({
 					variant: "destructive",
 					title: "File upload failed",
@@ -66,6 +66,7 @@ export default function RigidPcbFabrication() {
 			} else {
 				// handle add to cart
 				await addItemToCartAction(rigidPcb);
+				console.log(response.fileUrl);
 				toast({
 					variant: "default",
 					title: "Rigid PCB added to cart",

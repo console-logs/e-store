@@ -1,8 +1,13 @@
-export async function uploadFile(props: { file: File | undefined; Name: string }) {
-	const { file, Name } = props;
-	if (!file) return false;
+import { env } from "@/env";
 
-	const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/upload", {
+export async function uploadFile(props: {
+	file: File | undefined;
+	Name: string;
+}): Promise<{ success: boolean; fileUrl: string }> {
+	const { file, Name } = props;
+	if (!file) return { success: false, fileUrl: "" };
+
+	const response = await fetch(env.NEXT_PUBLIC_BASE_URL + "/api/upload", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -23,10 +28,14 @@ export async function uploadFile(props: { file: File | undefined; Name: string }
 			method: "POST",
 			body: formData,
 		});
-
-		return uploadResponse.ok ? true : false;
+		// const fileUrl = getUrlFromBucket({
+		// 	s3Bucket: env.AWS_BUCKET_NAME,
+		// 	region: env.AWS_REGION,
+		// 	fileName: Name,
+		// });
+		return uploadResponse.ok ? { success: true, fileUrl: "" } : { success: false, fileUrl: "" };
 	} else {
 		console.error("Failed to get presigned url");
-		return false;
+		return { success: false, fileUrl: "" };
 	}
 }

@@ -1,4 +1,5 @@
 import { createCartCookieAction } from "@/actions";
+import { env } from "@/env";
 import { convertMBToBytes } from "@/lib/utils";
 import { S3Client } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
@@ -21,9 +22,9 @@ export async function POST(request: Request) {
 		await createCartCookieAction(newCartId); // future reference
 	}
 	try {
-		const client = new S3Client({ region: process.env.AWS_REGION });
+		const client = new S3Client({ region: env.AWS_REGION });
 		const { url, fields } = await createPresignedPost(client, {
-			Bucket: process.env.AWS_BUCKET_NAME!,
+			Bucket: env.AWS_BUCKET_NAME,
 			Key: newFileName,
 			Conditions: [
 				["content-length-range", 0, convertMBToBytes(25)],
