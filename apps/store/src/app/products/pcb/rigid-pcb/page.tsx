@@ -1,6 +1,5 @@
 "use client";
 import { addItemToCartAction } from "@/actions";
-import { uploadFile } from "@/app/api/upload/uploadFile";
 import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
 import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import BreakdownVoltage from "@/app/products/pcb/rigid-pcb/_components/fields/breakdown";
@@ -42,37 +41,25 @@ import ViaHoles from "@/app/products/pcb/rigid-pcb/_components/fields/viaHoles";
 import RigidPcbPriceSummary from "@/app/products/pcb/rigid-pcb/_components/priceSum";
 import { selectRigidPcbMemoized } from "@/redux/reducers/rigidPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";
-import { useState, useTransition, type FormEvent } from "react";
+import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";
 
 export default function RigidPcbFabrication() {
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();
-	const [file, setFile] = useState<File>();
 	const rigidPcb: RigidPcbFabSpecsType = useSelector(selectRigidPcbMemoized);
 
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		startTransition(async () => {
 			e.preventDefault();
-			// handle file upload
-			const response = await uploadFile({ file, Name: rigidPcb.Name });
-			if (!response.success) {
-				toast({
-					variant: "destructive",
-					title: "File upload failed",
-					description: "We couldn't upload your file. Please try again!",
-					duration: 4000,
-				});
-			} else {
-				// handle add to cart
-				await addItemToCartAction(rigidPcb);
-				toast({
-					variant: "default",
-					title: "Rigid PCB added to cart",
-					description: "We've successfully added your pcb to cart!",
-					duration: 4000,
-				});
-			}
+			// handle add to cart
+			await addItemToCartAction(rigidPcb);
+			toast({
+				variant: "default",
+				title: "Rigid PCB added to cart",
+				description: "We've successfully added your pcb to cart!",
+				duration: 4000,
+			});
 		});
 	}
 	return (
@@ -116,7 +103,7 @@ export default function RigidPcbFabrication() {
 						<ViaHoles />
 						<LeadTime />
 						<DispatchUnit />
-						<UploadDesignFile setFile={setFile} />
+						<UploadDesignFile />
 					</div>
 					<div className="mt-8 space-y-4">
 						<RigidPcbPriceSummary />

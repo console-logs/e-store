@@ -2,6 +2,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { convertToTitleCase } from "@packages/shared/lib/utils";
 import { Button } from "@shared/components/ui/button";
+import Link from "next/link";
 import { Fragment, useState } from "react";
 
 type PcbFabSpecsModalProps = {
@@ -116,10 +117,23 @@ export default function PcbFabSpecsModal(props: PcbFabSpecsModalProps) {
 
 function TableRow(props: TableRowProps) {
 	const { isVisible, label, value } = props;
+	if (!isVisible) return null;
+	let content;
+	if (label === "File Url") {
+		content = (
+			<Link
+				href={value as string}
+				target="_blank">
+				Download
+			</Link>
+		);
+	} else {
+		content = value;
+	}
 	return isVisible ? (
 		<tr>
 			<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-0">{label}</td>
-			<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-0">{value}</td>
+			<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-0">{content}</td>
 		</tr>
 	) : null;
 }

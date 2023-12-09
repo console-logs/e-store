@@ -16,8 +16,7 @@ export async function uploadFile(props: {
 	});
 
 	if (response.ok) {
-		const { url, fields } = (await response.json()) as { url: string; fields: string };
-
+		const { url, fields } = (await response.json()) as { url: string; fields: FieldsType };
 		const formData = new FormData();
 		Object.entries(fields).forEach(([key, value]) => {
 			formData.append(key, value);
@@ -28,7 +27,9 @@ export async function uploadFile(props: {
 			method: "POST",
 			body: formData,
 		});
-		return uploadResponse.ok ? { success: true, fileUrl: "" } : { success: false, fileUrl: "" };
+
+		const fileUrl = url + fields.key;
+		return uploadResponse.ok ? { success: true, fileUrl } : { success: false, fileUrl: "" };
 	} else {
 		console.error("Failed to get presigned url");
 		return { success: false, fileUrl: "" };

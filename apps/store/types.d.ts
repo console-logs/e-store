@@ -1099,3 +1099,16 @@ type RazorpayPropsType = {
 };
 
 type CheckoutDataType = Pick<UserType, "cart" | "billingAddresses" | "shippingAddresses">;
+
+
+type FieldsType = {
+	acl: string;
+	"Content-Type": string;
+	bucket: string;
+	"X-Amz-Algorithm": string;
+	"X-Amz-Credential": string;
+	"X-Amz-Date": string;
+	key: string;
+	Policy: string;
+	"X-Amz-Signature": string;
+};
