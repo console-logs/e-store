@@ -66,7 +66,6 @@ export default function RigidPcbFabrication() {
 			} else {
 				// handle add to cart
 				await addItemToCartAction(rigidPcb);
-				console.log(response.fileUrl);
 				toast({
 					variant: "default",
 					title: "Rigid PCB added to cart",
