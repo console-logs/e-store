@@ -28,11 +28,6 @@ export async function uploadFile(props: {
 			method: "POST",
 			body: formData,
 		});
-		// const fileUrl = getUrlFromBucket({
-		// 	s3Bucket: env.AWS_BUCKET_NAME,
-		// 	region: env.AWS_REGION,
-		// 	fileName: Name,
-		// });
 		return uploadResponse.ok ? { success: true, fileUrl: "" } : { success: false, fileUrl: "" };
 	} else {
 		console.error("Failed to get presigned url");
