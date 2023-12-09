@@ -74,6 +74,8 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 		const userCart = userResults.cart;
 		const guestCart = guestResults.cart;
 
+		//TODO: Rename file in S3 database
+
 		// merge carts
 		guestCart.cartItems.forEach(guestCartItem => {
 			const existingItem = userCart.cartItems.find(
@@ -95,6 +97,18 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 	}
 }
 
+export async function fetchCartSizeAction(): Promise<number> {
+	let cartSize = 0;
+	try {
+		await mongoClient.connect();
+		const cart = await fetchCartItemsAction();
+		cartSize = cart ? cart.cartSize : 0;
+	} catch (error) {
+		throw error; // handle on the client side.
+	}
+	return cartSize;
+}
+
 export async function fetchCartItemsAction(): Promise<CartDataType | null> {
 	try {
 		const { userId } = auth();
@@ -111,23 +125,15 @@ export async function fetchCartItemsAction(): Promise<CartDataType | null> {
 	}
 }
 
-export async function fetchCartSizeAction(): Promise<number> {
-	let cartSize = 0;
-	try {
-		await mongoClient.connect();
-		const cart = await fetchCartItemsAction();
-		cartSize = cart ? cart.cartSize : 0;
-	} catch (error) {
-		throw error; // handle on the client side.
-	}
-	return cartSize;
-}
-
 export async function addItemToCartAction(props: CartUpdatePropsType): Promise<void> {
 	const { Name, OrderedQty, Type } = props;
 	try {
 		await mongoClient.connect();
+		const { userId } = auth();
+		const cartIdCookie = cookies().get("cartId");
+
 		const cart = await fetchCartItemsAction();
+
 		if (cart) {
 			const existingItem = cart.cartItems.find(cartItem => cartItem.Type === Type && cartItem.Name === Name);
 			if (existingItem) {
@@ -137,22 +143,25 @@ export async function addItemToCartAction(props: CartUpdatePropsType): Promise<v
 				cart.cartSize++;
 			}
 			// update in db
-			const { userId } = auth();
-			const cartIdCookie = cookies().get("cartId");
 			const collection = userId ? usersCollection : guestCartsCollection;
 			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
 			await collection.updateOne(filter, { $set: { cart } });
 		} else {
-			// create new guest cart
-			const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
+			// new cart
+			let cartId = "";
+			if (cartIdCookie) {
+				cartId = cartIdCookie.value;
+			} else {
+				cartId = new ShortUniqueId({ length: 8 }).randomUUID();
+				await createCartCookieAction(cartId); // future reference
+			}
 			await guestCartsCollection.insertOne({
-				cartId: newCartId,
+				cartId: cartId,
 				cart: {
 					cartSize: 1,
 					cartItems: [props],
 				},
 			});
-			await createCartCookieAction(newCartId); // future reference
 		}
 		revalidatePath("/products", "layout");
 	} catch (error) {
@@ -356,8 +365,8 @@ export async function fetchOrders(): Promise<Array<OrderType>> {
 		await mongoClient.connect();
 		const filter = { userId };
 		const options = { projection: { _id: 0, orders: 1 } };
-		const result = await usersCollection.findOne<{orders: Array<OrderType>}>(filter, options);
-		if (!result) throw new Error("fetchOrders: User not found!");		
+		const result = await usersCollection.findOne<{ orders: Array<OrderType> }>(filter, options);
+		if (!result) throw new Error("fetchOrders: User not found!");
 		return result.orders;
 	} catch (error) {
 		throw error; // handle on the client side.

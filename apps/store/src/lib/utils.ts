@@ -67,3 +67,7 @@ export const initializeRazorpay = () => {
 		document.body.appendChild(script);
 	});
 };
+
+export function convertMBToBytes(mb: number): number {
+	return mb * 1024 * 1024;
+}

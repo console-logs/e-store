@@ -153,7 +153,7 @@ export const RigidPcbFabSpecsTypeSchema = z.object({
 	]),
 	DispatchUnit: z.union([z.literal("PCB"), z.literal("Panel")]),
 	NetPrice: z.number(),
-	DesignFile: z.string(),
+	FileUrl: z.string(),
 });
 
 export const FlexPcbFabSpecsTypeSchema = z.object({

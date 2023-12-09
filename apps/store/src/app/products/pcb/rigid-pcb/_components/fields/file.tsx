@@ -1,12 +1,10 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { setDesignFile } from "@/redux/reducers/rigidPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
-import { convertFileToBase64 } from "@shared/lib/utils";
-import { useDispatch } from "react-redux";
+import type { Dispatch, SetStateAction } from "react";
 
-export default function UploadDesignFile() {
-	const dispatch = useDispatch();
+export default function UploadDesignFile(props: { setFile: Dispatch<SetStateAction<File | undefined>> }) {
+	const { setFile } = props;
 	return (
 		<div>
 			<Label>
@@ -15,15 +13,14 @@ export default function UploadDesignFile() {
 			<Input
 				required
 				accept=".zip"
+				id="file"
 				type="file"
-				name="designFile"
 				autoComplete="off"
 				className="w-full"
-				onChange={async e => {
-					if (e.target.files) {
-						const designFile = e.target.files[0]!;
-						const base64File = (await convertFileToBase64(designFile).catch(console.error)) as string;
-						dispatch(setDesignFile(base64File));
+				onChange={e => {
+					const files = e.target.files;
+					if (files) {
+						setFile(files[0]);
 					}
 				}}
 			/>
