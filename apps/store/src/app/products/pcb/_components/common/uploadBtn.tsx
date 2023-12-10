@@ -1,4 +1,4 @@
-import { uploadFile } from "@/app/api/upload/uploadFile";
+import { uploadFile } from "@/app/products/pcb/_helpers/uploadFile";
 import { selectName, setFileUrl } from "@/redux/reducers/rigidPcbSlice";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
