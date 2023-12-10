@@ -92,6 +92,7 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 		// update in db
 		await usersCollection.updateOne(userCartFilter, { $set: { cart: userCart } });
 		await guestCartsCollection.deleteOne(guestCartFilter); // cleanup!
+		cookies().delete("cartId");
 	} catch (error) {
 		throw error; // handle on the client side.
 	}
