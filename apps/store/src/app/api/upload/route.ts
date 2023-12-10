@@ -11,16 +11,16 @@ export async function POST(request: Request) {
 	const { filename, contentType } = await request.json() as { filename: string; contentType: string }
 	const { userId } = auth();
 	const cartIdCookie = cookies().get("cartId");
-	let newFileName = "";
-	if (userId) {
-		newFileName = filename + "_" + userId;
-	} else if (cartIdCookie) {
+	const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
+	
+	let newFileName = filename + "_" + newCartId; // default
+
+	if(!userId && !cartIdCookie) {
+		await createCartCookieAction(newCartId);
+	} else if (cartIdCookie){
 		newFileName = filename + "_" + cartIdCookie.value;
-	} else {
-		const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
-		newFileName = filename + "_" + newCartId;
-		await createCartCookieAction(newCartId); // future reference
 	}
+	
 	try {
 		const client = new S3Client({ region: env.AWS_REGION });
 		const { url, fields } = await createPresignedPost(client, {
