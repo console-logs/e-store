@@ -1,4 +1,5 @@
 "use client";
+import { deleteAllItemsAction } from "@/actions";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { useTransition } from "react";
@@ -7,12 +8,6 @@ type DeleteCartItemButtonProps = {
 	deleteCartItemAction: (item: string) => Promise<void>;
 	item: string;
 	filename?: string | null;
-};
-
-type DeleteAllButtonProps = {
-	deleteAllAction: (property: string, value: string) => Promise<void>;
-	property: string;
-	value: string;
 };
 
 export function DeleteCartItemButton(props: DeleteCartItemButtonProps) {
@@ -48,8 +43,7 @@ export function DeleteCartItemButton(props: DeleteCartItemButtonProps) {
 	);
 }
 
-export function DeleteAllButton(props: DeleteAllButtonProps) {
-	const { deleteAllAction, property, value } = props;
+export async function DeleteAllButton({ type }: { type: string }) {
 	const [isLoading, startTransition] = useTransition();
 
 	return (
@@ -59,7 +53,11 @@ export function DeleteAllButton(props: DeleteAllButtonProps) {
 			variant={"ghost"}
 			onClick={() =>
 				startTransition(async () => {
-					await deleteAllAction(property, value);
+					if (type === "PCB") {
+						await deleteAllItemsAction("Type", "PCB");
+					} else if (type === "Part") {
+						await deleteAllItemsAction("Type", "Part");
+					}
 				})
 			}>
 			{isLoading ? (

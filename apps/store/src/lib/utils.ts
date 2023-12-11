@@ -1,3 +1,4 @@
+import { pcbTypes } from "@/lib/constants";
 import { formatToInr } from "@packages/shared/lib/utils";
 
 export function calculatePartUnitPrice(parts: PartDataType[], Name: string): string {
@@ -25,7 +26,6 @@ export function calculatePartNetPrice(unitPrice: string, cartQty: number) {
 }
 
 export function calculateCartTotal(cart: CartDataType | null): number {
-	const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
 	const parts = cart ? cart.cartItems.filter((item): item is PartDataType => item.Type === "Part") : [];
 	const pcbs = cart
 		? cart.cartItems.filter((item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>

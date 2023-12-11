@@ -1,12 +1,11 @@
 import PcbFabSpecsModal from "@/app/_components/fabSpecsModal";
+import { pcbTypes } from "@/lib/constants";
 import { formatToInr } from "@packages/shared/lib/utils";
-
-const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
 
 export default async function OrderedPcbsTable({ order }: { order: OrderType }) {
 	const pcbs = order.cart.cartItems.filter(
 		(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
-			pcbTypes.includes(item.Type)
+			pcbTypes.includes(item.Category)
 	);
 
 	return (
@@ -55,8 +54,8 @@ export default async function OrderedPcbsTable({ order }: { order: OrderType }) 
 					<tbody>
 						{pcbs.map((pcb, pcbIdx) => {
 							const serialNum = pcbIdx + 1;
-							const { NetPrice, Type } = pcb;
-							const isRigidOrFlex = Type === "Rigid PCB" || Type === "Flex PCB";
+							const { NetPrice, Category } = pcb;
+							const isRigidOrFlex = Category === "Rigid PCB" || Category === "Flex PCB";
 							const name = pcb.Name;
 							const quantity = isRigidOrFlex
 								? pcb.DesignFormat === "Single PCB"
@@ -79,7 +78,7 @@ export default async function OrderedPcbsTable({ order }: { order: OrderType }) 
 										</div>
 
 										<div className="font-bold">
-											Type: <span className="font-normal">{Type}</span>
+											Type: <span className="font-normal">{Category}</span>
 										</div>
 
 										<PcbFabSpecsModal fabSpecs={pcb} />

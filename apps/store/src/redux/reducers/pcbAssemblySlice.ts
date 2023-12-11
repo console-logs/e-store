@@ -3,8 +3,8 @@ import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolki
 import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: PcbAssemblyStoreStateType = {
-	Type: "PCB Assembly",
-	Category: "PCB",
+	Type: "PCB",
+	Category: "PCB Assembly",
 	Name: "",
 	BoardType: "Single PCB",
 	PcbsPerPanel: 1,
@@ -170,8 +170,8 @@ export const selectTurnaroundTimeOptions = (state: ReduxState) => state.pcbAssem
 /* Memoised Selector => Output selector performs type transformation */
 export const selectPcbAssemblyMemomized = createSelector([selectPcbAssemblyState], pcbAssembly => {
 	const pcbAssemblyFabSpecs: PcbAssemblyFabSpecsType = {
-		Type: "PCB Assembly",
-		Category: "PCB",
+		Type: "PCB",
+		Category: "PCB Assembly",
 		Name: pcbAssembly.Name,
 		BoardType: pcbAssembly.BoardType,
 		PcbsPerPanel: pcbAssembly.PcbsPerPanel,

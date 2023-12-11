@@ -16,8 +16,8 @@ type Unwrap<T> = {
 
 /****************************** RIGID PCB FAB *********************************************/
 type BaseRigidPcbFabSpecsType = {
-	Type: "Rigid PCB";
-	Category: "PCB";
+	Type: "PCB";
+	Category: "Rigid PCB";
 	Name: string;
 	OrderedQty: number;
 	Layer: 1 | 2 | 4 | 6 | 8 | 10;
@@ -308,8 +308,8 @@ type RigidPcbFabSpecsType = Unwrap<
 
 /****************************** FLEX PCB FAB *********************************************/
 type BaseFlexPcbFabSpecsType = {
-	Type: "Flex PCB";
-	Category: "PCB";
+	Type: "PCB";
+	Category: "Flex PCB";
 	Name: string;
 	OrderedQty: number;
 	BaseMaterial: "Flex (Polyimide)";
@@ -554,8 +554,8 @@ type FlexPcbFabSpecsType = Unwrap<
 
 /****************************** PCB ASSEMBLY FAB *********************************************/
 type PcbAssemblyFabSpecsType = {
-	Type: "PCB Assembly";
-	Category: "PCB";
+	Type: "PCB";
+	Category: "PCB Assembly";
 	Name: string;
 	BoardType: "Single PCB" | "Panel";
 	PcbsPerPanel: number;

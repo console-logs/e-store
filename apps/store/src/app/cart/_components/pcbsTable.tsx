@@ -1,9 +1,8 @@
-import { deleteAllItemsAction, deleteCartItemAction, fetchCartItemsAction } from "@/actions";
-import { DeleteAllButton, DeleteCartItemButton } from "@/app/cart/_components/delete";
+import { deleteCartItemAction, fetchCartItemsAction } from "@/actions";
 import PcbFabSpecsModal from "@/app/_components/fabSpecsModal";
+import { DeleteAllButton, DeleteCartItemButton } from "@/app/cart/_components/delete";
+import { pcbTypes } from "@/lib/constants";
 import { formatToInr } from "@packages/shared/lib/utils";
-
-const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
 
 export default async function BasketPcbsTable() {
 	const cart = await fetchCartItemsAction().catch((error: unknown) => {
@@ -14,7 +13,7 @@ export default async function BasketPcbsTable() {
 
 	const pcbs = cart
 		? cart.cartItems.filter((item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
-				pcbTypes.includes(item.Type)
+				pcbTypes.includes(item.Category)
 		  )
 		: [];
 
@@ -62,11 +61,7 @@ export default async function BasketPcbsTable() {
 							<th
 								scope="col"
 								className="text-right hidden sm:table-cell">
-								<DeleteAllButton
-									deleteAllAction={deleteAllItemsAction}
-									property="Category"
-									value="PCB"
-								/>
+								<DeleteAllButton type={"PCB"} />
 							</th>
 						</tr>
 					</thead>
@@ -75,8 +70,8 @@ export default async function BasketPcbsTable() {
 							<>
 								{pcbs.map((pcb, pcbIdx) => {
 									const serialNum = pcbIdx + 1;
-									const { NetPrice, Type } = pcb;
-									const isRigidOrFlex = Type === "Rigid PCB" || Type === "Flex PCB";
+									const { NetPrice, Category } = pcb;
+									const isRigidOrFlex = Category === "Rigid PCB" || Category === "Flex PCB";
 									const name = pcb.Name;
 									const filename = pcb.UploadedFileName;
 									const quantity = isRigidOrFlex
@@ -100,7 +95,7 @@ export default async function BasketPcbsTable() {
 												</div>
 
 												<div className="font-bold">
-													Type: <span className="font-normal">{Type}</span>
+													Category: <span className="font-normal">{Category}</span>
 												</div>
 
 												<PcbFabSpecsModal fabSpecs={pcb} />
