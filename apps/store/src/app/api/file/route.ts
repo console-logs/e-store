@@ -1,7 +1,6 @@
 import { createCartCookieAction } from "@/actions";
 import { env } from "@/env";
-import { convertMBToBytes } from "@/lib/utils";
-import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand, S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
@@ -35,7 +34,6 @@ export async function POST(request: Request) {
 		Key: filename,
 		Body: fileUint8Array,
 		ContentType: file.type,
-		ContentLength: convertMBToBytes(25),
 	});
 
 	const getCommand = new GetObjectCommand({
@@ -50,5 +48,22 @@ export async function POST(request: Request) {
 	} catch (err) {
 		console.error(err);
 		return new Response(null, { status: 500, statusText: "Something went wrong" });
+	}
+}
+
+export async function DELETE(request: Request) {
+	const { filename } = (await request.json()) as { filename: string };
+
+	const command = new DeleteObjectCommand({
+		Bucket: env.AWS_BUCKET_NAME,
+		Key: filename,
+	});
+
+	try {
+		await s3Client.send(command);
+		return new Response(null, { status: 200 });
+	} catch (err) {
+		console.error(err);
+		return new Response(null, { status: 404, statusText: "File not found" });
 	}
 }
