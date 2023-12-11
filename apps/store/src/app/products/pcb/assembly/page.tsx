@@ -5,6 +5,7 @@ import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAl
 import BgaComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/bga";
 import ConformalCoating from "@/app/products/pcb/assembly/_components/fields/coat";
 import Depanel from "@/app/products/pcb/assembly/_components/fields/depanel";
+import UploadDesignFile from "@/app/products/pcb/assembly/_components/fields/file";
 import FunctionalTest from "@/app/products/pcb/assembly/_components/fields/funcTest";
 import TurnAroundTime from "@/app/products/pcb/assembly/_components/fields/leadTime";
 import PcbName from "@/app/products/pcb/assembly/_components/fields/name";
@@ -18,7 +19,6 @@ import ThroughHoleComponentsQuantity from "@/app/products/pcb/assembly/_componen
 import BoardType from "@/app/products/pcb/assembly/_components/fields/type";
 import UniqueComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/uniqueComp";
 import PcbAssemblyPriceSummary from "@/app/products/pcb/assembly/_components/priceSum";
-import UploadDesignFile from "@/app/products/pcb/flex-pcb/_components/fields/file";
 import { selectPcbAssemblyMemomized } from "@/redux/reducers/pcbAssemblySlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
