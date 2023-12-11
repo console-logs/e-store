@@ -296,7 +296,6 @@ export const PcbAssemblyFabSpecsTypeSchema = z.object({
 	TurnaroundTime: z.union([z.literal("Standard 5-7 days"), z.literal("Expedited 3-4 days")]),
 	OneTimeSetupCosts: z.number(),
 	NetPrice: z.number(),
-	BOMFile: z.string(),
-	GerberFile: z.string(),
-	PickAndPlaceFile: z.string(),
+	UploadedFileUrl: z.string().nullable(),
+	UploadedFileName: z.string().nullable(),
 });

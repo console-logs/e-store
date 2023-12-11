@@ -23,9 +23,8 @@ const initialState: PcbAssemblyStoreStateType = {
 	NetPrice: 4500,
 	TentativeDispatchDate: getFutureDate(7),
 	OneTimeSetupCosts: 5000,
-	BOMFile: "",
-	GerberFile: "",
-	PickAndPlaceFile: "",
+	UploadedFileName: null,
+	UploadedFileUrl: null,
 
 	// options
 	BoardTypeOptions: ["Single PCB", "Panel"],
@@ -96,14 +95,11 @@ const pcbAssemblySlice = createSlice({
 		setTentativeDispatchDate: (state, action: PayloadAction<string>) => {
 			state.TentativeDispatchDate = action.payload;
 		},
-		setBomFile: (state, action: PayloadAction<string>) => {
-			state.BOMFile = action.payload;
+		setUploadedFileUrl: (state, action: PayloadAction<string | null>) => {
+			state.UploadedFileUrl = action.payload;
 		},
-		setGerberFile: (state, action: PayloadAction<string>) => {
-			state.GerberFile = action.payload;
-		},
-		setPickAndPlaceFile: (state, action: PayloadAction<string>) => {
-			state.PickAndPlaceFile = action.payload;
+		setUploadedFileName: (state, action: PayloadAction<string | null>) => {
+			state.UploadedFileName = action.payload;
 		},
 		setPcbPrice: (state, action: PayloadAction<number>) => {
 			state.NetPrice = action.payload;
@@ -129,9 +125,8 @@ export const {
 	setLeadTime,
 	setPcbAssemblyPrice,
 	setTentativeDispatchDate,
-	setBomFile,
-	setGerberFile,
-	setPickAndPlaceFile,
+	setUploadedFileUrl,
+	setUploadedFileName,
 	setOneTimeSetupCost,
 	setPcbPrice,
 } = pcbAssemblySlice.actions;
@@ -158,9 +153,8 @@ export const selectTurnaroundTime = (state: ReduxState) => state.pcbAssembly.Tur
 export const selectCalculatedPrice = (state: ReduxState) => state.pcbAssembly.NetPrice;
 export const selectTentativeDispatchDate = (state: ReduxState) => state.pcbAssembly.TentativeDispatchDate;
 export const selectOneTimeSetupCost = (state: ReduxState) => state.pcbAssembly.OneTimeSetupCosts;
-export const selectBomFile = (state: ReduxState) => state.pcbAssembly.BOMFile;
-export const selectGerberFile = (state: ReduxState) => state.pcbAssembly.GerberFile;
-export const selectPickAndPlaceFile = (state: ReduxState) => state.pcbAssembly.PickAndPlaceFile;
+export const selectUploadedName = (state: ReduxState) => state.rigidPcb.UploadedFileName;
+export const selectUploadedFileUrl = (state: ReduxState) => state.rigidPcb.UploadedFileUrl;
 
 /* dropdown menu selectors */
 export const selectBoardTypeOptions = (state: ReduxState) => state.pcbAssembly.BoardTypeOptions;
@@ -195,9 +189,8 @@ export const selectPcbAssemblyMemomized = createSelector([selectPcbAssemblyState
 		TurnaroundTime: pcbAssembly.TurnaroundTime,
 		OneTimeSetupCosts: pcbAssembly.OneTimeSetupCosts,
 		NetPrice: pcbAssembly.NetPrice,
-		BOMFile: pcbAssembly.BOMFile,
-		GerberFile: pcbAssembly.GerberFile,
-		PickAndPlaceFile: pcbAssembly.PickAndPlaceFile,
+		UploadedFileName: pcbAssembly.UploadedFileName,
+		UploadedFileUrl: pcbAssembly.UploadedFileUrl,
 	};
 	return pcbAssemblyFabSpecs;
 });

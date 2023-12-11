@@ -3,15 +3,12 @@ import { addItemToCartAction } from "@/actions";
 import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
 import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
 import BgaComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/bga";
-import UploadBomFile from "@/app/products/pcb/assembly/_components/fields/bom";
 import ConformalCoating from "@/app/products/pcb/assembly/_components/fields/coat";
 import Depanel from "@/app/products/pcb/assembly/_components/fields/depanel";
 import FunctionalTest from "@/app/products/pcb/assembly/_components/fields/funcTest";
-import UploadGerberFile from "@/app/products/pcb/assembly/_components/fields/gerber";
 import TurnAroundTime from "@/app/products/pcb/assembly/_components/fields/leadTime";
 import PcbName from "@/app/products/pcb/assembly/_components/fields/name";
 import PcbsPerPanel from "@/app/products/pcb/assembly/_components/fields/pcbsPanel";
-import UploadPickAndPlaceFile from "@/app/products/pcb/assembly/_components/fields/pickPlace";
 import AssemblyQuantity from "@/app/products/pcb/assembly/_components/fields/quantity";
 import AssemblySides from "@/app/products/pcb/assembly/_components/fields/sides";
 import SmdComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/smd";
@@ -21,28 +18,41 @@ import ThroughHoleComponentsQuantity from "@/app/products/pcb/assembly/_componen
 import BoardType from "@/app/products/pcb/assembly/_components/fields/type";
 import UniqueComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/uniqueComp";
 import PcbAssemblyPriceSummary from "@/app/products/pcb/assembly/_components/priceSum";
+import UploadDesignFile from "@/app/products/pcb/flex-pcb/_components/fields/file";
 import { selectPcbAssemblyMemomized } from "@/redux/reducers/pcbAssemblySlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";
 
+
 export default function PcbAssembly() {
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();
 	const pcbAssembly: PcbAssemblyFabSpecsType = useSelector(selectPcbAssemblyMemomized);
+	const isFileUploaded = pcbAssembly.UploadedFileUrl ? true : false;
 
-	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
-		startTransition(async () => {
-			e.preventDefault();
-			await addItemToCartAction(pcbAssembly);
-			toast({
-				variant: "default",
-				title: "PCB Assembly Project added to cart",
-				description: "We've successfully added your assembly project to cart!",
-				duration: 4000,
+		function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
+			startTransition(async () => {
+				e.preventDefault();
+				if (!isFileUploaded) {
+					toast({
+						variant: "destructive",
+						title: "Please upload design file",
+						description: "Click the upload button to upload your design file and then continue.",
+						duration: 5000,
+					});
+				} else {
+					// handle add to cart
+					await addItemToCartAction(pcbAssembly);
+					toast({
+						variant: "default",
+						title: "PCB Assembly added to cart",
+						description: "We've successfully added your assembly to cart!",
+						duration: 4000,
+					});
+				}
 			});
-		});
-	}
+		}
 	return (
 		<form onSubmit={handleOnSubmit}>
 			<div className="mx-auto my-2 max-w-6xl px-4">
@@ -64,9 +74,7 @@ export default function PcbAssembly() {
 						<FunctionalTest />
 						<ComponentSourcing />
 						<TurnAroundTime />
-						<UploadBomFile />
-						<UploadGerberFile />
-						<UploadPickAndPlaceFile />
+						<UploadDesignFile />
 					</div>
 					<div className="mt-8 space-y-4">
 						<PcbAssemblyPriceSummary />

@@ -573,9 +573,8 @@ type PcbAssemblyFabSpecsType = {
 	TurnaroundTime: "Standard 5-7 days" | "Expedited 3-4 days";
 	OneTimeSetupCosts: number;
 	NetPrice: number;
-	BOMFile: string;
-	GerberFile: string;
-	PickAndPlaceFile: string;
+	UploadedFileName: string | null;
+	UploadedFileUrl: string | null;
 };
 
 type PcbAssemblyStoreStateType = Unwrap<

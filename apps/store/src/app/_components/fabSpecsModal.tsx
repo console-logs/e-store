@@ -11,7 +11,7 @@ type PcbFabSpecsModalProps = {
 
 type TableRowProps = {
 	label: string;
-	value: string | number;
+	value: string | number | null;
 	isVisible: boolean;
 };
 
