@@ -78,6 +78,7 @@ export default async function BasketPcbsTable() {
 									const { NetPrice, Type } = pcb;
 									const isRigidOrFlex = Type === "Rigid PCB" || Type === "Flex PCB";
 									const name = pcb.Name;
+									const filename = pcb.UploadedFileName;
 									const quantity = isRigidOrFlex
 										? pcb.DesignFormat === "Single PCB"
 											? pcb.PcbQty
@@ -117,6 +118,7 @@ export default async function BasketPcbsTable() {
 														<DeleteCartItemButton
 															deleteCartItemAction={deleteCartItemAction}
 															item={name}
+															filename={filename}
 														/>
 													</dd>
 												</dl>
@@ -138,6 +140,7 @@ export default async function BasketPcbsTable() {
 												<DeleteCartItemButton
 													deleteCartItemAction={deleteCartItemAction}
 													item={name}
+													filename={filename}
 												/>
 											</td>
 										</tr>

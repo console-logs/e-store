@@ -6,6 +6,7 @@ import { useTransition } from "react";
 type DeleteCartItemButtonProps = {
 	deleteCartItemAction: (item: string) => Promise<void>;
 	item: string;
+	filename?: string | null;
 };
 
 type DeleteAllButtonProps = {
@@ -15,7 +16,7 @@ type DeleteAllButtonProps = {
 };
 
 export function DeleteCartItemButton(props: DeleteCartItemButtonProps) {
-	const { deleteCartItemAction, item } = props;
+	const { deleteCartItemAction, item, filename } = props;
 	const [isLoading, startTransition] = useTransition();
 
 	return (
@@ -26,6 +27,10 @@ export function DeleteCartItemButton(props: DeleteCartItemButtonProps) {
 			onClick={() =>
 				startTransition(async () => {
 					await deleteCartItemAction(item);
+					await fetch("/api/file", {
+						method: "DELETE",
+						body: JSON.stringify({ filename }),
+					});
 				})
 			}>
 			{isLoading ? (
