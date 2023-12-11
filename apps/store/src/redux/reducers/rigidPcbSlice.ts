@@ -25,7 +25,7 @@ const initialState: RigidPcbStoreStateType = {
 	DispatchUnit: "PCB",
 	NetPrice: 2640.19,
 	TentativeDispatchDate: getFutureDate(7),
-	FileUrl: "",
+	UploadedFileUrl: "",
 
 	/* conditional fields */
 	PcbQty: 5,
@@ -297,8 +297,8 @@ const rigidPcbSlice = createSlice({
 		setTentativeDispatchDate: (state, action: PayloadAction<string>) => {
 			state.TentativeDispatchDate = action.payload;
 		},
-		setFileUrl: (state, action: PayloadAction<string>) => {
-			state.FileUrl = action.payload;
+		setUploadedFileUrl: (state, action: PayloadAction<string>) => {
+			state.UploadedFileUrl = action.payload;
 		},
 		/***************** Dependent fields update	**********************/
 		updateOrderedQty: state => {
@@ -594,7 +594,7 @@ export const {
 	setDispatchUnit,
 	setPcbPrice,
 	setTentativeDispatchDate,
-	setFileUrl,
+	setUploadedFileUrl,
 	updateBoardThickness,
 	updateMaterial,
 	updateSurfaceFinish,
@@ -623,7 +623,7 @@ export const selectPanelSizeX = (state: ReduxState) => state.rigidPcb.PanelSizeX
 export const selectPanelSizeY = (state: ReduxState) => state.rigidPcb.PanelSizeY;
 export const selectCalculatedPrice = (state: ReduxState) => state.rigidPcb.NetPrice;
 export const selectPanelQty = (state: ReduxState) => state.rigidPcb.PanelQty;
-export const selectFileUrl = (state: ReduxState) => state.rigidPcb.FileUrl;
+export const selectUploadedFileUrl = (state: ReduxState) => state.rigidPcb.UploadedFileUrl;
 export const selectName = (state: ReduxState) => state.rigidPcb.Name;
 export const selectBaseMaterial = (state: ReduxState) => state.rigidPcb.BaseMaterial;
 export const selectLayer = (state: ReduxState) => state.rigidPcb.Layer;
@@ -740,7 +740,7 @@ export const selectRigidPcbMemoized = createSelector([selectRigidPcbState], rigi
 		LeadTime: rigidPcb.LeadTime,
 		DispatchUnit: rigidPcb.DispatchUnit,
 		NetPrice: rigidPcb.NetPrice,
-		FileUrl: rigidPcb.FileUrl,
+		UploadedFileUrl: rigidPcb.UploadedFileUrl,
 	};
 	return rigidPcbFabSpecs;
 });

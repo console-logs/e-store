@@ -116,7 +116,7 @@ type BaseRigidPcbFabSpecsType = {
 	LeadTime: "3 Working days" | "5 Working days" | "7 Working days" | "10 Working days";
 	DispatchUnit: "PCB" | "Panel";
 	NetPrice: number;
-	FileUrl: string;
+	UploadedFileUrl: string;
 };
 
 type RigidPcbStoreStateType = Unwrap<
@@ -1099,7 +1099,6 @@ type RazorpayPropsType = {
 };
 
 type CheckoutDataType = Pick<UserType, "cart" | "billingAddresses" | "shippingAddresses">;
-
 
 type FieldsType = {
 	acl: string;

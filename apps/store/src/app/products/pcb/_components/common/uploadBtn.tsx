@@ -1,5 +1,5 @@
 import { uploadFile } from "@/app/products/pcb/_helpers/uploadFile";
-import { selectName, setFileUrl } from "@/redux/reducers/rigidPcbSlice";
+import { selectName, setUploadedFileUrl } from "@/redux/reducers/rigidPcbSlice";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { useToast } from "@shared/components/ui/use-toast";
@@ -21,7 +21,7 @@ export default function UploadFileButton(props: { file: File | undefined }) {
 					event.preventDefault();
 					const response = await uploadFile({ file, Name: name });
 					if (response.success) {
-						dispatch(setFileUrl(response.fileUrl));
+						dispatch(setUploadedFileUrl(response.fileUrl));
 						toast({
 							variant: "default",
 							title: "File upload success",
