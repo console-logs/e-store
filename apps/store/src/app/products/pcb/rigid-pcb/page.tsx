@@ -48,18 +48,28 @@ export default function RigidPcbFabrication() {
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();
 	const rigidPcb: RigidPcbFabSpecsType = useSelector(selectRigidPcbMemoized);
+	const isFileUploaded = rigidPcb.UploadedFileUrl ? true : false;
 
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		startTransition(async () => {
 			e.preventDefault();
-			// handle add to cart
-			await addItemToCartAction(rigidPcb);
-			toast({
-				variant: "default",
-				title: "Rigid PCB added to cart",
-				description: "We've successfully added your pcb to cart!",
-				duration: 4000,
-			});
+			if (!isFileUploaded) {
+				toast({
+					variant: "destructive",
+					title: "Please upload design file",
+					description: "Click the upload button to upload your design file and then continue.",
+					duration: 5000,
+				});
+			} else {
+				// handle add to cart
+				await addItemToCartAction(rigidPcb);
+				toast({
+					variant: "default",
+					title: "Rigid PCB added to cart",
+					description: "We've successfully added your pcb to cart!",
+					duration: 4000,
+				});
+			}
 		});
 	}
 	return (
