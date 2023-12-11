@@ -272,7 +272,8 @@ export const FlexPcbFabSpecsTypeSchema = z.object({
 	]),
 	CuttingMethod: z.literal("Laser Cutting"),
 	NetPrice: z.number(),
-	DesignFile: z.string(),
+	UploadedFileUrl: z.string().nullable(),
+	UploadedFileName: z.string().nullable(),
 });
 
 export const PcbAssemblyFabSpecsTypeSchema = z.object({

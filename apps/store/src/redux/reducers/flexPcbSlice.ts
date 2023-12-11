@@ -67,7 +67,6 @@ const initialState: FlexPcbStoreStateType = {
 	CuttingMethodOptions: ["Laser Cutting"],
 	BoardOutlineTolerance: "±0.1mm",
 	BoardOutlineToleranceOptions: ["±0.1mm", "±0.05mm"],
-	DesignFile: "",
 	DispatchUnit: "PCB",
 	DispatchUnitOptions: ["PCB", "Panel"],
 	LeadTime: "3 Working days",
@@ -76,6 +75,8 @@ const initialState: FlexPcbStoreStateType = {
 	EdgeRailSizeOptions: ["5mm", "7mm", "10mm"],
 	NetPrice: 1165.11,
 	TentativeDispatchDate: getFutureDate(3),
+	UploadedFileName: null,
+	UploadedFileUrl: null,
 };
 
 const flexPcbSlice = createSlice({
@@ -234,8 +235,11 @@ const flexPcbSlice = createSlice({
 		setBoardOutlineTolerance: (state, action: PayloadAction<"±0.1mm" | "±0.05mm">) => {
 			state.BoardOutlineTolerance = action.payload;
 		},
-		setDesignFile: (state, action: PayloadAction<string>) => {
-			state.DesignFile = action.payload;
+		setUploadedFileUrl: (state, action: PayloadAction<string | null>) => {
+			state.UploadedFileUrl = action.payload;
+		},
+		setUploadedFileName: (state, action: PayloadAction<string | null>) => {
+			state.UploadedFileName = action.payload;
 		},
 		setDispatchUnit: (state, action: PayloadAction<"PCB" | "Panel">) => {
 			state.DispatchUnit = action.payload;
@@ -359,7 +363,8 @@ export const {
 	setCoverlay,
 	setCoverlayThickness,
 	setCuttingMethod,
-	setDesignFile,
+	setUploadedFileUrl,
+	setUploadedFileName,
 	setDifferentDesignsInPanel,
 	setDispatchUnit,
 	setEdgeRailSize,
@@ -408,7 +413,8 @@ export const selectCopperType = (state: ReduxState) => state.flexPcb.CopperType;
 export const selectCoverlay = (state: ReduxState) => state.flexPcb.Coverlay;
 export const selectCoverlayThickness = (state: ReduxState) => state.flexPcb.CoverlayThickness;
 export const selectCuttingMethod = (state: ReduxState) => state.flexPcb.CuttingMethod;
-export const selectDesignFile = (state: ReduxState) => state.flexPcb.DesignFile;
+export const selectUploadedName = (state: ReduxState) => state.rigidPcb.UploadedFileName;
+export const selectUploadedFileUrl = (state: ReduxState) => state.rigidPcb.UploadedFileUrl;
 export const selectDifferentDesignsInPanel = (state: ReduxState) => state.flexPcb.DifferentDesignsInPanel;
 export const selectDispatchUnit = (state: ReduxState) => state.flexPcb.DispatchUnit;
 export const selectEdgeRailSize = (state: ReduxState) => state.flexPcb.EdgeRailSize;
@@ -505,7 +511,8 @@ export const selectFlexPcbMemoized = createSelector([selectFlexPcbState], flexPc
 		SurfaceFinish: flexPcb.SurfaceFinish,
 		ThreeMTapeThickness: flexPcb.ThreeMTapeThickness,
 		ViaHoles: flexPcb.ViaHoles,
-		DesignFile: flexPcb.DesignFile,
+		UploadedFileName: flexPcb.UploadedFileName,
+		UploadedFileUrl: flexPcb.UploadedFileUrl,
 	};
 	return flexPcbFabSpecs;
 });

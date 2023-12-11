@@ -11,7 +11,7 @@ export default function PcbName() {
 	return (
 		<div>
 			<Label>
-				Flex PCB Name <NameTip />
+				PCB Name <NameTip />
 			</Label>
 			<Input
 				placeholder="Enter your Flex Pcb name"

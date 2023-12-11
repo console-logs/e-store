@@ -395,7 +395,8 @@ type BaseFlexPcbFabSpecsType = {
 	EMIShieldingFilm: "Without" | "Both sides (Black, 18um)" | "Single side (Black, 18um)";
 	CuttingMethod: "Laser Cutting";
 	NetPrice: number;
-	DesignFile: string;
+	UploadedFileName: string | null;
+	UploadedFileUrl: string | null;
 };
 
 type FlexPcbStoreStateType = Unwrap<

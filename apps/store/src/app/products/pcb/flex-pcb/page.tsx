@@ -44,19 +44,31 @@ export default function FlexPcbFabrication() {
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();
 	const flexPcb: FlexPcbFabSpecsType = useSelector(selectFlexPcbMemoized);
+	const isFileUploaded = flexPcb.UploadedFileUrl ? true : false;
 
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		startTransition(async () => {
 			e.preventDefault();
-			await addItemToCartAction(flexPcb);
-			toast({
-				variant: "default",
-				title: "Flex PCB added to cart",
-				description: "We've successfully added your pcb to cart!",
-				duration: 4000,
-			});
+			if (!isFileUploaded) {
+				toast({
+					variant: "destructive",
+					title: "Please upload design file",
+					description: "Click the upload button to upload your design file and then continue.",
+					duration: 5000,
+				});
+			} else {
+				// handle add to cart
+				await addItemToCartAction(flexPcb);
+				toast({
+					variant: "default",
+					title: "Flex PCB added to cart",
+					description: "We've successfully added your pcb to cart!",
+					duration: 4000,
+				});
+			}
 		});
 	}
+
 	return (
 		<form onSubmit={handleOnSubmit}>
 			<div className="mx-auto my-2 max-w-6xl px-4">
