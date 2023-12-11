@@ -1,17 +1,10 @@
 "use client";
-import { deleteAllItemsAction } from "@/actions";
+import { deleteAllItemsAction, deleteCartItemAction } from "@/actions";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { useTransition } from "react";
 
-type DeleteCartItemButtonProps = {
-	deleteCartItemAction: (item: string) => Promise<void>;
-	item: string;
-	filename?: string | null;
-};
-
-export function DeleteCartItemButton(props: DeleteCartItemButtonProps) {
-	const { deleteCartItemAction, item, filename } = props;
+export function DeleteCartItemButton({ itemName }: { itemName: string }) {
 	const [isLoading, startTransition] = useTransition();
 
 	return (
@@ -21,11 +14,11 @@ export function DeleteCartItemButton(props: DeleteCartItemButtonProps) {
 			variant={"ghost"}
 			onClick={() =>
 				startTransition(async () => {
-					await deleteCartItemAction(item);
-					await fetch("/api/file", {
-						method: "DELETE",
-						body: JSON.stringify({ filename }),
-					});
+					await deleteCartItemAction(itemName);
+					// await fetch("/api/file", {
+					// 	method: "DELETE",
+					// 	body: JSON.stringify({ filename }),
+					// });
 				})
 			}>
 			{isLoading ? (

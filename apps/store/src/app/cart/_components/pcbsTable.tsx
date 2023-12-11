@@ -1,4 +1,4 @@
-import { deleteCartItemAction, fetchCartItemsAction } from "@/actions";
+import { fetchCartItemsAction } from "@/actions";
 import PcbFabSpecsModal from "@/app/_components/fabSpecsModal";
 import { DeleteAllButton, DeleteCartItemButton } from "@/app/cart/_components/delete";
 import { pcbTypes } from "@/lib/constants";
@@ -73,7 +73,6 @@ export default async function BasketPcbsTable() {
 									const { NetPrice, Category } = pcb;
 									const isRigidOrFlex = Category === "Rigid PCB" || Category === "Flex PCB";
 									const name = pcb.Name;
-									const filename = pcb.UploadedFileName;
 									const quantity = isRigidOrFlex
 										? pcb.DesignFormat === "Single PCB"
 											? pcb.PcbQty
@@ -110,11 +109,7 @@ export default async function BasketPcbsTable() {
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
-														<DeleteCartItemButton
-															deleteCartItemAction={deleteCartItemAction}
-															item={name}
-															filename={filename}
-														/>
+														<DeleteCartItemButton itemName={name} />
 													</dd>
 												</dl>
 											</td>
@@ -132,11 +127,7 @@ export default async function BasketPcbsTable() {
 											</td>
 
 											<td className="hidden sm:table-cell text-right">
-												<DeleteCartItemButton
-													deleteCartItemAction={deleteCartItemAction}
-													item={name}
-													filename={filename}
-												/>
+												<DeleteCartItemButton itemName={name} />
 											</td>
 										</tr>
 									);
