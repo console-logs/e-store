@@ -25,8 +25,8 @@ const initialState: RigidPcbStoreStateType = {
 	DispatchUnit: "PCB",
 	NetPrice: 2640.19,
 	TentativeDispatchDate: getFutureDate(7),
-	UploadedFileName: "",
-	UploadedFileUrl: "",
+	UploadedFileName: null,
+	UploadedFileUrl: null,
 
 	/* conditional fields */
 	PcbQty: 5,
@@ -298,10 +298,10 @@ const rigidPcbSlice = createSlice({
 		setTentativeDispatchDate: (state, action: PayloadAction<string>) => {
 			state.TentativeDispatchDate = action.payload;
 		},
-		setUploadedFileUrl: (state, action: PayloadAction<string>) => {
+		setUploadedFileUrl: (state, action: PayloadAction<string | null>) => {
 			state.UploadedFileUrl = action.payload;
 		},
-		setUploadedFileName: (state, action: PayloadAction<string>) => {
+		setUploadedFileName: (state, action: PayloadAction<string | null>) => {
 			state.UploadedFileName = action.payload;
 		},
 		/***************** Dependent fields update	**********************/
