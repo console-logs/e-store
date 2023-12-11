@@ -116,6 +116,7 @@ type BaseRigidPcbFabSpecsType = {
 	LeadTime: "3 Working days" | "5 Working days" | "7 Working days" | "10 Working days";
 	DispatchUnit: "PCB" | "Panel";
 	NetPrice: number;
+	UploadedFileName: string;
 	UploadedFileUrl: string;
 };
 

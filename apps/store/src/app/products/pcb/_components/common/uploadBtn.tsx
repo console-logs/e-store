@@ -22,6 +22,7 @@ export default function UploadFileButton(props: { file: File | undefined }) {
 					const response = await uploadFile({ file, Name: name });
 					if (response.success) {
 						dispatch(setUploadedFileUrl(response.fileUrl));
+						//TODO: Set the file name in redux store.
 						toast({
 							variant: "default",
 							title: "File upload success",
