@@ -1,5 +1,6 @@
 import { createCartCookieAction } from "@/actions";
 import { env } from "@/env";
+import { convertMBToBytes } from "@/lib/utils";
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { auth } from "@clerk/nextjs";
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
 		Key: filename,
 		Body: fileUint8Array,
 		ContentType: file.type,
+		ContentLength: convertMBToBytes(25),
 	});
 
 	const getCommand = new GetObjectCommand({
