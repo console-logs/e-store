@@ -16,13 +16,14 @@ export async function POST(request: Request) {
 	const { userId } = auth();
 	const cartIdCookie = cookies().get("cartId");
 	const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
-
-	let filename = file.name + "_" + newCartId + ".zip"; // default
+	const filename = file.name + ".zip"; // default
+	let foldername = "";
 
 	if (!userId && !cartIdCookie) {
+		foldername = newCartId + "/";
 		await createCartCookieAction(newCartId);
 	} else if (cartIdCookie) {
-		filename = file.name + "_" + cartIdCookie.value + ".zip";
+		foldername = cartIdCookie.value + "/";
 	}
 
 	// Read the file into a Buffer
@@ -31,14 +32,14 @@ export async function POST(request: Request) {
 
 	const putCommand = new PutObjectCommand({
 		Bucket: env.AWS_BUCKET_NAME,
-		Key: filename,
+		Key: foldername + filename,
 		Body: fileUint8Array,
 		ContentType: file.type,
 	});
 
 	const getCommand = new GetObjectCommand({
 		Bucket: env.AWS_BUCKET_NAME,
-		Key: filename,
+		Key: foldername + filename,
 	});
 
 	try {
