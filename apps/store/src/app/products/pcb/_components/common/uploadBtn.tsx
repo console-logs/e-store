@@ -1,5 +1,4 @@
-import { uploadFile } from "@/app/products/pcb/_helpers/uploadFile";
-import { selectName, setUploadedFileUrl } from "@/redux/reducers/rigidPcbSlice";
+import { selectName, setUploadedFileName, setUploadedFileUrl } from "@/redux/reducers/rigidPcbSlice";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { useToast } from "@shared/components/ui/use-toast";
@@ -19,14 +18,27 @@ export default function UploadFileButton(props: { file: File | undefined }) {
 			onClick={event => {
 				startTransition(async () => {
 					event.preventDefault();
-					const response = await uploadFile({ file, Name: name });
-					if (response.success) {
-						dispatch(setUploadedFileUrl(response.fileUrl));
-						//TODO: Set the file name in redux store.
+					const formData = new FormData();
+					formData.set("file", file as Blob, name);
+					const response = await fetch("/api/file", {
+						method: "POST",
+						body: formData,
+					});
+					if (response.ok) {
+						const data = (await response.json()) as { filename: string; fileUrl: string };
+						dispatch(setUploadedFileUrl(data.fileUrl));
+						dispatch(setUploadedFileName(data.filename));
 						toast({
 							variant: "default",
 							title: "File upload success",
 							description: "We've successfully uploaded your file!",
+							duration: 4000,
+						});
+					} else {
+						toast({
+							variant: "destructive",
+							title: "File upload failed",
+							description: response.statusText,
 							duration: 4000,
 						});
 					}

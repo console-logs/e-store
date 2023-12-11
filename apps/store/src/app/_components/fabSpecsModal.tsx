@@ -119,7 +119,7 @@ function TableRow(props: TableRowProps) {
 	const { isVisible, label, value } = props;
 	if (!isVisible) return null;
 	let content;
-	if (label === "File Url") {
+	if (label === "Uploaded File Url") {
 		content = (
 			<Link
 				href={value as string}
