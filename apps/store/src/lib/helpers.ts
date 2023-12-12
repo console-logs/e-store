@@ -56,7 +56,7 @@ async function copyFilesFromSourceToDestination(cartId: string | undefined, dest
 	});
 	const listResults = await s3Client.send(listCommand);
 	const sourceObjects = listResults.Contents;
-	if (!sourceObjects) throw new Error("transferGuestCartToUserAction: No objects found in source directory!");
+	if (!sourceObjects) throw new Error("copyFilesFromSourceToDestination: No objects found in source directory!");
 
 	// copy each object to the destination directory
 	for (const sourceObject of sourceObjects) {
@@ -70,14 +70,14 @@ async function copyFilesFromSourceToDestination(cartId: string | undefined, dest
 	}
 }
 
-async function deleteFilesInSourceDirectory(cartId: string | undefined): Promise<void> {
+async function deleteFilesInSourceDirectory(foldername: string | undefined): Promise<void> {
 	const listCommand = new ListObjectsV2Command({
 		Bucket: env.AWS_BUCKET_NAME,
-		Prefix: cartId + "/",
+		Prefix: foldername + "/",
 	});
 	const listResults = await s3Client.send(listCommand);
 	const sourceObjects = listResults.Contents;
-	if (!sourceObjects) throw new Error("transferGuestCartToUserAction: No objects found in source directory!");
+	if (!sourceObjects) throw new Error("deleteFilesInSourceDirectory: No objects found in source directory!");
 	for (const sourceObject of sourceObjects) {
 		const deleteCommand = new DeleteObjectCommand({
 			Bucket: env.AWS_BUCKET_NAME,
