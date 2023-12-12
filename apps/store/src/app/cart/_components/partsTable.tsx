@@ -67,7 +67,7 @@ export default async function BasketPartsTable() {
 						{parts.length > 0 ? (
 							<>
 								{parts.map((part, partIdx) => {
-									const { Name, Description, Availability } = part;
+									const { Name, Description, Availability, Type } = part;
 									const serialNum = partIdx + 1;
 									const unitPrice = calculatePartUnitPrice(parts, Name);
 									const netPrice = calculatePartNetPrice(unitPrice, part.OrderedQty);
@@ -98,7 +98,10 @@ export default async function BasketPartsTable() {
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
-														<DeleteCartItemButton itemName={Name} />
+														<DeleteCartItemButton
+															itemName={Name}
+															type={Type}
+														/>
 													</dd>
 												</dl>
 											</td>
@@ -113,7 +116,10 @@ export default async function BasketPartsTable() {
 												{netPrice}
 											</td>
 											<td className="hidden sm:table-cell text-right">
-												<DeleteCartItemButton itemName={Name} />
+												<DeleteCartItemButton
+													itemName={Name}
+													type={Type}
+												/>
 											</td>
 										</tr>
 									);

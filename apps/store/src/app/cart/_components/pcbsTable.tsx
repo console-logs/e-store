@@ -80,6 +80,7 @@ export default async function BasketPcbsTable() {
 										: pcb.OrderedQty;
 									const netPrice = NetPrice;
 									const unitPrice = netPrice / quantity;
+									const type = pcb.Type;
 
 									return (
 										<tr
@@ -109,7 +110,10 @@ export default async function BasketPcbsTable() {
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
-														<DeleteCartItemButton itemName={name} />
+														<DeleteCartItemButton
+															itemName={name}
+															type={type}
+														/>
 													</dd>
 												</dl>
 											</td>
@@ -127,7 +131,10 @@ export default async function BasketPcbsTable() {
 											</td>
 
 											<td className="hidden sm:table-cell text-right">
-												<DeleteCartItemButton itemName={name} />
+												<DeleteCartItemButton
+													itemName={name}
+													type={type}
+												/>
 											</td>
 										</tr>
 									);
