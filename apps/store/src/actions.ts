@@ -5,6 +5,7 @@ import {
 	fetchGuestCart,
 	fetchUserCart,
 	filterCartItems,
+	filterCartItemsByProperty,
 	mergeCarts,
 	transferDesignFilesInS3,
 	updateCartInDB,
@@ -158,23 +159,10 @@ export async function deleteAllItemsAction(property: string, value: string) {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
-			const cartItems = cart.cartItems;
-
-			// keep the items that dont match the property value
-			const updatedCartItems = cartItems.filter(
-				cartItem => cartItem[property as keyof typeof cartItem] !== value
-			);
-
-			// Update cart with filtered items and adjust cartSize
+			const updatedCartItems = await filterCartItemsByProperty(cart, property, value);
 			cart.cartItems = updatedCartItems;
 			cart.cartSize = updatedCartItems.length;
-
-			// update db
-			const { userId } = auth();
-			const cartIdCookie = cookies().get("cartId");
-			const collection = userId ? usersCollection : guestCartsCollection;
-			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
-			await collection.updateOne(filter, { $set: { cart } });
+			await updateCartInDB(cart);
 		}
 		revalidatePath("/cart");
 	} catch (error) {

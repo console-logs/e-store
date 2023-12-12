@@ -152,6 +152,13 @@ export async function createCartCookie(cartId: string) {
 }
 
 export async function filterCartItems(cart: CartDataType, name: string): Promise<CartItemsType> {
-	// keep the item that is not a match
 	return cart.cartItems.filter(cartItem => cartItem.Name !== name);
+}
+
+export async function filterCartItemsByProperty(
+	cart: CartDataType,
+	property: string,
+	value: string
+): Promise<CartItemsType> {
+	return cart.cartItems.filter(cartItem => cartItem[property as keyof typeof cartItem] !== value);
 }
