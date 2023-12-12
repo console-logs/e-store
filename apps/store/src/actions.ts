@@ -1,22 +1,22 @@
 "use server";
-import { OVERHEAD_SHIPPING_CHARGES } from "@/lib/constants";
 import {
 	createNewCart,
+	createNewOpenOrder,
+	createNewOrder,
 	fetchGuestCart,
 	fetchUserCart,
 	filterCartItems,
 	filterCartItemsByProperty,
 	mergeCarts,
+	resetCart,
 	transferDesignFilesInS3,
 	updateCartInDB,
 	updateExistingCart,
 } from "@/lib/helpers";
-import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
-import { calculateCartTotal, calculateGst } from "@/lib/utils";
+import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import orderId from "order-id";
 
 export async function captureUserSignupAction(props: SignupPropsType): Promise<void> {
 	const { email, firstName, lastName, userId } = props;
@@ -210,62 +210,10 @@ export async function fetchAddressesAction(): Promise<FetchAddressesPropsType | 
 }
 
 export async function captureOrderDetails(props: RazorpayPropsType): Promise<void> {
-	const { razorpayResponses, razorpayOrderValue } = props;
 	try {
-		const { userId } = auth();
-		await mongoClient.connect();
-		const filter = { userId };
-		const options = { projection: { _id: 0, cart: 1, billingAddresses: 1, shippingAddresses: 1 } };
-		const result = await usersCollection.findOne<CheckoutDataType>(filter, options);
-
-		if (!result) throw new Error("captureOrderDetails: User not found!");
-
-		const cart = result.cart;
-		const cartValue = calculateCartTotal(cart);
-		const tax = calculateGst(cartValue);
-		const billingAddress = result.billingAddresses[0]!;
-		const shippingAddress = result.shippingAddresses[0]!;
-		const newOrderId = orderId(razorpayResponses.razorpay_order_id).generate();
-
-		const newOrder: OrderType = {
-			id: newOrderId,
-			createdAt: new Date(),
-			status: "PLACED",
-			cartValue,
-			discountCode: "NA",
-			discountValue: 0,
-			tax,
-			shippingCost: OVERHEAD_SHIPPING_CHARGES,
-			cartTotal: Number(razorpayOrderValue), // in paise
-			paymentId: razorpayResponses.razorpay_payment_id,
-			paymentOrderId: razorpayResponses.razorpay_order_id,
-			paymentSignature: razorpayResponses.razorpay_signature,
-			shipper: null,
-			awb: null,
-			billingAddress,
-			shippingAddress,
-			cart,
-			remarks: null,
-		};
-
-		// create new open order for admin
-		const newOpenOrder: OpenOrderType = {
-			...newOrder,
-			userId,
-			notes: null,
-		};
-
-		await usersCollection.updateOne(filter, {
-			$push: { orders: newOrder },
-		});
-		await openOrdersCollection.insertOne(newOpenOrder); // for admin
-
-		// reset cart
-		const newCart: CartDataType = {
-			cartSize: 0,
-			cartItems: [],
-		};
-		await usersCollection.updateOne(filter, { $set: { cart: newCart } });
+		const newOrder = await createNewOrder(props);
+		await createNewOpenOrder(newOrder);
+		await resetCart();
 		revalidatePath("/");
 	} catch (error) {
 		throw error; // handle on the client side.

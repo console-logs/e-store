@@ -1,10 +1,12 @@
 import { env } from "@/env";
-import { s3Client } from "@/lib/constants";
-import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo";
+import { OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
+import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
 import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
+import orderId from "order-id";
 import ShortUniqueId from "short-unique-id";
+import { calculateCartTotal, calculateGst } from "./utils";
 
 export async function updateCartInDB(cart: CartDataType): Promise<void> {
 	const { userId } = auth();
@@ -161,4 +163,69 @@ export async function filterCartItemsByProperty(
 	value: string
 ): Promise<CartItemsType> {
 	return cart.cartItems.filter(cartItem => cartItem[property as keyof typeof cartItem] !== value);
+}
+
+export async function createNewOrder(props: RazorpayPropsType): Promise<OrderType> {
+	const { razorpayResponses, razorpayOrderValue } = props;
+
+	const { userId } = auth();
+	const filter = { userId };
+	await mongoClient.connect();
+	const options = { projection: { _id: 0, cart: 1, billingAddresses: 1, shippingAddresses: 1 } };
+
+	const result = await usersCollection.findOne<CheckoutDataType>(filter, options);
+	if (!result) throw new Error("captureOrderDetails: User not found!");
+
+	const cart = result.cart;
+	const cartValue = calculateCartTotal(cart);
+	const tax = calculateGst(cartValue);
+	const billingAddress = result.billingAddresses[0]!;
+	const shippingAddress = result.shippingAddresses[0]!;
+	const newOrderId = orderId(razorpayResponses.razorpay_order_id).generate();
+
+	const newOrder: OrderType = {
+		id: newOrderId,
+		createdAt: new Date(),
+		status: "PLACED",
+		cartValue,
+		discountCode: "NA",
+		discountValue: 0,
+		tax,
+		shippingCost: OVERHEAD_SHIPPING_CHARGES,
+		cartTotal: Number(razorpayOrderValue), // in paise
+		paymentId: razorpayResponses.razorpay_payment_id,
+		paymentOrderId: razorpayResponses.razorpay_order_id,
+		paymentSignature: razorpayResponses.razorpay_signature,
+		shipper: null,
+		awb: null,
+		billingAddress,
+		shippingAddress,
+		cart,
+		remarks: null,
+	};
+
+	await usersCollection.updateOne(filter, { $push: { orders: newOrder } });
+
+	return newOrder;
+}
+
+export async function createNewOpenOrder(newOrder: OrderType) {
+	const { userId } = auth();
+	const newOpenOrder: OpenOrderType = {
+		...newOrder,
+		userId,
+		notes: null,
+	};
+	await openOrdersCollection.insertOne(newOpenOrder); // for admin
+}
+
+export async function resetCart(): Promise<void> {
+	const newCart: CartDataType = {
+		cartSize: 0,
+		cartItems: [],
+	};
+	const { userId } = auth();
+	const filter = { userId };
+	await mongoClient.connect();
+	await usersCollection.updateOne(filter, { $set: { cart: newCart } });
 }
