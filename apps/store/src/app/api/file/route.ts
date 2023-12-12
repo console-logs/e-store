@@ -1,13 +1,12 @@
 import { createCartCookieAction } from "@/actions";
 import { env } from "@/env";
+import { s3Client } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo";
-import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
 import ShortUniqueId from "short-unique-id";
-
-const s3Client = new S3Client({}); // credentials are loaded from environment variables
 
 export async function POST(request: Request) {
 	const formData = await request.formData();

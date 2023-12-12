@@ -1,3 +1,5 @@
+import { S3Client } from "@aws-sdk/client-s3";
+
 export const WEBSITE_NAME = "E-Store";
 export const SUBTITLE = "Lorem ipsum, dolor sit amet consectetur adipisicing elit impedit perferendi.";
 export const COUNTRY = "India";
@@ -16,3 +18,5 @@ export const OVERHEAD_SHIPPING_CHARGES = 0.0;
 
 
 export const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
+
+export const s3Client = new S3Client({}); // credentials are loaded from environment variables
