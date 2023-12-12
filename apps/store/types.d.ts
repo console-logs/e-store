@@ -1001,6 +1001,7 @@ type UserType = {
 	billingAddresses: Array<AddressType>;
 	shippingAddresses: Array<AddressType>;
 	orders: Array<OrderType>;
+	s3FileDir: string | null;
 };
 
 /****************************** ADDRESS *********************************************/
