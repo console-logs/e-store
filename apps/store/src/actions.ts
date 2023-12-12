@@ -1,18 +1,18 @@
 "use server";
-import { OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
+import { fetchGuestCart, fetchUserCart, mergeCarts, transferDesignFilesInS3 } from "@/lib/helpers";
+import { OVERHEAD_SHIPPING_CHARGES } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
 import { calculateCartTotal, calculateGst } from "@/lib/utils";
-import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import orderId from "order-id";
 import ShortUniqueId from "short-unique-id";
-import { env } from "./env";
 
 export async function captureUserSignupAction(props: SignupPropsType): Promise<void> {
 	const { email, firstName, lastName, userId } = props;
 	try {
+		await mongoClient.connect();
 		const user: UserType = {
 			createdAt: new Date(),
 			userId,
@@ -28,20 +28,13 @@ export async function captureUserSignupAction(props: SignupPropsType): Promise<v
 			s3FileDir: null,
 			orders: [],
 		};
-		await mongoClient.connect();
-		// Check if there's a guest cart and assign it to the user
+		const guestCart = await fetchGuestCart();
 		const cartId = cookies().get("cartId")?.value;
-		if (cartId) {
-			const guestCartResult = await guestCartsCollection.findOne<{cart: CartDataType}>(
-				{ cartId },
-				{ projection: { _id: 0, cart: 1 } }
-			);
-			if (!guestCartResult) throw new Error("createUserAction: Guest cart is missing!");
-			// reassign guest cart to user
-			user.cart = guestCartResult.cart;
+		if (guestCart && cartId) {
+			user.cart = guestCart;
 			user.s3FileDir = cartId;
 
-			// Clean up the guest cart
+			// cleanup!
 			await guestCartsCollection.deleteOne({ cartId });
 			cookies().delete("cartId");
 		}
@@ -55,78 +48,25 @@ export async function captureUserSignupAction(props: SignupPropsType): Promise<v
 export async function transferGuestCartToUserAction(): Promise<void> {
 	try {
 		await mongoClient.connect();
-		const options = { projection: { _id: 0, cart: 1 } };
-		const cartIdCookie = cookies().get("cartId");
-		const guestCartFilter = { cartId: cartIdCookie?.value };
-		const guestResults = await guestCartsCollection.findOne<{ cart: CartDataType }>(guestCartFilter, options);
-		if (!guestResults) return; // no guest cart to transfer
+		const guestCart = await fetchGuestCart();
+		const userCart = await fetchUserCart();
 
-		// transfer guest cart to user
-		const { userId } = auth();
-		const userFilter = { userId };
+		if (userCart && guestCart) {
+			const mergedCart = await mergeCarts(userCart, guestCart);
+			await transferDesignFilesInS3();
 
-		const userResults = await usersCollection.findOne<{ cart: CartDataType }>(userFilter, options);
-		if (!userResults) throw new Error("transferGuestCartToUserAction: User cart is missing!");
+			const { userId } = auth();
+			const userFilter = { userId };
+			const cartIdCookie = cookies().get("cartId");
+			const cartId = cartIdCookie?.value;
+			const guestCartFilter = { cartId };
 
-		const userCart = userResults.cart;
-		const guestCart = guestResults.cart;
+			await usersCollection.updateOne(userFilter, { $set: { cart: mergedCart } });
 
-		// merge carts
-		guestCart.cartItems.forEach(guestCartItem => {
-			const existingItem = userCart.cartItems.find(
-				userCartItem => userCartItem.Type === guestCartItem.Type && userCartItem.Name === guestCartItem.Name
-			);
-			if (existingItem) {
-				existingItem.OrderedQty = guestCartItem.OrderedQty; // update qty
-			} else {
-				userCart.cartItems.push(guestCartItem);
-				userCart.cartSize++;
-			}
-		});
-
-		// transfer files from guest dir to user dir
-		const s3DirOptions = { projection: { _id: 0, s3FileDir: 1 } };
-		const s3DirResults = await usersCollection.findOne<{ s3FileDir: string | null }>(userFilter, s3DirOptions);
-		if (!s3DirResults) throw new Error("transferGuestCartToUserAction: User s3FileDir is missing!");
-		if (s3DirResults.s3FileDir) {
-			// list all objects in the source directory
-			const listCommand = new ListObjectsV2Command({
-				Bucket: env.AWS_BUCKET_NAME,
-				Prefix: cartIdCookie?.value + "/",
-			});
-			const listResults = await s3Client.send(listCommand);
-			const sourceObjects = listResults.Contents;
-
-			if (!sourceObjects) throw new Error("transferGuestCartToUserAction: No objects found in source directory!");
-
-			// copy each object to the destination directory
-			for (const sourceObject of sourceObjects) {
-				const destinationKey = sourceObject.Key?.replace(cartIdCookie?.value + "/", "");
-				const copyCommand = new CopyObjectCommand({
-					CopySource: env.AWS_BUCKET_NAME + "/" + sourceObject.Key,
-					Bucket: env.AWS_BUCKET_NAME,
-					Key: s3DirResults.s3FileDir + "/" + destinationKey,
-				});
-
-				await s3Client.send(copyCommand);
-			}
-
-			// delete all objects in the source directory
-			for (const sourceObject of sourceObjects) {
-				const deleteCommand = new DeleteObjectCommand({
-					Bucket: env.AWS_BUCKET_NAME,
-					Key: sourceObject.Key,
-				});
-				await s3Client.send(deleteCommand);
-			}
-		} else {
-			await usersCollection.updateOne(userFilter, { $set: { s3FileDir: cartIdCookie?.value } });
+			// cleanup!
+			await guestCartsCollection.deleteOne(guestCartFilter);
+			cookies().delete("cartId");
 		}
-
-		// update in db
-		await usersCollection.updateOne(userFilter, { $set: { cart: userCart } });
-		await guestCartsCollection.deleteOne(guestCartFilter); // cleanup!
-		cookies().delete("cartId");
 	} catch (error) {
 		throw error; // handle on the client side.
 	}
