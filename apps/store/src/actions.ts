@@ -6,6 +6,7 @@ import {
 	fetchUserCart,
 	mergeCarts,
 	transferDesignFilesInS3,
+	updateCartInDB,
 	updateExistingCart,
 } from "@/lib/helpers";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
@@ -128,12 +129,7 @@ export async function updatePartQtyAction(props: UpdatePartQtyPropsType): Promis
 			if (existingItem) {
 				existingItem.OrderedQty = newQuantity;
 			}
-			// update in db
-			const { userId } = auth();
-			const cartIdCookie = cookies().get("cartId");
-			const collection = userId ? usersCollection : guestCartsCollection;
-			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
-			await collection.updateOne(filter, { $set: { cart } });
+			await updateCartInDB(cart);
 		}
 		revalidatePath("/cart");
 	} catch (error) {
@@ -152,13 +148,7 @@ export async function deleteCartItemAction(name: string): Promise<void> {
 			// Update cart with filtered items and adjust cartSize
 			cart.cartItems = updatedCartItems;
 			cart.cartSize = updatedCartItems.length;
-
-			// update db
-			const { userId } = auth();
-			const cartIdCookie = cookies().get("cartId");
-			const collection = userId ? usersCollection : guestCartsCollection;
-			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
-			await collection.updateOne(filter, { $set: { cart } });
+			await updateCartInDB(cart);
 		}
 		revalidatePath("/cart");
 	} catch (error) {
