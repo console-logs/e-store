@@ -36,7 +36,7 @@ export function DeleteCartItemButton({ itemName }: { itemName: string }) {
 	);
 }
 
-export async function DeleteAllButton({ type }: { type: string }) {
+export function DeleteAllButton({ type }: { type: string }) {
 	const [isLoading, startTransition] = useTransition();
 
 	return (
