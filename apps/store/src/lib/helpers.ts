@@ -1,5 +1,5 @@
 import { env } from "@/env";
-import { OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
+import { FOLDER_SUFFIX, OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
 import { calculateCartTotal, calculateGst } from "@/lib/utils";
 import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
@@ -228,4 +228,47 @@ export async function resetCart(): Promise<void> {
 	const filter = { userId };
 	await mongoClient.connect();
 	await usersCollection.updateOne(filter, { $set: { cart: newCart } });
+}
+
+export async function getFoldername(): Promise<string> {
+	let foldername = FOLDER_SUFFIX;
+
+	const { userId } = auth();
+	const cartIdCookie = cookies().get("cartId");
+	const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
+
+	if (!userId && !cartIdCookie) {
+		foldername = newCartId + FOLDER_SUFFIX;
+		await createCartCookie(newCartId);
+		// Presence of cartId cookie means an associated cart should also be present in the database.
+		// this ensures fetchCartItemsAction will not fail.
+		await guestCartsCollection.insertOne({
+			cartId: newCartId,
+			cart: {
+				cartSize: 0,
+				cartItems: [],
+			},
+		});
+	}
+
+	if (userId) {
+		await mongoClient.connect();
+		const options = { projection: { _id: 0, s3FileDir: 1 } };
+		const userFilter = { userId };
+		const result = await usersCollection.findOne<{ s3FileDir: string | null }>(userFilter, options);
+		if (!result) throw new Error("User not found");
+
+		// check if user has a foldername associated with their account
+		if (result.s3FileDir) {
+			foldername = result.s3FileDir + FOLDER_SUFFIX;
+		} else {
+			foldername = newCartId + FOLDER_SUFFIX;
+			await usersCollection.updateOne(userFilter, { $set: { s3FileDir: foldername } });
+		}
+	}
+
+	if (cartIdCookie) {
+		foldername = cartIdCookie.value + FOLDER_SUFFIX;
+	}
+	return foldername;
 }

@@ -1,56 +1,18 @@
 import { env } from "@/env";
-import { s3Client } from "@/lib/constants";
-import { createCartCookie } from "@/lib/helpers";
-import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo";
+import { FILE_EXTENSION, STATUS_BAD_REQUEST, STATUS_INTERNAL_SERVER_ERROR, STATUS_OK, s3Client } from "@/lib/constants";
+import { getFoldername } from "@/lib/helpers";
 import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { auth } from "@clerk/nextjs";
-import { cookies } from "next/headers";
-import ShortUniqueId from "short-unique-id";
 
 export async function POST(request: Request) {
 	const formData = await request.formData();
-
 	const file: File | null = formData.get("file") as File;
-	if (!file) return new Response(null, { status: 400, statusText: "No file provided" });
-	const filename = file.name + ".zip"; // default
-	let foldername = "/";
+	if (!file) return new Response(null, { status: STATUS_BAD_REQUEST, statusText: "No file provided" });
+	const filename = file.name + FILE_EXTENSION; // default
 
-	const { userId } = auth();
-	const cartIdCookie = cookies().get("cartId");
-	const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
+	const foldername = await getFoldername();
 
-	if (!userId && !cartIdCookie) {
-		foldername = newCartId + "/";
-		await guestCartsCollection.insertOne({
-			cartId: newCartId,
-			cart: {
-				cartSize: 0,
-				cartItems: [],
-			},
-		});
-		await createCartCookie(newCartId);
-	}
-
-	if (userId) {
-		await mongoClient.connect();
-		const options = { projection: { _id: 0, s3FileDir: 1 } };
-		const userFilter = { userId };
-		const result = await usersCollection.findOne<{ s3FileDir: string | null }>(userFilter, options);
-		if (!result) return new Response(null, { status: 404, statusText: "User not found" });
-		if (result.s3FileDir) {
-			foldername = result.s3FileDir + "/";
-		} else {
-			foldername = newCartId + "/";
-			await usersCollection.updateOne(userFilter, { $set: { s3FileDir: foldername } });
-		}
-	}
-
-	if (cartIdCookie) {
-		foldername = cartIdCookie.value + "/";
-	}
-
-	// Read the file into a Buffer
+	// s3 only accepts file in the form of a buffer
 	const fileArrayBuffer = await file.arrayBuffer();
 	const fileUint8Array = new Uint8Array(fileArrayBuffer);
 
@@ -69,10 +31,10 @@ export async function POST(request: Request) {
 	try {
 		await s3Client.send(putCommand);
 		const fileUrl = await getSignedUrl(s3Client, getCommand);
-		return new Response(JSON.stringify({ filename, fileUrl }), { status: 200 });
+		return new Response(JSON.stringify({ filename, fileUrl }), { status: STATUS_OK });
 	} catch (err) {
 		console.error(err);
-		return new Response(null, { status: 500, statusText: "Something went wrong" });
+		return new Response(null, { status: STATUS_INTERNAL_SERVER_ERROR, statusText: "Something went wrong" });
 	}
 }
 
@@ -86,9 +48,9 @@ export async function DELETE(request: Request) {
 
 	try {
 		await s3Client.send(command);
-		return new Response(null, { status: 200 });
+		return new Response(null, { status: STATUS_OK });
 	} catch (err) {
 		console.error(err);
-		return new Response(null, { status: 404, statusText: "File not found" });
+		return new Response(null, { status: STATUS_BAD_REQUEST, statusText: "File not found" });
 	}
 }
