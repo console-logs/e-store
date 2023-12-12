@@ -150,3 +150,8 @@ export async function createCartCookie(cartId: string) {
 		// domain: env.HOST,
 	});
 }
+
+export async function filterCartItems(cart: CartDataType, name: string): Promise<CartItemsType> {
+	// keep the item that is not a match
+	return cart.cartItems.filter(cartItem => cartItem.Name !== name);
+}

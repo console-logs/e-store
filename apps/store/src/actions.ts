@@ -4,6 +4,7 @@ import {
 	createNewCart,
 	fetchGuestCart,
 	fetchUserCart,
+	filterCartItems,
 	mergeCarts,
 	transferDesignFilesInS3,
 	updateCartInDB,
@@ -120,14 +121,13 @@ export async function addItemToCartAction(item: CartUpdatePropsType): Promise<vo
 }
 
 export async function updatePartQtyAction(props: UpdatePartQtyPropsType): Promise<void> {
-	const { name, newQty: newQuantity } = props;
 	try {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
-			const existingItem = cart.cartItems.find(cartItem => cartItem.Name === name);
+			const existingItem = cart.cartItems.find(cartItem => cartItem.Name === props.name);
 			if (existingItem) {
-				existingItem.OrderedQty = newQuantity;
+				existingItem.OrderedQty = props.newQty;
 			}
 			await updateCartInDB(cart);
 		}
@@ -142,10 +142,7 @@ export async function deleteCartItemAction(name: string): Promise<void> {
 		await mongoClient.connect();
 		const cart = await fetchCartItemsAction();
 		if (cart) {
-			// keep the item that is not a match
-			const updatedCartItems = cart.cartItems.filter(cartItem => cartItem.Name !== name);
-
-			// Update cart with filtered items and adjust cartSize
+			const updatedCartItems = await filterCartItems(cart, name);
 			cart.cartItems = updatedCartItems;
 			cart.cartSize = updatedCartItems.length;
 			await updateCartInDB(cart);
