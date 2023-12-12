@@ -16,7 +16,4 @@ export const ERROR_MSG = {
 export const PARTS_API = "https://parts-api-nine.vercel.app/api/parts?mpn=";
 export const OVERHEAD_SHIPPING_CHARGES = 0.0;
 
-
-export const pcbTypes = ["Rigid PCB", "Flex PCB", "PCB Assembly"];
-
 export const s3Client = new S3Client({}); // credentials are loaded from environment variables

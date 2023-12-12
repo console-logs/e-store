@@ -1,7 +1,6 @@
 import { fetchCartItemsAction } from "@/actions";
 import PcbFabSpecsModal from "@/app/_components/fabSpecsModal";
 import { DeleteAllButton, DeleteCartItemButton } from "@/app/cart/_components/delete";
-import { pcbTypes } from "@/lib/constants";
 import { formatToInr } from "@packages/shared/lib/utils";
 
 export default async function BasketPcbsTable() {
@@ -12,8 +11,9 @@ export default async function BasketPcbsTable() {
 	});
 
 	const pcbs = cart
-		? cart.cartItems.filter((item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
-				pcbTypes.includes(item.Category)
+		? cart.cartItems.filter(
+				(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
+					item.Type === "PCB"
 		  )
 		: [];
 

@@ -1,12 +1,11 @@
 import PcbFabSpecsModal from "@/app/_components/fabSpecsModal";
-import { pcbTypes } from "@/lib/constants";
 import { formatToInr } from "@packages/shared/lib/utils";
 
 export default async function OrderedPcbsTable({ order }: { order: OrderType }) {
 	const pcbs = order.cart.cartItems.filter(
-		(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
-			pcbTypes.includes(item.Category)
+		(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType => item.Type === "PCB"
 	);
+	
 
 	return (
 		<div>
