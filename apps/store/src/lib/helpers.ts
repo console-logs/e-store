@@ -1,12 +1,12 @@
 import { env } from "@/env";
 import { OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
+import { calculateCartTotal, calculateGst } from "@/lib/utils";
 import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
 import orderId from "order-id";
 import ShortUniqueId from "short-unique-id";
-import { calculateCartTotal, calculateGst } from "./utils";
 
 export async function updateCartInDB(cart: CartDataType): Promise<void> {
 	const { userId } = auth();
