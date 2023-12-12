@@ -13,8 +13,8 @@ export default async function SavedAddress() {
 		const errorMessage = error instanceof Error ? error.message : unknownError;
 		throw new Error(errorMessage); // activates closest error.tsx file
 	});
-
-	if (!addresses) {
+	
+	if (!addresses?.billingAddresses || !addresses.shippingAddresses) {
 		return (
 			<div className="mx-auto max-w-4xl px-4 py-2 sm:px-6 lg:px-8">
 				<EditAddressForm />
