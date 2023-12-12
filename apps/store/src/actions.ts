@@ -63,13 +63,12 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 
 			const { userId } = auth();
 			const userFilter = { userId };
-			const cartIdCookie = cookies().get("cartId");
-			const cartId = cartIdCookie?.value;
-			const guestCartFilter = { cartId };
-
 			await usersCollection.updateOne(userFilter, { $set: { cart: mergedCart } });
 
 			// cleanup!
+			const cartIdCookie = cookies().get("cartId");
+			const cartId = cartIdCookie?.value;
+			const guestCartFilter = { cartId };
 			await guestCartsCollection.deleteOne(guestCartFilter);
 			cookies().delete("cartId");
 		}
