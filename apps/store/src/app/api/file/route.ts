@@ -1,6 +1,6 @@
-import { createCartCookieAction } from "@/actions";
 import { env } from "@/env";
 import { s3Client } from "@/lib/constants";
+import { createCartCookie } from "@/lib/helpers";
 import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo";
 import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
 				cartItems: [],
 			},
 		});
-		await createCartCookieAction(newCartId);
+		await createCartCookie(newCartId);
 	}
 
 	if (userId) {

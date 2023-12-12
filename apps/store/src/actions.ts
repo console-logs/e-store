@@ -170,17 +170,6 @@ export async function deleteAllItemsAction(property: string, value: string) {
 	}
 }
 
-export async function createCartCookieAction(cartId: string) {
-	cookies().set({
-		name: "cartId",
-		value: cartId,
-		path: "/",
-		maxAge: 60 * 60 * 24 * 30, // one month
-		sameSite: true,
-		// domain: env.HOST,
-	});
-}
-
 export async function addAddressesAction(props: NewAddressPropsType): Promise<void> {
 	const { billingAddress, shippingAddress } = props;
 	try {
