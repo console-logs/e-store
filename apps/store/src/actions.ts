@@ -75,14 +75,13 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 export async function fetchCartItemsAction(): Promise<CartDataType | null> {
 	try {
 		const { userId } = auth();
-		const cartIdCookie = cookies().get("cartId");
-		await mongoClient.connect();
-
-		const collection = userId ? usersCollection : guestCartsCollection;
-		const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
-		const options = { projection: { _id: 0, cart: 1 } };
-		const result = await collection.findOne<{ cart: CartDataType }>(filter, options);
-		return result ? result.cart : null;
+		if (userId) {
+			const userCart = await fetchUserCart();
+			return userCart ? userCart : null;
+		} else {
+			const guestCart = await fetchGuestCart();
+			return guestCart ? guestCart : null;
+		}
 	} catch (error) {
 		throw error; // handle on the client side.
 	}
