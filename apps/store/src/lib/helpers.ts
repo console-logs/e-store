@@ -6,6 +6,14 @@ import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
 import ShortUniqueId from "short-unique-id";
 
+export async function updateCartInDB(cart: CartDataType): Promise<void> {
+	const { userId } = auth();
+	const cartIdCookie = cookies().get("cartId");
+	const collection = userId ? usersCollection : guestCartsCollection;
+	const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
+	await collection.updateOne(filter, { $set: { cart } });
+}
+
 export async function mergeCarts(userCart: CartDataType, guestCart: CartDataType): Promise<CartDataType> {
 	guestCart.cartItems.forEach(guestCartItem => {
 		const existingItem = userCart.cartItems.find(
@@ -110,13 +118,7 @@ export async function updateExistingCart({
 		cart.cartItems.push(item);
 		cart.cartSize++;
 	}
-	// update in db
-	await mongoClient.connect();
-	const { userId } = auth();
-	const cartIdCookie = cookies().get("cartId");
-	const collection = userId ? usersCollection : guestCartsCollection;
-	const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
-	await collection.updateOne(filter, { $set: { cart } });
+	await updateCartInDB(cart);
 }
 
 export async function createNewCart(props: CartUpdatePropsType): Promise<void> {
