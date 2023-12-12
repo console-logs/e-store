@@ -1,13 +1,19 @@
 "use server";
-import { fetchGuestCart, fetchUserCart, mergeCarts, transferDesignFilesInS3 } from "@/lib/helpers";
 import { OVERHEAD_SHIPPING_CHARGES } from "@/lib/constants";
+import {
+	createNewCart,
+	fetchGuestCart,
+	fetchUserCart,
+	mergeCarts,
+	transferDesignFilesInS3,
+	updateExistingCart,
+} from "@/lib/helpers";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
 import { calculateCartTotal, calculateGst } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import orderId from "order-id";
-import ShortUniqueId from "short-unique-id";
 
 export async function captureUserSignupAction(props: SignupPropsType): Promise<void> {
 	const { email, firstName, lastName, userId } = props;
@@ -99,43 +105,13 @@ export async function fetchCartSizeAction(): Promise<number> {
 	return cartSize;
 }
 
-export async function addItemToCartAction(props: CartUpdatePropsType): Promise<void> {
-	const { Name, OrderedQty, Type } = props;
+export async function addItemToCartAction(item: CartUpdatePropsType): Promise<void> {
 	try {
-		await mongoClient.connect();
-		const { userId } = auth();
-		const cartIdCookie = cookies().get("cartId");
-
 		const cart = await fetchCartItemsAction();
-
 		if (cart) {
-			const existingItem = cart.cartItems.find(cartItem => cartItem.Type === Type && cartItem.Name === Name);
-			if (existingItem) {
-				existingItem.OrderedQty += OrderedQty;
-			} else {
-				cart.cartItems.push(props);
-				cart.cartSize++;
-			}
-			// update in db
-			const collection = userId ? usersCollection : guestCartsCollection;
-			const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
-			await collection.updateOne(filter, { $set: { cart } });
+			await updateExistingCart({ cart, item });
 		} else {
-			// new cart
-			let cartId = "";
-			if (cartIdCookie) {
-				cartId = cartIdCookie.value;
-			} else {
-				cartId = new ShortUniqueId({ length: 8 }).randomUUID();
-				await createCartCookieAction(cartId); // future reference
-			}
-			await guestCartsCollection.insertOne({
-				cartId: cartId,
-				cart: {
-					cartSize: 1,
-					cartItems: [props],
-				},
-			});
+			await createNewCart(item);
 		}
 		revalidatePath("/products", "layout");
 	} catch (error) {

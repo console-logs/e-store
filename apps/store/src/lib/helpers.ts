@@ -4,6 +4,7 @@ import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo"
 import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
+import ShortUniqueId from "short-unique-id";
 
 export async function mergeCarts(userCart: CartDataType, guestCart: CartDataType): Promise<CartDataType> {
 	guestCart.cartItems.forEach(guestCartItem => {
@@ -93,4 +94,57 @@ export async function fetchUserCart(): Promise<CartDataType | null> {
 	const userFilter = { userId };
 	const userResults = await usersCollection.findOne<{ cart: CartDataType }>(userFilter, options);
 	return userResults ? userResults.cart : null;
+}
+
+export async function updateExistingCart({
+	cart,
+	item,
+}: {
+	cart: CartDataType;
+	item: CartUpdatePropsType;
+}): Promise<void> {
+	const existingItem = cart.cartItems.find(cartItem => cartItem.Type === item.Type && cartItem.Name === item.Name);
+	if (existingItem) {
+		existingItem.OrderedQty += item.OrderedQty;
+	} else {
+		cart.cartItems.push(item);
+		cart.cartSize++;
+	}
+	// update in db
+	await mongoClient.connect();
+	const { userId } = auth();
+	const cartIdCookie = cookies().get("cartId");
+	const collection = userId ? usersCollection : guestCartsCollection;
+	const filter = userId ? { userId } : { cartId: cartIdCookie?.value };
+	await collection.updateOne(filter, { $set: { cart } });
+}
+
+export async function createNewCart(props: CartUpdatePropsType): Promise<void> {
+	const cartIdCookie = cookies().get("cartId");
+	let cartId = "";
+	if (cartIdCookie) {
+		cartId = cartIdCookie.value;
+	} else {
+		cartId = new ShortUniqueId({ length: 8 }).randomUUID();
+		await createCartCookie(cartId); // future reference
+	}
+	await mongoClient.connect();
+	await guestCartsCollection.insertOne({
+		cartId: cartId,
+		cart: {
+			cartSize: 1,
+			cartItems: [props],
+		},
+	});
+}
+
+export async function createCartCookie(cartId: string) {
+	cookies().set({
+		name: "cartId",
+		value: cartId,
+		path: "/",
+		maxAge: 60 * 60 * 24 * 30, // one month
+		sameSite: true,
+		// domain: env.HOST,
+	});
 }
