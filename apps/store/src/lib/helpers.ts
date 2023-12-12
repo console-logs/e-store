@@ -1,5 +1,5 @@
 import { env } from "@/env";
-import { FOLDER_SUFFIX, OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
+import { FILE_PATH_SEPARATOR, OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
 import { calculateCartTotal, calculateGst } from "@/lib/utils";
 import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
@@ -231,14 +231,14 @@ export async function resetCart(): Promise<void> {
 }
 
 export async function getFoldername(): Promise<string> {
-	let foldername = FOLDER_SUFFIX;
+	let foldername = FILE_PATH_SEPARATOR;
 
 	const { userId } = auth();
 	const cartIdCookie = cookies().get("cartId");
 	const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
 
 	if (!userId && !cartIdCookie) {
-		foldername = newCartId + FOLDER_SUFFIX;
+		foldername = newCartId + FILE_PATH_SEPARATOR;
 		await createCartCookie(newCartId);
 		// Presence of cartId cookie means an associated cart should also be present in the database.
 		// this ensures fetchCartItemsAction will not fail.
@@ -260,15 +260,15 @@ export async function getFoldername(): Promise<string> {
 
 		// check if user has a foldername associated with their account
 		if (result.s3FileDir) {
-			foldername = result.s3FileDir + FOLDER_SUFFIX;
+			foldername = result.s3FileDir + FILE_PATH_SEPARATOR;
 		} else {
-			foldername = newCartId + FOLDER_SUFFIX;
+			foldername = newCartId + FILE_PATH_SEPARATOR;
 			await usersCollection.updateOne(userFilter, { $set: { s3FileDir: foldername } });
 		}
 	}
 
 	if (cartIdCookie) {
-		foldername = cartIdCookie.value + FOLDER_SUFFIX;
+		foldername = cartIdCookie.value + FILE_PATH_SEPARATOR;
 	}
 	return foldername;
 }
