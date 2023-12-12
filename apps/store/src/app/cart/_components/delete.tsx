@@ -4,7 +4,7 @@ import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { useTransition } from "react";
 
-export function DeleteCartItemButton({ itemName }: { itemName: string }) {
+export function DeleteCartItemButton({ itemName, type }: { itemName: string; type: "PCB" | "Part" }) {
 	const [isLoading, startTransition] = useTransition();
 
 	return (
@@ -15,10 +15,9 @@ export function DeleteCartItemButton({ itemName }: { itemName: string }) {
 			onClick={() =>
 				startTransition(async () => {
 					await deleteCartItemAction(itemName);
-					// await fetch("/api/file", {
-					// 	method: "DELETE",
-					// 	body: JSON.stringify({ filename }),
-					// });
+					if (type === "PCB") {
+						// delete its accompanied design file from s3
+					}
 				})
 			}>
 			{isLoading ? (
@@ -36,7 +35,7 @@ export function DeleteCartItemButton({ itemName }: { itemName: string }) {
 	);
 }
 
-export function DeleteAllButton({ type }: { type: string }) {
+export function DeleteAllButton({ type }: { type: "PCB" | "Part" }) {
 	const [isLoading, startTransition] = useTransition();
 
 	return (
@@ -48,6 +47,7 @@ export function DeleteAllButton({ type }: { type: string }) {
 				startTransition(async () => {
 					if (type === "PCB") {
 						await deleteAllItemsAction("Type", "PCB");
+						// delete all design files from s3
 					} else if (type === "Part") {
 						await deleteAllItemsAction("Type", "Part");
 					}
