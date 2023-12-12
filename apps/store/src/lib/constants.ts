@@ -24,4 +24,4 @@ export const STATUS_NOT_FOUND = 404;
 export const STATUS_INTERNAL_SERVER_ERROR = 500;
 export const FILE_EXTENSION = ".zip";
 
-export const FOLDER_SUFFIX = "/";
+export const FILE_PATH_SEPARATOR = "/";
