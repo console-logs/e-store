@@ -35,14 +35,16 @@ export async function captureUserSignupAction(props: SignupPropsType): Promise<v
 		// Check if there's a guest cart and assign it to the user
 		const cartId = cookies().get("cartId")?.value;
 		if (cartId) {
-			const guestCart = await guestCartsCollection.findOne<CartDataType>(
+			const guestCartResult = await guestCartsCollection.findOne<{cart: CartDataType}>(
 				{ cartId },
 				{ projection: { _id: 0, cart: 1 } }
 			);
 
-			if (!guestCart) throw new Error("createUserAction: Guest cart is missing!");
+			if (!guestCartResult) throw new Error("createUserAction: Guest cart is missing!");
 
-			user.cart = guestCart;
+			// assign guest cart to user
+			user.cart = guestCartResult.cart;
+			user.s3FileDir = cartId;
 
 			// Clean up the guest cart
 			await guestCartsCollection.deleteOne({ cartId });
@@ -138,18 +140,6 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 	}
 }
 
-export async function fetchCartSizeAction(): Promise<number> {
-	let cartSize = 0;
-	try {
-		await mongoClient.connect();
-		const cart = await fetchCartItemsAction();
-		cartSize = cart ? cart.cartSize : 0;
-	} catch (error) {
-		throw error; // handle on the client side.
-	}
-	return cartSize;
-}
-
 export async function fetchCartItemsAction(): Promise<CartDataType | null> {
 	try {
 		const { userId } = auth();
@@ -164,6 +154,18 @@ export async function fetchCartItemsAction(): Promise<CartDataType | null> {
 	} catch (error) {
 		throw error; // handle on the client side.
 	}
+}
+
+export async function fetchCartSizeAction(): Promise<number> {
+	let cartSize = 0;
+	try {
+		await mongoClient.connect();
+		const cart = await fetchCartItemsAction();
+		cartSize = cart ? cart.cartSize : 0;
+	} catch (error) {
+		throw error; // handle on the client side.
+	}
+	return cartSize;
 }
 
 export async function addItemToCartAction(props: CartUpdatePropsType): Promise<void> {
