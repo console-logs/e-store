@@ -13,7 +13,6 @@ import { env } from "./env";
 export async function captureUserSignupAction(props: SignupPropsType): Promise<void> {
 	const { email, firstName, lastName, userId } = props;
 	try {
-		// Create a new user with the provided details
 		const user: UserType = {
 			createdAt: new Date(),
 			userId,
@@ -29,9 +28,7 @@ export async function captureUserSignupAction(props: SignupPropsType): Promise<v
 			s3FileDir: null,
 			orders: [],
 		};
-
 		await mongoClient.connect();
-
 		// Check if there's a guest cart and assign it to the user
 		const cartId = cookies().get("cartId")?.value;
 		if (cartId) {
@@ -39,10 +36,8 @@ export async function captureUserSignupAction(props: SignupPropsType): Promise<v
 				{ cartId },
 				{ projection: { _id: 0, cart: 1 } }
 			);
-
 			if (!guestCartResult) throw new Error("createUserAction: Guest cart is missing!");
-
-			// assign guest cart to user
+			// reassign guest cart to user
 			user.cart = guestCartResult.cart;
 			user.s3FileDir = cartId;
 
@@ -50,10 +45,7 @@ export async function captureUserSignupAction(props: SignupPropsType): Promise<v
 			await guestCartsCollection.deleteOne({ cartId });
 			cookies().delete("cartId");
 		}
-
-		// Insert the new user into the database
 		await usersCollection.insertOne(user);
-
 		revalidatePath("/", "layout"); // full revalidate
 	} catch (error) {
 		throw error; // handle on the client side.
