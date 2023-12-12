@@ -24,6 +24,7 @@ export async function captureUserSignupAction(props: SignupPropsType): Promise<v
 				cartSize: 0,
 				cartItems: [],
 			},
+			s3FileDir: null,
 			orders: [],
 		};
 
@@ -66,15 +67,13 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 
 		// transfer guest cart to user
 		const { userId } = auth();
-		const userCartFilter = { userId };
+		const userFilter = { userId };
 
-		const userResults = await usersCollection.findOne<{ cart: CartDataType }>(userCartFilter, options);
+		const userResults = await usersCollection.findOne<{ cart: CartDataType }>(userFilter, options);
 		if (!userResults) throw new Error("transferGuestCartToUserAction: User cart is missing!");
 
 		const userCart = userResults.cart;
 		const guestCart = guestResults.cart;
-
-		//TODO: Rename file in S3 database
 
 		// merge carts
 		guestCart.cartItems.forEach(guestCartItem => {
@@ -90,7 +89,7 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 		});
 
 		// update in db
-		await usersCollection.updateOne(userCartFilter, { $set: { cart: userCart } });
+		await usersCollection.updateOne(userFilter, { $set: { cart: userCart, s3FileDir: cartIdCookie?.value } });
 		await guestCartsCollection.deleteOne(guestCartFilter); // cleanup!
 		cookies().delete("cartId");
 	} catch (error) {

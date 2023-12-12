@@ -1,6 +1,7 @@
 import { createCartCookieAction } from "@/actions";
 import { env } from "@/env";
-import { GetObjectCommand, PutObjectCommand, S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo";
+import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
@@ -13,16 +14,40 @@ export async function POST(request: Request) {
 
 	const file: File | null = formData.get("file") as File;
 	if (!file) return new Response(null, { status: 400, statusText: "No file provided" });
+	const filename = file.name + ".zip"; // default
+	let foldername = "/";
+
 	const { userId } = auth();
 	const cartIdCookie = cookies().get("cartId");
 	const newCartId = new ShortUniqueId({ length: 8 }).randomUUID();
-	const filename = file.name + ".zip"; // default
-	let foldername = "";
 
 	if (!userId && !cartIdCookie) {
 		foldername = newCartId + "/";
+		await guestCartsCollection.insertOne({
+			cartId: newCartId,
+			cart: {
+				cartSize: 0,
+				cartItems: [],
+			},
+		});
 		await createCartCookieAction(newCartId);
-	} else if (cartIdCookie) {
+	}
+
+	if (userId) {
+		await mongoClient.connect();
+		const options = { projection: { _id: 0, s3FileDir: 1 } };
+		const userFilter = { userId };
+		const result = await usersCollection.findOne<{ s3FileDir: string | null }>(userFilter, options);
+		if (!result) return new Response(null, { status: 404, statusText: "User not found" });
+		if (result.s3FileDir) {
+			foldername = result.s3FileDir + "/";
+		} else {
+			foldername = newCartId + "/";
+			await usersCollection.updateOne(userFilter, { $set: { s3FileDir: foldername } });
+		}
+	}
+
+	if (cartIdCookie) {
 		foldername = cartIdCookie.value + "/";
 	}
 
