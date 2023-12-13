@@ -39,7 +39,7 @@ import BoardThickness from "@/app/products/pcb/rigid-pcb/_components/fields/thic
 import ViaCovering from "@/app/products/pcb/rigid-pcb/_components/fields/viaCover";
 import ViaHoles from "@/app/products/pcb/rigid-pcb/_components/fields/viaHoles";
 import RigidPcbPriceSummary from "@/app/products/pcb/rigid-pcb/_components/priceSum";
-import { selectRigidPcbMemoized } from "@/redux/reducers/rigidPcbSlice";
+import { selectRigidPcb } from "@/redux/reducers/rigidPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";
@@ -47,7 +47,7 @@ import { useSelector } from "react-redux";
 export default function RigidPcbFabrication() {
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();
-	const rigidPcb: RigidPcbFabSpecsType = useSelector(selectRigidPcbMemoized);
+	const rigidPcb: RigidPcbFabSpecsType = useSelector(selectRigidPcb);
 	const isFileUploaded = rigidPcb.UploadedFileUrl ? true : false;
 
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
