@@ -1116,3 +1116,11 @@ type FieldsType = {
 	Policy: string;
 	"X-Amz-Signature": string;
 };
+
+/****************************** PARSER *********************************************/
+
+type ParsedDataObject = {
+	Name: string;
+	Description: string;
+	OrderedQty: string;
+};

@@ -8,6 +8,7 @@ import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
 import orderId from "order-id";
 import ShortUniqueId from "short-unique-id";
+import Papa, { type ParseResult } from "papaparse";
 
 export async function updateCartInDB(cart: CartDataType): Promise<void> {
 	const { userId } = auth();
@@ -318,5 +319,25 @@ export async function deleteAllDesignFilesFromS3(): Promise<void> {
 	if (cartIdCookie) {
 		foldername = cartIdCookie.value;
 	}
-	await deleteFilesInSourceDirectory(foldername)
+	await deleteFilesInSourceDirectory(foldername);
+}
+
+export default async function parseCsvFile(file: File): Promise<Array<ParsedDataObject>> {
+	try {
+		const fileData = await file.text();
+		const config = {
+			header: true,
+			skipEmptyLines: true,
+			delimiter: ",",
+		};
+		const csv: ParseResult<unknown> = Papa.parse(fileData, config);
+		if (csv.errors.length > 0) {
+			csv.errors.forEach(error => {
+				throw new Error(`${error.message} at row ${error.row}`);
+			});
+		}
+		return csv.data as Array<ParsedDataObject>;
+	} catch (error) {
+		throw error;
+	}
 }
