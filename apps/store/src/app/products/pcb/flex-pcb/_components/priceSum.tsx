@@ -1,16 +1,14 @@
 import {
+	selectCalculatedPrice,
 	selectDesignFormat,
-	selectFlexPcbMemoized,
 	selectPcbQty,
 	selectSinglePiecesQty,
-	selectTentativeDispatchDate,
+	selectTentativeDispatchDate
 } from "@/redux/reducers/flexPcbSlice";
-import { tRPCReactApi } from "@/trpc/react";
 import { useSelector } from "react-redux";
 
 export default function FlexPcbPriceSummary() {
-	const flexPcb = useSelector(selectFlexPcbMemoized);
-	const pcbPrice = tRPCReactApi.flexPcb.getPrice.useQuery(flexPcb).data ?? 0;
+	const pcbPrice = useSelector(selectCalculatedPrice)
 	const designFormat = useSelector(selectDesignFormat);
 	const pcbQty = useSelector(selectPcbQty);
 	const singlePiecesQty = useSelector(selectSinglePiecesQty);
