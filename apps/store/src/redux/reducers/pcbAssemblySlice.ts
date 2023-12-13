@@ -20,9 +20,10 @@ const initialState: PcbAssemblyStoreStateType = {
 	FunctionalTest: "No",
 	ComponentsProcurement: "TurnKey",
 	TurnaroundTime: "Standard 5-7 days",
-	NetPrice: 4500,
+	OneTimeSetupCost: 5000,
+	AssemblyCost: 4500,
+	NetPrice: 9500,
 	TentativeDispatchDate: getFutureDate(7),
-	OneTimeSetupCosts: 5000,
 	UploadedFileName: null,
 	UploadedFileUrl: null,
 
@@ -86,11 +87,13 @@ const pcbAssemblySlice = createSlice({
 		setLeadTime: (state, action: PayloadAction<"Standard 5-7 days" | "Expedited 3-4 days">) => {
 			state.TurnaroundTime = action.payload;
 		},
-		setPcbAssemblyPrice: (state, action: PayloadAction<number>) => {
-			state.NetPrice = action.payload;
+		setPcbAssemblyCost: (state, action: PayloadAction<number>) => {
+			state.AssemblyCost = action.payload;
+			state.NetPrice = state.AssemblyCost + state.OneTimeSetupCost;
 		},
 		setOneTimeSetupCost: (state, action: PayloadAction<number>) => {
-			state.OneTimeSetupCosts = action.payload;
+			state.OneTimeSetupCost = action.payload;
+			state.NetPrice = state.AssemblyCost + state.OneTimeSetupCost;
 		},
 		setTentativeDispatchDate: (state, action: PayloadAction<string>) => {
 			state.TentativeDispatchDate = action.payload;
@@ -100,9 +103,6 @@ const pcbAssemblySlice = createSlice({
 		},
 		setUploadedFileName: (state, action: PayloadAction<string | null>) => {
 			state.UploadedFileName = action.payload;
-		},
-		setPcbPrice: (state, action: PayloadAction<number>) => {
-			state.NetPrice = action.payload;
 		},
 	},
 });
@@ -123,12 +123,11 @@ export const {
 	setFunctionalTest,
 	setComponentsProcurement,
 	setLeadTime,
-	setPcbAssemblyPrice,
+	setPcbAssemblyCost,
 	setTentativeDispatchDate,
 	setUploadedFileUrl,
 	setUploadedFileName,
 	setOneTimeSetupCost,
-	setPcbPrice,
 } = pcbAssemblySlice.actions;
 
 export default pcbAssemblySlice.reducer;
@@ -150,9 +149,10 @@ export const selectConformalCoating = (state: ReduxState) => state.pcbAssembly.C
 export const selectFunctionalTest = (state: ReduxState) => state.pcbAssembly.FunctionalTest;
 export const selectComponentsProcurement = (state: ReduxState) => state.pcbAssembly.ComponentsProcurement;
 export const selectTurnaroundTime = (state: ReduxState) => state.pcbAssembly.TurnaroundTime;
-export const selectCalculatedPrice = (state: ReduxState) => state.pcbAssembly.NetPrice;
 export const selectTentativeDispatchDate = (state: ReduxState) => state.pcbAssembly.TentativeDispatchDate;
-export const selectOneTimeSetupCost = (state: ReduxState) => state.pcbAssembly.OneTimeSetupCosts;
+export const selectOneTimeSetupCost = (state: ReduxState) => state.pcbAssembly.OneTimeSetupCost;
+export const selectPcbAssemblyCost = (state: ReduxState) => state.pcbAssembly.AssemblyCost;
+export const selectAssemblyNetPrice = (state: ReduxState) => state.pcbAssembly.NetPrice;
 export const selectUploadedName = (state: ReduxState) => state.rigidPcb.UploadedFileName;
 export const selectUploadedFileUrl = (state: ReduxState) => state.rigidPcb.UploadedFileUrl;
 
@@ -187,7 +187,8 @@ export const selectPcbAssemblyMemomized = createSelector([selectPcbAssemblyState
 		FunctionalTest: pcbAssembly.FunctionalTest,
 		ComponentsProcurement: pcbAssembly.ComponentsProcurement,
 		TurnaroundTime: pcbAssembly.TurnaroundTime,
-		OneTimeSetupCosts: pcbAssembly.OneTimeSetupCosts,
+		AssemblyCost: pcbAssembly.AssemblyCost,
+		OneTimeSetupCost: pcbAssembly.OneTimeSetupCost,
 		NetPrice: pcbAssembly.NetPrice,
 		UploadedFileName: pcbAssembly.UploadedFileName,
 		UploadedFileUrl: pcbAssembly.UploadedFileUrl,

@@ -571,7 +571,8 @@ type PcbAssemblyFabSpecsType = {
 	FunctionalTest: "Yes" | "No";
 	ComponentsProcurement: "TurnKey" | "Consigned" | "Combo";
 	TurnaroundTime: "Standard 5-7 days" | "Expedited 3-4 days";
-	OneTimeSetupCosts: number;
+	AssemblyCost: number;
+	OneTimeSetupCost: number;
 	NetPrice: number;
 	UploadedFileName: string | null;
 	UploadedFileUrl: string | null;

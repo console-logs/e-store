@@ -1,17 +1,17 @@
 import {
-	selectPcbAssemblyMemomized,
+	selectAssemblyNetPrice,
+	selectOneTimeSetupCost,
 	selectOrderedQty,
+	selectPcbAssemblyCost,
 	selectTentativeDispatchDate,
 } from "@/redux/reducers/pcbAssemblySlice";
-import { tRPCReactApi } from "@/trpc/react";
 import { useSelector } from "react-redux";
 
 export default function PcbAssemblyPriceSummary() {
-	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
-	const response = tRPCReactApi.pcbAssembly.getPrice.useQuery(pcbAssembly).data ?? { assemblyCost: 0, setupCost: 0 };
-	const assemblyCost = response.assemblyCost;
-	const setupCost = response.setupCost;
+	const assemblyCost = useSelector(selectPcbAssemblyCost);
+	const setupCost = useSelector(selectOneTimeSetupCost);
 	const assemblyQty = useSelector(selectOrderedQty);
+	const pcbAssemblyNetPrice = useSelector(selectAssemblyNetPrice);
 	const tentativeDispatchDate = useSelector(selectTentativeDispatchDate);
 
 	return (
@@ -43,7 +43,7 @@ export default function PcbAssemblyPriceSummary() {
 					</div>
 					<div className="flex items-center justify-between py-4">
 						<dt className="text-base font-medium">Order Total</dt>
-						<dd className="text-base font-medium">₹{setupCost + assemblyCost}</dd>
+						<dd className="text-base font-medium">₹{pcbAssemblyNetPrice}</dd>
 					</div>
 				</dl>
 			</div>
