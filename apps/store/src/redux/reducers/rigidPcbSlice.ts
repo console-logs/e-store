@@ -1,5 +1,5 @@
 import { type ReduxState } from "@/redux/store";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { getFutureDate } from "@shared/lib/utils";
 
 const initialState: RigidPcbStoreStateType = {
@@ -701,52 +701,53 @@ export const selectSoldermaskOptions = (state: ReduxState) => state.rigidPcb.Sol
 export const selectGoldFingersOptions = (state: ReduxState) => state.rigidPcb.GoldFingersOptions;
 export const selectPanelQtyOptions = (state: ReduxState) => state.rigidPcb.PanelQtyOptions;
 
-export const selectRigidPcb = (state: ReduxState) => {
-	const rigidPcb: RigidPcbFabSpecsType = {
+/* Memoised Selector => Output selector performs type transformation */
+export const selectRigidPcbMemoized = createSelector([selectRigidPcbState], rigidPcb => {
+	const rigidPcbFabSpecs: RigidPcbFabSpecsType = {
 		Type: "PCB",
 		Category: "Rigid PCB",
-		Name: state.rigidPcb.Name,
-		OrderedQty: state.rigidPcb.OrderedQty,
-		Layer: state.rigidPcb.Layer,
-		BaseMaterial: state.rigidPcb.BaseMaterial,
-		DesignFormat: state.rigidPcb.DesignFormat,
-		DifferentDesignsInPanel: state.rigidPcb.DifferentDesignsInPanel,
-		Material: state.rigidPcb.Material,
-		BoardSizeX: state.rigidPcb.BoardSizeX,
-		BoardSizeY: state.rigidPcb.BoardSizeY,
-		PanelQty: state.rigidPcb.PanelQty,
-		Columns: state.rigidPcb.Columns,
-		Rows: state.rigidPcb.Rows,
-		SinglePiecesQty: state.rigidPcb.SinglePiecesQty,
-		PcbQty: state.rigidPcb.PcbQty,
-		BoardThickness: state.rigidPcb.BoardThickness,
-		Soldermask: state.rigidPcb.Soldermask,
-		Silkscreen: state.rigidPcb.Silkscreen,
-		SurfaceFinish: state.rigidPcb.SurfaceFinish,
-		GoldFingers: state.rigidPcb.GoldFingers,
-		GoldThickness: state.rigidPcb.GoldThickness,
-		EdgeRails: state.rigidPcb.EdgeRails,
-		EdgeRailSize: state.rigidPcb.EdgeRailSize,
-		PanelSizeX: state.rigidPcb.PanelSizeX,
-		PanelSizeY: state.rigidPcb.PanelSizeY,
-		OuterCuWeight: state.rigidPcb.OuterCuWeight,
-		CopperStructure: state.rigidPcb.CopperStructure,
-		ThermalConductivity: state.rigidPcb.ThermalConductivity,
-		BreakDownVoltage: state.rigidPcb.BreakDownVoltage,
-		InnerCuWeight: state.rigidPcb.InnerCuWeight,
-		ImpedanceControl: state.rigidPcb.ImpedanceControl,
-		ViaCovering: state.rigidPcb.ViaCovering,
-		MinViaHoleSizeAndDiameter: state.rigidPcb.MinViaHoleSizeAndDiameter,
-		BoardOutlineTolerance: state.rigidPcb.BoardOutlineTolerance,
-		ViaHoles: state.rigidPcb.ViaHoles,
-		CastellatedHoles: state.rigidPcb.CastellatedHoles,
-		CastellatedHolesEdges: state.rigidPcb.CastellatedHolesEdges,
-		ChamferedGoldFingers: state.rigidPcb.ChamferedGoldFingers,
-		LeadTime: state.rigidPcb.LeadTime,
-		DispatchUnit: state.rigidPcb.DispatchUnit,
-		NetPrice: state.rigidPcb.NetPrice,
-		UploadedFileName: state.rigidPcb.UploadedFileName,
-		UploadedFileUrl: state.rigidPcb.UploadedFileUrl,
+		Name: rigidPcb.Name,
+		OrderedQty: rigidPcb.OrderedQty,
+		Layer: rigidPcb.Layer,
+		BaseMaterial: rigidPcb.BaseMaterial,
+		DesignFormat: rigidPcb.DesignFormat,
+		DifferentDesignsInPanel: rigidPcb.DifferentDesignsInPanel,
+		Material: rigidPcb.Material,
+		BoardSizeX: rigidPcb.BoardSizeX,
+		BoardSizeY: rigidPcb.BoardSizeY,
+		PanelQty: rigidPcb.PanelQty,
+		Columns: rigidPcb.Columns,
+		Rows: rigidPcb.Rows,
+		SinglePiecesQty: rigidPcb.SinglePiecesQty,
+		PcbQty: rigidPcb.PcbQty,
+		BoardThickness: rigidPcb.BoardThickness,
+		Soldermask: rigidPcb.Soldermask,
+		Silkscreen: rigidPcb.Silkscreen,
+		SurfaceFinish: rigidPcb.SurfaceFinish,
+		GoldFingers: rigidPcb.GoldFingers,
+		GoldThickness: rigidPcb.GoldThickness,
+		EdgeRails: rigidPcb.EdgeRails,
+		EdgeRailSize: rigidPcb.EdgeRailSize,
+		PanelSizeX: rigidPcb.PanelSizeX,
+		PanelSizeY: rigidPcb.PanelSizeY,
+		OuterCuWeight: rigidPcb.OuterCuWeight,
+		CopperStructure: rigidPcb.CopperStructure,
+		ThermalConductivity: rigidPcb.ThermalConductivity,
+		BreakDownVoltage: rigidPcb.BreakDownVoltage,
+		InnerCuWeight: rigidPcb.InnerCuWeight,
+		ImpedanceControl: rigidPcb.ImpedanceControl,
+		ViaCovering: rigidPcb.ViaCovering,
+		MinViaHoleSizeAndDiameter: rigidPcb.MinViaHoleSizeAndDiameter,
+		BoardOutlineTolerance: rigidPcb.BoardOutlineTolerance,
+		ViaHoles: rigidPcb.ViaHoles,
+		CastellatedHoles: rigidPcb.CastellatedHoles,
+		CastellatedHolesEdges: rigidPcb.CastellatedHolesEdges,
+		ChamferedGoldFingers: rigidPcb.ChamferedGoldFingers,
+		LeadTime: rigidPcb.LeadTime,
+		DispatchUnit: rigidPcb.DispatchUnit,
+		NetPrice: rigidPcb.NetPrice,
+		UploadedFileName: rigidPcb.UploadedFileName,
+		UploadedFileUrl: rigidPcb.UploadedFileUrl,
 	};
-	return rigidPcb;
-};
+	return rigidPcbFabSpecs;
+});
