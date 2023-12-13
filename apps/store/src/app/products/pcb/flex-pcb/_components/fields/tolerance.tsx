@@ -2,9 +2,12 @@ import HelpPopover from "@/app/products/pcb/_components/common/help";
 import {
 	selectBoardOutlineTolerance,
 	selectBoardOutlineToleranceOptions,
+	selectFlexPcbMemoized,
 	selectLayer,
 	setBoardOutlineTolerance,
+	setPcbPrice,
 } from "@/redux/reducers/flexPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -17,6 +20,8 @@ export default function BoardOutlineTolerance() {
 	const boardOutlineToleranceOptions = useSelector(selectBoardOutlineToleranceOptions);
 	const boardOutlineTolerance = useSelector(selectBoardOutlineTolerance);
 	const layer = useSelector(selectLayer);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
+	const result = tRPCReactApi.flexPcb.getPrice.useQuery(flexPcb);
 
 	return (
 		<div hidden={layer < 2}>
@@ -27,6 +32,8 @@ export default function BoardOutlineTolerance() {
 				value={boardOutlineTolerance}
 				onChange={async value => {
 					dispatch(setBoardOutlineTolerance(value));
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">

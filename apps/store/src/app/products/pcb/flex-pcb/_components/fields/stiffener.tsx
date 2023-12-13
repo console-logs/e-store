@@ -1,5 +1,12 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectStiffner, selectStiffnerOptions, setStiffner } from "@/redux/reducers/flexPcbSlice";
+import {
+	selectFlexPcbMemoized,
+	selectStiffner,
+	selectStiffnerOptions,
+	setPcbPrice,
+	setStiffner,
+} from "@/redux/reducers/flexPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -10,29 +17,39 @@ export default function Stiffener() {
 	const dispatch = useDispatch();
 	const stiffnerOptions = useSelector(selectStiffnerOptions);
 	const stiffner = useSelector(selectStiffner);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
+	const result = tRPCReactApi.flexPcb.getPrice.useQuery(flexPcb);
 
 	async function handleChange(values: Array<"Without" | "Polyimide" | "FR4" | "Stainless Steel" | "3M Tape">) {
 		// selected none again. remove others.
 		if (values.length > 1 && values.indexOf("Without") > 0) {
 			dispatch(setStiffner(["Without"]));
+			const response = await result.refetch();
+			dispatch(setPcbPrice(response.data ?? 0));
 			return;
 		}
 
 		// just none (default), keep it.
 		if (values.length === 1 && values.includes("Without")) {
 			dispatch(setStiffner(["Without"]));
+			const response = await result.refetch();
+			dispatch(setPcbPrice(response.data ?? 0));
 			return;
 		}
 
 		// remove none others are selected.
 		if (values.length > 1 && values.includes("Without")) {
 			dispatch(setStiffner(values.filter(value => value !== "Without")));
+			const response = await result.refetch();
+			dispatch(setPcbPrice(response.data ?? 0));
 			return;
 		}
 
 		// just others, keep them
 		if (!values.includes("Without")) {
 			dispatch(setStiffner(values));
+			const response = await result.refetch();
+			dispatch(setPcbPrice(response.data ?? 0));
 			return;
 		}
 	}

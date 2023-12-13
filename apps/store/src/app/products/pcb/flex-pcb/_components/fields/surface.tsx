@@ -1,5 +1,6 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectSurfaceFinish, selectSurfaceFinishOptions, setSurfaceFinish } from "@/redux/reducers/flexPcbSlice";
+import { selectFlexPcbMemoized, selectSurfaceFinish, selectSurfaceFinishOptions, setPcbPrice, setSurfaceFinish } from "@/redux/reducers/flexPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -11,6 +12,8 @@ export default function SurfaceFinish() {
 	const dispatch = useDispatch();
 	const surfaceFinishOptions = useSelector(selectSurfaceFinishOptions);
 	const surfaceFinish = useSelector(selectSurfaceFinish);
+	const flexPcb = useSelector(selectFlexPcbMemoized);
+	const result = tRPCReactApi.flexPcb.getPrice.useQuery(flexPcb);
 
 	return (
 		<div>
@@ -21,6 +24,8 @@ export default function SurfaceFinish() {
 				value={surfaceFinish}
 				onChange={async value => {
 					dispatch(setSurfaceFinish(value));
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
