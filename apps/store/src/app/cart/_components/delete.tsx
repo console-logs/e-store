@@ -1,5 +1,6 @@
 "use client";
 import { deleteAllItemsAction, deleteCartItemAction } from "@/actions";
+import { deleteDesignFileFromS3 } from "@/lib/helpers";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { useTransition } from "react";
@@ -17,6 +18,7 @@ export function DeleteCartItemButton({ itemName, type }: { itemName: string; typ
 					await deleteCartItemAction(itemName);
 					if (type === "PCB") {
 						// delete its accompanied design file from s3
+						await deleteDesignFileFromS3(itemName);
 					}
 				})
 			}>

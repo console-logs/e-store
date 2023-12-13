@@ -1,5 +1,6 @@
+"use server";
 import { env } from "@/env";
-import { FILE_PATH_SEPARATOR, OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
+import { FILE_EXTENSION, FILE_PATH_SEPARATOR, OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
 import { calculateCartTotal, calculateGst } from "@/lib/utils";
 import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
@@ -263,7 +264,7 @@ export async function getFoldername(): Promise<string> {
 			foldername = result.s3FileDir + FILE_PATH_SEPARATOR;
 		} else {
 			foldername = newCartId + FILE_PATH_SEPARATOR;
-			await usersCollection.updateOne(userFilter, { $set: { s3FileDir: foldername } });
+			await usersCollection.updateOne(userFilter, { $set: { s3FileDir: newCartId } });
 		}
 	}
 
@@ -271,4 +272,30 @@ export async function getFoldername(): Promise<string> {
 		foldername = cartIdCookie.value + FILE_PATH_SEPARATOR;
 	}
 	return foldername;
+}
+
+export async function deleteDesignFileFromS3(itemName: string): Promise<void> {
+	let foldername = null;
+
+	const { userId } = auth();
+	const cartIdCookie = cookies().get("cartId");
+
+	if (userId) {
+		await mongoClient.connect();
+		const options = { projection: { _id: 0, s3FileDir: 1 } };
+		const userFilter = { userId };
+		const result = await usersCollection.findOne<{ s3FileDir: string | null }>(userFilter, options);
+		if (!result) throw new Error("User not found");
+		foldername = result.s3FileDir ? result.s3FileDir + FILE_PATH_SEPARATOR : null;
+	}
+
+	if (cartIdCookie) {
+		foldername = cartIdCookie.value + FILE_PATH_SEPARATOR;
+	}
+	const filename = foldername + itemName + FILE_EXTENSION;
+	const deleteCommand = new DeleteObjectCommand({
+		Bucket: env.AWS_BUCKET_NAME,
+		Key: filename,
+	});
+	await s3Client.send(deleteCommand);
 }
