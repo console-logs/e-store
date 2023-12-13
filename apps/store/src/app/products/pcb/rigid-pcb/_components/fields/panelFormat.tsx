@@ -62,6 +62,8 @@ export default function PanelFormat() {
 						dispatch(setColumns(Number(e.target.value)));
 						dispatch(updateSinglePiecesQty());
 						dispatch(updatePanelSize());
+						const response = await result.refetch();
+						dispatch(setPcbPrice(response.data ?? 0));
 					}}
 				/>
 			</div>
