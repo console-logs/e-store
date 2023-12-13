@@ -31,6 +31,8 @@ export async function POST(request: Request) {
 	try {
 		await s3Client.send(putCommand);
 		const fileUrl = await getSignedUrl(s3Client, getCommand);
+		console.log({ filename });
+
 		return new Response(JSON.stringify({ filename, fileUrl }), { status: STATUS_OK });
 	} catch (err) {
 		console.error(err);
