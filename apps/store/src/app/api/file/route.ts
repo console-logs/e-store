@@ -1,7 +1,7 @@
 import { env } from "@/env";
 import { FILE_EXTENSION, STATUS_BAD_REQUEST, STATUS_INTERNAL_SERVER_ERROR, STATUS_OK, s3Client } from "@/lib/constants";
 import { getFoldername } from "@/lib/helpers";
-import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 export async function POST(request: Request) {
@@ -35,22 +35,5 @@ export async function POST(request: Request) {
 	} catch (err) {
 		console.error(err);
 		return new Response(null, { status: STATUS_INTERNAL_SERVER_ERROR, statusText: "Something went wrong" });
-	}
-}
-
-export async function DELETE(request: Request) {
-	const { filename } = (await request.json()) as { filename: string };
-
-	const command = new DeleteObjectCommand({
-		Bucket: env.AWS_BUCKET_NAME,
-		Key: filename,
-	});
-
-	try {
-		await s3Client.send(command);
-		return new Response(null, { status: STATUS_OK });
-	} catch (err) {
-		console.error(err);
-		return new Response(null, { status: STATUS_BAD_REQUEST, statusText: "File not found" });
 	}
 }
