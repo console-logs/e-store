@@ -299,3 +299,24 @@ export async function deleteDesignFileFromS3(itemName: string): Promise<void> {
 	});
 	await s3Client.send(deleteCommand);
 }
+
+export async function deleteAllDesignFilesFromS3(): Promise<void> {
+	let foldername;
+
+	const { userId } = auth();
+	const cartIdCookie = cookies().get("cartId");
+
+	if (userId) {
+		await mongoClient.connect();
+		const options = { projection: { _id: 0, s3FileDir: 1 } };
+		const userFilter = { userId };
+		const result = await usersCollection.findOne<{ s3FileDir: string | null }>(userFilter, options);
+		if (!result) throw new Error("User not found");
+		foldername = result.s3FileDir ? result.s3FileDir : undefined;
+	}
+
+	if (cartIdCookie) {
+		foldername = cartIdCookie.value;
+	}
+	await deleteFilesInSourceDirectory(foldername)
+}
