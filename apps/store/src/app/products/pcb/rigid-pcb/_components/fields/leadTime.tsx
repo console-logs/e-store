@@ -2,9 +2,12 @@ import HelpPopover from "@/app/products/pcb/_components/common/help";
 import {
 	selectLeadTime,
 	selectLeadTimeOptions,
+	selectRigidPcbMemoized,
 	setLeadTime,
+	setPcbPrice,
 	setTentativeDispatchDate,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -17,6 +20,8 @@ export default function LeadTime() {
 	const dispatch = useDispatch();
 	const leadTimeOptions = useSelector(selectLeadTimeOptions);
 	const leadTime = useSelector(selectLeadTime);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 
 	return (
 		<div>
@@ -29,6 +34,8 @@ export default function LeadTime() {
 					dispatch(setLeadTime(value));
 					const dispatchDate = getFutureDate(parseInt(value, 10));
 					dispatch(setTentativeDispatchDate(dispatchDate));
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

@@ -3,8 +3,11 @@ import {
 	selectBaseMaterial,
 	selectBreakDownVoltage,
 	selectBreakDownVoltageOptions,
+	selectRigidPcbMemoized,
 	setBreakdownVoltage,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -17,6 +20,8 @@ export default function BreakdownVoltage() {
 	const breakdownVoltageOptions = useSelector(selectBreakDownVoltageOptions);
 	const breakdownVoltage = useSelector(selectBreakDownVoltage);
 	const baseMaterial = useSelector(selectBaseMaterial);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 
 	return (
 		<div hidden={baseMaterial !== "Aluminum"}>
@@ -27,6 +32,8 @@ export default function BreakdownVoltage() {
 				value={breakdownVoltage}
 				onChange={async value => {
 					dispatch(setBreakdownVoltage(value));
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

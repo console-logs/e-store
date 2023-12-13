@@ -2,12 +2,15 @@ import HelpPopover from "@/app/products/pcb/_components/common/help";
 import {
 	selectColumns,
 	selectDesignFormat,
+	selectRigidPcbMemoized,
 	selectRows,
 	setColumns,
+	setPcbPrice,
 	setRows,
 	updatePanelSize,
 	updateSinglePiecesQty,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +20,8 @@ export default function PanelFormat() {
 	const columns = useSelector(selectColumns);
 	const rows = useSelector(selectRows);
 	const designFormat = useSelector(selectDesignFormat);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 
 	return (
 		<div hidden={designFormat === "Single PCB"}>
@@ -38,6 +43,8 @@ export default function PanelFormat() {
 						dispatch(setRows(Number(e.target.value)));
 						dispatch(updateSinglePiecesQty());
 						dispatch(updatePanelSize());
+						const response = await result.refetch();
+						dispatch(setPcbPrice(response.data ?? 0));
 					}}
 				/>
 				<p className="flex items-center justify-center">x</p>

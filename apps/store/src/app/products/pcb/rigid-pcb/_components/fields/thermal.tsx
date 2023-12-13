@@ -1,10 +1,13 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
 import {
 	selectBaseMaterial,
+	selectRigidPcbMemoized,
 	selectThermalConductivity,
 	selectThermalConductivityOptions,
+	setPcbPrice,
 	setThermalConductivity,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -14,10 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ThermalConductivity() {
 	const dispatch = useDispatch();
-
 	const baseMaterial = useSelector(selectBaseMaterial);
 	const thermalConductivity = useSelector(selectThermalConductivity);
 	const thermalConductivityOptions = useSelector(selectThermalConductivityOptions);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 
 	const hiddenOptions = ["Aluminum", "CopperCore"];
 
@@ -30,6 +34,8 @@ export default function ThermalConductivity() {
 				value={thermalConductivity}
 				onChange={async value => {
 					dispatch(setThermalConductivity(value));
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

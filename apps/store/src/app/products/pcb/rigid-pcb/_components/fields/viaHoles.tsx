@@ -1,5 +1,12 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectBaseMaterial, selectViaHoles, setViaHoles } from "@/redux/reducers/rigidPcbSlice";
+import {
+	selectBaseMaterial,
+	selectRigidPcbMemoized,
+	selectViaHoles,
+	setPcbPrice,
+	setViaHoles,
+} from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +15,8 @@ export default function ViaHoles() {
 	const dispatch = useDispatch();
 	const viaHoles = useSelector(selectViaHoles);
 	const baseMaterial = useSelector(selectBaseMaterial);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 
 	return (
 		<div hidden={baseMaterial === "Aluminum" || baseMaterial === "CopperCore"}>
@@ -23,6 +32,8 @@ export default function ViaHoles() {
 				required
 				onChange={async e => {
 					dispatch(setViaHoles(Number(e.target.value)));
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}
 				value={viaHoles}
 			/>

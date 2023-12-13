@@ -3,10 +3,13 @@ import HelpPopover from "@/app/products/pcb/_components/common/help";
 import {
 	selectBoardSizeX,
 	selectBoardSizeY,
+	selectRigidPcbMemoized,
 	setBoardSizeX,
 	setBoardSizeY,
+	setPcbPrice,
 	updatePanelSize,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +18,8 @@ export default function BoardSize() {
 	const dispatch = useDispatch();
 	const boardSizeX = useSelector(selectBoardSizeX);
 	const boardSizeY = useSelector(selectBoardSizeY);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 
 	return (
 		<div className="w-full">
@@ -34,6 +39,8 @@ export default function BoardSize() {
 					onChange={async e => {
 						dispatch(setBoardSizeX(Number(e.target.value)));
 						dispatch(updatePanelSize());
+						const response = await result.refetch();
+						dispatch(setPcbPrice(response.data ?? 0));
 					}}
 				/>
 				<p className="flex items-center justify-center">x</p>

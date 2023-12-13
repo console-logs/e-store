@@ -1,5 +1,12 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectOuterCuWeight, selectOuterCuWeightOptions, setOuterCuWeight } from "@/redux/reducers/rigidPcbSlice";
+import {
+	selectOuterCuWeight,
+	selectOuterCuWeightOptions,
+	selectRigidPcbMemoized,
+	setOuterCuWeight,
+	setPcbPrice,
+} from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -11,6 +18,8 @@ export default function OuterCuWeight() {
 	const dispatch = useDispatch();
 	const OuterCuWeightOptions = useSelector(selectOuterCuWeightOptions);
 	const outerCuWeight = useSelector(selectOuterCuWeight);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 
 	return (
 		<div>
@@ -21,6 +30,8 @@ export default function OuterCuWeight() {
 				value={outerCuWeight}
 				onChange={async value => {
 					dispatch(setOuterCuWeight(value));
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

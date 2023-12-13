@@ -4,8 +4,11 @@ import {
 	selectLayer,
 	selectMaterial,
 	selectMaterialOptions,
+	selectRigidPcbMemoized,
 	setMaterial,
+	setPcbPrice,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -19,6 +22,8 @@ export default function MaterialType() {
 	const baseMaterial = useSelector(selectBaseMaterial);
 	const material = useSelector(selectMaterial);
 	const layer = useSelector(selectLayer);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 
 	const hiddenStatus = !(baseMaterial === "FR4" && layer >= 4) && baseMaterial !== "Rogers";
 
@@ -31,6 +36,8 @@ export default function MaterialType() {
 				value={material}
 				onChange={async value => {
 					dispatch(setMaterial(value));
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">

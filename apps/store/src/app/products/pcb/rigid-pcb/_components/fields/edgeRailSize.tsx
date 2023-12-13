@@ -4,9 +4,12 @@ import {
 	selectEdgeRailSize,
 	selectEdgeRailSizeOptions,
 	selectEdgeRails,
+	selectRigidPcbMemoized,
 	setEdgeRailSize,
+	setPcbPrice,
 	updatePanelSize,
 } from "@/redux/reducers/rigidPcbSlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -20,6 +23,8 @@ export default function EdgeRailsSize() {
 	const designFormat = useSelector(selectDesignFormat);
 	const edgeRails = useSelector(selectEdgeRails);
 	const edgeRailSizeOptions = useSelector(selectEdgeRailSizeOptions);
+	const rigidPcb = useSelector(selectRigidPcbMemoized);
+	const result = tRPCReactApi.rigidPcb.getPrice.useQuery(rigidPcb);
 	
 	const hiddenStatus = designFormat === "Single PCB" || designFormat === "Panel by Customer" || edgeRails === "No";
 
@@ -33,6 +38,8 @@ export default function EdgeRailsSize() {
 				onChange={async value => {
 					dispatch(setEdgeRailSize(value));
 					dispatch(updatePanelSize());
+					const response = await result.refetch();
+					dispatch(setPcbPrice(response.data ?? 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">
