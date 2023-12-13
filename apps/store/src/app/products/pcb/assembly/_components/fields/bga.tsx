@@ -1,5 +1,12 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectNumOfBgaComponents, setNumOfBgaComponents } from "@/redux/reducers/pcbAssemblySlice";
+import {
+	selectNumOfBgaComponents,
+	selectPcbAssemblyMemomized,
+	setNumOfBgaComponents,
+	setOneTimeSetupCost,
+	setPcbAssemblyCost,
+} from "@/redux/reducers/pcbAssemblySlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 export default function BgaComponentsQuantity() {
 	const dispatch = useDispatch();
 	const numOfBgaComponents = useSelector(selectNumOfBgaComponents);
+	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
+	const result = tRPCReactApi.pcbAssembly.getPrice.useQuery(pcbAssembly);
 
 	return (
 		<div>
@@ -24,6 +33,9 @@ export default function BgaComponentsQuantity() {
 				value={numOfBgaComponents}
 				onChange={async e => {
 					dispatch(setNumOfBgaComponents(Number(e.target.value)));
+					const response = await result.refetch();
+					dispatch(setPcbAssemblyCost(response.data ? response.data.assemblyCost : 0));
+					dispatch(setOneTimeSetupCost(response.data ? response.data.setupCost : 0));
 				}}
 			/>
 		</div>

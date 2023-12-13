@@ -1,5 +1,6 @@
 import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectTurnaroundTime, selectTurnaroundTimeOptions, setLeadTime } from "@/redux/reducers/pcbAssemblySlice";
+import { selectPcbAssemblyMemomized, selectTurnaroundTime, selectTurnaroundTimeOptions, setLeadTime, setOneTimeSetupCost, setPcbAssemblyCost } from "@/redux/reducers/pcbAssemblySlice";
+import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";
@@ -11,6 +12,8 @@ export default function TurnAroundTime() {
 	const dispatch = useDispatch();
 	const turnaroundTimeOptions = useSelector(selectTurnaroundTimeOptions);
 	const turnaroundTime = useSelector(selectTurnaroundTime);
+	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
+	const result = tRPCReactApi.pcbAssembly.getPrice.useQuery(pcbAssembly);
 
 	return (
 		<div>
@@ -21,6 +24,9 @@ export default function TurnAroundTime() {
 				value={turnaroundTime}
 				onChange={async value => {
 					dispatch(setLeadTime(value));
+					const response = await result.refetch();
+					dispatch(setPcbAssemblyCost(response.data ? response.data.assemblyCost : 0));
+					dispatch(setOneTimeSetupCost(response.data ? response.data.setupCost : 0));
 				}}>
 				<div className="relative">
 					<Listbox.Button className="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
