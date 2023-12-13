@@ -56,6 +56,8 @@ export default function BoardSize() {
 					onChange={async e => {
 						dispatch(setBoardSizeY(Number(e.target.value)));
 						dispatch(updatePanelSize());
+						const response = await result.refetch();
+						dispatch(setPcbPrice(response.data ?? 0));
 					}}
 				/>
 			</div>
