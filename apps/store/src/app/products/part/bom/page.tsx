@@ -1,17 +1,13 @@
-import Loading from "@/app/loading";
+"use client";
+import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { Input } from "@packages/shared/components/ui/input";
-import type { Metadata } from "next";
-import { useState } from "react";
 import { useToast } from "@shared/components/ui/use-toast";
-
-export const metadata: Metadata = {
-	title: "Upload BOM",
-};
+import { useState, useTransition } from "react";
 
 export default function UploadBomPage() {
 	const [bomFile, setBomFile] = useState<File | undefined>();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isLoading, startTransition] = useTransition();
 	const { toast } = useToast();
 
 	function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -20,35 +16,31 @@ export default function UploadBomPage() {
 		}
 	}
 
-	async function handleFileUpload() {
-		setIsLoading(true);
-		if (!bomFile) {
-			setIsLoading(false);
-			toast({
-				variant: "destructive",
-				title: "Please upload your BoM",
-				description: "Please upload your BoM file to continue",
-				duration: 4000,
-			});
-			return;
-		}
-		try {
-			const formData = new FormData();
-			formData.set("file", bomFile);
-			const response = await fetch("/api/bom-parser", {
-				method: "POST",
-				body: formData,
-			});
-			if (!response.ok) throw new Error(await response.text());
-			const data = (await response.json()) as unknown;
-			console.log({ data });
-		} catch (error) {
-			throw error;
-		}
-	}
-
-	if (isLoading) {
-		return <Loading />;
+	function handleFileUpload() {
+		startTransition(async () => {
+			if (!bomFile) {
+				toast({
+					variant: "destructive",
+					title: "Please upload your BoM",
+					description: "Please upload your BoM file to continue",
+					duration: 4000,
+				});
+				return;
+			}
+			try {
+				const formData = new FormData();
+				formData.set("file", bomFile);
+				const response = await fetch("/api/bom-parser", {
+					method: "POST",
+					body: formData,
+				});
+				if (!response.ok) throw new Error(await response.text());
+				const data = (await response.json()) as unknown;
+				console.log({ data });
+			} catch (error) {
+				throw error;
+			}
+		});
 	}
 
 	return (
@@ -85,9 +77,16 @@ export default function UploadBomPage() {
 					onChange={e => handleFileChange(e)}
 				/>
 				<Button
-					disabled={!bomFile}
+					disabled={isLoading}
 					onClick={handleFileUpload}>
-					Upload
+					{isLoading ? (
+						<Icons.spinner
+							className="animate-spin text-center"
+							aria-hidden="true"
+						/>
+					) : (
+						"Upload"
+					)}
 				</Button>
 			</div>
 		</div>
