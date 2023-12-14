@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
 		// Api returns multiple results that match the query.
 		// Filter out Names that are not exact match to Names in our bom file.
-		const parsedDataNames = new Set(parsedData.map(data => data.Name));
+		const parsedDataNames = new Set(parsedData.map(data => data.Name.toUpperCase()));		
 		const results = responses.filter(response => {
 			return Object.values(response.Parts).some(part => parsedDataNames.has(part.Name));
 		});

@@ -35,8 +35,22 @@ export default function UploadBomPage() {
 					body: formData,
 				});
 				if (!response.ok) throw new Error(await response.text());
-				const data = (await response.json()) as unknown;
-				console.log({ data });
+				const results = (await response.json()) as Array<PartResultsType>;
+				const availableParts: Array<PartDataType> = [];
+				const naParts: Array<PartDataType> = [];
+
+				Object.values(results).forEach(result => {
+					Object.values(result.Parts).forEach(part => {
+						if (part.Availability.includes("None") || part.Availability.includes("On Order")) {
+							naParts.push(part);
+						} else {
+							availableParts.push(part);
+						}
+					});
+				});
+
+				console.log({ availableParts });
+				console.log({ naParts });
 			} catch (error) {
 				throw error;
 			}
