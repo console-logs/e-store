@@ -36,6 +36,8 @@ export default function UploadBomPage() {
 				});
 				if (!response.ok) throw new Error(await response.text());
 				const results = (await response.json()) as Array<PartResultsType>;
+				console.log({ results });
+
 				const availableParts: Array<PartDataType> = [];
 				const naParts: Array<PartDataType> = [];
 
