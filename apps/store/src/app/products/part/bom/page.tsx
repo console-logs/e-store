@@ -1,15 +1,18 @@
 "use client";
+import { addItemToCartAction } from "@/actions";
+import { SHOPPING_CART_PAGE } from "@/lib/routes";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { Input } from "@packages/shared/components/ui/input";
 import { useToast } from "@shared/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 export default function UploadBomPage() {
 	const [bomFile, setBomFile] = useState<File | undefined>();
 	const [isLoading, startTransition] = useTransition();
 	const { toast } = useToast();
-
+	const router = useRouter();
 	function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
 		if (e.target.files) {
 			setBomFile(e.target.files[0]);
@@ -36,7 +39,6 @@ export default function UploadBomPage() {
 				});
 				if (!response.ok) throw new Error(await response.text());
 				const results = (await response.json()) as Array<PartResultsType>;
-				console.log({ results });
 
 				const availableParts: Array<PartDataType> = [];
 				const naParts: Array<PartDataType> = [];
@@ -51,8 +53,11 @@ export default function UploadBomPage() {
 					});
 				});
 
-				console.log({ availableParts });
-				console.log({ naParts });
+				// add to cart
+				availableParts.map(async part => {
+					await addItemToCartAction(part);
+				});
+				router.push(SHOPPING_CART_PAGE);
 			} catch (error) {
 				throw error;
 			}
