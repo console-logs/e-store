@@ -13,6 +13,7 @@ export default function UploadBomPage() {
 	const [isLoading, startTransition] = useTransition();
 	const { toast } = useToast();
 	const router = useRouter();
+
 	function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
 		if (e.target.files) {
 			setBomFile(e.target.files[0]);
@@ -38,25 +39,15 @@ export default function UploadBomPage() {
 					body: formData,
 				});
 				if (!response.ok) throw new Error(await response.text());
-				const results = (await response.json()) as Array<PartResultsType>;
+				const results = (await response.json()) as SortedResultsType;
 
-				const availableParts: Array<PartDataType> = [];
-				const naParts: Array<PartDataType> = [];
-
-				Object.values(results).forEach(result => {
-					Object.values(result.Parts).forEach(part => {
-						if (part.Availability.includes("None") || part.Availability.includes("On Order")) {
-							naParts.push(part);
-						} else {
-							availableParts.push(part);
-						}
-					});
-				});
-
+				console.log({results});
+				
 				// add to cart
-				availableParts.map(async part => {
+				results.availableParts.map(async part => {
 					await addItemToCartAction(part);
 				});
+				
 				router.push(SHOPPING_CART_PAGE);
 			} catch (error) {
 				throw error;

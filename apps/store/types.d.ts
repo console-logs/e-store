@@ -627,6 +627,11 @@ type PriceBreakType = {
 	Currency: string;
 };
 
+type SortedResultsType =  {
+    naParts: PartDataType[];
+    availableParts: PartDataType[];
+}
+
 /****************************** PCB RATE CARD *********************************************/
 type RigidPcbRateCardType = {
 	baseMaterial: {

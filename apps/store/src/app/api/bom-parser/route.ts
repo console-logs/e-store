@@ -15,23 +15,51 @@ export async function POST(request: Request) {
 
 		// Api returns multiple results that match the query.
 		// Filter out Names that are not exact match to Names in our bom file.
-		const filteredResults: PartResultsType[] = [];
 		const parsedDataNames = new Set(parsedData.map(data => data.Name.toUpperCase())); // Get all Names from parsed data
+
+		// Create a map to store unique parts
+		const uniqueParts: Record<string, PartResultsType> = {};
+		const sortedResults: SortedResultsType = {
+			naParts: [],
+			availableParts: [],
+		};
 
 		responses.forEach(response => {
 			for (const [key, value] of Object.entries(response.Parts)) {
 				if (parsedDataNames.has(key.toUpperCase())) {
-					filteredResults.push({
-						Parts: { [key]: value },
-						Errors: null,
-					});
+					// Only add the part to the map if it's not already present
+					if (!uniqueParts[key]) {
+						// Find the corresponding part in parsedData
+						const correspondingPart = parsedData.find(
+							part => part.Name.toUpperCase() === key.toUpperCase()
+						);
+
+						// Update the OrderedQty value
+						value.OrderedQty = correspondingPart ? parseInt(correspondingPart.OrderedQty) : 0;
+
+						uniqueParts[key] = {
+							Parts: { [key]: value },
+							Errors: null,
+						};
+					}
 				}
 			}
 		});
+		// Convert the map to an array
+		const filteredResults = Object.values(uniqueParts);
 
-		// unique results
-		const uniqueResults = [...new Set(filteredResults)];
-		return new Response(JSON.stringify(uniqueResults), { status: STATUS_OK });
+		// Check the Availability property of each part in the filtered data
+		Object.values(filteredResults).forEach(result => {
+			Object.values(result.Parts).forEach(part => {
+				if (part.Availability.includes("None") || part.Availability.includes("On Order")) {
+					sortedResults.naParts.push(part);
+				} else {
+					sortedResults.availableParts.push(part);
+				}
+			});
+		});
+
+		return new Response(JSON.stringify(sortedResults), { status: STATUS_OK });
 	} catch (err) {
 		console.error(err);
 		return new Response(null, { status: STATUS_INTERNAL_SERVER_ERROR, statusText: "Failed to process BoM" });
