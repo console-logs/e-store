@@ -1,6 +1,6 @@
 "use server";
 import {
-	createNewCart,
+	createNewCartInDB,
 	createNewOpenOrder,
 	createNewOrder,
 	fetchGuestCart,
@@ -12,6 +12,7 @@ import {
 	transferDesignFilesInS3,
 	updateCartInDB,
 	updateExistingCart,
+	updateGuestCart,
 } from "@/lib/helpers";
 import { guestCartsCollection, mongoClient, usersCollection } from "@/lib/mongo";
 import { auth } from "@clerk/nextjs";
@@ -112,10 +113,33 @@ export async function addItemToCartAction(item: CartUpdatePropsType): Promise<vo
 		const cart = await fetchCartItemsAction();
 		if (cart) {
 			await updateExistingCart({ cart, item });
+			await updateCartInDB(cart);
 		} else {
-			await createNewCart(item);
+			const guestCart = await updateGuestCart(item);
+			await createNewCartInDB(guestCart);
 		}
 		revalidatePath("/products", "layout");
+	} catch (error) {
+		throw error; // handle on the client side.
+	}
+}
+
+export async function addMultiplePartsToCartAction(parts: Array<PartDataType>): Promise<void> {
+	try {
+		const cart = await fetchCartItemsAction();
+		if (cart) {
+			for (const part of parts) {
+				await updateExistingCart({ cart, item: part });
+			}
+			await updateCartInDB(cart);
+		} else {
+			const guestCart = {
+				cartSize: parts.length,
+				cartItems: parts,
+			};
+			await createNewCartInDB(guestCart);
+		}
+		revalidatePath("/cart");
 	} catch (error) {
 		throw error; // handle on the client side.
 	}

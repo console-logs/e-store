@@ -122,10 +122,16 @@ export async function updateExistingCart({
 		cart.cartItems.push(item);
 		cart.cartSize++;
 	}
-	await updateCartInDB(cart);
 }
 
-export async function createNewCart(props: CartUpdatePropsType): Promise<void> {
+export async function updateGuestCart(props: CartUpdatePropsType): Promise<CartDataType> {
+	return {
+		cartSize: 1,
+		cartItems: [props],
+	};
+}
+
+export async function createNewCartInDB(cart: CartDataType): Promise<void> {
 	const cartIdCookie = cookies().get("cartId");
 	let cartId = "";
 	if (cartIdCookie) {
@@ -138,8 +144,8 @@ export async function createNewCart(props: CartUpdatePropsType): Promise<void> {
 	await guestCartsCollection.insertOne({
 		cartId: cartId,
 		cart: {
-			cartSize: 1,
-			cartItems: [props],
+			cartSize: cart.cartSize,
+			cartItems: cart.cartItems,
 		},
 	});
 }
