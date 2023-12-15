@@ -63,7 +63,13 @@ export async function transferGuestCartToUserAction(): Promise<void> {
 
 		if (userCart && guestCart) {
 			const mergedCart = await mergeCarts(userCart, guestCart);
-			await transferDesignFilesInS3();
+
+			// transfer pcb design files only if there are PCBs in the cart
+			const guestCartPcbs = guestCart.cartItems.filter(cartItem => cartItem.Type === "PCB");
+			const userCartPcbs = userCart.cartItems.filter(cartItem => cartItem.Type === "PCB");
+			if (guestCartPcbs.length > 0 || userCartPcbs.length > 0) {
+				await transferDesignFilesInS3();
+			}
 
 			const { userId } = auth();
 			const userFilter = { userId };
