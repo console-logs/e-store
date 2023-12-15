@@ -1,5 +1,5 @@
 "use client";
-import { addItemToCartAction } from "@/actions";
+import { addMultiplePartsToCartAction } from "@/actions";
 import { SHOPPING_CART_PAGE } from "@/lib/routes";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
@@ -41,13 +41,8 @@ export default function UploadBomPage() {
 				if (!response.ok) throw new Error(await response.text());
 				const results = (await response.json()) as SortedResultsType;
 
-				console.log({results});
-				
-				// add to cart
-				results.availableParts.map(async part => {
-					await addItemToCartAction(part);
-				});
-				
+				await addMultiplePartsToCartAction(results.availableParts);
+
 				router.push(SHOPPING_CART_PAGE);
 			} catch (error) {
 				throw error;
