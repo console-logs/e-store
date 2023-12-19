@@ -13,6 +13,7 @@ export const env = createEnv({
 		AWS_SECRET_ACCESS_KEY: z.string().min(1),
 		AWS_REGION: z.string().min(1),
 		AWS_BUCKET_NAME: z.string().min(1),
+		REDIS_URL: z.string().url(),
 	},
 	client: {
 		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
@@ -37,6 +38,7 @@ export const env = createEnv({
 		AWS_REGION: process.env.AWS_REGION,
 		AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
 		NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+		REDIS_URL: process.env.REDIS_URL,
 	},
 	skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 	emptyStringAsUndefined: true,

@@ -36,6 +36,7 @@
 		"react-dom": "18.2.0",
 		"react-razorpay": "latest",
 		"react-redux": "^8.1.2",
+		"redis": "^4.6.12",
 		"shared": "workspace:*",
 		"short-unique-id": "^4.4.4",
 		"superjson": "^2.2.1",
