@@ -12,7 +12,6 @@ export const ERROR_MSG = {
 	COMPONENT_SEARCH_QUERY_REQUIRED: "Please enter part number, keywords or tech specs to search",
 };
 
-//TODO: REPLACE WITH HOSTED PUBLIC URL
 export const PARTS_API = "https://parts-api-nine.vercel.app/api/parts?mpn=";
 export const OVERHEAD_SHIPPING_CHARGES = 0.0;
 
@@ -25,3 +24,5 @@ export const STATUS_INTERNAL_SERVER_ERROR = 500;
 export const FILE_EXTENSION = ".zip";
 
 export const FILE_PATH_SEPARATOR = "/";
+
+export const PART_REQUEST_RATE_LIMIT = 30; // 30 requests per minute

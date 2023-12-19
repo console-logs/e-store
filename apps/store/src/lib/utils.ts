@@ -77,3 +77,21 @@ export function getUrlFromBucket(props: { s3Bucket: string; region: string; file
 	const { s3Bucket, region, fileName } = props;
 	return `https://${s3Bucket}.s3${region}.amazonaws.com/${fileName}`;
 }
+
+export async function rateLimiter(requestCount: number, requestsPerMinute: number): Promise<void> {
+	const timeInterval = (60 * 1000) / requestsPerMinute; // one request every 2000ms or 1 request every 2 seconds.
+
+	return new Promise(resolve => {
+		if (requestCount >= requestsPerMinute) {
+			console.log("RATE LIMITER ENABLED...SLOWING DOWN REQUESTS...");
+			const timeSpent = Date.now() % timeInterval;
+			const remainderTime = timeInterval - timeSpent;
+			setTimeout(() => {
+				console.log("DISABLING RATE LIMITER...");
+				resolve();
+			}, remainderTime); // wait for remainder time to pass before making another request.
+		} else {
+			resolve();
+		}
+	});
+}
