@@ -29,6 +29,7 @@ export async function mergeCarts(userCart: CartDataType, guestCart: CartDataType
 			userCart.cartItems.push(guestCartItem);
 			userCart.cartSize++;
 		}
+		userCart.updatedAt = guestCart.updatedAt;
 	});
 	return userCart;
 }
@@ -119,6 +120,7 @@ export async function updateExistingCart({
 	if (existingItem) {
 		existingItem.OrderedQty += item.OrderedQty;
 	} else {
+		cart.updatedAt = new Date();
 		cart.cartItems.push(item);
 		cart.cartSize++;
 	}
@@ -126,6 +128,8 @@ export async function updateExistingCart({
 
 export async function updateGuestCart(props: CartUpdatePropsType): Promise<CartDataType> {
 	return {
+		createdAt: new Date(),
+		updatedAt: new Date(),
 		cartSize: 1,
 		cartItems: [props],
 	};
@@ -144,6 +148,8 @@ export async function createNewCartInDB(cart: CartDataType): Promise<void> {
 	await guestCartsCollection.insertOne({
 		cartId: cartId,
 		cart: {
+			createdAt: cart.createdAt,
+			updatedAt: cart.updatedAt,
 			cartSize: cart.cartSize,
 			cartItems: cart.cartItems,
 		},
@@ -253,6 +259,8 @@ export async function getFoldername(): Promise<string> {
 		await guestCartsCollection.insertOne({
 			cartId: newCartId,
 			cart: {
+				createdAt: new Date(),
+				updatedAt: new Date(),
 				cartSize: 0,
 				cartItems: [],
 			},

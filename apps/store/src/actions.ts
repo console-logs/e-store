@@ -159,6 +159,7 @@ export async function updatePartQtyAction(props: UpdatePartQtyPropsType): Promis
 			const existingItem = cart.cartItems.find(cartItem => cartItem.Name === props.name);
 			if (existingItem) {
 				existingItem.OrderedQty = props.newQty;
+				cart.updatedAt = new Date();
 			}
 			await updateCartInDB(cart);
 		}

@@ -991,6 +991,8 @@ type PcbAssemblyRateCardType = {
 
 /****************************** CART *********************************************/
 type CartDataType = {
+	createdAt?: Date;
+	updatedAt?: Date;
 	cartId?: string; // used only with guest carts
 	cartSize: number;
 	cartItems: CartItemsType;
