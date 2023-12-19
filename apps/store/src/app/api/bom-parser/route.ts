@@ -9,13 +9,13 @@ export async function POST(request: Request) {
 	try {
 		const parsedData = await parseCsvFile(file);
 		const promises = parsedData.map(part => {
-			return tRPCServerApi.part.getParts.query({ mpn: part.Name });
+			return tRPCServerApi.part.getParts.query({ mpn: part.ManufacturerPartNumber });
 		});
 		const responses = await Promise.all(promises);
 
 		// Api returns multiple results that match the query.
 		// Filter out Names that are not exact match to Names in our bom file.
-		const parsedDataNames = new Set(parsedData.map(data => data.Name.toUpperCase())); // Get all Names from parsed data
+		const parsedDataNames = new Set(parsedData.map(data => data.ManufacturerPartNumber.toUpperCase())); // Get all Names from parsed data
 
 		// Create a map to store unique parts
 		const uniqueParts: Record<string, PartResultsType> = {};
@@ -31,11 +31,11 @@ export async function POST(request: Request) {
 					if (!uniqueParts[key]) {
 						// Find the corresponding part in parsedData
 						const correspondingPart = parsedData.find(
-							part => part.Name.toUpperCase() === key.toUpperCase()
+							part => part.ManufacturerPartNumber.toUpperCase() === key.toUpperCase()
 						);
 
 						// Update the OrderedQty value
-						value.OrderedQty = correspondingPart ? parseInt(correspondingPart.OrderedQty) : 0;
+						value.OrderedQty = correspondingPart ? parseInt(correspondingPart.Quantity) : 0;
 
 						uniqueParts[key] = {
 							Parts: { [key]: value },

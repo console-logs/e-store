@@ -1127,7 +1127,13 @@ type FieldsType = {
 /****************************** PARSER *********************************************/
 
 type ParsedDataObject = {
-	Name: string;
+	Item: number;
+	ReferenceDesignator: string;
+	ManufacturerPartNumber: string;
 	Description: string;
-	OrderedQty: string;
+	Quantity: string;
+	Value: string;
+	Package: string;
+	Type: string;
+	Manufacturer: string;
 };

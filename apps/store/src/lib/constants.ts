@@ -4,7 +4,7 @@ export const WEBSITE_NAME = "E-Store";
 export const SUBTITLE = "Lorem ipsum, dolor sit amet consectetur adipisicing elit impedit perferendi.";
 export const COUNTRY = "India";
 export const BOM_TEMPLATE_STRING =
-	"https://e-store-public-bucket.s3.ap-south-1.amazonaws.com/E-Store+Bill+of+Materials+Template.xlsx";
+	"https://e-store-public-bucket.s3.ap-south-1.amazonaws.com/E-Store-Bill-of-Materials-Template.csv";
 export const FALLBACK_PART_IMAGE = "https://e-store-public-bucket.s3.ap-south-1.amazonaws.com/comp-img-placeholder.png";
 
 export const ERROR_MSG = {
