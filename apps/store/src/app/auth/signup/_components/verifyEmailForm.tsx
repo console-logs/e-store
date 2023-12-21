@@ -49,7 +49,6 @@ export default function VerifyEmailForm() {
 							method: "POST",
 							body: JSON.stringify({ email: signupData.email, firstName: signupData.firstName }),
 						});
-						
 						await captureUserSignupAction(signupData).catch(console.error);
 						router.push(HOME_PAGE);
 					}
