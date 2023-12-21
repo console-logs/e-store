@@ -21,6 +21,7 @@ export default authMiddleware({
     "/terms-and-conditions",
     "/coming-soon",
     "/roadmap",
+    "/email"
   ],
   afterAuth(auth, req) {
     // redirect to login who aren't authenticated

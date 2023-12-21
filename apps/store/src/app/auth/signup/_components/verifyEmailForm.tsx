@@ -45,6 +45,11 @@ export default function VerifyEmailForm() {
 							email: completeSignUp.emailAddress!,
 							userId: completeSignUp.createdUserId!,
 						};
+						await fetch("/api/send", {
+							method: "POST",
+							body: JSON.stringify({ email: signupData.email, firstName: signupData.firstName }),
+						});
+						
 						await captureUserSignupAction(signupData).catch(console.error);
 						router.push(HOME_PAGE);
 					}

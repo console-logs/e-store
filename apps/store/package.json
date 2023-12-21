@@ -37,6 +37,7 @@
 		"react-razorpay": "latest",
 		"react-redux": "^8.1.2",
 		"redis": "^4.6.12",
+		"resend": "^2.0.0",
 		"shared": "workspace:*",
 		"short-unique-id": "^4.4.4",
 		"superjson": "^2.2.1",
