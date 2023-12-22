@@ -218,6 +218,12 @@ export async function createNewOrder(props: RazorpayPropsType): Promise<OrderTyp
 		remarks: null,
 	};
 
+	// send email to customer
+	await fetch("http://localhost:3000/api/order", {
+		method: "POST",
+		body: JSON.stringify(newOrder),
+	});
+
 	await usersCollection.updateOne(filter, { $push: { orders: newOrder } });
 
 	return newOrder;
