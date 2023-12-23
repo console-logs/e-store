@@ -1,16 +1,17 @@
 import { fetchAddressesAction, fetchCartItemsAction } from "@/actions";
-import BasketPartsTable from "@/app/cart/_components/partsTable";
-import BasketPcbsTable from "@/app/cart/_components/pcbsTable";
-import CartSummary from "@/app/cart/_components/summary";
-import { AddressDisplayCard } from "@/app/checkout/_components/address/displayAddress";
-import EditAddressForm from "@/app/checkout/_components/address/editAddress";
-import PayButton from "@/app/checkout/_components/pay";
+import { BasketPartsTable } from "@/components/cart/basket-parts-table";
+import { BasketPcbsTable } from "@/components/cart/basket-pcbs-table";
+import { CartPricingSummary } from "@/components/cart/cart-pricing-summary";
+import { AddressDisplayCard } from "@/components/checkout/address/address-display-card";
+import { EditAddressForm } from "@/components/checkout/address/edit-address-form";
+import { MakePaymentButton } from "@/components/checkout/make-payment-button";
 import { calculateCartTotal } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Review Order",
 };
+
 export default async function ReviewOrder() {
 	const cart = await fetchCartItemsAction().catch((error: unknown) => {
 		const unknownError = "Something went wrong, please try again later.";
@@ -52,8 +53,8 @@ export default async function ReviewOrder() {
 
 			<div className="mt-10 flex justify-end">
 				<div className="w-full sm:w-1/2">
-					<CartSummary cartValue={cartValue} />
-					<PayButton cartValue={cartValue} />
+					<CartPricingSummary cartValue={cartValue} />
+					<MakePaymentButton cartValue={cartValue} />
 				</div>
 			</div>
 		</div>

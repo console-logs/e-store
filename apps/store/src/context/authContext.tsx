@@ -1,8 +1,8 @@
 "use client";
 import Loading from "@/app/loading";
 import { useUser } from "@clerk/nextjs";
+import type { UserResource } from "@clerk/types";
 import React from "react";
-import { type UserResource } from "@clerk/types";
 
 type AuthContextType = {
   isSignedIn: boolean | undefined;

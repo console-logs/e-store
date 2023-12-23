@@ -2,7 +2,7 @@ import { HOME_PAGE } from "@/lib/routes";
 import { Button } from "@shared/components/ui/button";
 import Link from "next/link";
 
-export default function ContinueShoppingBtn() {
+export function ContinueShoppingButton() {
 	return (
 		<div className="text-center text-sm">
 			<p>

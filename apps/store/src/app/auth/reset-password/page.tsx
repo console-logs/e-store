@@ -1,4 +1,4 @@
-import ResetPasswordForm from "@/app/auth/reset-password/_components/resetForm";
+import { ResetPasswordForm } from "@/components/auth/reset-password-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@shared/components/ui/card";
 import type { Metadata } from "next";
 

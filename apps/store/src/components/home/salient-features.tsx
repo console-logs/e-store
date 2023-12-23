@@ -2,7 +2,7 @@ import { Icons } from "@packages/shared/components/Icons";
 import Image from "next/image";
 import productImage from "public/images/dark-project-app-screenshot.png";
 
-export default function SalientFeatures() {
+export function SalientFeatures() {
 	return (
 		<div className="overflow-hidden py-16">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">

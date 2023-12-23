@@ -1,7 +1,7 @@
 import { WEBSITE_NAME } from "@/lib/constants";
 import { Icons } from "@packages/shared/components/Icons";
 
-export default function Title() {
+export function Title() {
   return (
     <div className="flex h-16 shrink-0 items-center justify-center space-x-2">
       <Icons.triangle className="h-10 w-auto" />

@@ -9,7 +9,7 @@ import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useCallback, useTransition } from "react";
 
-export default function SearchPartInput() {
+export function SearchPartInput() {
 	const router = useRouter();
 	const [isLoading, startTransition] = useTransition();
 

@@ -1,46 +1,49 @@
 "use client";
-import { transferGuestCartToUserAction } from "@/actions";
-import { HOME_PAGE } from "@/lib/routes";
-import { loginSchema } from "@/schema/yup";
-import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
+import { VERIFY_EMAIL_PAGE } from "@/lib/routes";
+import { signupSchema } from "@/schema/yup";
+import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useToast } from "@shared/components/ui/use-toast";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useCallback, useState, useTransition } from "react";
 
-export default function LoginForm() {
-	const [isLoading, startTransition] = useTransition();
-	const { isLoaded, signIn, setActive } = useSignIn();
-	const { toast } = useToast();
-	const [showPassword, setShowPassword] = useState(false);
+export function SignupForm() {
 	const router = useRouter();
+	const { toast } = useToast();
+	const { isLoaded, signUp } = useSignUp();
+	const [showPassword, setShowPassword] = useState(false);
+	const [isLoading, startTransition] = useTransition();
 
 	const initialValues = {
+		fname: "",
+		lname: "",
 		email: "",
 		password: "",
 	};
 
 	const handleOnSubmit = useCallback(
-		(login_credentials: { email: string; password: string }) => {
+		(signup_credentials: { email: string; password: string; fname: string; lname: string }) => {
 			startTransition(async () => {
-				if (!isLoaded) return;
+				if (!isLoaded) {
+					return;
+				}
 				try {
-					const result = await signIn.create({
-						identifier: login_credentials.email,
-						password: login_credentials.password,
+					await signUp.create({
+						emailAddress: signup_credentials.email,
+						password: signup_credentials.password,
+						firstName: signup_credentials.fname,
+						lastName: signup_credentials.lname,
 					});
-					if (result.status === "complete") {
-						await setActive({ session: result.createdSessionId });
-						await transferGuestCartToUserAction();
-						router.push(HOME_PAGE);
-					} else {
-						/*Investigate why the login hasn't completed */
-						console.log(result);
-					}
+
+					// Send email verification code
+					await signUp.prepareEmailAddressVerification({
+						strategy: "email_code",
+					});
+					router.push(VERIFY_EMAIL_PAGE);
 				} catch (err: unknown) {
 					let errorMessage: string | undefined = "Something went wrong, please try again later.";
 					if (err instanceof Error) {
@@ -63,10 +66,34 @@ export default function LoginForm() {
 	return (
 		<Formik
 			initialValues={initialValues}
-			validationSchema={loginSchema}
+			validationSchema={signupSchema}
 			onSubmit={handleOnSubmit}>
 			{({}) => (
 				<Form className="space-y-3">
+					<div className="grid gap-2">
+						<Label htmlFor="fname">First Name</Label>
+						<Field
+							as={Input}
+							id="fname"
+							name="fname"
+							type="text"
+							autoComplete="off"
+							formNoValidate
+							required
+						/>
+					</div>
+					<div className="grid gap-2">
+						<Label htmlFor="lname">Last Name</Label>
+						<Field
+							as={Input}
+							id="lname"
+							name="lname"
+							type="text"
+							autoComplete="off"
+							formNoValidate
+							required
+						/>
+					</div>
 					<div className="grid gap-2">
 						<Label htmlFor="email">Email</Label>
 						<Field
@@ -103,6 +130,10 @@ export default function LoginForm() {
 								<span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
 							</Button>
 						</div>
+						<ErrorMessage
+							name="password"
+							render={(msg: string) => <p className="text-red-600">{msg}</p>}
+						/>
 					</div>
 					<Button
 						disabled={isLoading}
@@ -114,7 +145,7 @@ export default function LoginForm() {
 								aria-hidden="true"
 							/>
 						) : (
-							"Sign In"
+							"Create account"
 						)}
 					</Button>
 				</Form>

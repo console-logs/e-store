@@ -1,7 +1,7 @@
 "use client";
 import { addAddressesAction } from "@/actions";
-import BillingAddressFields from "@/app/checkout/_components/address/fields/bill";
-import ShippingAddressFields from "@/app/checkout/_components/address/fields/ship";
+import { BillingAddressFields } from "@/components/checkout/address/billing-address-fields";
+import ShippingAddressFields from "@/components/checkout/address/shipping-address-fields";
 import { REVIEW_ORDER_PAGE } from "@/lib/routes";
 import { addressSchema } from "@/schema/yup";
 import { Icons } from "@shared/components/Icons";
@@ -12,7 +12,7 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState, useTransition } from "react";
 
-export default function EditAddressForm() {
+export function EditAddressForm() {
 	const router = useRouter();
 	const [isSameAddress, setIsSameAddress] = useState<boolean>(true);
 	const [isLoading, startTransition] = useTransition();

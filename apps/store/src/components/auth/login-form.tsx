@@ -1,49 +1,46 @@
 "use client";
-import { VERIFY_EMAIL_PAGE } from "@/lib/routes";
-import { signupSchema } from "@/schema/yup";
-import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
+import { transferGuestCartToUserAction } from "@/actions";
+import { HOME_PAGE } from "@/lib/routes";
+import { loginSchema } from "@/schema/yup";
+import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useToast } from "@shared/components/ui/use-toast";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useCallback, useState, useTransition } from "react";
 
-export default function SignupForm() {
-	const router = useRouter();
-	const { toast } = useToast();
-	const { isLoaded, signUp } = useSignUp();
-	const [showPassword, setShowPassword] = useState(false);
+export function LoginForm() {
 	const [isLoading, startTransition] = useTransition();
+	const { isLoaded, signIn, setActive } = useSignIn();
+	const { toast } = useToast();
+	const [showPassword, setShowPassword] = useState(false);
+	const router = useRouter();
 
 	const initialValues = {
-		fname: "",
-		lname: "",
 		email: "",
 		password: "",
 	};
 
 	const handleOnSubmit = useCallback(
-		(signup_credentials: { email: string; password: string; fname: string; lname: string }) => {
+		(login_credentials: { email: string; password: string }) => {
 			startTransition(async () => {
-				if (!isLoaded) {
-					return;
-				}
+				if (!isLoaded) return;
 				try {
-					await signUp.create({
-						emailAddress: signup_credentials.email,
-						password: signup_credentials.password,
-						firstName: signup_credentials.fname,
-						lastName: signup_credentials.lname,
+					const result = await signIn.create({
+						identifier: login_credentials.email,
+						password: login_credentials.password,
 					});
-
-					// Send email verification code
-					await signUp.prepareEmailAddressVerification({
-						strategy: "email_code",
-					});
-					router.push(VERIFY_EMAIL_PAGE);
+					if (result.status === "complete") {
+						await setActive({ session: result.createdSessionId });
+						await transferGuestCartToUserAction();
+						router.push(HOME_PAGE);
+					} else {
+						/*Investigate why the login hasn't completed */
+						console.log(result);
+					}
 				} catch (err: unknown) {
 					let errorMessage: string | undefined = "Something went wrong, please try again later.";
 					if (err instanceof Error) {
@@ -66,34 +63,10 @@ export default function SignupForm() {
 	return (
 		<Formik
 			initialValues={initialValues}
-			validationSchema={signupSchema}
+			validationSchema={loginSchema}
 			onSubmit={handleOnSubmit}>
 			{({}) => (
 				<Form className="space-y-3">
-					<div className="grid gap-2">
-						<Label htmlFor="fname">First Name</Label>
-						<Field
-							as={Input}
-							id="fname"
-							name="fname"
-							type="text"
-							autoComplete="off"
-							formNoValidate
-							required
-						/>
-					</div>
-					<div className="grid gap-2">
-						<Label htmlFor="lname">Last Name</Label>
-						<Field
-							as={Input}
-							id="lname"
-							name="lname"
-							type="text"
-							autoComplete="off"
-							formNoValidate
-							required
-						/>
-					</div>
 					<div className="grid gap-2">
 						<Label htmlFor="email">Email</Label>
 						<Field
@@ -130,10 +103,6 @@ export default function SignupForm() {
 								<span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
 							</Button>
 						</div>
-						<ErrorMessage
-							name="password"
-							render={(msg: string) => <p className="text-red-600">{msg}</p>}
-						/>
 					</div>
 					<Button
 						disabled={isLoading}
@@ -145,7 +114,7 @@ export default function SignupForm() {
 								aria-hidden="true"
 							/>
 						) : (
-							"Create account"
+							"Sign In"
 						)}
 					</Button>
 				</Form>

@@ -10,7 +10,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useCallback, useTransition } from "react";
 import * as Yup from "yup";
 
-export default function UpdateAccountForm() {
+export function UpdateAccountForm() {
 	const { user } = useUser();
 	const { toast } = useToast();
 	const [showPassword, setShowPassword] = React.useState(false);

@@ -12,7 +12,7 @@ import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useCallback, useTransition } from "react";
 
-export default function VerifyEmailForm() {
+export function VerifyEmailForm() {
 	const { isLoaded, signUp, setActive } = useSignUp();
 	const { toast } = useToast();
 	const router = useRouter();

@@ -1,31 +1,29 @@
 import { fetchCartItemsAction } from "@/actions";
-import ViewPcbFabSpecsModal from "@/components/pcb/view-pcb-fab-specs-modal";
-import { DeleteAllButton, DeleteCartItemButton } from "@/app/cart/_components/delete";
-import { formatToInr } from "@packages/shared/lib/utils";
+import { DeleteAllButton, DeleteCartItemButton } from "@/components/cart/delete-cart-item-button";
+import { UpdatePartQuantityForm } from "@/components/cart/update-part-qty-form";
+import { calculatePartNetPrice, calculatePartUnitPrice } from "@/lib/utils";
+import { Badge } from "@shared/components/ui/badge";
 
-export default async function BasketPcbsTable() {
+export async function BasketPartsTable() {
 	const cart = await fetchCartItemsAction().catch((error: unknown) => {
 		const unknownError = "Something went wrong, please try again later.";
 		const errorMessage = error instanceof Error ? error.message : unknownError;
 		throw new Error(errorMessage); // activates closest error.tsx file
 	});
 
-	const pcbs = cart
-		? cart.cartItems.filter(
-				(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType =>
-					item.Type === "PCB"
-		  )
-		: [];
+	// May include out-of-stock parts added by bom parser.
+	// Make sure to remove them at checkout.
+	const parts = cart ? cart.cartItems.filter((item): item is PartDataType => item.Type === "Part") : [];
 
 	return (
 		<div>
-			<h3 className="text-lg font-semibold">PCB Fabrication/Assembly</h3>
+			<h3 className="text-lg font-semibold">Parts</h3>
 			<div className="-mx-4 mt-3 flow-root sm:mx-0">
 				<table className="min-w-full">
 					<colgroup>
 						<col className="sm:w-1/12" />
 						<col className="w-full sm:w-1/4" />
-						<col className="sm:w-1/6" />
+						<col />
 						<col className="sm:w-1/6" />
 						<col className="sm:w-1/6" />
 						<col className="sm:w-1/12" />
@@ -40,7 +38,7 @@ export default async function BasketPcbsTable() {
 							<th
 								scope="col"
 								className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-0">
-								PCB Details
+								Part Details
 							</th>
 
 							<th
@@ -61,27 +59,18 @@ export default async function BasketPcbsTable() {
 							<th
 								scope="col"
 								className="text-right hidden sm:table-cell">
-								<DeleteAllButton type={"PCB"} />
+								<DeleteAllButton type={"Part"} />
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						{pcbs.length > 0 ? (
+						{parts.length > 0 ? (
 							<>
-								{pcbs.map((pcb, pcbIdx) => {
-									const serialNum = pcbIdx + 1;
-									const { NetPrice, Category } = pcb;
-									const isRigidOrFlex = Category === "Rigid PCB" || Category === "Flex PCB";
-									const name = pcb.Name;
-									const quantity = isRigidOrFlex
-										? pcb.DesignFormat === "Single PCB"
-											? pcb.PcbQty
-											: pcb.SinglePiecesQty
-										: pcb.OrderedQty;
-									const netPrice = NetPrice;
-									const unitPrice = netPrice / quantity;
-									const type = pcb.Type;
-
+								{parts.map((part, partIdx) => {
+									const { Name, Description, Availability, Type } = part;
+									const serialNum = partIdx + 1;
+									const unitPrice = calculatePartUnitPrice(parts, Name);
+									const netPrice = calculatePartNetPrice(unitPrice, part.OrderedQty);
 									return (
 										<tr
 											key={serialNum}
@@ -89,51 +78,47 @@ export default async function BasketPcbsTable() {
 											<td className="px-3 py-5 text-center text-sm text-muted-foreground sm:table-cell">
 												{serialNum}
 											</td>
-											<td className="max-w-0 space-y-1 py-5 pl-4 pr-3 text-sm sm:pl-0">
-												<div className="font-bold">
-													Name: <span className="font-normal">{name}</span>
-												</div>
-
-												<div className="font-bold">
-													Category: <span className="font-normal">{Category}</span>
-												</div>
-
-												<ViewPcbFabSpecsModal fabSpecs={pcb} />
-
+											<td className="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
+												<div className="font-medium">{Name}</div>
+												<div className="mt-1 text-muted-foreground">{Description}</div>
 												<dl className="lg:hidden">
-													<dd className="flex items-center gap-x-2 mt-1 sm:w-64 md:w-80 sm:hidden">
-														{quantity} No&apos;s
+													<dt className="sr-only">Ordered Quantity</dt>
+													<dd className="mt-1 md:w-80 sm:hidden">
+														<UpdatePartQuantityForm part={part} />
 													</dd>
+
+													<dt className="sr-only sm:hidden">Stock</dt>
+													<dd className="mt-1 sm:hidden">
+														<Badge>{Availability}</Badge>
+													</dd>
+													<dt className="sr-only sm:hidden">Rate</dt>
 													<dd className="mt-1 sm:hidden">
 														<span className="text-muted-foreground">Rate: </span>
-														<span className="font-medium">{formatToInr(unitPrice)}</span>
+														<span className="font-medium">{unitPrice}</span>
 													</dd>
 													<dt className="sr-only sm:hidden">Remove</dt>
 													<dd className="mt-1 text-muted-foreground sm:hidden">
 														<DeleteCartItemButton
-															itemName={name}
-															type={type}
+															itemName={Name}
+															type={Type}
 														/>
 													</dd>
 												</dl>
 											</td>
-
-											<td className="hidden px-3 py-5 text-sm sm:table-cell text-center">
-												{quantity} No&apos;s
+											<td className="hidden px-3 py-5 text-sm sm:table-cell">
+												<UpdatePartQuantityForm part={part} />
+												<Badge className="mt-2">{Availability}</Badge>
 											</td>
-
 											<td className="hidden px-3 py-5 text-right font-medium text-sm sm:table-cell">
-												{formatToInr(unitPrice)}
+												{unitPrice}
 											</td>
-
-											<td className="py-5 pl-3 pr-4 text-right font-medium text-sm sm:pr-0">
-												{formatToInr(netPrice)}
+											<td className="py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+												{netPrice}
 											</td>
-
 											<td className="hidden sm:table-cell text-right">
 												<DeleteCartItemButton
-													itemName={name}
-													type={type}
+													itemName={Name}
+													type={Type}
 												/>
 											</td>
 										</tr>
@@ -145,7 +130,7 @@ export default async function BasketPcbsTable() {
 								<td
 									colSpan={6}
 									className="text-center text-muted-foreground text-sm">
-									You&apos;ve not added PCB fabrication or assembly projects to cart
+									You&apos;ve not added any parts to cart
 								</td>
 							</tr>
 						)}

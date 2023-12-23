@@ -1,4 +1,4 @@
-import EditAddressForm from "@/app/checkout/_components/address/editAddress";
+import { EditAddressForm } from "@/components/checkout/address/edit-address-form";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

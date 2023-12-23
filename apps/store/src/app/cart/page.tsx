@@ -1,10 +1,10 @@
 import { fetchCartItemsAction } from "@/actions";
-import CheckoutBtn from "@/app/cart/_components/checkout";
-import ContinueShoppingBtn from "@/app/cart/_components/continue";
-import NaComponentsAlert from "@/app/cart/_components/naAlert";
-import BasketPartsTable from "@/app/cart/_components/partsTable";
-import BasketPcbsTable from "@/app/cart/_components/pcbsTable";
-import CartSummary from "@/app/cart/_components/summary";
+import { CheckoutButton } from "@/components/cart/checkout-button";
+import { ContinueShoppingButton } from "@/components/cart/continue-shopping-button";
+import { NotAvailablePartsAlert } from "@/components/cart/na-part-alert";
+import { BasketPartsTable } from "@/components/cart/basket-parts-table";
+import { BasketPcbsTable } from "@/components/cart/basket-pcbs-table";
+import { CartPricingSummary } from "@/components/cart/cart-pricing-summary";
 import { calculateCartTotal } from "@/lib/utils";
 import type { Metadata } from "next";
 
@@ -31,10 +31,10 @@ export default async function ShoppingCart() {
 				</div>
 
 				<div className="space-y-4">
-					<CartSummary cartValue={cartValue} />
-					<NaComponentsAlert cart={cart} />
-					<CheckoutBtn cartValue={cartValue} />
-					<ContinueShoppingBtn />
+					<CartPricingSummary cartValue={cartValue} />
+					<NotAvailablePartsAlert cart={cart} />
+					<CheckoutButton cartValue={cartValue} />
+					<ContinueShoppingButton />
 				</div>
 			</div>
 		</div>

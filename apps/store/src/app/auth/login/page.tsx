@@ -1,4 +1,4 @@
-import LoginForm from "@/app/auth/login/_components/loginForm";
+import { LoginForm } from "@/components/auth/login-form";
 import { RESET_PASSWORD_PAGE, SIGNUP_PAGE } from "@/lib/routes";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@shared/components/ui/card";
 import type { Metadata } from "next";
@@ -13,7 +13,7 @@ export default function Login() {
 		<div className="my-10 justify-center sm:mb-48">
 			<Card className="w-full sm:w-96 sm:mx-auto">
 				<CardHeader className="space-y-1">
-					<CardTitle className="text-2xl">Sign In</CardTitle>
+					<CardTitle className="text-2xl">Login</CardTitle>
 					<CardDescription>Login to your circuit parts account</CardDescription>
 				</CardHeader>
 				<CardContent className="grid gap-4">

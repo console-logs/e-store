@@ -1,6 +1,6 @@
 import { fetchAddressesAction } from "@/actions";
-import EditAddressForm from "@/app/checkout/_components/address/editAddress";
-import ViewSavedAddresses from "@/app/checkout/_components/address/viewAddress";
+import { EditAddressForm } from "@/components/checkout/address/edit-address-form";
+import { ViewSavedAddresses } from "@/components/checkout/address/view-saved-address";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export default async function SavedAddress() {
 		const errorMessage = error instanceof Error ? error.message : unknownError;
 		throw new Error(errorMessage); // activates closest error.tsx file
 	});
-	
+
 	if (!addresses?.billingAddresses || !addresses.shippingAddresses) {
 		return (
 			<div className="mx-auto max-w-4xl px-4 py-2 sm:px-6 lg:px-8">

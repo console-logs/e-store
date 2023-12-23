@@ -1,4 +1,4 @@
-export default function SignupEmailTemplate({ firstName }: { firstName: string }) {
+export function SignupEmailTemplate({ firstName }: { firstName: string }) {
 	return (
 		<div className="space-y-2">
 			<h1 className="font-bold text-lg">Thanks for signing up!</h1>

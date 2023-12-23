@@ -7,7 +7,7 @@ import { Input } from "@shared/components/ui/input";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useCallback, useTransition } from "react";
 
-export default function UpdatePartQtyForm(props: { part: PartDataType }) {
+export function UpdatePartQuantityForm(props: { part: PartDataType }) {
 	const [isLoading, startTransition] = useTransition();
 	const { part } = props;
 	const { Name, OrderedQty, Availability, Min } = part;

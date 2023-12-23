@@ -1,5 +1,5 @@
 import { fetchOrders } from "@/actions";
-import { AddressDisplayCard } from "@/app/checkout/_components/address/displayAddress";
+import { AddressDisplayCard } from "@/components/checkout/address/address-display-card";
 import OrderedPartsTable from "@/app/order-history/_components/partsTable";
 import OrderedPcbsTable from "@/app/order-history/_components/pcbsTable";
 import PriceSummary from "@/app/order-history/_components/priceSum";

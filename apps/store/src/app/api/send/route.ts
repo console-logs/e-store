@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import SignupEmailTemplate from "@/app/auth/signup/_components/email";
+import { SignupEmailTemplate } from "@/email-templates/signup-email-template";
 import { env } from "@/env";
 
 const resend = new Resend(env.RESEND_API_KEY);

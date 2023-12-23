@@ -11,7 +11,7 @@ import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useCallback, useTransition } from "react";
 
-export default function ResetPasswordForm() {
+export function ResetPasswordForm() {
 	const router = useRouter();
 	const [isLoading, startTransition] = useTransition();
 

@@ -9,7 +9,7 @@ import { useToast } from "@shared/components/ui/use-toast";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useCallback, useState, useTransition } from "react";
 
-export default function ResetPasswordForm2() {
+export function ResetPasswordForm2() {
 	const [isLoading, startTransition] = useTransition();
 	const { isLoaded, signIn, setActive } = useSignIn();
 	const [complete, setComplete] = useState(false);

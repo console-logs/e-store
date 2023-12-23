@@ -13,7 +13,7 @@ import { Card, CardContent } from "@shared/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@shared/components/ui/tabs";
 import Link from "next/link";
 
-export default function PcbInstantQuote() {
+export function PcbInstantQuote() {
 	return (
 		<div className="my-6">
 			<Tabs

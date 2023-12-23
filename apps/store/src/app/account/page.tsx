@@ -1,4 +1,4 @@
-import UpdateAccountForm from "@/app/account/_components/update";
+import { UpdateAccountForm } from "@/components/account/update-account-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@shared/components/ui/card";
 import type { Metadata } from "next";
 

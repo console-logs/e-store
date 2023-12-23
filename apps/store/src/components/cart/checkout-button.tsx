@@ -6,7 +6,7 @@ import { useToast } from "@shared/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-export default function CheckoutBtn(props: { cartValue: number }) {
+export function CheckoutButton(props: { cartValue: number }) {
 	const { cartValue } = props;
 	const { toast } = useToast();
 	const router = useRouter();

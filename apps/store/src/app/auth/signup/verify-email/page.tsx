@@ -1,4 +1,4 @@
-import VerifyEmailForm from "@/app/auth/signup/_components/verifyEmailForm";
+import { VerifyEmailForm } from "@/components/auth/verify-email-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@shared/components/ui/card";
 import type { Metadata } from "next";
 

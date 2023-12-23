@@ -3,7 +3,7 @@ import { calculateGst } from "@/lib/utils";
 import { formatToInr } from "@packages/shared/lib/utils";
 import { Badge } from "@shared/components/ui/badge";
 
-export default async function CartSummary(props: { cartValue: number }) {
+export async function CartPricingSummary(props: { cartValue: number }) {
 	const { cartValue } = props;
 	const tax = calculateGst(cartValue);
 

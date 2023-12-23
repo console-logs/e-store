@@ -122,7 +122,7 @@ const fieldProps = [
 	},
 ];
 
-export default function BillingAddressFields() {
+export function BillingAddressFields() {
 	return (
 		<div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
 			{fieldProps.map((field, index) => (

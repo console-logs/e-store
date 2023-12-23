@@ -1,5 +1,5 @@
 "use client";
-import { AddressDisplayCard } from "@/app/checkout/_components/address/displayAddress";
+import { AddressDisplayCard } from "@/components/checkout/address/address-display-card";
 import { EDIT_ADDRESSES_PAGE, REVIEW_ORDER_PAGE } from "@/lib/routes";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-export default function ViewSavedAddresses({
+export function ViewSavedAddresses({
 	billingAddresses,
 	shippingAddresses,
 }: {

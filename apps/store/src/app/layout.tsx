@@ -13,8 +13,8 @@ import { cookies } from "next/headers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-	title: "E-Store App",
-	description: "Open-source E-Commerce platform for embedded electronics",
+	title: "E-Store",
+	description: "Open-source E-Commerce shopping platform for embedded electronics",
 	icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

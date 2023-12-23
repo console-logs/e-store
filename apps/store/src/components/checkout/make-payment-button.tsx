@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import useRazorpay, { type RazorpayOptions } from "react-razorpay";
 
-export default function PayButton(props: { cartValue: number }) {
+export function MakePaymentButton(props: { cartValue: number }) {
 	const { cartValue } = props;
 	const tax = calculateGst(cartValue);
 	const [isLoading, startTransition] = useTransition();

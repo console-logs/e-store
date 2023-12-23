@@ -1,4 +1,4 @@
-import SignupForm from "@/app/auth/signup/_components/signupForm";
+import { SignupForm } from "@/components/auth/signup-form";
 import { LOGIN_PAGE } from "@/lib/routes";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@shared/components/ui/card";
 import type { Metadata } from "next";
