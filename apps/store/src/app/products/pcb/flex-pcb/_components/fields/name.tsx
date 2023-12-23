@@ -1,4 +1,4 @@
-import HelpPopover from "@/app/products/pcb/_components/common/help";
+import HelpPopover from "@/components/products/pcb/common/help-popover";
 import { selectName, setName } from "@/redux/reducers/flexPcbSlice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";

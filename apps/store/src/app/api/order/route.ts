@@ -1,4 +1,4 @@
-import OrderConfirmationEmailTemplate from "@/app/order-status/success/_components/email";
+import { OrderConfirmationEmailTemplate } from "@/email-templates/order-confirmation-email-template";
 import { env } from "@/env";
 import { Resend } from "resend";
 
@@ -13,10 +13,10 @@ export async function POST(request: Request) {
 			subject: `E-Store Order Confirmation: ${order.id}`,
 			react: OrderConfirmationEmailTemplate(order),
 		});
-    console.log(data);
+		console.log(data);
 		return Response.json(data);
 	} catch (error) {
-    console.log(error);
+		console.log(error);
 		return Response.json({ error });
 	}
 }

@@ -1,4 +1,4 @@
-import HelpPopover from "@/app/products/pcb/_components/common/help";
+import HelpPopover from "@/components/products/pcb/common/help-popover";
 import {
 	selectPcbAssemblyMemomized,
 	selectTempHumiditySensitivity,
@@ -21,7 +21,7 @@ export default function TemperatureAndHumiditySensitivity() {
 	const temperatureAndHumiditySensitity = useSelector(selectTempHumiditySensitivity);
 	const pcbAssembly = useSelector(selectPcbAssemblyMemomized);
 	const result = tRPCReactApi.pcbAssembly.getPrice.useQuery(pcbAssembly);
-	
+
 	return (
 		<div>
 			<Label>

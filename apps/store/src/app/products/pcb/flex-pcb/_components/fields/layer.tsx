@@ -1,5 +1,5 @@
 "use client";
-import HelpPopover from "@/app/products/pcb/_components/common/help";
+import HelpPopover from "@/components/products/pcb/common/help-popover";
 import {
 	selectFlexPcbMemoized,
 	selectLayer,

@@ -8,7 +8,7 @@ import { useToast } from "@shared/components/ui/use-toast";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useCallback, useTransition } from "react";
 
-export default function PartOrderForm({ partData }: { partData: PartDataType }) {
+export function PartOrderForm({ partData }: { partData: PartDataType }) {
 	const { Min, Availability, Name } = partData;
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();

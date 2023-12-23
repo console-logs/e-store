@@ -6,6 +6,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
 	title: "Success",
 };
+
 export default function OrderSuccess() {
 	return (
 		<div>

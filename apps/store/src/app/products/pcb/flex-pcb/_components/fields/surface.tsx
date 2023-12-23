@@ -1,5 +1,11 @@
-import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectFlexPcbMemoized, selectSurfaceFinish, selectSurfaceFinishOptions, setPcbPrice, setSurfaceFinish } from "@/redux/reducers/flexPcbSlice";
+import HelpPopover from "@/components/products/pcb/common/help-popover";
+import {
+	selectFlexPcbMemoized,
+	selectSurfaceFinish,
+	selectSurfaceFinishOptions,
+	setPcbPrice,
+	setSurfaceFinish,
+} from "@/redux/reducers/flexPcbSlice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";

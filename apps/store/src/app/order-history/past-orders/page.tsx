@@ -1,10 +1,11 @@
 import { fetchOrders } from "@/actions";
-import OverviewCard from "@/app/order-history/_components/overview";
+import { OrderHistoryOverview } from "@/components/order-history/order-history-overview";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Order History",
 };
+
 export default async function PastOrders() {
 	const orders = await fetchOrders().catch((error: unknown) => {
 		const unknownError = "Something went wrong, please try again later.";
@@ -25,7 +26,7 @@ export default async function PastOrders() {
 					const { id, createdAt, cartTotal } = order;
 					const cartTotalInRupees = cartTotal / 100;
 					return (
-						<OverviewCard
+						<OrderHistoryOverview
 							key={orderIdx}
 							ordernumber={id}
 							date={createdAt}

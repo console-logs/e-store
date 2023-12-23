@@ -1,7 +1,7 @@
 import ViewPcbFabSpecsModal from "@/components/pcb/view-pcb-fab-specs-modal";
 import { formatToInr } from "@packages/shared/lib/utils";
 
-export default async function OrderedPcbsTable({ order }: { order: OrderType }) {
+export async function OrderedPcbsTable({ order }: { order: OrderType }) {
 	const pcbs = order.cart.cartItems.filter(
 		(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType => item.Type === "PCB"
 	);

@@ -2,7 +2,7 @@ import { rigidPcbSpecifications } from "@/content/rigidPcbCapabilities";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@shared/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/components/ui/table";
 
-export default function RigidPcbCapabilities() {
+export function RigidPcbCapabilities() {
 	return (
 		<>
 			{Object.entries(rigidPcbSpecifications).map(([specification, values], specIdx) => (

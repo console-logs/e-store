@@ -1,5 +1,11 @@
-import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectRigidPcbMemoized, selectSilkscreen, selectSilkscreenOptions, setPcbPrice, setSilkscreen } from "@/redux/reducers/rigidPcbSlice";
+import HelpPopover from "@/components/products/pcb/common/help-popover";
+import {
+	selectRigidPcbMemoized,
+	selectSilkscreen,
+	selectSilkscreenOptions,
+	setPcbPrice,
+	setSilkscreen,
+} from "@/redux/reducers/rigidPcbSlice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";

@@ -1,6 +1,6 @@
 import { calculatePartNetPrice, calculatePartUnitPrice } from "@/lib/utils";
 
-export default async function OrderedPartsTable({ order }: { order: OrderType }) {
+export async function OrderedPartsTable({ order }: { order: OrderType }) {
 	const parts = order.cart.cartItems.filter((item): item is PartDataType => item.Type === "Part");
 	return (
 		<div>

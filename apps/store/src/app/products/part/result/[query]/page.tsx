@@ -1,4 +1,4 @@
-import TableHead from "@/app/products/part/result/_components/thead";
+import { PartResultTableHead } from "@/components/products/part/part-result-thead";
 import { PART_DETAILS_PAGE } from "@/lib/routes";
 import { tRPCServerApi } from "@/trpc/server";
 import { Badge } from "@shared/components/ui/badge";
@@ -33,7 +33,7 @@ export default async function PartResults({
 				Results for {decodeURIComponent(query)}
 			</h1>
 			<table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700 table-fixed">
-				<TableHead />
+				<PartResultTableHead />
 				<tbody className="divide-y divide-gray-200 dark:divide-gray-700">
 					{partNumbers.map((partNumber, index) => {
 						const { Description, DatasheetUrl, Availability } = parts[partNumber]!;

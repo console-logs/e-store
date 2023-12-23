@@ -3,7 +3,7 @@ import { calculateGst } from "@/lib/utils";
 import { formatToInr } from "@packages/shared/lib/utils";
 import { Badge } from "@shared/components/ui/badge";
 
-export default async function PriceSummary(props: { orderValue: number }) {
+export async function OrderedItemsPriceSummary(props: { orderValue: number }) {
 	const { orderValue } = props;
 	const orderValueInRupees = orderValue / 100;
 	const tax = calculateGst(orderValueInRupees);

@@ -1,5 +1,11 @@
-import HelpPopover from "@/app/products/pcb/_components/common/help";
-import { selectNumOfSmdComponents, selectPcbAssemblyMemomized, setNumOfSmdComponents, setOneTimeSetupCost, setPcbAssemblyCost } from "@/redux/reducers/pcbAssemblySlice";
+import HelpPopover from "@/components/products/pcb/common/help-popover";
+import {
+	selectNumOfSmdComponents,
+	selectPcbAssemblyMemomized,
+	setNumOfSmdComponents,
+	setOneTimeSetupCost,
+	setPcbAssemblyCost,
+} from "@/redux/reducers/pcbAssemblySlice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";

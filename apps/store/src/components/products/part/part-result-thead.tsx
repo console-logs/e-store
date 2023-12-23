@@ -1,4 +1,4 @@
-export default function TableHead() {
+export function PartResultTableHead() {
 	return (
 		<thead>
 			<tr>

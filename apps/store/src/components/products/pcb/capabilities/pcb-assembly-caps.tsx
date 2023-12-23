@@ -1,7 +1,7 @@
 import { pcbAssemblySpecifications } from "@/content/assemblyCapabilities";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/components/ui/table";
 
-export default function PcbAssemblyCapabilities() {
+export function PcbAssemblyCapabilities() {
 	return (
 		<Table>
 			<TableHeader>

@@ -1,7 +1,7 @@
 "use client";
 import { addItemToCartAction } from "@/actions";
-import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
-import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
+import AddPcbToCartBtn from "@/components/products/pcb/common/add-pcb-to-cart-button";
+import PcbPriceEstimateAlert from "@/components/products/pcb/common/pcb-price-est-alert";
 import BgaComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/bga";
 import ConformalCoating from "@/app/products/pcb/assembly/_components/fields/coat";
 import Depanel from "@/app/products/pcb/assembly/_components/fields/depanel";
@@ -24,35 +24,34 @@ import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";
 
-
 export default function PcbAssembly() {
 	const { toast } = useToast();
 	const [isLoading, startTransition] = useTransition();
 	const pcbAssembly: PcbAssemblyFabSpecsType = useSelector(selectPcbAssemblyMemomized);
 	const isFileUploaded = pcbAssembly.UploadedFileUrl ? true : false;
 
-		function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
-			startTransition(async () => {
-				e.preventDefault();
-				if (!isFileUploaded) {
-					toast({
-						variant: "destructive",
-						title: "Please upload design file",
-						description: "Click the upload button to upload your design file and then continue.",
-						duration: 5000,
-					});
-				} else {
-					// handle add to cart
-					await addItemToCartAction(pcbAssembly);
-					toast({
-						variant: "default",
-						title: "PCB Assembly added to cart",
-						description: "We've successfully added your assembly to cart!",
-						duration: 4000,
-					});
-				}
-			});
-		}
+	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
+		startTransition(async () => {
+			e.preventDefault();
+			if (!isFileUploaded) {
+				toast({
+					variant: "destructive",
+					title: "Please upload design file",
+					description: "Click the upload button to upload your design file and then continue.",
+					duration: 5000,
+				});
+			} else {
+				// handle add to cart
+				await addItemToCartAction(pcbAssembly);
+				toast({
+					variant: "default",
+					title: "PCB Assembly added to cart",
+					description: "We've successfully added your assembly to cart!",
+					duration: 4000,
+				});
+			}
+		});
+	}
 	return (
 		<form onSubmit={handleOnSubmit}>
 			<div className="mx-auto my-2 max-w-6xl px-4">

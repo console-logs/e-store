@@ -1,4 +1,4 @@
-import HelpPopover from "@/app/products/pcb/_components/common/help";
+import HelpPopover from "@/components/products/pcb/common/help-popover";
 import {
 	selectCoverlay,
 	selectCoverlayOptions,
@@ -20,7 +20,7 @@ export default function CoverlayColor() {
 	const coverlayColor = useSelector(selectCoverlay);
 	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const result = tRPCReactApi.flexPcb.getPrice.useQuery(flexPcb);
-	
+
 	return (
 		<div>
 			<Label>

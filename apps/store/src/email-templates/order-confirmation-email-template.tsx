@@ -1,7 +1,7 @@
 import { calculateGst, calculatePartNetPrice, calculatePartUnitPrice } from "@/lib/utils";
 import { formatToInr } from "@packages/shared/lib/utils";
 
-export default function OrderConfirmationEmailTemplate(order: OrderType) {
+export function OrderConfirmationEmailTemplate(order: OrderType) {
 	const { billingAddress, shippingAddress, id, cart } = order;
 	const orderValue = order.cartTotal;
 	const orderValueInRupees = orderValue / 100;

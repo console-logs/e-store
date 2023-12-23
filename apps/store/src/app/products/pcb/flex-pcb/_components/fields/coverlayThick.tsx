@@ -1,4 +1,4 @@
-import HelpPopover from "@/app/products/pcb/_components/common/help";
+import HelpPopover from "@/components/products/pcb/common/help-popover";
 import {
 	selectCoverlayThickness,
 	selectCoverlayThicknessOptions,
@@ -20,7 +20,7 @@ export default function CoverlayThickness() {
 	const coverlayThickness = useSelector(selectCoverlayThickness);
 	const flexPcb = useSelector(selectFlexPcbMemoized);
 	const result = tRPCReactApi.flexPcb.getPrice.useQuery(flexPcb);
-	
+
 	return (
 		<div>
 			<Label>

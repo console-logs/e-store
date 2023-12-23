@@ -1,6 +1,6 @@
 import { formatToInr } from "@packages/shared/lib/utils";
 
-export function PartPrice({ partData }: { partData: PartDataType }) {
+export function PartPricingTable({ partData }: { partData: PartDataType }) {
 	return (
 		<div className="lg:col-start-2 lg:row-span-2 lg:mt-0 lg:border-l lg:pl-4">
 			<p className="text-lg font-semibold my-2">Pricing Chart</p>

@@ -1,7 +1,7 @@
 "use client";
 import { addItemToCartAction } from "@/actions";
-import AddPcbToCartBtn from "@/app/products/pcb/_components/common/addCart";
-import PcbPriceEstimateAlert from "@/app/products/pcb/_components/common/priceAlert";
+import AddPcbToCartBtn from "@/components/products/pcb/common/add-pcb-to-cart-button";
+import PcbPriceEstimateAlert from "@/components/products/pcb/common/pcb-price-est-alert";
 import CoverlayColor from "@/app/products/pcb/flex-pcb/_components/fields/coverlay";
 import CoverlayThickness from "@/app/products/pcb/flex-pcb/_components/fields/coverlayThick";
 import CopperType from "@/app/products/pcb/flex-pcb/_components/fields/cuType";
