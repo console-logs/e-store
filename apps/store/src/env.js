@@ -19,7 +19,6 @@ export const env = createEnv({
 		NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: z.string().min(1),
 		NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: z.string().min(1),
 		NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string().min(1),
-		NEXT_PUBLIC_BASE_URL: z.string().min(1),
 	},
 	runtimeEnv: {
 		NODE_ENV: process.env.NODE_ENV,
@@ -34,7 +33,6 @@ export const env = createEnv({
 		AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
 		AWS_REGION: process.env.AWS_REGION,
 		AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
-		NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
 		REDIS_URL: process.env.REDIS_URL,
 		RESEND_API_KEY: process.env.RESEND_API_KEY,
 	},
