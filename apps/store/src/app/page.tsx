@@ -1,9 +1,9 @@
-import Feature from "@/app/_components/home/feature";
-import PcbInstantQuote from "@/app/_components/home/instQuote";
-import SearchPartInput from "@/app/_components/home/search";
-import SubTitle from "@/app/_components/home/subtitle";
-import Title from "@/app/_components/home/title";
-import UploadBom from "@/app/_components/home/upload";
+import SalientFeatures from "@/components/home/salient-features";
+import PcbInstantQuote from "@/components/home/pcb-instant-quote";
+import SearchPartInput from "@/components/home/search-part-input";
+import SubTitle from "@/components/home/subtitle";
+import Title from "@/components/home/title";
+import UploadBomLink from "@/components/home/upload-bom-link";
 
 export default async function Home() {
 	return (
@@ -11,9 +11,9 @@ export default async function Home() {
 			<Title />
 			<SubTitle />
 			<SearchPartInput />
-			<UploadBom />
+			<UploadBomLink />
 			<PcbInstantQuote />
-			<Feature />
+			<SalientFeatures />
 		</>
 	);
 }

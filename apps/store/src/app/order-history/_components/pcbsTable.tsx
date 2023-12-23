@@ -1,11 +1,10 @@
-import PcbFabSpecsModal from "@/app/_components/fabSpecsModal";
+import ViewPcbFabSpecsModal from "@/components/pcb/view-pcb-fab-specs-modal";
 import { formatToInr } from "@packages/shared/lib/utils";
 
 export default async function OrderedPcbsTable({ order }: { order: OrderType }) {
 	const pcbs = order.cart.cartItems.filter(
 		(item): item is RigidPcbFabSpecsType | FlexPcbFabSpecsType | PcbAssemblyFabSpecsType => item.Type === "PCB"
 	);
-	
 
 	return (
 		<div>
@@ -80,7 +79,7 @@ export default async function OrderedPcbsTable({ order }: { order: OrderType }) 
 											Type: <span className="font-normal">{Category}</span>
 										</div>
 
-										<PcbFabSpecsModal fabSpecs={pcb} />
+										<ViewPcbFabSpecsModal fabSpecs={pcb} />
 
 										<dl className="lg:hidden">
 											<dd className="flex items-center gap-x-2 mt-1 sm:w-64 md:w-80 sm:hidden">

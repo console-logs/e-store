@@ -1,5 +1,5 @@
 import { fetchCartItemsAction } from "@/actions";
-import PcbFabSpecsModal from "@/app/_components/fabSpecsModal";
+import ViewPcbFabSpecsModal from "@/components/pcb/view-pcb-fab-specs-modal";
 import { DeleteAllButton, DeleteCartItemButton } from "@/app/cart/_components/delete";
 import { formatToInr } from "@packages/shared/lib/utils";
 
@@ -98,7 +98,7 @@ export default async function BasketPcbsTable() {
 													Category: <span className="font-normal">{Category}</span>
 												</div>
 
-												<PcbFabSpecsModal fabSpecs={pcb} />
+												<ViewPcbFabSpecsModal fabSpecs={pcb} />
 
 												<dl className="lg:hidden">
 													<dd className="flex items-center gap-x-2 mt-1 sm:w-64 md:w-80 sm:hidden">
