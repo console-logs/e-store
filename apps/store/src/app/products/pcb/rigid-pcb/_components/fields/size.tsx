@@ -1,5 +1,5 @@
 "use client";
-import HelpPopover from "@/components/products/pcb/common/help-popover";
+import HelpPopover from "@/components/products/pcb/help-popover";
 import {
 	selectBoardSizeX,
 	selectBoardSizeY,

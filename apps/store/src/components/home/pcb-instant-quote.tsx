@@ -1,9 +1,9 @@
-import AssemblyQuantity from "@/app/products/pcb/assembly/_components/fields/quantity";
-import AssemblySides from "@/app/products/pcb/assembly/_components/fields/sides";
-import BoardType from "@/app/products/pcb/assembly/_components/fields/type";
-import FlexPcbBoardSize from "@/app/products/pcb/flex-pcb/_components/fields/size";
-import FlexPcbLayer from "@/app/products/pcb/flex-pcb/_components/fields/layer";
-import FlexPcbQuantity from "@/app/products/pcb/flex-pcb/_components/fields/pcbQty";
+import { AssemblyQuantity } from "@/components/products/pcb/assembly/fields/assembly-quantity";
+import AssemblySides from "@/components/products/pcb/assembly/fields/assembly-sides";
+import BoardType from "@/components/products/pcb/assembly/fields/assembly-board-type";
+import FlexPcbBoardSize from "@/components/products/pcb/flex/fields/flex-board-size";
+import FlexPcbLayer from "@/components/products/pcb/flex/fields/flex-layer";
+import FlexPcbQuantity from "@/components/products/pcb/flex/fields/flex-pcb-quantity";
 import RigidPcbBoardSize from "@/app/products/pcb/rigid-pcb/_components/fields/size";
 import RigidPcbLayer from "@/app/products/pcb/rigid-pcb/_components/fields/layer";
 import RigidPcbQuantity from "@/app/products/pcb/rigid-pcb/_components/fields/quantity";

@@ -1,24 +1,24 @@
 "use client";
 import { addItemToCartAction } from "@/actions";
-import AddPcbToCartBtn from "@/components/products/pcb/common/add-pcb-to-cart-button";
-import PcbPriceEstimateAlert from "@/components/products/pcb/common/pcb-price-est-alert";
-import BgaComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/bga";
-import ConformalCoating from "@/app/products/pcb/assembly/_components/fields/coat";
-import Depanel from "@/app/products/pcb/assembly/_components/fields/depanel";
-import UploadDesignFile from "@/app/products/pcb/assembly/_components/fields/file";
-import FunctionalTest from "@/app/products/pcb/assembly/_components/fields/funcTest";
-import TurnAroundTime from "@/app/products/pcb/assembly/_components/fields/leadTime";
-import PcbName from "@/app/products/pcb/assembly/_components/fields/name";
-import PcbsPerPanel from "@/app/products/pcb/assembly/_components/fields/pcbsPanel";
-import AssemblyQuantity from "@/app/products/pcb/assembly/_components/fields/quantity";
-import AssemblySides from "@/app/products/pcb/assembly/_components/fields/sides";
-import SmdComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/smd";
-import ComponentSourcing from "@/app/products/pcb/assembly/_components/fields/sourcing";
-import TemperatureAndHumiditySensitivity from "@/app/products/pcb/assembly/_components/fields/temperature";
-import ThroughHoleComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/throughHole";
-import BoardType from "@/app/products/pcb/assembly/_components/fields/type";
-import UniqueComponentsQuantity from "@/app/products/pcb/assembly/_components/fields/uniqueComp";
-import PcbAssemblyPriceSummary from "@/app/products/pcb/assembly/_components/priceSum";
+import { AddPcbToCartButton } from "@/components/products/pcb/add-pcb-to-cart-button";
+import { AssemblyQuantity } from "@/components/products/pcb/assembly/fields/assembly-quantity";
+import { AssemblySides } from "@/components/products/pcb/assembly/fields/assembly-sides";
+import { AssemblyBgaComponentsQuantity } from "@/components/products/pcb/assembly/fields/assembly-bga-quantity";
+import { AssemblyBoardType } from "@/components/products/pcb/assembly/fields/assembly-board-type";
+import { AssemblyComponentSourcing } from "@/components/products/pcb/assembly/fields/assembly-components-sourcing";
+import { AssemblyConformalCoating } from "@/components/products/pcb/assembly/fields/assembly-conformal-coat";
+import { AssemblyDepanel } from "@/components/products/pcb/assembly/fields/assembly-depanel";
+import { AssemblyFunctionalTest } from "@/components/products/pcb/assembly/fields/assembly-functional-test";
+import { AssemblyPcbName } from "@/components/products/pcb/assembly/fields/assembly-pcb-name";
+import { AssemblyPcbsPerPanel } from "@/components/products/pcb/assembly/fields/assembly-pcbs-per-panel";
+import { AssemblySmdComponentsQuantity } from "@/components/products/pcb/assembly/fields/assembly-smd-comps-quantity";
+import { AssemblyTemperatureAndHumiditySensitivity } from "@/components/products/pcb/assembly/fields/assembly-temp-and-humidity-sensitivity";
+import { AssemblyThroughHoleComponentsQuantity } from "@/components/products/pcb/assembly/fields/assembly-through-hole-comps-quantity";
+import { AssemblyTurnAroundTime } from "@/components/products/pcb/assembly/fields/assembly-turn-around-time";
+import { AssemblyUniqueComponentsQuantity } from "@/components/products/pcb/assembly/fields/assembly-unique-comps-quantity";
+import { AssemblyUploadDesignFile } from "@/components/products/pcb/assembly/fields/assembly-upload-design-file";
+import { AssemblyPcbPriceSummary } from "@/components/products/pcb/assembly/assembly-pcb-price-summary";
+import { PcbPriceEstimateAlert } from "@/components/products/pcb/pcb-price-est-alert";
 import { selectPcbAssemblyMemomized } from "@/redux/reducers/pcbAssemblySlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
@@ -52,33 +52,34 @@ export default function PcbAssembly() {
 			}
 		});
 	}
+
 	return (
 		<form onSubmit={handleOnSubmit}>
 			<div className="mx-auto my-2 max-w-6xl px-4">
 				<h1 className=" text-3xl font-bold tracking-tight">PCB Assembly</h1>
 				<div className="grid grid-cols-1 gap-y-3 lg:grid-cols-3 lg:gap-x-4">
 					<div className="mt-8 grid grid-cols-1 gap-y-6 sm:col-span-2 sm:grid-cols-2 sm:gap-x-4">
-						<PcbName />
-						<BoardType />
-						<PcbsPerPanel />
+						<AssemblyPcbName />
+						<AssemblyBoardType />
+						<AssemblyPcbsPerPanel />
 						<AssemblyQuantity />
 						<AssemblySides />
-						<UniqueComponentsQuantity />
-						<SmdComponentsQuantity />
-						<BgaComponentsQuantity />
-						<ThroughHoleComponentsQuantity />
-						<TemperatureAndHumiditySensitivity />
-						<Depanel />
-						<ConformalCoating />
-						<FunctionalTest />
-						<ComponentSourcing />
-						<TurnAroundTime />
-						<UploadDesignFile />
+						<AssemblyUniqueComponentsQuantity />
+						<AssemblySmdComponentsQuantity />
+						<AssemblyBgaComponentsQuantity />
+						<AssemblyThroughHoleComponentsQuantity />
+						<AssemblyTemperatureAndHumiditySensitivity />
+						<AssemblyDepanel />
+						<AssemblyConformalCoating />
+						<AssemblyFunctionalTest />
+						<AssemblyComponentSourcing />
+						<AssemblyTurnAroundTime />
+						<AssemblyUploadDesignFile />
 					</div>
 					<div className="mt-8 space-y-4">
-						<PcbAssemblyPriceSummary />
+						<AssemblyPcbPriceSummary />
 						<PcbPriceEstimateAlert />
-						<AddPcbToCartBtn isLoading={isLoading} />
+						<AddPcbToCartButton isLoading={isLoading} />
 					</div>
 				</div>
 			</div>

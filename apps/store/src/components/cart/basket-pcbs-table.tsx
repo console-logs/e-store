@@ -1,5 +1,5 @@
 import { fetchCartItemsAction } from "@/actions";
-import ViewPcbFabSpecsModal from "@/components/pcb/view-pcb-fab-specs-modal";
+import ViewPcbFabSpecsModal from "@/components/products/pcb/view-pcb-fab-specs-modal";
 import { DeleteAllButton, DeleteCartItemButton } from "@/components/cart/delete-cart-item-button";
 import { formatToInr } from "@packages/shared/lib/utils";
 

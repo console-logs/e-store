@@ -1,4 +1,4 @@
-import ViewPcbFabSpecsModal from "@/components/pcb/view-pcb-fab-specs-modal";
+import ViewPcbFabSpecsModal from "@/components/products/pcb/view-pcb-fab-specs-modal";
 import { formatToInr } from "@packages/shared/lib/utils";
 
 export async function OrderedPcbsTable({ order }: { order: OrderType }) {

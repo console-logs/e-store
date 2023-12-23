@@ -1,7 +1,7 @@
 "use client";
 import { addItemToCartAction } from "@/actions";
-import AddPcbToCartBtn from "@/components/products/pcb/common/add-pcb-to-cart-button";
-import PcbPriceEstimateAlert from "@/components/products/pcb/common/pcb-price-est-alert";
+import AddPcbToCartBtn from "@/components/products/pcb/add-pcb-to-cart-button";
+import PcbPriceEstimateAlert from "@/components/products/pcb/pcb-price-est-alert";
 import BreakdownVoltage from "@/app/products/pcb/rigid-pcb/_components/fields/breakdown";
 import CastellatedHolesEdges from "@/app/products/pcb/rigid-pcb/_components/fields/castEdge";
 import CastellatedHoles from "@/app/products/pcb/rigid-pcb/_components/fields/castHole";
