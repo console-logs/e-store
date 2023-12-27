@@ -1,12 +1,12 @@
+import { AssemblyBoardType } from "@/components/products/pcb/assembly/fields/assembly-board-type";
 import { AssemblyQuantity } from "@/components/products/pcb/assembly/fields/assembly-quantity";
-import AssemblySides from "@/components/products/pcb/assembly/fields/assembly-sides";
-import BoardType from "@/components/products/pcb/assembly/fields/assembly-board-type";
-import FlexPcbBoardSize from "@/components/products/pcb/flex/fields/flex-board-size";
-import FlexPcbLayer from "@/components/products/pcb/flex/fields/flex-layer";
-import FlexPcbQuantity from "@/components/products/pcb/flex/fields/flex-pcb-quantity";
-import RigidPcbBoardSize from "@/app/products/pcb/rigid-pcb/_components/fields/size";
-import RigidPcbLayer from "@/app/products/pcb/rigid-pcb/_components/fields/layer";
-import RigidPcbQuantity from "@/app/products/pcb/rigid-pcb/_components/fields/quantity";
+import { AssemblySides } from "@/components/products/pcb/assembly/fields/assembly-sides";
+import { FlexBoardSize } from "@/components/products/pcb/flex/fields/flex-board-size";
+import { FlexLayer } from "@/components/products/pcb/flex/fields/flex-layer";
+import { FlexPcbQuantity } from "@/components/products/pcb/flex/fields/flex-pcb-quantity";
+import { RigidBoardSize } from "@/components/products/pcb/rigid/fields/rigid-board-size";
+import { RigidLayer } from "@/components/products/pcb/rigid/fields/rigid-layer";
+import { RigidPcbQuantity } from "@/components/products/pcb/rigid/fields/rigid-pcb-quantity";
 import { FLEX_PCB_FAB_PAGE, PCB_ASSEMBLY_PAGE, RIGID_PCB_FAB_PAGE } from "@/lib/routes";
 import { Button } from "@shared/components/ui/button";
 import { Card, CardContent } from "@shared/components/ui/card";
@@ -40,8 +40,8 @@ export function PcbInstantQuote() {
 				<TabsContent value="rigidPcb">
 					<Card>
 						<CardContent className="my-2 lg:flex lg:items-center lg:justify-evenly lg:space-x-4">
-							<RigidPcbBoardSize />
-							<RigidPcbLayer />
+							<RigidBoardSize />
+							<RigidLayer />
 							<RigidPcbQuantity />
 							<Button
 								asChild
@@ -55,8 +55,8 @@ export function PcbInstantQuote() {
 				<TabsContent value="flexPcb">
 					<Card>
 						<CardContent className="my-2 lg:flex lg:items-center lg:justify-evenly lg:space-x-4">
-							<FlexPcbBoardSize />
-							<FlexPcbLayer />
+							<FlexBoardSize />
+							<FlexLayer />
 							<FlexPcbQuantity />
 							<Button
 								asChild
@@ -70,7 +70,7 @@ export function PcbInstantQuote() {
 				<TabsContent value="pcbAssembly">
 					<Card>
 						<CardContent className="my-2 lg:flex lg:items-center lg:justify-evenly lg:space-x-4">
-							<BoardType />
+							<AssemblyBoardType />
 							<AssemblySides />
 							<AssemblyQuantity />
 							<Button

@@ -1,10 +1,10 @@
 import { HelpPopover } from "@/components/products/pcb/help-popover";
-import { UploadFlexDesignFileButton } from "@/components/products/pcb/flex/flex-design-file-upload-button";
+import { UploadRigidDesignFileButton } from "@/components/products/pcb/rigid/rigid-design-file-upload-button";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useState } from "react";
 
-export function FlexUploadDesignFile() {
+export function RigidUploadDesignFile() {
 	const [file, setFile] = useState<File | undefined>();
 
 	return (
@@ -27,7 +27,7 @@ export function FlexUploadDesignFile() {
 						}
 					}}
 				/>
-				<UploadFlexDesignFileButton file={file} />
+				<UploadRigidDesignFileButton file={file} />
 			</div>
 		</div>
 	);

@@ -1,44 +1,44 @@
 "use client";
 import { addItemToCartAction } from "@/actions";
-import AddPcbToCartBtn from "@/components/products/pcb/add-pcb-to-cart-button";
-import PcbPriceEstimateAlert from "@/components/products/pcb/pcb-price-est-alert";
-import BreakdownVoltage from "@/app/products/pcb/rigid-pcb/_components/fields/breakdown";
-import CastellatedHolesEdges from "@/app/products/pcb/rigid-pcb/_components/fields/castEdge";
-import CastellatedHoles from "@/app/products/pcb/rigid-pcb/_components/fields/castHole";
-import ChamferedGoldFingers from "@/app/products/pcb/rigid-pcb/_components/fields/chamfGold";
-import CopperStructure from "@/app/products/pcb/rigid-pcb/_components/fields/cuStruct";
-import DesignFormat from "@/app/products/pcb/rigid-pcb/_components/fields/design";
-import DifferentDesignsInPanel from "@/app/products/pcb/rigid-pcb/_components/fields/diffDesign";
-import DispatchUnit from "@/app/products/pcb/rigid-pcb/_components/fields/dispatch";
-import EdgeRails from "@/app/products/pcb/rigid-pcb/_components/fields/edgeRail";
-import EdgeRailsSize from "@/app/products/pcb/rigid-pcb/_components/fields/edgeRailSize";
-import UploadDesignFile from "@/app/products/pcb/rigid-pcb/_components/fields/file";
-import GoldFingers from "@/app/products/pcb/rigid-pcb/_components/fields/gold";
-import GoldThickness from "@/app/products/pcb/rigid-pcb/_components/fields/goldThick";
-import ImpedenceControl from "@/app/products/pcb/rigid-pcb/_components/fields/impedence";
-import InnerCuWeight from "@/app/products/pcb/rigid-pcb/_components/fields/innerCu";
-import Layer from "@/app/products/pcb/rigid-pcb/_components/fields/layer";
-import LeadTime from "@/app/products/pcb/rigid-pcb/_components/fields/leadTime";
-import BaseMaterial from "@/app/products/pcb/rigid-pcb/_components/fields/material";
-import MaterialType from "@/app/products/pcb/rigid-pcb/_components/fields/materialType";
-import MinimumHoleSizeAndDiameter from "@/app/products/pcb/rigid-pcb/_components/fields/minViaHSize";
-import PcbName from "@/app/products/pcb/rigid-pcb/_components/fields/name";
-import OuterCuWeight from "@/app/products/pcb/rigid-pcb/_components/fields/outerCu";
-import BoardOutlineTolerance from "@/app/products/pcb/rigid-pcb/_components/fields/outline";
-import PanelFormat from "@/app/products/pcb/rigid-pcb/_components/fields/panelFormat";
-import PanelQuantity from "@/app/products/pcb/rigid-pcb/_components/fields/panelQty";
-import PanelSize from "@/app/products/pcb/rigid-pcb/_components/fields/panelSize";
-import PcbQuantity from "@/app/products/pcb/rigid-pcb/_components/fields/quantity";
-import Silkscreen from "@/app/products/pcb/rigid-pcb/_components/fields/silkscreen";
-import SinglePiecesQuantity from "@/app/products/pcb/rigid-pcb/_components/fields/singlePieces";
-import BoardSize from "@/app/products/pcb/rigid-pcb/_components/fields/size";
-import Soldermask from "@/app/products/pcb/rigid-pcb/_components/fields/soldermask";
-import SurfaceFinish from "@/app/products/pcb/rigid-pcb/_components/fields/surface";
-import ThermalConductivity from "@/app/products/pcb/rigid-pcb/_components/fields/thermal";
-import BoardThickness from "@/app/products/pcb/rigid-pcb/_components/fields/thickness";
-import ViaCovering from "@/app/products/pcb/rigid-pcb/_components/fields/viaCover";
-import ViaHoles from "@/app/products/pcb/rigid-pcb/_components/fields/viaHoles";
-import RigidPcbPriceSummary from "@/app/products/pcb/rigid-pcb/_components/priceSum";
+import { AddPcbToCartButton } from "@/components/products/pcb/add-pcb-to-cart-button";
+import { PcbPriceEstimateAlert } from "@/components/products/pcb/pcb-price-est-alert";
+import { RigidBaseMaterial } from "@/components/products/pcb/rigid/fields/rigid-base-material";
+import { RigidBoardOutlineTolerance } from "@/components/products/pcb/rigid/fields/rigid-board-outline-tolerance";
+import { RigidBoardSize } from "@/components/products/pcb/rigid/fields/rigid-board-size";
+import { RigidBoardThickness } from "@/components/products/pcb/rigid/fields/rigid-board-thickness";
+import { RigidBreakdownVoltage } from "@/components/products/pcb/rigid/fields/rigid-breakdown-voltage";
+import { RigidCastellatedHolesEdges } from "@/components/products/pcb/rigid/fields/rigid-cast-hole-edges";
+import { RigidCastellatedHoles } from "@/components/products/pcb/rigid/fields/rigid-castellated-holes";
+import { RigidChamferedGoldFingers } from "@/components/products/pcb/rigid/fields/rigid-chamfered-gold-fingers";
+import { RigidCopperStructure } from "@/components/products/pcb/rigid/fields/rigid-cu-structure";
+import { RigidDesignFormat } from "@/components/products/pcb/rigid/fields/rigid-design-format";
+import { RigidDifferentDesignsInPanel } from "@/components/products/pcb/rigid/fields/rigid-diff-designs-in-panel";
+import { DispatchUnit } from "@/components/products/pcb/rigid/fields/rigid-dispatch-unit";
+import { RigidEdgeRailsSize } from "@/components/products/pcb/rigid/fields/rigid-edge-rail-size";
+import { RigidEdgeRails } from "@/components/products/pcb/rigid/fields/rigid-edge-rails";
+import { RigidGoldFingers } from "@/components/products/pcb/rigid/fields/rigid-gold-fingers";
+import { RigidGoldThickness } from "@/components/products/pcb/rigid/fields/rigid-gold-thickness";
+import { RigidImpedanceControl } from "@/components/products/pcb/rigid/fields/rigid-impedance-control";
+import { RigidInnerCuWeight } from "@/components/products/pcb/rigid/fields/rigid-inner-cu-weight";
+import { RigidLayer } from "@/components/products/pcb/rigid/fields/rigid-layer";
+import { RigidLeadTime } from "@/components/products/pcb/rigid/fields/rigid-lead-time";
+import { RigidMaterialType } from "@/components/products/pcb/rigid/fields/rigid-material-type";
+import { RigidMinimumHoleSizeAndDiameter } from "@/components/products/pcb/rigid/fields/rigid-min-via-hole-size-and-dia";
+import { RigidOuterCuWeight } from "@/components/products/pcb/rigid/fields/rigid-outer-cu-weight";
+import { RigidPanelFormat } from "@/components/products/pcb/rigid/fields/rigid-panel-format";
+import { RigidPanelQuantity } from "@/components/products/pcb/rigid/fields/rigid-panel-quantity";
+import { RigidPanelSize } from "@/components/products/pcb/rigid/fields/rigid-panel-size";
+import { RigidPcbName } from "@/components/products/pcb/rigid/fields/rigid-pcb-name";
+import { RigidPcbQuantity } from "@/components/products/pcb/rigid/fields/rigid-pcb-quantity";
+import { RigidSilkscreen } from "@/components/products/pcb/rigid/fields/rigid-silkscreen";
+import { RigidSinglePiecesQuantity } from "@/components/products/pcb/rigid/fields/rigid-single-pieces-quantity";
+import { RigidSoldermask } from "@/components/products/pcb/rigid/fields/rigid-soldermask";
+import { RigidSurfaceFinish } from "@/components/products/pcb/rigid/fields/rigid-surface-finish";
+import { RigidThermalConductivity } from "@/components/products/pcb/rigid/fields/rigid-thermal-conductivity";
+import { RigidUploadDesignFile } from "@/components/products/pcb/rigid/fields/rigid-upload-design-file";
+import { RigidViaCovering } from "@/components/products/pcb/rigid/fields/rigid-via-covering";
+import { RigidViaHoles } from "@/components/products/pcb/rigid/fields/rigid-via-holes";
+import { RigidPcbPriceSummary } from "@/components/products/pcb/rigid/rigid-pcb-price-summary";
 import { selectRigidPcbMemoized } from "@/redux/reducers/rigidPcbSlice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
@@ -78,47 +78,47 @@ export default function RigidPcbFabrication() {
 				<h1 className=" text-3xl font-bold tracking-tight">Rigid Pcb Fabrication</h1>
 				<div className="grid grid-cols-1 gap-y-3 lg:grid-cols-3 lg:gap-x-4">
 					<div className="mt-8 grid grid-cols-1 gap-y-6 sm:col-span-2 sm:grid-cols-2 sm:gap-x-4">
-						<PcbName />
-						<BaseMaterial />
-						<Layer />
-						<MaterialType />
-						<BoardSize />
-						<PcbQuantity />
-						<DifferentDesignsInPanel />
-						<DesignFormat />
-						<PanelQuantity />
-						<PanelFormat />
-						<PanelSize />
-						<SinglePiecesQuantity />
-						<BoardThickness />
-						<Soldermask />
-						<Silkscreen />
-						<SurfaceFinish />
-						<GoldThickness />
-						<EdgeRails />
-						<EdgeRailsSize />
-						<OuterCuWeight />
-						<CopperStructure />
-						<ThermalConductivity />
-						<BreakdownVoltage />
-						<InnerCuWeight />
-						<ImpedenceControl />
-						<ViaCovering />
-						<MinimumHoleSizeAndDiameter />
-						<BoardOutlineTolerance />
-						<GoldFingers />
-						<ChamferedGoldFingers />
-						<CastellatedHoles />
-						<CastellatedHolesEdges />
-						<ViaHoles />
-						<LeadTime />
+						<RigidPcbName />
+						<RigidBaseMaterial />
+						<RigidLayer />
+						<RigidMaterialType />
+						<RigidBoardSize />
+						<RigidPcbQuantity />
+						<RigidDifferentDesignsInPanel />
+						<RigidDesignFormat />
+						<RigidPanelQuantity />
+						<RigidPanelFormat />
+						<RigidPanelSize />
+						<RigidSinglePiecesQuantity />
+						<RigidBoardThickness />
+						<RigidSoldermask />
+						<RigidSilkscreen />
+						<RigidSurfaceFinish />
+						<RigidGoldThickness />
+						<RigidEdgeRails />
+						<RigidEdgeRailsSize />
+						<RigidOuterCuWeight />
+						<RigidCopperStructure />
+						<RigidThermalConductivity />
+						<RigidBreakdownVoltage />
+						<RigidInnerCuWeight />
+						<RigidImpedanceControl />
+						<RigidViaCovering />
+						<RigidMinimumHoleSizeAndDiameter />
+						<RigidBoardOutlineTolerance />
+						<RigidGoldFingers />
+						<RigidChamferedGoldFingers />
+						<RigidCastellatedHoles />
+						<RigidCastellatedHolesEdges />
+						<RigidViaHoles />
+						<RigidLeadTime />
 						<DispatchUnit />
-						<UploadDesignFile />
+						<RigidUploadDesignFile />
 					</div>
 					<div className="mt-8 space-y-4">
 						<RigidPcbPriceSummary />
 						<PcbPriceEstimateAlert />
-						<AddPcbToCartBtn isLoading={isLoading} />
+						<AddPcbToCartButton isLoading={isLoading} />
 					</div>
 				</div>
 			</div>
