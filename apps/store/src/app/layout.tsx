@@ -1,7 +1,7 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { AuthProvider } from "@/context/authContext";
-import { ReduxProvider } from "@/context/reduxContext";
+import { AuthProvider } from "@/context/auth-context";
+import { ReduxProvider } from "@/context/redux-context";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Container } from "@shared/components/container";

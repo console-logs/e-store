@@ -1,4 +1,4 @@
-import { RigidPcbRateCard } from "@/lib/rateCards";
+import { RigidPcbRateCard } from "@/lib/rate-cards";
 import { RigidPcbFabSpecsTypeSchema } from "@/schema/pcb";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 

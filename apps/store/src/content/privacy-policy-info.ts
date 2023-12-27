@@ -1,4 +1,4 @@
-export const PRIVACY_POLICY_CONTENT = [
+export const PRIVACY_POLICY_INFORMATION = [
 	{
 		HEADING: "Policy Brief",
 		BODY: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 

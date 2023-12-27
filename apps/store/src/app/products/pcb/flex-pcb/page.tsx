@@ -35,7 +35,7 @@ import { FlexThreeMTapeThickness } from "@/components/products/pcb/flex/fields/f
 import { FlexUploadDesignFile } from "@/components/products/pcb/flex/fields/flex-upload-design-file";
 import { FlexPcbPriceSummary } from "@/components/products/pcb/flex/flex-pcb-price-summary";
 import { PcbPriceEstimateAlert } from "@/components/products/pcb/pcb-price-est-alert";
-import { selectFlexPcbMemoized } from "@/redux/reducers/flexPcbSlice";
+import { selectFlexPcbMemoized } from "@/redux/reducers/flex-pcb-slice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";

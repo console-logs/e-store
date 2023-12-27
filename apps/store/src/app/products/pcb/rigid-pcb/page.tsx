@@ -39,7 +39,7 @@ import { RigidUploadDesignFile } from "@/components/products/pcb/rigid/fields/ri
 import { RigidViaCovering } from "@/components/products/pcb/rigid/fields/rigid-via-covering";
 import { RigidViaHoles } from "@/components/products/pcb/rigid/fields/rigid-via-holes";
 import { RigidPcbPriceSummary } from "@/components/products/pcb/rigid/rigid-pcb-price-summary";
-import { selectRigidPcbMemoized } from "@/redux/reducers/rigidPcbSlice";
+import { selectRigidPcbMemoized } from "@/redux/reducers/rigid-pcb-slice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";

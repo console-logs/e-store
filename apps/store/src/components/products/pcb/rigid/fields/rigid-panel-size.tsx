@@ -1,5 +1,5 @@
 import { HelpPopover } from "@/components/products/pcb/help-popover";
-import { selectDesignFormat, selectPanelSizeX, selectPanelSizeY } from "@/redux/reducers/rigidPcbSlice";
+import { selectDesignFormat, selectPanelSizeX, selectPanelSizeY } from "@/redux/reducers/rigid-pcb-slice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useSelector } from "react-redux";

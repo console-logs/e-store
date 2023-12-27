@@ -1,4 +1,4 @@
-import { rigidPcbSpecifications } from "@/content/rigidPcbCapabilities";
+import { rigidPcbSpecifications } from "@/content/rigid-pcb-capabilities-info";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@shared/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/components/ui/table";
 

@@ -5,7 +5,7 @@ import {
 	setDifferentDesignsInPanel,
 	updateDesignFormatOption,
 	updateOrderedQty,
-} from "@/redux/reducers/rigidPcbSlice";
+} from "@/redux/reducers/rigid-pcb-slice";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
 import { Label } from "@shared/components/ui/label";

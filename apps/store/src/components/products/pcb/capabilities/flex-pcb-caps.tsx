@@ -1,4 +1,4 @@
-import { flexPcbSpecifications } from "@/content/flexPcbCapabilities";
+import { flexPcbSpecifications } from "@/content/flex-pcb-capabilities-info";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@shared/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/components/ui/table";
 

@@ -1,6 +1,6 @@
-import flexPcbReducer from "@/redux/reducers/flexPcbSlice";
-import pcbAssemblyReducer from "@/redux/reducers/pcbAssemblySlice";
-import rigidPcbReducer from "@/redux/reducers/rigidPcbSlice";
+import flexPcbReducer from "@/redux/reducers/flex-pcb-slice";
+import pcbAssemblyReducer from "@/redux/reducers/pcb-assembly-slice";
+import rigidPcbReducer from "@/redux/reducers/rigid-pcb-slice";
 import { configureStore, type Action, type ThunkAction } from "@reduxjs/toolkit";
 import {
 	useDispatch as useReduxDispatch,

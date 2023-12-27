@@ -1,4 +1,4 @@
-import { assemblyRateCard } from "@/lib/rateCards";
+import { assemblyRateCard } from "@/lib/rate-cards";
 import { PcbAssemblyFabSpecsTypeSchema } from "@/schema/pcb";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 

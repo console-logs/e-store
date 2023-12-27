@@ -1,4 +1,4 @@
-import { flexPcbRateCard } from "@/lib/rateCards";
+import { flexPcbRateCard } from "@/lib/rate-cards";
 import { FlexPcbFabSpecsTypeSchema } from "@/schema/pcb";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 

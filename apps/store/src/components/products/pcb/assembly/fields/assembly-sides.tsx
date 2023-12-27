@@ -7,7 +7,7 @@ import {
 	setAssemblySides,
 	setOneTimeSetupCost,
 	setPcbAssemblyCost,
-} from "@/redux/reducers/pcbAssemblySlice";
+} from "@/redux/reducers/pcb-assembly-slice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";

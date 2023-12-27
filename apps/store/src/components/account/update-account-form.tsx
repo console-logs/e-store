@@ -5,7 +5,7 @@ import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useToast } from "@shared/components/ui/use-toast";
-import { PASSWORD_ERROR } from "@shared/lib/errorMessages";
+import { PASSWORD_ERROR } from "@shared/lib/error-messages";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useCallback, useTransition } from "react";
 import * as Yup from "yup";

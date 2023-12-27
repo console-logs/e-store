@@ -4,7 +4,7 @@ import {
 	selectOrderedQty,
 	selectPcbAssemblyCost,
 	selectTentativeDispatchDate,
-} from "@/redux/reducers/pcbAssemblySlice";
+} from "@/redux/reducers/pcb-assembly-slice";
 import { useSelector } from "react-redux";
 
 export function AssemblyPcbPriceSummary() {

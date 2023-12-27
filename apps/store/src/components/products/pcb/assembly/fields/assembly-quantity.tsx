@@ -7,7 +7,7 @@ import {
 	setOneTimeSetupCost,
 	setOrderedQty,
 	setPcbAssemblyCost,
-} from "@/redux/reducers/pcbAssemblySlice";
+} from "@/redux/reducers/pcb-assembly-slice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";

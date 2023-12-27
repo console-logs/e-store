@@ -1,4 +1,4 @@
-export const ABOUT_PARA_1 = `Lorem ipsum dolor sit amet. Qui cumque sunt eos nostrum tempore At natus
+export const ABOUT_PARA_1_INFORMATION = `Lorem ipsum dolor sit amet. Qui cumque sunt eos nostrum tempore At natus
 repudiandae. Et tempore dolorem eum consequatur omnis qui amet dolores At
 impedit odio et iusto inventore et enim odio. Ad quisquam totam qui debitis
 dicta ea earum voluptas est reprehenderit eaque in voluptas dolorum ut quas
@@ -8,7 +8,7 @@ minus deleniti aut sint maiores eum galisum sunt. Id nemo saepe nam harum error
 ut voluptas ullam. Et molestiae debitis ea distinctio amet ex earum similique
 sed autem libero non odit enim ut doloribus nulla sed laborum reiciendis.`;
 
-export const ABOUT_PARA_2 = `Est quaerat nisi 33 repellendus blanditiis cum laborum soluta 33 iusto dolor ut fugit
+export const ABOUT_PARA_2_INFORMATION = `Est quaerat nisi 33 repellendus blanditiis cum laborum soluta 33 iusto dolor ut fugit
 animi et nemo minima et consequatur expedita. Et odit adipisci est quam pariatur
 et laboriosam sint cum itaque doloremque a accusamus velit ex quibusdam iure ad esse
 sequi? Qui dicta porro est tempore cumque qui sequi tempore qui dolores quisquam.

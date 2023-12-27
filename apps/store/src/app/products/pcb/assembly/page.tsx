@@ -19,7 +19,7 @@ import { AssemblyUniqueComponentsQuantity } from "@/components/products/pcb/asse
 import { AssemblyUploadDesignFile } from "@/components/products/pcb/assembly/fields/assembly-upload-design-file";
 import { AssemblyPcbPriceSummary } from "@/components/products/pcb/assembly/assembly-pcb-price-summary";
 import { PcbPriceEstimateAlert } from "@/components/products/pcb/pcb-price-est-alert";
-import { selectPcbAssemblyMemomized } from "@/redux/reducers/pcbAssemblySlice";
+import { selectPcbAssemblyMemomized } from "@/redux/reducers/pcb-assembly-slice";
 import { useToast } from "@shared/components/ui/use-toast";
 import { useTransition, type FormEvent } from "react";
 import { useSelector } from "react-redux";

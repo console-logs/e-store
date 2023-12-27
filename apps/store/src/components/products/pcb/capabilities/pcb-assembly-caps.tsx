@@ -1,4 +1,4 @@
-import { pcbAssemblySpecifications } from "@/content/assemblyCapabilities";
+import { pcbAssemblySpecifications } from "@/content/pcb-assembly-capabilities-info";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/components/ui/table";
 
 export function PcbAssemblyCapabilities() {

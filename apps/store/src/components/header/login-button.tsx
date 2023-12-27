@@ -1,5 +1,5 @@
 "use client";
-import { AuthContext } from "@/context/authContext";
+import { AuthContext } from "@/context/auth-context";
 import { LOGIN_PAGE } from "@/lib/routes";
 import { Button } from "@shared/components/ui/button";
 import Link from "next/link";

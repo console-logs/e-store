@@ -1,4 +1,4 @@
-import { selectName, setUploadedFileName, setUploadedFileUrl } from "@/redux/reducers/flexPcbSlice";
+import { selectName, setUploadedFileName, setUploadedFileUrl } from "@/redux/reducers/flex-pcb-slice";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { useToast } from "@shared/components/ui/use-toast";

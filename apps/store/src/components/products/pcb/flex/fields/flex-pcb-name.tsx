@@ -1,5 +1,5 @@
 import { HelpPopover } from "@/components/products/pcb/help-popover";
-import { selectName, setName } from "@/redux/reducers/flexPcbSlice";
+import { selectName, setName } from "@/redux/reducers/flex-pcb-slice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";

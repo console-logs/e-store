@@ -16,7 +16,7 @@ import {
 	PASSWORD_ERROR,
 	PHONENUMBER_ERROR,
 	POSTALCODE_ERROR,
-} from "@packages/shared/lib/errorMessages";
+} from "@packages/shared/lib/error-messages";
 import * as Yup from "yup";
 
 export const searchPartSchema = Yup.object().shape({

@@ -1,5 +1,5 @@
 import { HelpPopover } from "@/components/products/pcb/help-popover";
-import { selectDesignFormat, selectSinglePiecesQty } from "@/redux/reducers/flexPcbSlice";
+import { selectDesignFormat, selectSinglePiecesQty } from "@/redux/reducers/flex-pcb-slice";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useSelector } from "react-redux";

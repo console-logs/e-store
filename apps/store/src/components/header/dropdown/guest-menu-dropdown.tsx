@@ -1,6 +1,6 @@
 "use client";
 import { GuestAvatar } from "@/components/header/avatar/guest-avatar";
-import { AuthContext } from "@/context/authContext";
+import { AuthContext } from "@/context/auth-context";
 import { LOGIN_PAGE, ORDER_HISTORY_PAGE, SIGNUP_PAGE } from "@/lib/routes";
 import { Button } from "@shared/components/ui/button";
 import {

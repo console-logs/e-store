@@ -1,4 +1,4 @@
-export const SHIPPING_POLICY_CONTENT = [
+export const SHIPPING_POLICY_INFORMATION = [
 	{
 		HEADING: "Shipment processing times",
 		BODY: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget nunc scelerisque viverra mauris in aliquam sem.`,

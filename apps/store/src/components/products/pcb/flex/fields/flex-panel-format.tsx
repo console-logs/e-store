@@ -9,7 +9,7 @@ import {
 	setRows,
 	updatePanelSize,
 	updateSinglePiecesQty,
-} from "@/redux/reducers/flexPcbSlice";
+} from "@/redux/reducers/flex-pcb-slice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";

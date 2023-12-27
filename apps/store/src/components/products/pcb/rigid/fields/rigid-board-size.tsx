@@ -8,7 +8,7 @@ import {
 	setBoardSizeY,
 	setPcbPrice,
 	updatePanelSize,
-} from "@/redux/reducers/rigidPcbSlice";
+} from "@/redux/reducers/rigid-pcb-slice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";

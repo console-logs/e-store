@@ -1,8 +1,8 @@
-import { pcbAssemblyRouter } from "@/server/api/routers/assembly";
-import { flexPcbRouter } from "@/server/api/routers/flex";
-import { partRouter } from "@/server/api/routers/part";
-import { razorpayRouter } from "@/server/api/routers/razorpay";
-import { rigidPcbRouter } from "@/server/api/routers/rigid";
+import { pcbAssemblyRouter } from "@/server/api/routers/pcb-assembly-router";
+import { flexPcbRouter } from "@/server/api/routers/flex-pcb-router";
+import { partRouter } from "@/server/api/routers/part-router";
+import { razorpayRouter } from "@/server/api/routers/razorpay-router";
+import { rigidPcbRouter } from "@/server/api/routers/rigid-pcb-router";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 // This is the primary router for your server.

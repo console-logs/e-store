@@ -1,4 +1,4 @@
-import { PRIVACY_POLICY_CONTENT } from "@/content/privacyPolicy";
+import { PRIVACY_POLICY_INFORMATION } from "@/content/privacy-policy-info";
 import { getCurrentYear } from "@packages/shared/lib/utils";
 import type { Metadata } from "next";
 
@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
 				<p className="text-muted-foreground">This policy was last modified on {currYear}</p>
 			</div>
 			<div className="space-y-8 mt-10 text-justify">
-				{PRIVACY_POLICY_CONTENT.map((condition, index) => (
+				{PRIVACY_POLICY_INFORMATION.map((condition, index) => (
 					<div key={index}>
 						<p className="font-semibold">{condition.HEADING}</p>
 						<p>{condition.BODY}</p>

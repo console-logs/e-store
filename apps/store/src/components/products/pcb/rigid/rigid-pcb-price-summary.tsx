@@ -4,7 +4,7 @@ import {
 	selectPcbQty,
 	selectSinglePiecesQty,
 	selectTentativeDispatchDate,
-} from "@/redux/reducers/rigidPcbSlice";
+} from "@/redux/reducers/rigid-pcb-slice";
 import { useSelector } from "react-redux";
 
 export function RigidPcbPriceSummary() {

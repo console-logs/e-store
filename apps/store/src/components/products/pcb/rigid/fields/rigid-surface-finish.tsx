@@ -5,7 +5,7 @@ import {
 	selectSurfaceFinishOptions,
 	setPcbPrice,
 	setSurfaceFinish,
-} from "@/redux/reducers/rigidPcbSlice";
+} from "@/redux/reducers/rigid-pcb-slice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";

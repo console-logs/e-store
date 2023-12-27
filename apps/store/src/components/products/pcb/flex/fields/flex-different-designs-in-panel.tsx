@@ -6,8 +6,8 @@ import {
 	setPcbPrice,
 	updateDesignFormatOption,
 	updateOrderedQty,
-} from "@/redux/reducers/flexPcbSlice";
-import { selectDifferentDesignsInPanelOptions } from "@/redux/reducers/rigidPcbSlice";
+} from "@/redux/reducers/flex-pcb-slice";
+import { selectDifferentDesignsInPanelOptions } from "@/redux/reducers/rigid-pcb-slice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";

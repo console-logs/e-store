@@ -6,7 +6,7 @@ import {
 	selectThreeMTapeThicknessOptions,
 	setPcbPrice,
 	setThreeMTapeThickness,
-} from "@/redux/reducers/flexPcbSlice";
+} from "@/redux/reducers/flex-pcb-slice";
 import { tRPCReactApi } from "@/trpc/react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Icons } from "@packages/shared/components/Icons";
