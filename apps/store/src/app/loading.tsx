@@ -1,5 +1,6 @@
-import loadingHourGlass from "public/images/loadingHourglass.gif";
 import Image from "next/image";
+import loadingHourGlass from "public/images/loading-hour-glass.gif";
+
 export default function Loading() {
 	return (
 		<div className="flex justify-center items-center max-h-screen">

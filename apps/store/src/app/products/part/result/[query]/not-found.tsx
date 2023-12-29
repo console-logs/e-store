@@ -2,7 +2,7 @@ import { HOME_PAGE } from "@/lib/routes";
 import { Button } from "@shared/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import errorImage from "public/images/apiError.gif";
+import errorImage from "public/images/error.gif";
 
 export default function NotFound() {
   return (

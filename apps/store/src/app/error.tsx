@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@shared/components/ui/button";
 import Image from "next/image";
-import errorImage from "public/images/apiError.gif";
+import errorImage from "public/images/error.gif";
 
 export default function Error({ reset, error }: { error: Error; reset: () => void }) {
 	return (

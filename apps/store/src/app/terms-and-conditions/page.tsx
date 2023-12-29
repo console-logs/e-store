@@ -1,4 +1,4 @@
-import { TERMS_AND_CONDITIONS } from "@/content/tnc";
+import { TERMS_AND_CONDITIONS } from "@/content/terms-and-conditions-info";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
