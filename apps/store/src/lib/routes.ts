@@ -1,5 +1,10 @@
+import { env } from "@/env";
+
+export const HOST_URL = env.NODE_ENV === "development" ? "http://localhost:3000" : "https://e-store-store.vercel.app";
+export const SIGNUP_EMAIL_API_ROUTE = "/api/signup-email";
+export const ORDER_EMAIL_API_ROUTE = HOST_URL + "/api/order-email";
+export const UPLOAD_FILE_API_ROUTE = HOST_URL + "/api/upload-file";
 export const HOME_PAGE = "/";
-export const RIGID_PCB_API_ROUTE = "api/rigid-pcb";
 export const PART_PAGES = "/products/part";
 export const PART_RESULTS_PAGE = "/products/part/result/";
 export const PART_DETAILS_PAGE = "/products/part/detail/";

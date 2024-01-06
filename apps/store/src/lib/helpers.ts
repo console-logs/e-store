@@ -2,13 +2,14 @@
 import { env } from "@/env";
 import { FILE_EXTENSION, FILE_PATH_SEPARATOR, OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
+import { ORDER_EMAIL_API_ROUTE } from "@/lib/routes";
 import { calculateCartTotal, calculateGst } from "@/lib/utils";
 import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { auth } from "@clerk/nextjs";
 import { cookies } from "next/headers";
 import orderId from "order-id";
-import ShortUniqueId from "short-unique-id";
 import Papa, { type ParseResult } from "papaparse";
+import ShortUniqueId from "short-unique-id";
 
 export async function updateCartInDB(cart: CartDataType): Promise<void> {
 	const { userId } = auth();
@@ -219,7 +220,7 @@ export async function createNewOrder(props: RazorpayPropsType): Promise<OrderTyp
 	};
 
 	// send email to customer
-	await fetch("http://localhost:3000/api/order", {
+	await fetch(ORDER_EMAIL_API_ROUTE, {
 		method: "POST",
 		body: JSON.stringify(newOrder),
 	});

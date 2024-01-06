@@ -1,3 +1,4 @@
+import { UPLOAD_FILE_API_ROUTE } from "@/lib/routes";
 import { selectName, setUploadedFileName, setUploadedFileUrl } from "@/redux/reducers/rigid-pcb-slice";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
@@ -20,7 +21,7 @@ export function UploadRigidDesignFileButton(props: { file: File | undefined }) {
 					event.preventDefault();
 					const formData = new FormData();
 					formData.set("file", file as Blob, name);
-					const response = await fetch("/api/file", {
+					const response = await fetch(UPLOAD_FILE_API_ROUTE, {
 						method: "POST",
 						body: formData,
 					});

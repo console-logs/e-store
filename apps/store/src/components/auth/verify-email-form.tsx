@@ -1,6 +1,6 @@
 "use client";
 import { captureUserSignupAction } from "@/actions";
-import { HOME_PAGE } from "@/lib/routes";
+import { HOME_PAGE, SIGNUP_EMAIL_API_ROUTE } from "@/lib/routes";
 import { verifyEmailSchema } from "@/schema/yup";
 import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
@@ -45,7 +45,7 @@ export function VerifyEmailForm() {
 							email: completeSignUp.emailAddress!,
 							userId: completeSignUp.createdUserId!,
 						};
-						await fetch("/api/send", {
+						await fetch(SIGNUP_EMAIL_API_ROUTE, {
 							method: "POST",
 							body: JSON.stringify({ email: signupData.email, firstName: signupData.firstName }),
 						});
