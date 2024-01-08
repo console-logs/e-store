@@ -1,5 +1,5 @@
 import { SHIPPING_POLICY_INFORMATION } from "@/content/shipping-policy-info";
-import { HOME_PAGE } from "@/lib/routes";
+import { HOME_PAGE } from "@/lib/page-routes";
 import { getCurrentYear } from "@packages/shared/lib/utils";
 import type { Metadata } from "next";
 import Link from "next/link";

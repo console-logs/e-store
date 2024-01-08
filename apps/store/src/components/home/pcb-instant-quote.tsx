@@ -7,7 +7,7 @@ import { FlexPcbQuantity } from "@/components/products/pcb/flex/fields/flex-pcb-
 import { RigidBoardSize } from "@/components/products/pcb/rigid/fields/rigid-board-size";
 import { RigidLayer } from "@/components/products/pcb/rigid/fields/rigid-layer";
 import { RigidPcbQuantity } from "@/components/products/pcb/rigid/fields/rigid-pcb-quantity";
-import { FLEX_PCB_FAB_PAGE, PCB_ASSEMBLY_PAGE, RIGID_PCB_FAB_PAGE } from "@/lib/routes";
+import { FLEX_PCB_FAB_PAGE, PCB_ASSEMBLY_PAGE, RIGID_PCB_FAB_PAGE } from "@/lib/page-routes";
 import { Button } from "@shared/components/ui/button";
 import { Card, CardContent } from "@shared/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@shared/components/ui/tabs";

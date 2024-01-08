@@ -1,4 +1,4 @@
-import { UPLOAD_FILE_API_ROUTE } from "@/lib/routes";
+import { UPLOAD_FILE_API_ROUTE } from "@/lib/page-routes";
 import { selectName, setUploadedFileName, setUploadedFileUrl } from "@/redux/reducers/flex-pcb-slice";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";

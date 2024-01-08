@@ -1,6 +1,6 @@
 "use client";
 import { addMultiplePartsToCartAction } from "@/actions";
-import { SHOPPING_CART_PAGE } from "@/lib/routes";
+import { SHOPPING_CART_PAGE } from "@/lib/page-routes";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@packages/shared/components/ui/button";
 import { Input } from "@packages/shared/components/ui/input";

@@ -1,4 +1,9 @@
-import { FLEX_PCB_FAB_PAGE, PCB_ASSEMBLY_PAGE, PCB_TECH_CAPABILITIES_PAGE, RIGID_PCB_FAB_PAGE } from "@/lib/routes";
+import {
+	FLEX_PCB_FAB_PAGE,
+	PCB_ASSEMBLY_PAGE,
+	PCB_TECH_CAPABILITIES_PAGE,
+	RIGID_PCB_FAB_PAGE,
+} from "@/lib/page-routes";
 import {
 	NavigationMenuContent,
 	NavigationMenuItem,

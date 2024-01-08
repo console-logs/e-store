@@ -1,4 +1,4 @@
-import { COMING_SOON_PAGE } from "@/lib/routes";
+import { COMING_SOON_PAGE } from "@/lib/page-routes";
 import {
 	NavigationMenuItem,
 	NavigationMenuLink,

@@ -1,5 +1,5 @@
 import { PartResultTableHead } from "@/components/products/part/part-result-thead";
-import { PART_DETAILS_PAGE } from "@/lib/routes";
+import { PART_DETAILS_PAGE } from "@/lib/page-routes";
 import { tRPCServerApi } from "@/trpc/server";
 import { Badge } from "@shared/components/ui/badge";
 import type { Metadata } from "next";

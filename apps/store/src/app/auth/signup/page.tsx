@@ -1,5 +1,5 @@
 import { SignupForm } from "@/components/auth/signup-form";
-import { LOGIN_PAGE } from "@/lib/routes";
+import { LOGIN_PAGE } from "@/lib/page-routes";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@shared/components/ui/card";
 import type { Metadata } from "next";
 import Link from "next/link";

@@ -1,5 +1,5 @@
 import { WEBSITE_NAME } from "@/lib/constants";
-import { HOME_PAGE } from "@/lib/routes";
+import { HOME_PAGE } from "@/lib/page-routes";
 import { Icons } from "@packages/shared/components/Icons";
 import Link from "next/link";
 

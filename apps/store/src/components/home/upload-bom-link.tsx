@@ -1,4 +1,4 @@
-import { UPLOAD_BOM_PAGE } from "@/lib/routes";
+import { UPLOAD_BOM_PAGE } from "@/lib/page-routes";
 import Link from "next/link";
 
 export function UploadBomLink() {

@@ -1,6 +1,6 @@
 "use client";
 import { captureUserSignupAction } from "@/actions";
-import { HOME_PAGE } from "@/lib/routes";
+import { HOME_PAGE } from "@/lib/page-routes";
 import { verifyEmailSchema } from "@/schema/yup-schema";
 import { tRPCReactApi } from "@/trpc/react";
 import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";

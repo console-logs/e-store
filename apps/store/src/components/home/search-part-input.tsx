@@ -1,5 +1,5 @@
 "use client";
-import { PART_RESULTS_PAGE } from "@/lib/routes";
+import { PART_RESULTS_PAGE } from "@/lib/page-routes";
 import { searchPartSchema } from "@/schema/yup-schema";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";

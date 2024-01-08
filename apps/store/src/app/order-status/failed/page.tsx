@@ -1,4 +1,4 @@
-import { REVIEW_ORDER_PAGE } from "@/lib/routes";
+import { REVIEW_ORDER_PAGE } from "@/lib/page-routes";
 import { Button } from "@shared/components/ui/button";
 import type { Metadata } from "next";
 import Link from "next/link";

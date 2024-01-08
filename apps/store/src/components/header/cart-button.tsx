@@ -1,5 +1,5 @@
 import { fetchCartSizeAction } from "@/actions";
-import { SHOPPING_CART_PAGE } from "@/lib/routes";
+import { SHOPPING_CART_PAGE } from "@/lib/page-routes";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import Link from "next/link";

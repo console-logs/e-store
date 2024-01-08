@@ -1,5 +1,5 @@
 "use client";
-import { RESET_PASSWORD_STEP_2_PAGE } from "@/lib/routes";
+import { RESET_PASSWORD_STEP_2_PAGE } from "@/lib/page-routes";
 import { resetSchema } from "@/schema/yup-schema";
 import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";

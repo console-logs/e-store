@@ -2,7 +2,7 @@
 import { env } from "@/env";
 import { FILE_EXTENSION, FILE_PATH_SEPARATOR, OVERHEAD_SHIPPING_CHARGES, s3Client } from "@/lib/constants";
 import { guestCartsCollection, mongoClient, openOrdersCollection, usersCollection } from "@/lib/mongo";
-import { ORDER_EMAIL_API_ROUTE } from "@/lib/routes";
+import { ORDER_EMAIL_API_ROUTE } from "@/lib/page-routes";
 import { calculateCartTotal, calculateGst } from "@/lib/utils";
 import { CopyObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { auth } from "@clerk/nextjs";

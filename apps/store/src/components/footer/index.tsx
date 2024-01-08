@@ -6,7 +6,7 @@ import {
 	PRIVACY_POLICY_PAGE,
 	SHIPPING_PAGE,
 	TERMS_AND_CONDITIONS_PAGE,
-} from "@/lib/routes";
+} from "@/lib/page-routes";
 import { Icons } from "@shared/components/Icons";
 import { getCurrentYear } from "@shared/lib/utils";
 

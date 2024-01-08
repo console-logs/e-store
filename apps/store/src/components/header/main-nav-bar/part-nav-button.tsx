@@ -1,4 +1,4 @@
-import { HOME_PAGE } from "@/lib/routes";
+import { HOME_PAGE } from "@/lib/page-routes";
 import {
 	NavigationMenuItem,
 	NavigationMenuLink,

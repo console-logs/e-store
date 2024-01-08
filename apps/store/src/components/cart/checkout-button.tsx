@@ -1,5 +1,5 @@
 "use client";
-import { ADDRESSES_PAGE } from "@/lib/routes";
+import { ADDRESSES_PAGE } from "@/lib/page-routes";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { useToast } from "@shared/components/ui/use-toast";

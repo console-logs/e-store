@@ -1,4 +1,4 @@
-import { ROADMAP_PAGE } from "@/lib/routes";
+import { ROADMAP_PAGE } from "@/lib/page-routes";
 import {
 	NavigationMenuItem,
 	NavigationMenuLink,

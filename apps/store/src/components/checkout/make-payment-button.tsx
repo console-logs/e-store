@@ -2,7 +2,7 @@
 import { captureOrderDetails } from "@/actions";
 import { env } from "@/env";
 import { OVERHEAD_SHIPPING_CHARGES } from "@/lib/constants";
-import { ORDER_FAILED_PAGE, ORDER_SUCCESS_PAGE } from "@/lib/routes";
+import { ORDER_FAILED_PAGE, ORDER_SUCCESS_PAGE } from "@/lib/page-routes";
 import { calculateGst, initializeRazorpay } from "@/lib/utils";
 import { tRPCReactApi } from "@/trpc/react";
 import { formatToInr } from "@packages/shared/lib/utils";

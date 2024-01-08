@@ -1,4 +1,4 @@
-import { HOME_PAGE } from "@/lib/routes";
+import { HOME_PAGE } from "@/lib/page-routes";
 import { Button } from "@shared/components/ui/button";
 import Link from "next/link";
 

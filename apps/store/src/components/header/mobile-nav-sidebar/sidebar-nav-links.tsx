@@ -6,7 +6,7 @@ import {
 	PCB_TECH_CAPABILITIES_PAGE,
 	RIGID_PCB_FAB_PAGE,
 	ROADMAP_PAGE,
-} from "@/lib/routes";
+} from "@/lib/page-routes";
 import { Icons } from "@packages/shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import Link from "next/link";
