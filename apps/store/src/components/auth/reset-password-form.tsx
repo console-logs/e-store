@@ -1,6 +1,6 @@
 "use client";
 import { RESET_PASSWORD_STEP_2_PAGE } from "@/lib/page-routes";
-import { resetSchema } from "@/schema/yup-schema";
+import { resetPasswordSchema } from "@/schema/yup-schema";
 import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
@@ -65,7 +65,7 @@ export function ResetPasswordForm() {
 	return (
 		<Formik
 			initialValues={initialValues}
-			validationSchema={resetSchema}
+			validationSchema={resetPasswordSchema}
 			onSubmit={handleOnSubmit}>
 			{({}) => (
 				<Form className="space-y-3">

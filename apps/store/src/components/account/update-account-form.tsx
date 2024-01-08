@@ -1,14 +1,13 @@
 "use client";
+import { updateAccountSchema } from "@/schema/yup-schema";
 import { isClerkAPIResponseError, useUser } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";
 import { Label } from "@shared/components/ui/label";
 import { useToast } from "@shared/components/ui/use-toast";
-import { PASSWORD_ERROR } from "@shared/lib/error-messages";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useCallback, useTransition } from "react";
-import * as Yup from "yup";
 
 export function UpdateAccountForm() {
 	const { user } = useUser();
@@ -24,18 +23,6 @@ export function UpdateAccountForm() {
 		c_password: "",
 		n_password: "",
 	};
-
-	const validationSchema = Yup.object().shape({
-		fname: Yup.string().required("First name is required"),
-		lname: Yup.string().required("Last name is required"),
-		c_password: Yup.string(),
-		n_password: Yup.string()
-			.matches(/(?=.*[a-z])/, PASSWORD_ERROR)
-			.matches(/(?=.*[A-Z])/, PASSWORD_ERROR)
-			.matches(/(?=.*[0-9])/, PASSWORD_ERROR)
-			.matches(/(?=.*[!@#\$%\^&\*\?])/, PASSWORD_ERROR)
-			.min(8, PASSWORD_ERROR),
-	});
 
 	const handleOnSubmit = useCallback(
 		(values: { fname: string; lname: string; c_password: string; n_password: string }) => {
@@ -75,7 +62,7 @@ export function UpdateAccountForm() {
 	return (
 		<Formik
 			initialValues={initialValues}
-			validationSchema={validationSchema}
+			validationSchema={updateAccountSchema}
 			onSubmit={handleOnSubmit}>
 			{({}) => (
 				<Form className="w-full space-y-4">

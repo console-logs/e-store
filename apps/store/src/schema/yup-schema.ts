@@ -32,7 +32,7 @@ export const loginSchema = Yup.object().shape({
 	password: Yup.string().required(PASSWORD_ERROR),
 });
 
-export const resetSchema = Yup.object().shape({
+export const resetPasswordSchema = Yup.object().shape({
 	email: Yup.string()
 		.email(INVALID_EMAIL)
 		.required(INVALID_EMAIL)
@@ -40,7 +40,7 @@ export const resetSchema = Yup.object().shape({
 		.matches(/^\S+$/, INVALID_EMAIL),
 });
 
-export const reset2Schema = Yup.object().shape({
+export const resetPassword2Schema = Yup.object().shape({
 	code: Yup.string().required(EMPTY_CODE).min(6, INVALID_CODE).max(6, INVALID_CODE),
 	newPassword: Yup.string()
 		.required(PASSWORD_ERROR)
@@ -131,4 +131,16 @@ export const addressSchema = (isSameAddress: boolean) =>
 				.matches(/^\S+$/, INVALID_EMAIL),
 			ship_phone: Yup.string().required(EMPTY_PHONENUMBER).min(10, PHONENUMBER_ERROR).max(10, PHONENUMBER_ERROR),
 		}),
+	});
+
+	export const updateAccountSchema = Yup.object().shape({
+		fname: Yup.string().required("First name is required"),
+		lname: Yup.string().required("Last name is required"),
+		c_password: Yup.string(),
+		n_password: Yup.string()
+			.matches(/(?=.*[a-z])/, PASSWORD_ERROR)
+			.matches(/(?=.*[A-Z])/, PASSWORD_ERROR)
+			.matches(/(?=.*[0-9])/, PASSWORD_ERROR)
+			.matches(/(?=.*[!@#\$%\^&\*\?])/, PASSWORD_ERROR)
+			.min(8, PASSWORD_ERROR),
 	});
