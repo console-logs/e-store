@@ -1,7 +1,8 @@
 "use client";
 import { captureUserSignupAction } from "@/actions";
-import { HOME_PAGE, SIGNUP_EMAIL_API_ROUTE } from "@/lib/routes";
+import { HOME_PAGE } from "@/lib/routes";
 import { verifyEmailSchema } from "@/schema/yup-schema";
+import { tRPCReactApi } from "@/trpc/react";
 import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
@@ -17,6 +18,7 @@ export function VerifyEmailForm() {
 	const { toast } = useToast();
 	const router = useRouter();
 	const [isLoading, startTransition] = useTransition();
+	const sendSignupEmail = tRPCReactApi.signup.sendSignupEmail.useMutation();
 
 	const initialValues = {
 		code: "",
@@ -45,10 +47,13 @@ export function VerifyEmailForm() {
 							email: completeSignUp.emailAddress!,
 							userId: completeSignUp.createdUserId!,
 						};
-						await fetch(SIGNUP_EMAIL_API_ROUTE, {
-							method: "POST",
-							body: JSON.stringify({ email: signupData.email, firstName: signupData.firstName }),
+
+						// send signup email
+						sendSignupEmail.mutate({
+							email: signupData.email,
+							firstName: signupData.firstName,
 						});
+
 						await captureUserSignupAction(signupData).catch(console.error);
 						router.push(HOME_PAGE);
 					}

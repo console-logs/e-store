@@ -1,7 +1,4 @@
-import { env } from "@/env";
-
-export const HOST_URL = env.NODE_ENV === "development" ? "http://localhost:3000" : "https://e-store-store.vercel.app";
-export const SIGNUP_EMAIL_API_ROUTE = "/api/signup-email";
+export const HOST_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://e-store-store.vercel.app";
 export const ORDER_EMAIL_API_ROUTE = HOST_URL + "/api/order-email";
 export const UPLOAD_FILE_API_ROUTE = HOST_URL + "/api/upload-file";
 export const HOME_PAGE = "/";
