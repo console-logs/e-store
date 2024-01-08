@@ -1,5 +1,5 @@
 import { RigidPcbRateCard } from "@/lib/rate-cards";
-import { RigidPcbFabSpecsTypeSchema } from "@/schema/pcb";
+import { RigidPcbFabSpecsTypeSchema } from "@/schema/pcb-trpc-router-schema";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const rigidPcbRouter = createTRPCRouter({

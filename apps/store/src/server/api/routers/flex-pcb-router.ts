@@ -1,5 +1,5 @@
 import { flexPcbRateCard } from "@/lib/rate-cards";
-import { FlexPcbFabSpecsTypeSchema } from "@/schema/pcb";
+import { FlexPcbFabSpecsTypeSchema } from "@/schema/pcb-trpc-router-schema";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const flexPcbRouter = createTRPCRouter({

@@ -1,7 +1,7 @@
 "use client";
 import { transferGuestCartToUserAction } from "@/actions";
 import { HOME_PAGE } from "@/lib/routes";
-import { loginSchema } from "@/schema/yup";
+import { loginSchema } from "@/schema/yup-schema";
 import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";

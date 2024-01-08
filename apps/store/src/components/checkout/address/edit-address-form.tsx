@@ -3,7 +3,7 @@ import { addAddressesAction } from "@/actions";
 import { BillingAddressFields } from "@/components/checkout/address/billing-address-fields";
 import ShippingAddressFields from "@/components/checkout/address/shipping-address-fields";
 import { REVIEW_ORDER_PAGE } from "@/lib/routes";
-import { addressSchema } from "@/schema/yup";
+import { addressSchema } from "@/schema/yup-schema";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";

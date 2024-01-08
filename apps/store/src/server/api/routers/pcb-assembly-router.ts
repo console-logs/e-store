@@ -1,5 +1,5 @@
 import { assemblyRateCard } from "@/lib/rate-cards";
-import { PcbAssemblyFabSpecsTypeSchema } from "@/schema/pcb";
+import { PcbAssemblyFabSpecsTypeSchema } from "@/schema/pcb-trpc-router-schema";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const pcbAssemblyRouter = createTRPCRouter({

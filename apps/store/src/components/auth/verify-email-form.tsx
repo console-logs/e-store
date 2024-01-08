@@ -1,7 +1,7 @@
 "use client";
 import { captureUserSignupAction } from "@/actions";
 import { HOME_PAGE, SIGNUP_EMAIL_API_ROUTE } from "@/lib/routes";
-import { verifyEmailSchema } from "@/schema/yup";
+import { verifyEmailSchema } from "@/schema/yup-schema";
 import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";

@@ -1,6 +1,6 @@
 "use client";
 import { addItemToCartAction } from "@/actions";
-import { partOrderSchema } from "@/schema/yup";
+import { partOrderSchema } from "@/schema/yup-schema";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
 import { Input } from "@shared/components/ui/input";

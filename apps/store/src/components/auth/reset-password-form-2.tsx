@@ -1,5 +1,5 @@
 "use client";
-import { reset2Schema } from "@/schema/yup";
+import { reset2Schema } from "@/schema/yup-schema";
 import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
 import { Icons } from "@shared/components/Icons";
 import { Button } from "@shared/components/ui/button";
